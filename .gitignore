@@ -1,0 +1,11 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Obsidian per-machine UI state (safe to ignore; the notes are the vault)
+.obsidian/workspace*.json
+.obsidian/cache
+.trash/
+
+# Local settings that shouldn't be shared
+.claude/settings.local.json
