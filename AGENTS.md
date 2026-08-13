@@ -8,6 +8,9 @@ vault gets smarter over time.
 > The folder structure exists mainly for *you* to reason over. The human should rarely have to
 > think about where something goes — that's your job.
 
+**Read [`index.md`](index.md) at the start of any non-trivial session** — it's the catalog of what
+exists, and reading it beats searching blind.
+
 **This file is the single source of truth.** It is read natively by most coding agents
 (Codex, Cursor, Copilot, Aider, Windsurf, Zed and others). Agent-specific files such as
 `CLAUDE.md` are thin pointers back to here — never put instructions in them.
@@ -66,6 +69,31 @@ keep a stable sort order.
 **PARA sorts by how actionable something is right now, not by subject.** That's why one vault can
 hold work, side projects and life without turning into a filing cabinet.
 
+**The Areas/Resources boundary, stated once so you can actually apply it:** an **Area** is a
+standing responsibility with no completion state — something you are on the hook for. A
+**Resource** is something you'd *read* rather than *act on*. If you'd never be "behind" on it, it's
+a Resource.
+
+### Folder map — resolve through this table, never hardcode a path
+
+| `type:` | Lives in |
+| --- | --- |
+| `note`, `concept`, `person`, `moc` | `03_Resources/` |
+| `source` | `03_Resources/` (the original goes to `raw/`) |
+| `project` | `01_Projects/` |
+| `area` | `02_Areas/` |
+| `daily` | `Daily/` |
+
+Read this table to decide where something goes. Someone can swap PARA for a different scheme by
+editing these rows, and every command keeps working — which is the point.
+
+### Retrieval order
+
+When answering a question, search `03_Resources/`, `01_Projects/`, `02_Areas/` and `Daily/` first.
+**Read `raw/`, `index.md` history, and `brain/log.md` only to verify a citation or re-derive a
+note — never to answer from.** Long raw transcripts and append-only logs outrank short canonical
+notes on keyword match, which is a measured retrieval failure, not a theoretical one.
+
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `03_Resources/`, linked to a relevant Area
 - **A link / article / PDF / transcript** → original into `raw/`, then a *source note* in `03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
@@ -83,9 +111,13 @@ hold work, side projects and life without turning into a filing cabinet.
 ---
 title: Human-readable title
 type: note            # note | source | daily | project | area | moc | person | concept
-status: inbox         # inbox | active | evergreen | archived
+stage: inbox          # inbox | active | evergreen | archived   — how processed is it
+status: draft         # draft | stable | deprecated             — how much should you trust it
 created: 2026-01-01
 updated: 2026-01-01
+generated: { by: human:me, at: 2026-01-01T00:00:00Z }   # or { by: claude-code/opus-5, at: ... }
+verified: []          # [{ by: human:me, at: ... }] once a person has actually confirmed it
+stale_after:          # YYYY-MM-DD — only where the claim can rot
 tags: []
 area:                 # the Area this belongs to, or blank
 source:               # URL or origin, if derived from external material
@@ -93,11 +125,32 @@ aliases: []
 ---
 ```
 
-- `type: note` = one atomic idea. `source` = a note *about* external material.
-- `status`: `inbox` (unprocessed) → `active`/`evergreen` (kept and refined) → `archived`.
+- `type: note` = one atomic idea. `source` = a note *about* external material. **`type` is the
+  authoritative routing key** — see the folder map below.
 - Bump `updated` whenever you meaningfully change a note.
 - For facts from sources, add a recency marker in the body: `(as of 2026-01, example.com)`. If two
   sources conflict, keep both with markers rather than silently picking one.
+
+### Two axes, deliberately separate
+
+`stage` and `status` look similar and are not. Conflating them is the specific failure this split
+exists to prevent — "I haven't processed this yet" is a completely different statement from "no
+human has confirmed this is true."
+
+- **`stage`** is *workflow*: `inbox` (unprocessed) → `active`/`evergreen` (kept and refined) → `archived`.
+- **`status`** is *trust*: `draft` (unconfirmed) → `stable` (relied upon) → `deprecated` (superseded but kept).
+
+### Provenance fields
+
+- **`generated.by`** — who wrote it. `human:<name>` for the human, `<agent>/<version>` for you.
+  The `human:` prefix is load-bearing: it makes "did a person write this?" a grep.
+- **`verified`** — empty until a *person* confirms the content. An agent may never add itself here.
+- **`stale_after`** — a date after which the claim should be re-checked. Only set it where the fact
+  can actually rot (prices, versions, org charts), not on timeless notes.
+
+**Deprecate, don't delete.** When a note is superseded, set `status: deprecated`, link to what
+replaced it, and keep the file. An outdated-but-once-true note is not the same as a wrong one, and
+deleting it destroys the trail.
 
 ---
 
@@ -168,7 +221,7 @@ wrappers (see `.claude/commands/` for the Claude Code versions).
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
-| `maintain` | `brain/prompts/maintain.md` | The nightly pass: close the day, drain inbox, reconcile, report |
+| `maintain` | `brain/prompts/maintain.md` | The nightly pass: close the day, drain inbox, reconcile, rebuild the index, report |
 
 If the human just talks to you without naming a command, treat it as `capture`.
 

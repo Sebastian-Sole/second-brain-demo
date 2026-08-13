@@ -7,6 +7,10 @@ there's no question at all, ask what they want to know.
 
 This is **read-mostly** — don't create or edit knowledge notes in order to answer.
 
+0. **Start with `index.md`.** It lists what exists. Reading the catalog first is cheaper and more
+   accurate than searching blind, and it tells you what *isn't* there — which is how you avoid
+   confidently answering from a gap.
+
 1. **Search broadly, then read narrowly.**
    - Grep across `03_Resources/`, `01_Projects/`, `02_Areas/`, `Daily/`, and `00_Inbox/` — titles,
      `aliases`, and body text. Try synonyms and entity names, not just their exact words.

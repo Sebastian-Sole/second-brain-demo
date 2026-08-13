@@ -5,7 +5,7 @@ prefer leaving something alone over making a change you can't justify. Everythin
 recoverable via git, but a scheduled job that quietly rewrites notes is how a second brain loses
 its owner's trust.
 
-Work through four phases, then write the log.
+Work through five phases, then write the log.
 
 ## Phase 1 — Close the day
 
@@ -41,12 +41,22 @@ Three checks, in order of value:
 3. **Broken links.** `[[wikilinks]]` pointing at notes that don't exist. Some are intentional
    ("worth writing later") — leave those. Fix the ones that are clearly typos or renames.
 
-## Phase 4 — Report
+## Phase 4 — Rebuild the index
+
+Regenerate `index.md` from what's actually on disk: one line per note,
+`- [[Note Title]] — one-line description`, grouped by section. Drop entries for notes that no
+longer exist; add any that were never catalogued.
+
+While you're here, sweep the recency markers: grep for `(as of YYYY-MM)` markers and any
+`stale_after:` dates that have passed, and list what's due for re-checking. A marker nobody ever
+sweeps is decoration.
+
+## Phase 5 — Report
 
 Append **one line** to `brain/log.md` (create it if missing, newest entries at the bottom):
 
 ```
-- YYYY-MM-DD maintain: <n> inbox items filed, <n> left with questions · <n> orphans linked · <n> contradictions found · <notable thing, or "quiet">
+- YYYY-MM-DD maintain: <n> inbox filed, <n> left with questions · <n> orphans linked · <n> contradictions found · <n> stale markers due · index rebuilt · <notable thing, or "quiet">
 ```
 
 Then say the same thing in the conversation, plus anything the human should actually look at.

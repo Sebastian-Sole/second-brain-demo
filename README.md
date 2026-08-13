@@ -123,6 +123,7 @@ cron job, and a CI workflow can all call the identical code path.
 ## How it's organised
 
 ```
+index.md         the catalog — what exists. The agent reads this first.
 00_Inbox/        anything unprocessed or ambiguous
 01_Projects/     active efforts with a goal and an end
 02_Areas/        ongoing responsibilities with no end date
@@ -138,6 +139,22 @@ brain/           the harness: prompts, scripts, run log
 thinking layer. PARA sorts by *how actionable something is right now*, not by subject, which is
 why one vault can hold your work, your side projects and your life without becoming a filing
 cabinet.
+
+> **Honest note on the folders: PARA is here because it's familiar, not because it's proven.**
+> There are no controlled trials of PARA, Zettelkasten, LYT, ACCESS or Johnny Decimal — not mixed
+> evidence, none at all. The widely-quoted "40% improvement" is self-reported confidence from
+> paying customers with no control group. What *is* measured is much duller: shallow trees beat
+> deep ones, and folders start paying for a split at around 21 items. So this layout is one
+> reasonable answer, not the right one — and `type:` in frontmatter, not the folder, is what
+> actually routes a note. Swap the folder map in `AGENTS.md` and every command still works.
+>
+> The genuinely evidence-backed part of this repo is `digest` and `maintain` — the review loop.
+> The robust finding in the note-taking literature is that *revisiting* notes helps; how you filed
+> them doesn't.
+
+`index.md` is the piece that makes retrieval work without an embedding index: the agent reads the
+catalog to see what exists instead of guessing at search terms. It's rebuilt on every capture and
+fully regenerated nightly.
 
 Two deliberate omissions:
 
@@ -181,6 +198,21 @@ trusting, and gradually losing track of which thoughts were yours.
 the topic, stay concrete, and mark anything the agent inferred with a `> [!ai]` callout so
 authorship stays clear permanently. That last rule matters more than it looks — an inference that
 gets mistaken for a fact will be cited as evidence for the next inference.
+
+Provenance is also **machine-queryable**, not just a prose convention. Every note carries:
+
+```yaml
+generated: { by: human:me, at: ... }   # or { by: claude-code/opus-5, at: ... }
+verified: []                            # only a person may add themselves here
+status: draft                           # draft | stable | deprecated  — trust
+stage: inbox                            # inbox | active | evergreen | archived — workflow
+```
+
+So "show me everything the agent wrote that no human has confirmed" is a grep, not a vibe. The
+field names follow Google Cloud's [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md),
+so this isn't a private invention. Note that `status` (trust) and `stage` (workflow) are separate —
+"I haven't processed this" and "nobody has confirmed this is true" are different claims, and
+collapsing them is how an unverified inference quietly becomes a fact.
 
 Keep those rules. They're the difference between a second brain and a pile of AI text.
 

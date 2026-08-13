@@ -34,8 +34,10 @@ Follow the workflow in `AGENTS.md`. Concretely:
 5. **Link.** Every new note links to at least one other note and to its Area. Add the reverse
    link where it reads naturally. A link to a note that doesn't exist yet is fine.
 
-6. **Log.** Add a one-line entry to today's daily note (`Daily/YYYY-MM-DD.md`) so there's a
-   timeline. Create the daily note if it doesn't exist.
+6. **Log and catalog.** Add a one-line entry to today's daily note (`Daily/YYYY-MM-DD.md`) so
+   there's a timeline — create the note if it doesn't exist. Then add each new note to `index.md`
+   under the right section as `- [[Note Title]] — one-line description`. Keeping the catalog
+   current is what lets the next session find this without searching for it.
 
 7. **Report.** Tell them briefly what you created, updated, and linked — and surface anything you
    left in `00_Inbox/` as an explicit question.
