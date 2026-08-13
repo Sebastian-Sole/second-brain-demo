@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+# Commit the vault, and push it if a remote is configured.
+#
+# Portable on purpose: no agent, no runtime, no dependencies beyond git and a
+# POSIX shell. Call it from an agent hook, a cron job, a CI workflow, or by hand.
+#
+#   brain/bin/sync ["commit message"]
+#
+# Exits 0 even when there is nothing to do, so it is safe to call unconditionally.
+
+set -u
+
+# Run from the repo root regardless of where we were invoked.
+root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+  echo "sync: not a git repository — skipping" >&2
+  exit 0
+}
+cd "$root" || exit 0
+
+msg=${1:-"brain: sync $(date +%F)"}
+
+if [ -n "$(git status --porcelain)" ]; then
+  git add -A
+  git commit -q -m "$msg" || true
+fi
+
+# Only touch the network if this branch actually tracks something.
+if git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
+  git pull --rebase --autostash -q 2>/dev/null || git rebase --abort -q 2>/dev/null
+  git push -q 2>/dev/null || echo "sync: push failed — commits are safe locally" >&2
+fi
+
+exit 0

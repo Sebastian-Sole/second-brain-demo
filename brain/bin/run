@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+# Run one of the vault's prompts with whichever agent CLI is available.
+#
+#   brain/bin/run maintain
+#   brain/bin/run digest "last two weeks"
+#   BRAIN_AGENT=codex brain/bin/run maintain
+#
+# This is the seam that keeps the vault model-agnostic: prompts are plain
+# markdown, and this script is the only place that knows how to invoke a
+# particular vendor's CLI. Teaching the vault a new agent means adding one
+# case below — nothing else changes.
+
+set -eu
+
+root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+cd "$root"
+
+name=${1:-}
+if [ -z "$name" ]; then
+  echo "usage: brain/bin/run <prompt-name> [extra instructions]" >&2
+  echo "available:" >&2
+  ls brain/prompts/*.md 2>/dev/null | sed 's|.*/|  |; s|\.md$||' >&2
+  exit 64
+fi
+shift
+
+prompt_file="brain/prompts/${name}.md"
+[ -f "$prompt_file" ] || { echo "run: no such prompt: $prompt_file" >&2; exit 66; }
+
+prompt=$(cat "$prompt_file")
+[ $# -gt 0 ] && prompt="$prompt
+
+---
+Additional instructions from the caller: $*"
+
+# Pick an agent: explicit choice first, then whatever is installed.
+agent=${BRAIN_AGENT:-}
+if [ -z "$agent" ]; then
+  if   command -v claude >/dev/null 2>&1; then agent=claude
+  elif command -v codex  >/dev/null 2>&1; then agent=codex
+  elif command -v gemini >/dev/null 2>&1; then agent=gemini
+  else
+    echo "run: no agent CLI found. Install one, or set BRAIN_AGENT." >&2
+    exit 69
+  fi
+fi
+
+echo "run: $name via $agent" >&2
+
+case "$agent" in
+  claude)
+    # Non-interactive mode. acceptEdits lets it write notes without prompting.
+    claude -p "$prompt" --permission-mode acceptEdits
+    ;;
+  codex)
+    # workspace-write confines it to this directory tree.
+    codex exec --sandbox workspace-write "$prompt"
+    ;;
+  gemini)
+    gemini -p "$prompt"
+    ;;
+  *)
+    echo "run: unknown agent '$agent'. Add a case to brain/bin/run." >&2
+    exit 78
+    ;;
+esac

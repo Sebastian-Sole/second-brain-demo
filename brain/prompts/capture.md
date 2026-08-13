@@ -1,0 +1,50 @@
+# capture — file a raw dump into the vault
+
+Capture what the human gave you: a thought, a link, a decision, a transcript, whatever it is.
+
+If they gave you nothing specific, capture what you just did or discussed in this session. If
+there's nothing to capture at all, ask what they want to put in.
+
+Follow the workflow in `AGENTS.md`. Concretely:
+
+1. **Triage.** Decide what each piece is — a thought, external source material, a task, a journal
+   entry, or a project update. One dump can be several of these; split it.
+
+2. **Preserve first.** If any of it is external material (an article, a transcript, a pasted
+   thread, a PDF), write the original verbatim into `raw/` as
+   `raw/YYYY-MM-DD-<short-slug>.md` **before** you write anything else. Never edit that file
+   afterwards.
+
+3. **Search before writing.** Grep the vault for the concepts involved — titles, `aliases`, and
+   body text, plus obvious synonyms. If a note on this already exists, **extend it** rather than
+   creating a near-duplicate. Note what you found.
+
+4. **Write atomically.** One idea per note in `03_Resources/`, with the full frontmatter block
+   from `CLAUDE.md`. Titles are claims, not labels. Write it in the human's voice — their idea
+   sharpened, not replaced by a neutral summary. A big dump becomes several small linked notes,
+   not one long one.
+
+   If you generated a synthesis or an inference the human didn't say, mark it:
+
+   ```
+   > [!ai] Synthesis
+   > …
+   ```
+
+5. **Link.** Every new note links to at least one other note and to its Area. Add the reverse
+   link where it reads naturally. A link to a note that doesn't exist yet is fine.
+
+6. **Log.** Add a one-line entry to today's daily note (`Daily/YYYY-MM-DD.md`) so there's a
+   timeline. Create the daily note if it doesn't exist.
+
+7. **Report.** Tell them briefly what you created, updated, and linked — and surface anything you
+   left in `00_Inbox/` as an explicit question.
+
+Rules that matter here:
+- **Never lose anything.** If you can't process a piece, it goes to `00_Inbox/` with a
+  `> [!question]` callout describing what you were unsure about. Don't silently drop it.
+- **Don't pad.** Five well-linked atomic notes beat one sprawling essay. If the dump only
+  contains one idea, write one note.
+- Don't invent facts to make a note feel complete.
+
+The `Stop` hook commits for you — you don't need to run git.

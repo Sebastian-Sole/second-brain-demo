@@ -1,0 +1,86 @@
+# Nightly maintenance — the vault tends itself while you're asleep.
+#
+# This is the piece that turns a notes folder into a system. It runs
+# brain/prompts/maintain.md on a schedule and commits whatever changed.
+#
+# ---------------------------------------------------------------------------
+# SETUP (about two minutes)
+#
+# 1. Pick your agent. Set a repository *variable* named BRAIN_AGENT to either
+#    "claude" or "codex"  (Settings → Secrets and variables → Actions → Variables).
+#    Defaults to "claude" if unset.
+#
+# 2. Add the matching repository *secret*:
+#      claude → ANTHROPIC_API_KEY   (console.anthropic.com)
+#               or CLAUDE_CODE_OAUTH_TOKEN, from `claude setup-token`
+#      codex  → OPENAI_API_KEY
+#
+# 3. That's it. Check the Actions tab tomorrow morning.
+#
+# Prefer not to use GitHub? `brain/bin/run maintain` does the same thing
+# locally — put it in cron or launchd. See the README.
+#
+# ---------------------------------------------------------------------------
+# THINGS GITHUB WILL DO TO YOU, so you aren't surprised:
+#   - Scheduled workflows only run from the DEFAULT branch.
+#   - On public repos, GitHub disables the schedule after 60 days with no
+#     repository activity. A nightly commit counts as activity, so in practice
+#     this keeps itself alive — but a quiet vault can go dormant.
+#   - Cron times are UTC and the queue is best-effort; expect drift of minutes.
+
+name: Nightly maintenance
+
+on:
+  schedule:
+    - cron: "0 3 * * *"     # 03:00 UTC daily
+  workflow_dispatch:         # ...and a "Run workflow" button for testing
+
+# Only one maintenance run at a time — two agents editing the same notes
+# concurrently is exactly the race you don't want.
+concurrency:
+  group: brain-maintenance
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Maintain the vault (Claude)
+        if: ${{ (vars.BRAIN_AGENT || 'claude') == 'claude' }}
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Using a subscription instead of an API key? Swap the line above for:
+          # claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: "Read brain/prompts/maintain.md and follow it exactly. Do not commit; the workflow handles that."
+          claude_args: |
+            --allowedTools "Read,Write,Edit,Glob,Grep"
+            --max-turns 40
+
+      - name: Maintain the vault (Codex)
+        if: ${{ vars.BRAIN_AGENT == 'codex' }}
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: "Read brain/prompts/maintain.md and follow it exactly. Do not commit; the workflow handles that."
+
+      # Committing here rather than asking the agent to do it: one less tool to
+      # grant, and it behaves identically whichever agent ran above.
+      - name: Commit whatever changed
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing changed — quiet night."
+            exit 0
+          fi
+          git config user.name  "second-brain[bot]"
+          git config user.email "second-brain[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "brain: nightly maintenance $(date +%F)"
+          git push
