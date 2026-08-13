@@ -1,0 +1,129 @@
+#!/usr/bin/env sh
+# Find and stage AI session transcripts so an agent can read them.
+#
+#   brain/bin/sessions list [pattern]        what's on this machine
+#   brain/bin/sessions stage <pattern> [n]   copy the n newest matches in (default 5)
+#   brain/bin/sessions clean                 delete everything staged
+#
+# Why this exists: agent CLIs sandbox themselves to the working directory, so
+# none of them can read ~/.claude/projects or ~/.codex/sessions no matter how
+# you invoke them. Rather than teaching every agent a different escape hatch,
+# this script — plain POSIX shell, no jq, no runtime — copies the transcripts
+# you asked for into raw/sessions/transcripts/, which is gitignored. The agent
+# then reads them with the same tools it uses for everything else.
+#
+# Nothing staged here is ever committed. Run `clean` when you're done.
+
+set -eu
+
+root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+cd "$root"
+
+stage_dir="raw/sessions/transcripts"
+claude_dir="$HOME/.claude/projects"
+codex_dir="$HOME/.codex/sessions"
+
+# mtime as YYYY-MM-DD. `date -r <file>` works on both BSD and GNU date.
+mtime() { date -r "$1" +%Y-%m-%d 2>/dev/null || echo "????-??-??"; }
+
+# Claude Code encodes the project path in the directory name: /Users/me/foo
+# becomes -Users-me-foo. The encoding is lossy — a hyphen in a real folder name
+# is indistinguishable from a separator — so "My-Notes" comes back as "My/Notes".
+# Good enough to match and display; don't treat the result as a real path.
+decode() { echo "$1" | sed 's|-|/|g'; }
+
+# Codex stores the project path as "cwd":"..." in the first line of the file.
+codex_cwd() { sed -n '1s/.*"cwd":"\([^"]*\)".*/\1/p' "$1" 2>/dev/null; }
+
+cmd=${1:-list}
+[ $# -gt 0 ] && shift
+
+case "$cmd" in
+  list)
+    pattern=${1:-}
+    if [ -d "$claude_dir" ]; then
+      echo "Claude Code — $claude_dir"
+      for d in "$claude_dir"/*/; do
+        [ -d "$d" ] || continue
+        name=$(basename "$d")
+        proj=$(decode "$name")
+        case "$proj" in *"${pattern}"*) ;; *) [ -n "$pattern" ] && continue ;; esac
+        n=$(find "$d" -name '*.jsonl' 2>/dev/null | wc -l | tr -d ' ')
+        [ "$n" -eq 0 ] && continue
+        newest=$(ls -t "$d"*.jsonl 2>/dev/null | head -1)
+        printf '  %-4s sessions  %s  %s\n' "$n" "$(mtime "${newest:-$d}")" "$proj"
+      done
+    fi
+    if [ -d "$codex_dir" ]; then
+      echo "Codex — $codex_dir"
+      find "$codex_dir" -name 'rollout-*.jsonl' 2>/dev/null | while read -r f; do
+        proj=$(codex_cwd "$f")
+        [ -n "$proj" ] || continue
+        case "$proj" in *"${pattern}"*) ;; *) [ -n "$pattern" ] && continue ;; esac
+        echo "$proj"
+      done | sort | uniq -c | sort -rn | while read -r n proj; do
+        printf '  %-4s sessions  %s\n' "$n" "$proj"
+      done
+    fi
+    [ -d "$claude_dir" ] || [ -d "$codex_dir" ] || {
+      echo "No agent session directories found on this machine." >&2
+      exit 69
+    }
+    ;;
+
+  stage)
+    pattern=${1:-}
+    [ -n "$pattern" ] || { echo "usage: sessions stage <pattern> [n]" >&2; exit 64; }
+    limit=${2:-5}
+    mkdir -p "$stage_dir"
+
+    # Collect every match first, then sort by recency across ALL of them, so
+    # "the 3 newest" means the 3 newest overall — not 3 from each directory.
+    # A project with a git worktree has more than one directory here.
+    matches=""
+    if [ -d "$claude_dir" ]; then
+      for d in "$claude_dir"/*/; do
+        [ -d "$d" ] || continue
+        proj=$(decode "$(basename "$d")")
+        case "$proj" in *"${pattern}"*) ;; *) continue ;; esac
+        matches="$matches $(find "$d" -maxdepth 1 -name '*.jsonl' 2>/dev/null | tr '\n' ' ')"
+      done
+    fi
+    if [ -d "$codex_dir" ]; then
+      for f in $(find "$codex_dir" -name 'rollout-*.jsonl' 2>/dev/null); do
+        proj=$(codex_cwd "$f")
+        case "$proj" in *"${pattern}"*) ;; *) continue ;; esac
+        matches="$matches $f"
+      done
+    fi
+
+    [ -n "$(echo "$matches" | tr -d ' ')" ] || {
+      echo "sessions: nothing matches '$pattern' — try: brain/bin/sessions list" >&2
+      exit 66
+    }
+
+    staged=0
+    # shellcheck disable=SC2086  # deliberate word-splitting; these paths have no spaces
+    for f in $(ls -t $matches 2>/dev/null | head -"$limit"); do
+      case "$f" in
+        "$codex_dir"/*) cp "$f" "$stage_dir/codex--$(basename "$f")" ;;
+        *)              cp "$f" "$stage_dir/claude--$(basename "$f")" ;;
+      esac
+      staged=$((staged + 1))
+    done
+
+    echo "staged $staged transcript(s) matching '$pattern' into $stage_dir" >&2
+    echo "remember to run: brain/bin/sessions clean" >&2
+    ls -la "$stage_dir" | tail -n +4
+    ;;
+
+  clean)
+    rm -rf "$stage_dir"
+    echo "cleaned $stage_dir" >&2
+    ;;
+
+  *)
+    echo "usage: sessions {list|stage|clean}" >&2
+    exit 64
+    ;;
+esac

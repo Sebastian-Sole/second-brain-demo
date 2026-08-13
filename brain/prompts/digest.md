@@ -28,7 +28,8 @@ Two or three real observations. If there genuinely isn't a pattern, say so — a
 worse than a short section. Mark these as yours:
 
 ```
-> [!ai] Synthesis — not stated anywhere explicitly; this is a read across N notes.
+> [!NOTE]
+> **AI synthesis** — not stated anywhere explicitly; this is a read across N notes.
 ```
 
 ### 3. Stalled

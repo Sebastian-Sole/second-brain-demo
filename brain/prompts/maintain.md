@@ -1,9 +1,12 @@
-# maintain — the nightly pass
+# maintain — the health pass
 
-Keep the vault healthy. This normally runs unattended on a schedule, so **be conservative**:
-prefer leaving something alone over making a change you can't justify. Everything here is
-recoverable via git, but a scheduled job that quietly rewrites notes is how a second brain loses
-its owner's trust.
+Keep the vault healthy. **Be conservative**: prefer leaving something alone over making a change
+you can't justify. Everything here is recoverable via git, but an agent that quietly rewrites
+someone's notes is how a second brain loses its owner's trust.
+
+Assume this may one day be running unattended on a schedule, with nobody reading the output until
+morning. Write every judgement call so it survives that: if you weren't sure, the vault should say
+so in the file, not only in the conversation.
 
 Work through five phases, then write the log.
 
@@ -23,7 +26,7 @@ For each item in `00_Inbox/`:
 
 - If you can now file it confidently, file it per `AGENTS.md` — write it up, link it, and remove
   it from the inbox.
-- If it's still ambiguous, **leave it there.** Add or refine a `> [!question]` callout naming
+- If it's still ambiguous, **leave it there.** Add or refine an **Open question** callout naming
   precisely what you'd need from the human to file it. An honest question beats a wrong filing.
 
 ## Phase 3 — Reconcile and connect
@@ -47,6 +50,11 @@ Regenerate `index.md` from what's actually on disk: one line per note,
 `- [[Note Title]] — one-line description`, grouped by section. Drop entries for notes that no
 longer exist; add any that were never catalogued.
 
+**Do not enumerate `06_Sessions/` here.** It has its own `index.md` and there can be thousands of
+session notes; listing them in the root catalog would drown the notes it exists to surface. One
+line pointing at `06_Sessions/index.md` is all the root index gets. If session notes are present,
+refresh their own index while you're here.
+
 While you're here, sweep the recency markers: grep for `(as of YYYY-MM)` markers and any
 `stale_after:` dates that have passed, and list what's due for re-checking. A marker nobody ever
 sweeps is decoration.
@@ -68,5 +76,6 @@ a maintenance run that invents work to look busy is worse than one that reports 
 
 - **Never delete a note** during maintenance. Archive, flag, or ask.
 - **Never rewrite the human's words** into your own. You may fix structure, links and frontmatter.
-- Mark anything you concluded with a `> [!ai]` callout, per the provenance rules in `AGENTS.md`.
+- Mark anything you concluded with an **AI synthesis** callout, per the provenance rules in
+  `AGENTS.md`.
 - Don't commit — whatever invoked you handles that.

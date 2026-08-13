@@ -9,4 +9,4 @@ not knowledge: don't link it into the graph, don't file notes here.
 
 ---
 
-- _(no runs yet — trigger one with `brain/bin/run maintain`, or wait for the nightly job)_
+- _(no runs yet — trigger one with `brain/bin/run maintain`, or just say `maintain` to your agent)_

@@ -20,15 +20,15 @@ Follow the workflow in `AGENTS.md`. Concretely:
    creating a near-duplicate. Note what you found.
 
 4. **Write atomically.** One idea per note in `03_Resources/`, with the full frontmatter block
-   from `CLAUDE.md`. Titles are claims, not labels. Write it in the human's voice — their idea
+   from `AGENTS.md`. Titles are claims, not labels. Write it in the human's voice — their idea
    sharpened, not replaced by a neutral summary. A big dump becomes several small linked notes,
    not one long one.
 
    If you generated a synthesis or an inference the human didn't say, mark it:
 
    ```
-   > [!ai] Synthesis
-   > …
+   > [!NOTE]
+   > **AI synthesis** — …
    ```
 
 5. **Link.** Every new note links to at least one other note and to its Area. Add the reverse
@@ -43,8 +43,8 @@ Follow the workflow in `AGENTS.md`. Concretely:
    left in `00_Inbox/` as an explicit question.
 
 Rules that matter here:
-- **Never lose anything.** If you can't process a piece, it goes to `00_Inbox/` with a
-  `> [!question]` callout describing what you were unsure about. Don't silently drop it.
+- **Never lose anything.** If you can't process a piece, it goes to `00_Inbox/` with an
+  **Open question** callout describing what you were unsure about. Don't silently drop it.
 - **Don't pad.** Five well-linked atomic notes beat one sprawling essay. If the dump only
   contains one idea, write one note.
 - Don't invent facts to make a note feel complete.

@@ -4,7 +4,7 @@ The catalog of this vault. **Agents read this first** to find out what exists be
 it — it's cheaper and more accurate than globbing, and at this scale it's what removes the need for
 an embedding index entirely.
 
-Rebuilt by `capture` (incrementally, as notes are added) and by `maintain` (fully, nightly).
+Rebuilt by `capture` (incrementally, as notes are added) and by `maintain` (fully, every run).
 
 This is scaffolding, not knowledge. Don't file notes here, don't link it into the graph, and don't
 answer questions from it — it's a table of contents, not a source.

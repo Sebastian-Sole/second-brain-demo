@@ -36,9 +36,10 @@ Additional instructions from the caller: $*"
 # Pick an agent: explicit choice first, then whatever is installed.
 agent=${BRAIN_AGENT:-}
 if [ -z "$agent" ]; then
-  if   command -v claude >/dev/null 2>&1; then agent=claude
-  elif command -v codex  >/dev/null 2>&1; then agent=codex
-  elif command -v gemini >/dev/null 2>&1; then agent=gemini
+  if   command -v claude       >/dev/null 2>&1; then agent=claude
+  elif command -v codex        >/dev/null 2>&1; then agent=codex
+  elif command -v cursor-agent >/dev/null 2>&1; then agent=cursor-agent
+  elif command -v gemini       >/dev/null 2>&1; then agent=gemini
   else
     echo "run: no agent CLI found. Install one, or set BRAIN_AGENT." >&2
     exit 69
@@ -56,8 +57,23 @@ case "$agent" in
     # workspace-write confines it to this directory tree.
     codex exec --sandbox workspace-write "$prompt"
     ;;
+  cursor-agent)
+    # Cursor has no write-only approval tier equivalent to Claude's acceptEdits;
+    # its non-interactive flag waives every approval, so it stays opt-in.
+    if [ "${BRAIN_UNATTENDED:-}" = 1 ]; then
+      cursor-agent -p "$prompt" --force
+    else
+      cursor-agent -p "$prompt"
+    fi
+    ;;
   gemini)
-    gemini -p "$prompt"
+    # Gemini reads GEMINI.md rather than AGENTS.md — the pointer file matters here.
+    # Same caveat as cursor-agent: its unattended flag waives every approval.
+    if [ "${BRAIN_UNATTENDED:-}" = 1 ]; then
+      gemini -p "$prompt" --yolo
+    else
+      gemini -p "$prompt"
+    fi
     ;;
   *)
     echo "run: unknown agent '$agent'. Add a case to brain/bin/run." >&2

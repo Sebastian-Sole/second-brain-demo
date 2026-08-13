@@ -62,6 +62,7 @@ keep a stable sort order.
 | `03_Resources/` | **Atomic notes** + reference material — the actual knowledge |
 | `04_Archive/` | Finished projects, dormant areas |
 | `05_Attachments/` | Images, PDFs, binaries referenced by notes |
+| `06_Sessions/` | Distilled notes about past AI coding sessions. Created by `ingest-sessions`; absent until then |
 | `Daily/` | Daily notes — journal and capture log, `YYYY-MM-DD.md` |
 | `raw/` | **Immutable** original source material — never edit |
 | `brain/` | The harness itself: prompts, scripts, run log. Not knowledge — don't file notes here. |
@@ -82,6 +83,7 @@ a Resource.
 | `source` | `03_Resources/` (the original goes to `raw/`) |
 | `project` | `01_Projects/` |
 | `area` | `02_Areas/` |
+| `session` | `06_Sessions/` (the transcript stays outside the vault) |
 | `daily` | `Daily/` |
 
 Read this table to decide where something goes. Someone can swap PARA for a different scheme by
@@ -94,6 +96,11 @@ When answering a question, search `03_Resources/`, `01_Projects/`, `02_Areas/` a
 note — never to answer from.** Long raw transcripts and append-only logs outrank short canonical
 notes on keyword match, which is a measured retrieval failure, not a theoretical one.
 
+`06_Sessions/` is a third tier: read it when the question is *about past work* — "what did I decide
+about X", "when did I last touch Y", "why did we go with Z" — and leave it alone otherwise. There
+can be thousands of session notes against a few dozen real ones, so searching it by default would
+drown the vault in its own history.
+
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `03_Resources/`, linked to a relevant Area
 - **A link / article / PDF / transcript** → original into `raw/`, then a *source note* in `03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
@@ -101,7 +108,7 @@ notes on keyword match, which is a measured retrieval failure, not a theoretical
 - **A task or reminder** → today's daily note under Tasks, and the relevant project if one exists
 - **Project news** → the relevant `01_Projects/` note
 - **Journal / life log** → today's daily note
-- **Can't tell** → `00_Inbox/` with a `> [!question]` callout saying what you were unsure about
+- **Can't tell** → `00_Inbox/` with an **Open question** callout saying what you were unsure about
 
 ---
 
@@ -188,12 +195,26 @@ vault quietly fills with confident conclusions nobody ever made.
 - Something **you** inferred, synthesised, or concluded → mark it:
 
   ```
-  > [!ai] Synthesis
-  > …what you concluded, and what you concluded it from.
+  > [!NOTE]
+  > **AI synthesis** — what you concluded, and what you concluded it from.
+  ```
+
+- Something you couldn't decide and need the human for → mark it:
+
+  ```
+  > [!IMPORTANT]
+  > **Open question** — what you'd need in order to file this.
   ```
 
 - Never promote a marked inference into an unmarked fact in a later pass. If evidence later
   confirms it, say so and keep the trail.
+
+**Why these two markers and not prettier ones.** The alert type must be one of GitHub's five
+(`NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`) on a line by itself, because github.com is the
+only viewer of this vault that needs nothing installed — and a provenance marker that renders as a
+plain blockquote in the place people actually browse is a provenance marker nobody sees. The bold
+lead-in carries the meaning and keeps it greppable: `grep -rn "AI synthesis"` finds every
+unverified inference in the vault. Don't swap these for custom types.
 
 ---
 
@@ -221,11 +242,23 @@ wrappers (see `.claude/commands/` for the Claude Code versions).
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
-| `maintain` | `brain/prompts/maintain.md` | The nightly pass: close the day, drain inbox, reconcile, rebuild the index, report |
+| `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
+| `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search |
 
 If the human just talks to you without naming a command, treat it as `capture`.
 
 Adding your own is one markdown file in `brain/prompts/`, plus a row in this table.
+
+### Nothing here runs on a schedule
+
+Every command above is invoked by the human. This vault ships **no** cron job, no CI workflow and
+no background agent, and that is deliberate: an agent with unattended write access to someone's
+notes, before they have watched what it does, is how a second brain loses its owner's trust on day
+one. Earn it first.
+
+Scheduling `maintain` later is a good idea and entirely the human's call — `brain/bin/run maintain`
+is one line in whatever scheduler they already trust. If they ask you to set that up, help. Don't
+set it up unasked.
 
 ---
 

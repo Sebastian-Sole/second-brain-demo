@@ -9,3 +9,10 @@ Thumbs.db
 
 # Local settings that shouldn't be shared
 .claude/settings.local.json
+
+# Ingested AI session transcripts. `ingest-sessions` writes short session notes
+# into the vault and leaves the transcripts themselves outside git — they are
+# enormous (gigabytes) and full of credentials, client code and pasted secrets.
+# If you ever copy one in for reference, it lands here and stays uncommitted.
+raw/sessions/transcripts/
+
