@@ -18,11 +18,31 @@ Delete the whole folder and the vault still works.
 3. Install **Second Brain** from the plugins that appear
 4. Create a Cowork project and attach your vault folder to it
 
-**If your vault is local only:** use the upload option on the Plugins page and select the
-`brain/cowork` folder. You'll need to re-upload it after changing anything in here — the marketplace
-route updates itself, this one doesn't.
+**If your vault is local only** (no remote), there's nothing for Cowork to fetch from, so upload the
+plugin instead. Zip this directory and select it with the upload option on the Plugins page:
 
-Then, in a session inside that project: `/second-brain:setup`
+```sh
+cd brain/cowork && zip -r ~/second-brain-plugin.zip .claude-plugin commands skills README.md
+```
+
+You'll need to re-zip and re-upload after changing anything in here — the marketplace route updates
+itself, this one doesn't. If the upload rejects that layout, try zipping the `cowork` directory
+itself so the archive contains one top-level folder.
+
+> [!NOTE]
+> **Partly unverified.** Anthropic documents sharing a plugin "as a compressed file" but doesn't
+> specify the expected archive layout, and the marketplace route is the one that's actually been
+> tested here. If you have somewhere to push the repo — a private GitHub repo is free — prefer it.
+
+Then start a **new** session inside that project and type `/` — you should see the commands listed.
+Run `/second-brain:setup` first. The bare `/setup` also works unless something else claims the name.
+
+**Attaching the folder is not installing the plugin.** Nothing in this directory loads until you
+install it under Customize → Plugins; a vault folder on its own does nothing here. That's deliberate
+— it's what keeps this adapter inert for everyone not using Cowork — but it does mean "I attached
+the vault and the commands aren't there" is expected, not a bug. If they still don't appear right
+after installing, start a fresh session; Claude Code needs an explicit reload after an install and
+Cowork's equivalent isn't documented.
 
 ## The commands
 
