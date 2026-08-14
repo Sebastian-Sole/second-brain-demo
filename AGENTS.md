@@ -130,7 +130,7 @@ generated: { by: human:me, at: 2026-01-01T00:00:00Z }   # or { by: claude-code/o
 verified: []          # [{ by: human:me, at: ... }] once a person has actually confirmed it
 stale_after:          # YYYY-MM-DD — only where the claim can rot
 tags: []
-area:                 # the Area this belongs to, or blank
+area: "[[Engineering practice]]"   # the Area this belongs to, as a quoted wikilink — or blank
 source:               # URL or origin, if derived from external material
 aliases: []
 ---
@@ -138,6 +138,10 @@ aliases: []
 
 - `type: note` = one atomic idea. `source` = a note *about* external material. **`type` is the
   authoritative routing key** — see the folder map below.
+- `area:` takes a **quoted wikilink** to the Area note (`area: "[[Health]]"`), or is left blank.
+  Quoted so YAML doesn't choke on the brackets, and a link rather than a bare string so the Area
+  is reachable from the note rather than merely named by it. Keep the form consistent — half the
+  value of a frontmatter field is that you can grep it.
 - Bump `updated` whenever you meaningfully change a note.
 - For facts from sources, add a recency marker in the body: `(as of 2026-01, example.com)`. If two
   sources conflict, keep both with markers rather than silently picking one.

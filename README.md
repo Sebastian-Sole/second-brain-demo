@@ -66,6 +66,9 @@ It'll tell you what's missing and exactly how to fix it. Fix anything marked `[X
 
 **3. Start your agent** in that folder — type `claude`, or `codex`, or whatever you installed.
 
+Claude Code will ask whether you trust this folder the first time. **Say yes** — until you do, it
+ignores the settings that ship with this repo and will pester you for permission on routine things.
+
 **4. Say `setup`.**
 
 It asks you five questions about who you are and what you're working on, writes the answers into

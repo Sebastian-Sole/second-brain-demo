@@ -17,6 +17,11 @@ Run `brain/bin/doctor` and read the output.
 If it reports anything blocking, deal with that first — help them fix it, in plain language, then
 re-run. Don't start the interview on a vault that can't save itself.
 
+If you can't run `doctor` at all because you'd need approval you can't get, that's the Claude Code
+trust prompt — this folder hasn't been trusted yet, so the settings in `.claude/` are being ignored.
+Say so plainly and tell them to restart `claude` here and accept it. Don't quietly hand-check the
+vault instead and carry on; a session where the repo's own settings aren't loaded is worth naming.
+
 If it only reports warnings, mention the ones that matter (no backup configured, session history
 being deleted after 30 days) but **don't stop for them** — they can be fixed later and the
 interview is more valuable now.

@@ -165,6 +165,22 @@ if [ -d "$HOME/.claude" ]; then
          "You'll need to run  brain/bin/sync  yourself to save your work"
   fi
 
+  # Claude Code ignores this folder's settings.json — permissions AND hooks —
+  # until the folder has been trusted once, interactively. Until then the vault
+  # looks configured and behaves as though it isn't, which is the worst way for
+  # this to fail. Needs jq to answer definitively; stay quiet rather than guess.
+  if command -v jq >/dev/null 2>&1 && [ -f "$HOME/.claude.json" ]; then
+    trusted=$(jq -r --arg p "$root" \
+              '.projects[$p].hasTrustDialogAccepted // false' \
+              "$HOME/.claude.json" 2>/dev/null)
+    if [ "$trusted" = "true" ]; then
+      ok "this folder is trusted, so its settings actually apply"
+    else
+      warn "Claude Code hasn't trusted this folder yet — it's ignoring the settings in .claude/" \
+           "Run  claude  here once and accept the trust prompt. Until you do, you'll be asked to approve routine things, and scheduled runs will be crippled."
+    fi
+  fi
+
   # The one setting worth changing before you need it. Session transcripts are
   # deleted after 30 days by default, and ingest-sessions cannot recover them.
   days=""

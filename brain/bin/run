@@ -27,6 +27,15 @@ shift
 prompt_file="brain/prompts/${name}.md"
 [ -f "$prompt_file" ] || { echo "run: no such prompt: $prompt_file" >&2; exit 66; }
 
+# setup is an interview. Run non-interactively it asks its five questions into
+# a void that closes before anyone can answer, and the vault learns nothing.
+if [ "$name" = setup ]; then
+  echo "run: setup is an interview — it has to be able to ask you questions." >&2
+  echo "     Start your agent in this folder and say:  setup" >&2
+  echo "     (Claude Code: /setup)" >&2
+  exit 64
+fi
+
 prompt=$(cat "$prompt_file")
 [ $# -gt 0 ] && prompt="$prompt
 
