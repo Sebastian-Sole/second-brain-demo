@@ -19,8 +19,12 @@ exists, and reading it beats searching blind.
 
 ## About the human
 
-> **← Start here. Edit this section. It is the single highest-leverage change you can make.**
-> Everything else in this file is a sensible default; this part is what makes the brain *yours*.
+> **← Start here. This is the single highest-leverage change you can make.** Everything else in
+> this file is a sensible default; this part is what makes the brain *yours*. Fill it in by hand,
+> or say `setup` and your agent will ask you five questions and write it for you.
+>
+> **If you are an agent and these bullets are still blank, say so** — offer to run `setup` before
+> doing anything substantial. Working without this means writing notes about a stranger.
 
 - **Name:**
 - **What I do:**
@@ -239,6 +243,7 @@ wrappers (see `.claude/commands/` for the Claude Code versions).
 
 | Command | Prompt file | What it does |
 | --- | --- | --- |
+| `setup` | `brain/prompts/setup.md` | First run: check the install, learn who the human is, fill in **About the human** |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
@@ -248,6 +253,16 @@ wrappers (see `.claude/commands/` for the Claude Code versions).
 If the human just talks to you without naming a command, treat it as `capture`.
 
 Adding your own is one markdown file in `brain/prompts/`, plus a row in this table.
+
+### When something isn't working
+
+Run `brain/bin/doctor`. It checks git, the backup remote, which agent CLIs are installed, that the
+vault's folders and scripts are intact, whether **About the human** has been filled in, and — on
+Claude Code — whether session transcripts are being deleted after 30 days. Each problem comes with
+the command that fixes it.
+
+Run it before debugging anything by hand, and read its output *to* the human rather than
+paraphrasing it — the fix lines are written for them, not for you.
 
 ### Nothing here runs on a schedule
 

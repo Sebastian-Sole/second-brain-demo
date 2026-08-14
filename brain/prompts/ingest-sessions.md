@@ -61,6 +61,10 @@ closing it, and it does not deserve a note.
 
 Never read a whole transcript into context. Pull the shape of it:
 
+The recipes below use `jq`, which is not installed everywhere — check with `command -v jq` before
+relying on it (`brain/bin/doctor` reports it too). Without it, `grep`/`sed` over the JSONL works
+fine for pulling user turns; it's just noisier. Don't ask the human to install anything.
+
 - **Claude Code**: `jq -r 'select(.type=="user") | .message.content | if type=="array" then .[0].text else . end'`
   gives you the human's turns — usually enough on its own. `select(.type=="ai-title") | .aiTitle`
   sometimes has a pre-made title; use it when it's there, don't rely on it. `.cwd` and `.gitBranch`

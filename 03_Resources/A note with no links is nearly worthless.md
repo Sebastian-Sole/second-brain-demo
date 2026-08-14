@@ -22,8 +22,9 @@ remember the thing next to it.
 
 This is also what makes the vault useful to a model. Grep finds notes that share your exact
 words. Links find notes that share an *idea* — which is usually what you actually wanted. It's the
-same reason [[index.md is the front door|the index]] is worth maintaining: a map of what exists
-beats searching for what might.
+same reason `index.md` is worth maintaining: a map of what exists beats searching for what might.
+(That file is scaffolding, not knowledge, so it gets a plain code reference here rather than a
+`[[wikilink]]` — the catalog stays outside the graph it catalogs.)
 
 So: before writing a new note, search for what's already here and connect to it. One good link
 beats a perfect folder.

@@ -22,6 +22,7 @@ _(none yet)_
 ## Notes
 
 - [[A note with no links is nearly worthless]] — links, not folders, are what make a note findable later
+- [[Notes should be self-contained]] — the size test: does it still say something read cold, six months later
 
 ## Sources
 

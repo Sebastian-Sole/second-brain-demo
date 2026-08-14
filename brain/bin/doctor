@@ -1,0 +1,205 @@
+#!/usr/bin/env sh
+# Check that this vault has everything it needs to work.
+#
+#   brain/bin/doctor
+#
+# One line per check: [ok] fine · [!!] worth fixing · [XX] blocking. Every
+# problem comes with the exact thing to do about it, in words rather than
+# jargon — this is the file you run when something isn't working and you
+# don't yet know enough to guess why.
+#
+# Exits 1 if anything is blocking, 0 otherwise, so a script can call it too.
+# Portable on purpose: POSIX shell, no jq, no runtime.
+
+set -u
+
+root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+cd "$root" || exit 1
+
+blockers=0
+warnings=0
+
+ok()   { printf '  [ok] %s\n' "$1"; }
+warn() { printf '  [!!] %s\n' "$1"; [ -n "${2:-}" ] && printf '       -> %s\n' "$2"
+         warnings=$((warnings + 1)); }
+fail() { printf '  [XX] %s\n' "$1"; [ -n "${2:-}" ] && printf '       -> %s\n' "$2"
+         blockers=$((blockers + 1)); }
+
+echo
+echo "Second brain — checkup"
+echo
+
+# ---------------------------------------------------------------- the basics
+
+echo "Foundations"
+
+if command -v git >/dev/null 2>&1; then
+  ok "git is installed"
+else
+  fail "git is not installed" \
+       "Mac: install Xcode command line tools with  xcode-select --install"
+fi
+
+if git rev-parse --git-dir >/dev/null 2>&1; then
+  ok "this folder is a git repository (so every change is undoable)"
+else
+  fail "this folder is not a git repository — nothing here can be undone" \
+       "Run:  git init && git add -A && git commit -m 'my second brain'"
+fi
+
+# A remote is optional, but it is the difference between "backed up" and not.
+if [ -n "$(git remote 2>/dev/null)" ]; then
+  if git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
+    ok "backed up to $(git remote get-url origin 2>/dev/null || echo 'a remote')"
+  else
+    warn "a remote exists but this branch doesn't push to it yet" \
+         "Run:  git push -u origin $(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo main)"
+  fi
+else
+  warn "no backup — this vault exists only on this machine" \
+       "Create an empty private repo on github.com, then:  git remote add origin <url> && git push -u origin main"
+fi
+
+echo
+
+# ------------------------------------------------------------------ the agent
+
+echo "Your agent"
+
+agent=${BRAIN_AGENT:-}
+if [ -n "$agent" ]; then
+  if command -v "$agent" >/dev/null 2>&1; then
+    ok "using $agent (set by BRAIN_AGENT)"
+  else
+    fail "BRAIN_AGENT is set to '$agent', but that command isn't installed" \
+         "Unset it, or install $agent"
+  fi
+else
+  found=""
+  for candidate in claude codex cursor-agent gemini; do
+    if command -v "$candidate" >/dev/null 2>&1; then
+      found="$found $candidate"
+    fi
+  done
+  if [ -n "$found" ]; then
+    # shellcheck disable=SC2086  # word-splitting is what turns the list into a first item
+    set -- $found
+    ok "found:$found — the vault will use $1 by default"
+  else
+    fail "no agent CLI found — the vault has nothing to run it" \
+         "Install one, e.g. Claude Code:  npm install -g @anthropic-ai/claude-code"
+  fi
+fi
+
+# jq is only needed by ingest-sessions, and only on some paths.
+if command -v jq >/dev/null 2>&1; then
+  ok "jq is installed (ingest-sessions reads transcripts faster with it)"
+else
+  warn "jq is not installed — ingest-sessions works without it, but slower" \
+       "Optional. Mac:  brew install jq"
+fi
+
+echo
+
+# ------------------------------------------------------------------ the vault
+
+echo "The vault"
+
+missing=""
+for d in 00_Inbox 01_Projects 02_Areas 03_Resources 04_Archive 05_Attachments Daily raw brain/prompts brain/bin; do
+  [ -d "$d" ] || missing="$missing $d"
+done
+if [ -z "$missing" ]; then
+  ok "all folders present"
+else
+  fail "missing folders:$missing" \
+       "You're probably not in the vault directory. cd into it and try again."
+fi
+
+for s in run sync sessions doctor; do
+  if [ -x "brain/bin/$s" ]; then
+    :
+  elif [ -f "brain/bin/$s" ]; then
+    warn "brain/bin/$s isn't executable" "Run:  chmod +x brain/bin/*"
+  else
+    fail "brain/bin/$s is missing" "Re-download the repo — part of the harness is gone"
+  fi
+done
+[ -x brain/bin/run ] && [ -x brain/bin/sync ] && ok "the scripts can run"
+
+# The single highest-leverage thing a new user can do, and the one they skip.
+if [ ! -f AGENTS.md ]; then
+  fail "AGENTS.md is missing — this is the manual every agent reads" \
+       "Re-download the repo"
+elif grep -qE '^- \*\*Name:\*\*[[:space:]]*$' AGENTS.md 2>/dev/null; then
+  warn "AGENTS.md still has a blank 'About the human' section" \
+       "Say  setup  to your agent — it'll ask you five questions and fill it in. This one change matters more than everything else here."
+else
+  ok "AGENTS.md knows who you are"
+fi
+
+# Count only the human's notes — the shipped examples are tagged, so a fresh
+# vault reads as empty rather than as "2 notes" the human never wrote.
+notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' 2>/dev/null \
+        -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
+if [ "$notes" -eq 0 ]; then
+  echo "  [--] no notes yet — that's expected on day one"
+  echo "       -> Try:  capture <anything on your mind>"
+elif [ "$notes" -eq 1 ]; then
+  ok "1 note"
+else
+  ok "$notes notes"
+fi
+
+echo
+
+# ------------------------------------------------- Claude Code, if it's here
+
+if [ -d "$HOME/.claude" ]; then
+  echo "Claude Code"
+
+  if [ -f .claude/settings.json ] && grep -q '"Stop"' .claude/settings.json 2>/dev/null; then
+    ok "auto-save hook is wired up (your vault commits itself after each turn)"
+  else
+    warn "the auto-save hook isn't configured" \
+         "You'll need to run  brain/bin/sync  yourself to save your work"
+  fi
+
+  # The one setting worth changing before you need it. Session transcripts are
+  # deleted after 30 days by default, and ingest-sessions cannot recover them.
+  days=""
+  if [ -f "$HOME/.claude/settings.json" ]; then
+    days=$(sed -n 's/.*"cleanupPeriodDays"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p' \
+           "$HOME/.claude/settings.json" 2>/dev/null | head -1)
+  fi
+  if [ -z "$days" ]; then
+    warn "your past AI sessions are being deleted after 30 days (Claude Code's default)" \
+         "Add  \"cleanupPeriodDays\": 3650  to ~/.claude/settings.json. Do it now — ingest-sessions can't recover what's already gone."
+  elif [ "$days" -lt 365 ]; then
+    warn "your past AI sessions are deleted after $days days" \
+         "Raise cleanupPeriodDays in ~/.claude/settings.json — 3650 is ten years"
+  else
+    ok "session history kept for $days days"
+  fi
+
+  echo
+fi
+
+# ----------------------------------------------------------------- the verdict
+
+plural() { [ "$1" -eq 1 ] && echo "$1 thing" || echo "$1 things"; }
+
+if [ "$blockers" -gt 0 ]; then
+  echo "$(plural "$blockers") need fixing before this will work."
+  [ "$warnings" -gt 0 ] && echo "$(plural "$warnings") worth doing after that."
+  echo
+  exit 1
+fi
+
+if [ "$warnings" -gt 0 ]; then
+  echo "Everything works. $(plural "$warnings") worth doing when you have a minute."
+else
+  echo "All good."
+fi
+echo
+exit 0
