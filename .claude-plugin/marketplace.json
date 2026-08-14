@@ -1,0 +1,15 @@
+{
+  "name": "second-brain",
+  "owner": {
+    "name": "Sebastian Sole"
+  },
+  "plugins": [
+    {
+      "name": "second-brain",
+      "source": "./brain/cowork",
+      "description": "Run this vault's commands from Claude Cowork, without a terminal.",
+      "category": "productivity",
+      "tags": ["notes", "pkm", "second-brain", "obsidian"]
+    }
+  ]
+}

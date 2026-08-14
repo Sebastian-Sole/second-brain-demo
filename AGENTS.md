@@ -69,7 +69,7 @@ keep a stable sort order.
 | `06_Sessions/` | Distilled notes about past AI coding sessions. Created by `ingest-sessions`; absent until then |
 | `Daily/` | Daily notes — journal and capture log, `YYYY-MM-DD.md` |
 | `raw/` | **Immutable** original source material — never edit |
-| `brain/` | The harness itself: prompts, scripts, run log. Not knowledge — don't file notes here. |
+| `brain/` | The harness itself: prompts, scripts, run log, and the Cowork adapter. Not knowledge — don't file notes here. |
 
 **PARA sorts by how actionable something is right now, not by subject.** That's why one vault can
 hold work, side projects and life without turning into a filing cabinet.
@@ -286,8 +286,11 @@ set it up unasked.
 This vault is version-controlled, which makes git the **undo button** for anything you do here.
 
 **At the end of a working session, run `brain/bin/sync`.** It commits, pulls with rebase, and
-pushes if a remote is configured. Claude Code runs it automatically via a hook; other agents
-should run it explicitly.
+pushes if a remote is configured. Claude Code runs it automatically via a hook; every other
+agent — Codex, Cursor, Gemini, **Cowork** — must run it explicitly.
+
+If you *can't* run it, say so and tell the human their work isn't committed. Don't let a session
+end with someone believing git has their back when it doesn't.
 
 Don't commit secrets. If the human wants to undo something, `git log` / `git revert` is the path.
 

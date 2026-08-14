@@ -1,0 +1,12 @@
+{
+  "name": "second-brain",
+  "displayName": "Second Brain",
+  "version": "0.1.0",
+  "description": "Capture, ask, digest and maintain a markdown second-brain vault from Claude Cowork.",
+  "author": {
+    "name": "Sebastian Sole"
+  },
+  "repository": "https://github.com/Sebastian-Sole/second-brain-demo",
+  "license": "MIT",
+  "keywords": ["notes", "pkm", "second-brain", "markdown", "obsidian"]
+}
