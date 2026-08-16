@@ -118,28 +118,47 @@ theatre this repo is against.
 | **Codex — CLI or app** | Yes | Reads `AGENTS.md`. You run `brain/bin/sync` yourself. |
 | Cursor / Aider / Windsurf / Zed | Yes | Read `AGENTS.md`. Sync yourself. |
 | Gemini CLI | Yes | Reads `GEMINI.md`, which points at `AGENTS.md`. |
-| **Claude Cowork** | With a plugin | Needs the adapter in [`brain/cowork/`](brain/cowork/README.md), and has real caveats — see below. |
+| **Claude Cowork** | Not out of the box | See below. Use the desktop app instead. |
 | claude.ai chat / mobile | No | No access to a folder on your computer. |
 
 ### Cowork is the honest exception
 
-Cowork is the friendliest of these for someone who never opens a terminal, and it's where this
-repo's "works with any agent" claim is least true. Two documented facts cause it:
+Cowork is the friendliest of these for someone who never opens a terminal, and it's the one place
+this repo's "works with any agent" claim doesn't hold. Two documented facts cause it:
 
 - **Cowork doesn't read `AGENTS.md` or `CLAUDE.md` from a folder you attach.** Its standing context
   is per-project *Instructions*, which live in Cowork's own metadata on your machine — not in your
   repo, not in git, not shared with anyone, and [deleted when you archive the project](https://claude.com/docs/cowork/guide/projects).
-- **It doesn't read the repo's `.claude/` directory either**, so the auto-commit hook never fires.
+- **It doesn't read the repo's `.claude/` directory either**, so the auto-commit hook never fires
+  and nothing gets committed unless you ask for it.
 
-So this repo ships a [Cowork plugin](brain/cowork/README.md) — the same six commands, installable
-from your own repo, versioned in git like everything else. It closes most of the gap. It does not
-close all of it: a plugin has no always-on component, so the operating manual is loaded by a skill
-that fires when it looks relevant, and the reliable fix is pasting a pointer into project
-Instructions — vendor metadata, outside git, exactly what this repo argues against elsewhere.
+Point Cowork at a clone and the operating manual is inert. That's worth stating plainly because it's
+the exact failure this repo argues against everywhere else: the instructions that govern your notes
+living in a vendor's metadata, outside git, unversioned and unshareable.
 
-**Installing the plugin changes nothing for anyone else.** A marketplace has to be added by hand
-before a single file in it loads; Codex, Cursor and Gemini ignore it outright. Delete
-`brain/cowork/` and `.claude-plugin/` and the vault is untouched.
+**So there's no Cowork adapter here.** One could be built — Cowork supports plugins, and plugins are
+file-based and installable straight from a git repo — but it would ship with the operating manual
+riding on a skill that fires on relevance rather than on every session, and with no working
+auto-commit. Half a seam, on the surface whose users are least able to notice when it slips. Not
+worth it while **Claude Code's desktop app is also GUI-only, reads the manual natively, and has none
+of these problems.**
+
+<details>
+<summary>If you want to use Cowork anyway</summary>
+
+Attach your vault folder to a Cowork project, then paste this into the project's **Instructions**:
+
+> The attached folder is a second-brain vault. Read `AGENTS.md` at its root at the start of every
+> session and follow it — it is the operating manual. If I talk about something without naming a
+> command, treat it as a capture; if I name one, read `brain/prompts/<name>.md` and follow it. Never
+> produce HTML artifacts, PDFs or canvas documents; notes go in the vault as markdown and answers
+> go in the conversation as text. Run `brain/bin/sync` before you finish, and tell me if you can't.
+
+That works, and it's the thing to know you're accepting: those Instructions aren't in your repo,
+aren't versioned, aren't shared, and vanish when the project is archived. Check `git log`
+occasionally — nothing here commits itself.
+
+</details>
 
 ## Your history, made searchable
 

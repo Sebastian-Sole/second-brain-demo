@@ -27,9 +27,6 @@ brain/bin/sessions finds and stages AI transcripts that agents can't reach thems
 
 .claude/commands/  six-line wrappers pointing at brain/prompts/
 .claude/settings.json  a hook that calls brain/bin/sync, plus a read-only permission allowlist
-brain/cowork/      a Cowork plugin — the same wrappers again, for the one agent that
-                   can't read files from the folder it's pointed at
-.claude-plugin/marketplace.json  makes the vault its own plugin marketplace
 ```
 
 Teaching the vault a new agent means adding **one case** to `brain/bin/run` and one pointer file.
@@ -53,25 +50,29 @@ metadata — not in the repo, not in git, not shareable, and deleted when the pr
 It also ignores the repo's `.claude/` directory, so the auto-commit hook never fires.
 
 That is the vendor-metadata failure this document argues against, arriving on the surface with the
-least technical audience. The adapter in `brain/cowork/` is a plugin, which is genuinely file-based
-and installable straight from the vault's own git repo — so the *commands* stay versioned and
-portable. But plugins have **no always-on component**. The operating manual is carried by a skill,
-and a skill fires when its description looks relevant rather than on every session. The reliable
-fix is pasting a pointer into project Instructions, which is unversioned vendor metadata.
+least technical audience.
+
+**An adapter was built and then deleted, which is the more useful story.** Cowork supports plugins,
+plugins are file-based and installable straight from a git repo, and the six commands ported over
+cleanly as thin wrappers — the same shape as `.claude/commands/`. That part worked. What didn't:
+
+- **Plugins have no always-on component.** The operating manual would ride on a skill that fires
+  when its description looks relevant, not on every session. The reliable alternative is pasting a
+  pointer into project Instructions, which is the unversioned vendor metadata this whole document
+  argues against.
+- **No auto-commit.** Whether a Cowork plugin hook can run `brain/bin/sync` against a local folder
+  isn't answerable from Anthropic's docs, which describe Cowork both as working directly on your
+  computer and as running in an isolated VM that writes to your filesystem.
 
 So the honest statement is: **the commands are portable to Cowork; the operating manual is not.**
-Ninety percent of a seam is still a seam, and the remaining ten percent is worth naming rather than
-rounding up to "works everywhere".
+That's half a seam — and half a seam, on the surface whose users are least equipped to notice when
+the manual didn't load and nothing got committed, is worse than an honest "not supported here."
 
-Two things about that adapter that follow from the rules above:
-
-- **It is inert until explicitly installed.** A marketplace must be added by hand; no other agent
-  loads a byte of it. Adding Cowork support cannot change behaviour on a surface that already
-  works — that was the design constraint, not a nice-to-have.
-- **It ships no hook.** Whether a Cowork plugin hook can run `brain/bin/sync` against a local folder
-  isn't answerable from Anthropic's docs, which describe Cowork both as working directly on your
-  computer and as running in an isolated VM that writes to your filesystem. Unverified claims don't
-  ship here, so the skill tells the agent to run sync itself and to say so plainly if it can't.
+The generalisable lesson is the one worth keeping: **this design travels exactly as far as the
+convention that an agent reads its instructions from the folder it's working in.** Every agent that
+honours it costs one pointer file and one `run` case. The first agent that doesn't costs the whole
+thesis, and no amount of adapter cleverness buys it back — because what fails to port isn't the
+commands, it's the manual that makes the commands mean anything.
 
 ---
 

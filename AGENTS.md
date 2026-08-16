@@ -69,7 +69,7 @@ keep a stable sort order.
 | `06_Sessions/` | Distilled notes about past AI coding sessions. Created by `ingest-sessions`; absent until then |
 | `Daily/` | Daily notes — journal and capture log, `YYYY-MM-DD.md` |
 | `raw/` | **Immutable** original source material — never edit |
-| `brain/` | The harness itself: prompts, scripts, run log, and the Cowork adapter. Not knowledge — don't file notes here. |
+| `brain/` | The harness itself: prompts, scripts, run log. Not knowledge — don't file notes here. |
 
 **PARA sorts by how actionable something is right now, not by subject.** That's why one vault can
 hold work, side projects and life without turning into a filing cabinet.
