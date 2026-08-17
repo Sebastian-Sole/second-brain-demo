@@ -56,6 +56,9 @@ Rules:
   confident wrong fact about the human is worse than a gap — it will shape every note you write.
 - **Don't polish their voice away.** If they said "terse, I hate preamble", write that, not
   "prefers concise communication".
+- **Write it in first person, as they'd write it.** The bullets say "What I do", so the answers read
+  "Exam in November", not "she has an exam in November". You're filling in their words, not
+  describing them to a third party.
 - **Keep it short.** This loads into every session. A paragraph per bullet is too much.
 - Delete the `> **← Start here...**` instruction block above the bullets once it's filled in —
   it's scaffolding for an empty template, and leaving it makes the file look unfinished forever.
@@ -72,6 +75,11 @@ add it to `index.md`.
 
 Then **show them what you did**: the file you created, where it went, and why it went there. Point
 out that `git log` and `git revert` mean nothing here is permanent.
+
+**Don't assert whether anything was committed unless you actually ran `git log` and looked.** If you
+couldn't, say the notes are written and you weren't able to check git — not that the work is
+uncommitted. Telling someone their first session wasn't saved when it was is a bad first impression,
+and it's the kind of claim that's easy to make from an assumption about a hook you never observed.
 
 If they have nothing to give you, offer to capture what brought them to this tool in the first
 place. That's a real note and it's usually a good one.
