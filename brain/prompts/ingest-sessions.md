@@ -121,6 +121,9 @@ thousand session lines would destroy the catalog that makes retrieval work.
 
 ## Phase 5 — Report
 
+**Output surface:** session notes as markdown in `06_Sessions/`, plus a plain-text summary in the
+conversation. No artifact, no rendered report, and never a transcript copied into the vault.
+
 Say how many sessions you scanned, ingested, and skipped (and why), how many remain outside the
 window, and name the two or three notes most worth reading. Then stop.
 

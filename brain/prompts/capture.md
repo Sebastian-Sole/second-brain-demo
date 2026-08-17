@@ -49,4 +49,7 @@ Rules that matter here:
   contains one idea, write one note.
 - Don't invent facts to make a note feel complete.
 
+**Output surface:** markdown notes in the vault, plus a short plain-text report in the
+conversation. Never an artifact, PDF or rendered document — see `AGENTS.md`.
+
 The `Stop` hook commits for you — you don't need to run git.

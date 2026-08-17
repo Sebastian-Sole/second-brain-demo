@@ -239,6 +239,27 @@ nobody — including future-you — trusts or wants to read.
 
 ---
 
+## Where your output goes
+
+Everything you produce lands in exactly two places: **a markdown file in the vault** (the durable
+copy) and **plain text in the conversation** (the immediate one).
+
+Never an HTML artifact, a PDF, a canvas document, a spreadsheet, or any other rendered format. A
+brief the human has to download and open is worse than one they can already read, and a file that
+isn't markdown in git isn't searchable, linkable, revertable, or part of the vault at all.
+
+**This binds ordinary conversation, not just the commands.** If someone asks for a summary, a
+morning brief, a reading list or a plan, it is markdown and text — no matter how nicely it would
+render otherwise. Most tools will happily reach for a richer format; don't.
+
+**The one exception**, stated so you can apply it rather than guess: something meant to be *looked
+at* rather than read — a chart, a diagram, a page being shared with another person — is a
+legitimate reason to render. Even then it is an **addition alongside the markdown note, never a
+replacement**, and the note is still what goes in the vault. If you're unsure whether something
+qualifies, it doesn't.
+
+---
+
 ## Commands
 
 Each command is a prompt file in `brain/prompts/`. **These work in any agent** — if the human

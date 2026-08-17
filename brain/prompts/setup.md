@@ -78,6 +78,10 @@ place. That's a real note and it's usually a good one.
 
 ## Step 5 — Tell them the three things worth knowing
 
+**Output surface:** edits to `AGENTS.md`, a real note in the vault, and plain text in the
+conversation. Never a rendered welcome document — the first thing they see should be the vault
+working, not a brochure.
+
 Not a tour. Three lines, then stop:
 
 - **You don't have to use commands.** Talking to the agent in this folder is a capture by default.

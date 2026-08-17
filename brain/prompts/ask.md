@@ -42,4 +42,7 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    synthesis across notes, a missing link you noticed), offer it. Only write if they say yes. You
    may fix an obviously broken `[[link]]` in passing — mention it if you do.
 
+**Output surface:** plain text in the conversation, and nothing else — this command doesn't write.
+Never an artifact or rendered document, however well the answer would format. See `AGENTS.md`.
+
 Keep it a briefing, not an essay. The win is that they get the answer without opening the vault.
