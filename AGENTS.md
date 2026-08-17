@@ -181,6 +181,38 @@ deleting it destroys the trail.
 - Never rename or move a note in a way that breaks inbound links. If you must move it, fix the
   links in the same pass.
 
+### A title has to stay true
+
+A title is a **claim that stays true**, not a measurement. `Spaced repetition beats massed
+practice` still holds next year; `My PB is 16:31` stops being true the moment you beat it.
+
+**Volatile values — times, prices, counts, versions, scores, statuses — go in the body, never in
+the title or the filename.** Title the thing, not its current value: `MCSR Ranked personal best`,
+with the number inside and `updated:` bumped when it changes. Keep the previous value in a line
+below so there's a progression.
+
+This isn't a style preference. A value in the title can only be corrected by renaming the file,
+renaming breaks every inbound link, and the rule above forbids it — so a note titled with a value
+is a note you can never update. If you catch yourself writing "update the number here rather than
+starting a new note", the number is in the wrong place.
+
+### Filenames
+
+**Files you link to are named by their title. Files you reach by path are named by slug or date.**
+
+- **Linkable notes** (`03_Resources/`, `01_Projects/`, `02_Areas/`) — the filename *is* the title,
+  spaces, capitals and all, because `[[wikilinks]]` resolve by filename and have to read well
+  inside a sentence.
+- **Path-addressed files** — `raw/YYYY-MM-DD-<slug>.md`, `Daily/YYYY-MM-DD.md`,
+  `06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody links these by title; they sort
+  chronologically instead. That split is deliberate — don't "fix" it in either direction.
+
+When a title contains a character the filesystem rejects (`:` `/` `\` `?` `*` `|` `<` `>` `"`),
+**strip or replace only that character** and keep the true form in frontmatter `title:`. Never
+case-fold, never hyphenate a whole filename, and never let sanitising change what the name means —
+`16:31` becoming `16-31` reads as a date range, which is a good sign the value shouldn't have been
+in the filename at all.
+
 ---
 
 ## Linking
