@@ -128,19 +128,30 @@ done
 [ -x brain/bin/run ] && [ -x brain/bin/sync ] && ok "the scripts can run"
 
 # The single highest-leverage thing a new user can do, and the one they skip.
+profile='03_Resources/About me.md'
 if [ ! -f AGENTS.md ]; then
   fail "AGENTS.md is missing — this is the manual every agent reads" \
        "Re-download the repo"
-elif grep -qE '^- \*\*Name:\*\*[[:space:]]*$' AGENTS.md 2>/dev/null; then
-  warn "AGENTS.md still has a blank 'About the human' section" \
-       "Say  setup  to your agent — it'll ask you five questions and fill it in. This one change matters more than everything else here."
+elif [ ! -f "$profile" ] || grep -qE '^- \*\*Name:\*\*[[:space:]]*$' "$profile" 2>/dev/null; then
+  # Distinguish "never filled in" from "filled in once and since lost". The second
+  # is the alarming one: the vault silently went back to not knowing its owner, and
+  # without this the human only finds out from an agent that has forgotten them.
+  had=$(git log --diff-filter=A --format='%h' -1 -- "$profile" 2>/dev/null)
+  if [ -n "$had" ]; then
+    warn "you had a profile in '$profile' and it's gone now" \
+         "It was added in $had. Get it back with:  git checkout $had -- '$profile'   (then run  setup  again if it's out of date)"
+  else
+    warn "this vault doesn't know who you are yet" \
+         "Say  setup  to your agent — it'll ask you five questions and write '$profile'. This one change matters more than everything else here."
+  fi
 else
-  ok "AGENTS.md knows who you are"
+  ok "the vault knows who you are"
 fi
 
 # Count only the human's notes — the shipped examples are tagged, so a fresh
-# vault reads as empty rather than as "2 notes" the human never wrote.
-notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' 2>/dev/null \
+# vault reads as empty rather than as "2 notes" the human never wrote. The profile
+# isn't a capture either: a vault that's had setup run and nothing else is empty.
+notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' ! -path "$profile" 2>/dev/null \
         -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
 if [ "$notes" -eq 0 ]; then
   echo "  [--] no notes yet — that's expected on day one"

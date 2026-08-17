@@ -1,9 +1,9 @@
 # setup — make this vault theirs
 
 This is the human's **first session** with this second brain. Everything here is a stock template
-until you finish this conversation. Your job is to learn enough about them to fill in the
-**About the human** section at the top of `AGENTS.md`, which loads into every future session and
-is what stops this from writing generic notes about a stranger.
+until you finish this conversation. Your job is to learn enough about them to write
+`03_Resources/About me.md`, which every future session reads at the start and which is what stops
+this from writing generic notes about a stranger.
 
 Treat them as someone who has never used a tool like this and may not be a programmer. No jargon,
 no lectures on PARA or provenance. They can read `README.md` for that if they want to.
@@ -47,8 +47,31 @@ you have, and tell them `setup` can be run again any time.
 
 ## Step 3 — Write it
 
-Edit **only** the `## About the human` section of `AGENTS.md`. Replace the blank bullets with what
-they told you, in their words. Leave every other line of the file exactly as it is.
+Create `03_Resources/About me.md` with what they told you, in their words:
+
+```markdown
+---
+title: About me
+type: person
+stage: evergreen
+status: stable
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+generated: { by: <you>, at: <timestamp> }
+verified: []
+tags: []
+aliases: []          # their name, once you know it — so [[Sebastian]] resolves here too
+---
+
+- **Name:**
+- **What I do:**
+- **What this brain is for:**
+- **How I like to work:**
+- **Current focus:** _(as of YYYY-MM)_
+```
+
+**Don't touch `AGENTS.md`.** The profile deliberately lives outside the manual so that updating the
+harness can't erase it — see *About the human* there for why.
 
 Rules:
 
@@ -60,10 +83,12 @@ Rules:
   "Exam in November", not "she has an exam in November". You're filling in their words, not
   describing them to a third party.
 - **Keep it short.** This loads into every session. A paragraph per bullet is too much.
-- Delete the `> **← Start here...**` instruction block above the bullets once it's filled in —
-  it's scaffolding for an empty template, and leaving it makes the file look unfinished forever.
+- **Date the current focus.** It's the bullet that rots — mark it `(as of YYYY-MM)` so a later
+  session can tell six-month-old plans from this week's.
+- This note is exempt from the "every note links to another" rule on day one — there's nothing to
+  link to yet. `maintain` will wire it up as the vault fills.
 
-Then show them the section you wrote and ask if it's right. Fix whatever they correct.
+Then show them the file you wrote and ask if it's right. Fix whatever they correct.
 
 ## Step 4 — Their first capture
 
@@ -86,9 +111,9 @@ place. That's a real note and it's usually a good one.
 
 ## Step 5 — Tell them the three things worth knowing
 
-**Output surface:** edits to `AGENTS.md`, a real note in the vault, and plain text in the
-conversation. Never a rendered welcome document — the first thing they see should be the vault
-working, not a brochure.
+**Output surface:** two real notes in the vault — `[[About me]]` and their first capture — and plain
+text in the conversation. Never a rendered welcome document, and no edits to `AGENTS.md`. The first
+thing they see should be the vault working, not a brochure.
 
 Not a tour. Three lines, then stop:
 

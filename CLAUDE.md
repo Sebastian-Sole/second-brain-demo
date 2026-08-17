@@ -12,5 +12,5 @@ Claude-specific conveniences, all of which are thin wrappers over the portable l
 - `.claude/settings.json` — a `Stop` hook that runs `brain/bin/sync` after each turn, plus an
   allowlist for the vault's own scripts and read-only inspection commands
 
-If the human seems new here, or `AGENTS.md`'s **About the human** section is still blank, offer
-`/setup` before anything else.
+If the human seems new here, or `03_Resources/About me.md` is missing or blank, offer `/setup`
+before anything else.

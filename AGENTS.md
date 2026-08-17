@@ -8,8 +8,9 @@ vault gets smarter over time.
 > The folder structure exists mainly for *you* to reason over. The human should rarely have to
 > think about where something goes — that's your job.
 
-**Read [`index.md`](index.md) at the start of any non-trivial session** — it's the catalog of what
-exists, and reading it beats searching blind.
+**Read [`index.md`](index.md) and `03_Resources/About me.md` at the start of any non-trivial
+session** — the catalog of what exists, and who you're doing it for. Reading both beats searching
+blind.
 
 **This file is the single source of truth.** It is read natively by most coding agents
 (Codex, Cursor, Copilot, Aider, Windsurf, Zed and others). Agent-specific files such as
@@ -19,18 +20,27 @@ exists, and reading it beats searching blind.
 
 ## About the human
 
-> **← Start here. This is the single highest-leverage change you can make.** Everything else in
-> this file is a sensible default; this part is what makes the brain *yours*. Fill it in by hand,
-> or say `setup` and your agent will ask you five questions and write it for you.
->
-> **If you are an agent and these bullets are still blank, say so** — offer to run `setup` before
-> doing anything substantial. Working without this means writing notes about a stranger.
+**Their profile is a note: `03_Resources/About me.md`. Read it at the start of every session,
+alongside `index.md`.** It carries `type: person` and holds **Name**, **What I do**, **What this
+brain is for**, **How I like to work**, and **Current focus**.
 
-- **Name:**
-- **What I do:**
-- **What this brain is for:** _(e.g. work + side projects + reading + life admin)_
-- **How I like to work:** _(e.g. "terse over comprehensive", "keep my voice", "ask before writing long things")_
-- **Current focus:** _(what I'm actually working on now, so captures get filed against it)_
+> **← Start here. This is the single highest-leverage change available.** Everything else in this
+> file is a sensible default; that note is what makes the brain *yours*. Say `setup` and your agent
+> will ask five questions and write it.
+>
+> **If you are an agent and `[[About me]]` is missing or its bullets are blank, say so** — offer
+> `setup` before doing anything substantial. Working without it means writing notes about a
+> stranger.
+
+**Why it isn't in this file.** `AGENTS.md` is harness: it ships with the vault and gets replaced
+wholesale when someone pulls in an improved version. Who the human is belongs to *them*, and a
+routine update must never quietly erase it — an agent that forgets its owner and can't say why is
+indistinguishable, from the outside, from one that lost their notes. Nothing upstream is ever
+shipped at that path. Keep it that way: don't move the profile back into any file under `brain/`
+or into this one.
+
+`setup` writes that note. Nothing else edits it without being asked — including `maintain`, which
+may fix its links and frontmatter but never its content.
 
 ---
 
@@ -114,8 +124,8 @@ agency work", "your environment carries a skill pointing at `~/Documents/radar`"
 someone's machine dressed up as a note about them. It reads as surveillance, and it's
 unreproducible: the same question on a different laptop returns a different person.
 
-If a claim can't be traced to a note, to **About the human**, or to something the human just said,
-it doesn't belong in the answer — marked as an inference or otherwise.
+If a claim can't be traced to a note, to `[[About me]]`, or to something the human just said, it
+doesn't belong in the answer — marked as an inference or otherwise.
 
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `03_Resources/`, linked to a relevant Area
@@ -317,7 +327,7 @@ wrappers (see `.claude/commands/` for the Claude Code versions).
 
 | Command | Prompt file | What it does |
 | --- | --- | --- |
-| `setup` | `brain/prompts/setup.md` | First run: check the install, learn who the human is, fill in **About the human** |
+| `setup` | `brain/prompts/setup.md` | First run: check the install, learn who the human is, write `[[About me]]` |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
@@ -331,7 +341,7 @@ Adding your own is one markdown file in `brain/prompts/`, plus a row in this tab
 ### When something isn't working
 
 Run `brain/bin/doctor`. It checks git, the backup remote, which agent CLIs are installed, that the
-vault's folders and scripts are intact, whether **About the human** has been filled in, and — on
+vault's folders and scripts are intact, whether `[[About me]]` has been written, and — on
 Claude Code — whether session transcripts are being deleted after 30 days. Each problem comes with
 the command that fixes it.
 

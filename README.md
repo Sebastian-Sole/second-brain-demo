@@ -78,9 +78,9 @@ ignores the settings that ship with this repo and will pester you for permission
 
 **4. Say `setup`.**
 
-It asks you five questions about who you are and what you're working on, writes the answers into
-`AGENTS.md`, and walks you through your first capture. **Don't skip this** — it's two minutes and
-it's the difference between notes about you and notes about a generic person.
+It asks you five questions about who you are and what you're working on, writes the answers into a
+note called `About me`, and walks you through your first capture. **Don't skip this** — it's two
+minutes and it's the difference between notes about you and notes about a generic person.
 
 That's it. From here you just talk to it.
 
@@ -244,6 +244,28 @@ contradict each other, links up orphans, and rebuilds `index.md`. It appends one
 unattended access to your notes, before you've watched what it does, is how you stop trusting it in
 week two. Run it by hand a few times first. Scheduling it later is one line in whatever scheduler
 you already use; see [`DESIGN.md`](DESIGN.md#why-nothing-runs-on-a-schedule).
+
+### Updating the harness
+
+Setup cut you loose from this repo's history, so `git pull` won't reach it. When you want a newer
+version of the manual and the commands, take the harness and leave your notes alone:
+
+```bash
+git remote add upstream https://github.com/Sebastian-Sole/second-brain-demo.git
+git fetch upstream
+git checkout upstream/main -- AGENTS.md CLAUDE.md GEMINI.md README.md DESIGN.md brain/ .claude/
+git diff --stat            # look before you commit
+./brain/bin/doctor
+```
+
+Those paths are the harness and nothing else — your notes, your daily notes and `index.md` aren't
+in the list, so they can't be touched.
+
+**Your profile is a note (`03_Resources/About me.md`), not part of the manual, and this is why.**
+Anything personal stored inside `AGENTS.md` would be overwritten by the command above without a
+word, and you'd find out from an agent that had quietly stopped knowing who you are. If you ever
+suspect that happened, `doctor` checks for it specifically and prints the one line that restores it
+from git.
 
 ---
 
