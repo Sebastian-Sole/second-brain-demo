@@ -105,6 +105,18 @@ about X", "when did I last touch Y", "why did we go with Z" — and leave it alo
 can be thousands of session notes against a few dozen real ones, so searching it by default would
 drown the vault in its own history.
 
+### Answer from the vault, not from the room you're standing in
+
+Your session can see things the vault can't: which MCP connectors are configured, which skills are
+installed, what other repos sit on the disk, the shell history, this repo's own git log. **None of
+that is knowledge the human gave this brain.** Reasoning from it — "your toolchain says you do
+agency work", "your environment carries a skill pointing at `~/Documents/radar`" — is a profile of
+someone's machine dressed up as a note about them. It reads as surveillance, and it's
+unreproducible: the same question on a different laptop returns a different person.
+
+If a claim can't be traced to a note, to **About the human**, or to something the human just said,
+it doesn't belong in the answer — marked as an inference or otherwise.
+
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `03_Resources/`, linked to a relevant Area
 - **A link / article / PDF / transcript** → original into `raw/`, then a *source note* in `03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
@@ -248,6 +260,11 @@ vault quietly fills with confident conclusions nobody ever made.
 
 - Never promote a marked inference into an unmarked fact in a later pass. If evidence later
   confirms it, say so and keep the trail.
+
+**Marking an inference doesn't license making it.** The callout is there to keep a conclusion
+honest, not to make any conclusion permissible. Inference is proportional to evidence: four notes
+support almost none. A labelled character sketch built on a nearly empty vault is still slop, and
+it's the kind that costs you trust fastest — because the human can see exactly how little you had.
 
 **Why these two markers and not prettier ones.** The alert type must be one of GitHub's five
 (`NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`) on a line by itself, because github.com is the
