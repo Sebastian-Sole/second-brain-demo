@@ -35,16 +35,7 @@ once. If something goes wrong later, `brain/bin/doctor` tells you what's broken 
 
 **1. Get your own copy.**
 
-The easy way: click **[Use this template](https://github.com/Sebastian-Sole/second-brain-demo/generate)**
-at the top of this repo to create your own private copy on GitHub, then clone it:
-
-```bash
-git clone https://github.com/<you>/<your-repo>.git my-brain
-cd my-brain
-```
-
-<details>
-<summary>No GitHub account? Do it locally instead.</summary>
+Copy this repo, then cut it loose from its history so the notes you write are yours:
 
 ```bash
 git clone https://github.com/Sebastian-Sole/second-brain-demo.git my-brain
@@ -52,8 +43,23 @@ cd my-brain
 rm -rf .git && git init && git add -A && git commit -m "my second brain"
 ```
 
-That `rm -rf .git` deletes this repo's history so you start with your own. It doesn't touch your
-notes. You can add a backup later with `git remote add origin <url> && git push -u origin main`.
+The `rm -rf .git` deletes *this repo's* history so you start with your own. It doesn't touch a
+single note.
+
+<details>
+<summary>Want it backed up and readable from your phone? (recommended, 2 minutes)</summary>
+
+Create an empty **private** repo on [github.com/new](https://github.com/new) — no README, no
+`.gitignore` — then:
+
+```bash
+git remote add origin https://github.com/<you>/<your-repo>.git
+git push -u origin main
+```
+
+Now every change is backed up, and github.com renders your notes on any device. `brain/bin/doctor`
+warns you until this is set up, because a vault that exists on one laptop is one spilled coffee from
+gone.
 </details>
 
 **2. Check it works.**
