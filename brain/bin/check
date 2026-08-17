@@ -1,0 +1,266 @@
+#!/usr/bin/env sh
+# Lint the assumption register — the mechanical half of the rules in AGENTS.md.
+#
+#   brain/bin/check
+#
+# Prose doesn't hold a line; code does. An assumption that quietly sheds its
+# label, its evidence or its id becomes a fact nobody ever asserted — and the
+# next assumption cites it as one. These checks make that a visible failure
+# instead of a slow drift.
+#
+# One line per problem: [XX] blocking · [!!] worth fixing · [--] for information.
+# Exits 1 if anything is blocking, 0 otherwise, so a hook, CI or another script
+# can call it. Portable on purpose: POSIX shell and awk, no runtime.
+
+set -u
+
+root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+cd "$root" || exit 1
+
+REGISTER='03_Resources/Assumptions.md'
+PROFILE='03_Resources/About me.md'
+FLOOR=10
+STALE_DAYS=90
+
+today=$(date +%Y-%m-%d)
+
+tmp=${TMPDIR:-/tmp}/brain-check.$$
+trap 'rm -f "$tmp"' EXIT INT TERM
+: > "$tmp"
+
+# ------------------------------------------------- files that may show syntax
+#
+# The manual and the prompts quote the assumption format as an example. Linting
+# their examples as if they were claims is how a checker teaches people to
+# ignore it.
+exempt() {
+  case "$1" in
+    AGENTS.md|README.md|DESIGN.md|CLAUDE.md|GEMINI.md|index.md) return 0 ;;
+    brain/*|.claude/*|.github/*|raw/*|"$REGISTER") return 0 ;;
+  esac
+  return 1
+}
+
+# ------------------------------------------------------------- the register
+#
+# Everything inside 03_Resources/Assumptions.md: block structure, field values,
+# id bookkeeping, staleness. Findings come back as TIER<TAB>message.
+
+if [ -f "$REGISTER" ]; then
+  awk -v reg="$REGISTER" -v today="$today" -v stale="$STALE_DAYS" '
+    function daynum(s,   y, m, d, a, yy, mm) {
+      y = substr(s, 1, 4) + 0; m = substr(s, 6, 2) + 0; d = substr(s, 9, 2) + 0
+      if (y == 0 || m == 0) return 0
+      a = int((14 - m) / 12); yy = y + 4800 - a; mm = m + 12 * a - 3
+      return d + int((153 * mm + 2) / 5) + 365 * yy + int(yy / 4) \
+             - int(yy / 100) + int(yy / 400) - 32045
+    }
+    function emit(tier, msg) { print tier "\t" msg }
+    function has(set, v) { return index(set, " " v " ") > 0 }
+
+    function flush(   i, line, body, id, conf, kind, st, links, collecting, tail) {
+      if (nb == 0) return
+      body = "\n"
+      for (i = 1; i <= nb; i++) {
+        line = blk[i]; sub(/^[ \t]*>[ ]?/, "", line); body = body line "\n"
+      }
+
+      # Basis links live on the Basis line(s) only — from "Basis:" to the next field.
+      links = 0; collecting = 0
+      for (i = 1; i <= nb; i++) {
+        line = blk[i]; sub(/^[ \t]*>[ ]?/, "", line)
+        if (line ~ /^(Reasoning|Falsifier|Status):/) collecting = 0
+        if (line ~ /^Basis:/) collecting = 1
+        if (collecting) links += gsub(/\[\[/, "[[", line)
+      }
+      nb = 0
+
+      if (body !~ /\*\*Assumption/) return   # some other [!WARNING] callout — not ours
+
+      if (match(body, /ASM-[0-9][0-9][0-9][0-9]/)) {
+        id = substr(body, RSTART, RLENGTH)
+      } else {
+        emit("ERROR", reg ":" st_line " — assumption callout with no ASM- id. Give it the next id " \
+             "from Next ID, or downgrade it to an [!NOTE] AI synthesis if it does not actually " \
+             "leap past the record.")
+        return
+      }
+      block_seen[id]++
+
+      if (body !~ /\nBasis:/)     emit("ERROR", reg ":" st_line " — " id " has no Basis: line. No basis, no assumption: say the vault does not know instead.")
+      if (body !~ /\nReasoning:/) emit("ERROR", reg ":" st_line " — " id " has no Reasoning: line. If you cannot state the leap in one sentence, you do not have one.")
+      if (body !~ /\nFalsifier:/) emit("ERROR", reg ":" st_line " — " id " has no Falsifier: line. An assumption nothing could disprove is a horoscope.")
+      if (body !~ /\nStatus:/)    emit("ERROR", reg ":" st_line " — " id " has no Status: line (open, confirmed, refuted, stale or withdrawn, plus the date).")
+
+      if (match(body, /confidence:[ ]*[a-z][a-z-]*/)) {
+        conf = substr(body, RSTART, RLENGTH); sub(/confidence:[ ]*/, "", conf)
+        if (!has(" low medium high ", conf))
+          emit("ERROR", reg ":" st_line " — " id " confidence is \"" conf "\"; it must be low, medium or high.")
+      } else {
+        emit("ERROR", reg ":" st_line " — " id " header has no confidence:.")
+      }
+
+      if (match(body, /basis-kind:[ ]*[a-z][a-z-]*/)) {
+        kind = substr(body, RSTART, RLENGTH); sub(/basis-kind:[ ]*/, "", kind)
+        if (!has(" personal population mixed ", kind))
+          emit("ERROR", reg ":" st_line " — " id " basis-kind is \"" kind "\"; it must be personal, population or mixed.")
+      } else {
+        emit("ERROR", reg ":" st_line " — " id " header has no basis-kind:. It is the difference between a fact about them and a prior about people.")
+      }
+
+      st = ""
+      if (match(body, /\nStatus:[ ]*[a-z]+/)) {
+        st = substr(body, RSTART, RLENGTH); sub(/\nStatus:[ ]*/, "", st)
+        if (!has(" open confirmed refuted stale withdrawn ", st))
+          emit("ERROR", reg ":" st_line " — " id " status is \"" st "\"; it must be open, confirmed, refuted, stale or withdrawn.")
+        tally[st]++
+      }
+
+      if (links < 2 && body !~ /thin basis/)
+        emit("WARN", reg ":" st_line " — " id " cites " links " basis link(s). Two or more, or say \"thin basis\" in the reasoning and mean it.")
+
+      # Staleness: an open assumption nothing has tested in 90 days.
+      if (st == "open") {
+        tail = substr(body, index(body, "\nStatus:"))
+        if (match(tail, /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/)) {
+          age = daynum(today) - daynum(substr(tail, RSTART, RLENGTH))
+          if (age > stale)
+            emit("INFO", id " has been open " age " days with nothing testing it. Run review-assumptions, or mark it stale.")
+        }
+      }
+    }
+
+    /^### ASM-[0-9][0-9][0-9][0-9]/ {
+      hid = substr($2, 1, 8); heading[hid]++
+      n = substr(hid, 5) + 0; if (n > maxid) maxid = n
+    }
+    /\*\*Next ID:[ ]*ASM-[0-9][0-9][0-9][0-9]\*\*/ {
+      match($0, /ASM-[0-9][0-9][0-9][0-9]/); nextid = substr($0, RSTART + 4, 4) + 0; hasnext = 1
+    }
+    /^\|[ ]*(open|confirmed|refuted|stale|withdrawn)[ ]*\|[ ]*[0-9]+[ ]*\|/ {
+      k = $2; gsub(/[ \t]/, "", k); v = $4; gsub(/[ \t]/, "", v); stated[k] = v + 0; hascounts = 1
+    }
+
+    /^[ \t]*>/ {
+      if ($0 ~ /^[ \t]*>[ ]*\[!/) { flush(); nb = 1; blk[1] = $0; st_line = NR; next }
+      if (nb > 0) { blk[++nb] = $0 }
+      next
+    }
+    { flush() }
+
+    END {
+      flush()
+
+      for (id in heading)
+        if (heading[id] > 1)
+          emit("ERROR", reg " — " id " has " heading[id] " headings. Ids are never reused or renumbered.")
+
+      for (id in heading)
+        if (!(id in block_seen))
+          emit("WARN", reg " — " id " has a heading but no [!WARNING] Assumption block under it.")
+
+      if (!hasnext) {
+        emit("WARN", reg " — no \"**Next ID: ASM-nnnn**\" line. Without it the next run guesses, and ids collide.")
+      } else if (maxid > 0 && nextid <= maxid) {
+        emit("ERROR", reg " — Next ID is ASM-" sprintf("%04d", nextid) " but ASM-" sprintf("%04d", maxid) " is already allocated. Ids must never be reused.")
+      }
+
+      if (hascounts) {
+        split("open confirmed refuted stale withdrawn", ss, " ")
+        for (i = 1; i <= 5; i++) {
+          k = ss[i]; a = (k in tally) ? tally[k] : 0
+          if ((k in stated) && stated[k] != a)
+            emit("INFO", reg " — the header says " stated[k] " " k ", but " a " block(s) carry that status.")
+        }
+      }
+    }
+  ' "$REGISTER" >> "$tmp"
+fi
+
+# ------------------------------------------------------ everywhere else
+#
+# Two things matter outside the register: an id must resolve to a real entry,
+# and an assumption must never sit where only facts belong.
+
+find . -name '*.md' -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r f; do
+  exempt "$f" && continue
+  [ -f "$f" ] || continue
+
+  grep -o 'ASM-[0-9][0-9][0-9][0-9]' "$f" 2>/dev/null | sort -u | while IFS= read -r id; do
+    if [ ! -f "$REGISTER" ]; then
+      printf 'ERROR\t%s references %s, but %s does not exist. A labelled claim with no traceable evidence is exactly what the rules forbid.\n' "$f" "$id" "$REGISTER"
+    elif ! grep -q "^### $id" "$REGISTER" 2>/dev/null; then
+      printf 'ERROR\t%s references %s, which has no "### %s" entry in %s.\n' "$f" "$id" "$id" "$REGISTER"
+    fi
+  done
+
+  awk -v f="$f" -v profile="$PROFILE" '
+    /^#+[ ]+/ { infacts = ($0 ~ /^#+[ ]+[Ff]acts[ ]*:?[ ]*$/) ? 1 : 0 }
+    {
+      if ((infacts || f == profile) && (/ASM-[0-9][0-9][0-9][0-9]/ || /\*\*Assumption/))
+        print "ERROR\t" f ":" NR " — an assumption sits where only facts belong. Facts are what the human said; assumptions live in the register, and only the human promotes one."
+    }
+  ' "$f"
+done >> "$tmp"
+
+# --------------------------------------------------------- the evidence floor
+#
+# The failure this repo is most likely to hit: a fresh clone with four notes,
+# three of them about the vault itself, and a confident character sketch built
+# on top. Below the floor there is nothing to reason from.
+
+if [ -f "$REGISTER" ] && grep -q '^Status:[ ]*open\|^>[ ]*Status:[ ]*open' "$REGISTER" 2>/dev/null; then
+  notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' \
+            ! -path "$PROFILE" ! -path "$REGISTER" 2>/dev/null \
+            -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
+  if [ "${notes:-0}" -lt "$FLOOR" ]; then
+    printf 'WARN\tThe register holds open assumptions but the vault has only %s note(s) the human wrote. Below %s there is not enough to reason from — review them with review-assumptions before they get cited as evidence.\n' \
+      "$notes" "$FLOOR" >> "$tmp"
+  fi
+fi
+
+# ------------------------------------------------------------------ the verdict
+
+errors=0
+warnings=0
+infos=0
+
+echo
+echo "Assumptions — check"
+echo
+
+if [ ! -f "$REGISTER" ] && [ ! -s "$tmp" ]; then
+  echo "  [--] no assumption register yet — nothing to check."
+  echo "       -> It gets created the first time  infer  concludes something worth keeping."
+  echo
+  exit 0
+fi
+
+while IFS="$(printf '\t')" read -r tier msg; do
+  [ -z "${tier:-}" ] && continue
+  case "$tier" in
+    ERROR) printf '  [XX] %s\n' "$msg"; errors=$((errors + 1)) ;;
+    WARN)  printf '  [!!] %s\n' "$msg"; warnings=$((warnings + 1)) ;;
+    INFO)  printf '  [--] %s\n' "$msg"; infos=$((infos + 1)) ;;
+  esac
+done < "$tmp"
+
+if [ "$errors" -eq 0 ] && [ "$warnings" -eq 0 ] && [ "$infos" -eq 0 ]; then
+  open=$(grep -c '^>[ ]*Status:[ ]*open' "$REGISTER" 2>/dev/null | tr -d ' ')
+  echo "  [ok] the register is well-formed (${open:-0} open)"
+fi
+
+plural() { [ "$1" -eq 1 ] && echo "$1 $2" || echo "$1 ${2}s"; }
+
+echo
+if [ "$errors" -gt 0 ]; then
+  echo "$(plural "$errors" problem) to fix before this register can be trusted."
+  echo "Everything here is recoverable — git log, git revert."
+  echo
+  exit 1
+fi
+if [ "$((warnings + infos))" -gt 0 ]; then
+  echo "Nothing blocking. $(plural "$((warnings + infos))" thing) worth a look."
+  echo
+fi
+exit 0

@@ -31,7 +31,7 @@ For each item in `00_Inbox/`:
 
 ## Phase 3 — Reconcile and connect
 
-Three checks, in order of value:
+Four checks, in order of value:
 
 1. **Contradictions.** Look for notes making claims that disagree. When you find a pair, don't
    delete either — keep both, add recency markers `(as of YYYY-MM, source)`, and state plainly in
@@ -43,6 +43,14 @@ Three checks, in order of value:
    manufacture a link that isn't real just to clear the count.
 3. **Broken links.** `[[wikilinks]]` pointing at notes that don't exist. Some are intentional
    ("worth writing later") — leave those. Fix the ones that are clearly typos or renames.
+4. **Assumptions.** Skip this entirely if `03_Resources/Assumptions.md` doesn't exist. Otherwise,
+   for each `open` block: does anything captured since it was raised **satisfy its falsifier**? If
+   so, refute it — `Status: refuted · <date>`, naming the note that did it, moved to **Refuted &
+   withdrawn**, never deleted. This is the one verdict you may reach without the human, because a
+   falsifier they already wrote is a test they already agreed to; anything short of that stays
+   open. Mark anything open more than 90 days as `stale`, recount the header, and run
+   `brain/bin/check` — fix every `[XX]` it reports. Never promote an assumption to a fact here, no
+   matter how much evidence has piled up. Only the human does that.
 
 ## Phase 4 — Rebuild the index
 
@@ -64,8 +72,10 @@ sweeps is decoration.
 Append **one line** to `brain/log.md` (create it if missing, newest entries at the bottom):
 
 ```
-- YYYY-MM-DD maintain: <n> inbox filed, <n> left with questions · <n> orphans linked · <n> contradictions found · <n> stale markers due · index rebuilt · <notable thing, or "quiet">
+- YYYY-MM-DD maintain: <n> inbox filed, <n> left with questions · <n> orphans linked · <n> contradictions found · <n> assumptions refuted, <n> stale · <n> stale markers due · index rebuilt · <notable thing, or "quiet">
 ```
+
+Leave the assumptions figures out of the line entirely if there's no register.
 
 Then say the same thing in the conversation, plus anything the human should actually look at.
 

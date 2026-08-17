@@ -34,6 +34,13 @@ Follow the workflow in `AGENTS.md`. Concretely:
 5. **Link.** Every new note links to at least one other note and to its Area. Add the reverse
    link where it reads naturally. A link to a note that doesn't exist yet is fine.
 
+   **If what they just told you settles an open assumption**, say so and record it now. A dump
+   that contradicts one is a refutation — `Status: refuted`, their words as the reason, moved to
+   **Refuted & withdrawn** in `03_Resources/Assumptions.md` and never deleted. One that confirms
+   one is *not* a confirmation you can make on their behalf; note that it adds evidence and leave
+   the verdict to `review-assumptions`. Most verdicts will arrive this way rather than in a review
+   pass, so don't let one slide past unrecorded. Run `brain/bin/check` if you touched the register.
+
 6. **Log and catalog.** Add a one-line entry to today's daily note (`Daily/YYYY-MM-DD.md`) so
    there's a timeline — create the note if it doesn't exist. Then add each new note to `index.md`
    under the right section as `- [[Note Title]] — one-line description`. Keeping the catalog

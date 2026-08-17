@@ -23,6 +23,7 @@ brain/prompts/     the commands, as plain markdown. Any agent can read them.
 brain/bin/sync     commit + push, in POSIX shell. Callable by a hook, cron, CI, or you.
 brain/bin/run      runs a prompt with whichever agent CLI is installed.
 brain/bin/doctor   checks the install and says what to fix, in plain language.
+brain/bin/check    lints the assumption register — the guardrail that isn't a prompt.
 brain/bin/sessions finds and stages AI transcripts that agents can't reach themselves.
 
 .claude/commands/  six-line wrappers pointing at brain/prompts/
@@ -145,12 +146,76 @@ inference quietly becomes a fact.
 
 ---
 
+## Assumptions, and why they're allowed at all
+
+A brain that only returns what you put in loses to a chat window, which needs no belief about
+coverage. The one thing it can do that nothing else can is reason about **you** — what you'd
+choose, what you'll actually finish, what you keep circling. That capability is the reason to ask
+it anything.
+
+It's also the single most dangerous thing in here, for one specific reason: **an assumption
+mistaken for a fact gets cited as evidence for the next assumption.** Do that twice and the vault
+is full of confident conclusions with no author, and you can't tell which of your own beliefs you
+actually held. So the design question was never "should it guess" — it's *how do you make a guess
+that can be killed later*.
+
+Four properties do the work:
+
+- **One register, one home.** Every assumption's full reasoning lives in
+  `03_Resources/Assumptions.md` and nowhere else; notes carry a one-line pointer. Copies drift, and
+  a drifted copy is how the softened version of a claim outlives the honest one.
+- **A falsifier is mandatory.** An assumption that no observation could disprove is a horoscope,
+  and horoscopes are always confirmed. Writing down what would kill it, before you need to, is what
+  makes `maintain` able to refute it against notes captured later.
+- **`basis-kind`.** The label separating *"this rests on facts about this person"* from *"this
+  rests on what's true of most people"*. Cross-domain personality prediction is nearly always the
+  second wearing the costume of the first, and it's the failure mode that reads as insight right up
+  until it's insultingly wrong about you.
+- **Refuted rows are never deleted.** The most valuable entry in the file is a recorded wrong
+  guess: it says the model of you was wrong in a specific way, and it stops the same guess
+  reappearing next month. It's also the only honest calibration signal — if nothing has ever been
+  refuted, the assumptions are too timid to be worth making.
+
+**The register is not shipped, and it's not in `brain/`.** It's created the first time `infer`
+concludes something worth keeping, and it lives in `03_Resources/` next to `[[About me]]` for the
+reason given in `AGENTS.md`: the harness gets replaced wholesale on update, and what the brain
+concluded about its owner must never be collateral damage of a `git pull`.
+
+### The floor, which is the part specific to a repo people clone
+
+A fresh clone has two notes, both about the vault itself. The tempting failure is a paragraph of
+confident character analysis built on them — labelled, technically, and still worthless, because
+you can see exactly how little it had. So there's a hard gate: **no assumptions about you until ten
+notes you actually wrote exist**, notes about the vault don't count as evidence about the person,
+and neither does anything the agent can see in its environment rather than in the folder. The first
+two are checked by `brain/bin/check`; the third is the same rule as
+[answering from the vault, not the room](AGENTS.md).
+
+### Why a shell script and not just the prompt
+
+The prompts describe the rules well. Prompts are also interpreted, negotiable and quietly dropped
+under a long context, and the specific thing being guarded here is a slow drift nobody notices in
+any single session. `brain/bin/check` is a POSIX shell and awk script that exits non-zero on an
+unregistered id, a missing falsifier, an invalid confidence value, or an assumption that has crept
+into `About me.md` as though you'd said it. A guarantee you need to survive a thousand sessions
+belongs in code; only the judgement belongs in the prompt.
+
+---
+
 ## Why nothing runs on a schedule
 
 Every command is invoked by you. This repo ships **no cron job, no CI workflow and no background
 agent**, and that's on purpose. Handing an agent unattended write access to your notes before
 you've watched what it does is how you stop trusting it in week two. Run `maintain` by hand a few
 times. Read the diffs. `git revert` the ones you don't like.
+
+`interview` is the sharpest case, and the reason it ships user-invoked rather than nightly. It's the
+only command that initiates, so it's the only one that can nag — and a proactive channel gets
+exactly one chance: ask twice with nothing behind it and it's muted, after which the good questions
+never land either. Its rules are written as if it were already unattended (silence by default,
+cooldowns on skipped questions, stop at the first sign of disengagement, never re-ask inside a
+week), so scheduling it later is a config change rather than a rewrite. Run it by hand first and
+watch what it chooses to ask. That's the evidence you'd want before letting it interrupt you at 9pm.
 
 Once you *do* trust it, scheduling is one line in whatever you already use — `launchd` or `cron`
 locally, a GitHub Action, or your own runner:
@@ -196,6 +261,7 @@ index.md                    ~60 lines, one per note, grouped
 03_Resources/               ~40 atomic notes — the actual knowledge
                             Retries need a budget, not just a count.md
                             Kaufmann — The Undoing Project.md
+                            About me.md · Assumptions.md
 04_Archive/                 3 finished projects
 06_Sessions/                ~200 distilled session notes + their own index.md
 Daily/                      2026-06-14.md … 2026-08-14.md

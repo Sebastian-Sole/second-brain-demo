@@ -50,6 +50,10 @@ Threads waiting on someone else, unanswered questions, things half-decided.
 Then, in the conversation (not the file), close with **one line**: the single thing most worth
 doing next, and why it's that one.
 
+If `03_Resources/Assumptions.md` exists and holds anything `open`, add **one more line** — how many
+are waiting on a verdict, and the oldest one — then offer `review-assumptions`. One line, not a
+section: the digest reports on the vault, and the assumptions are a two-minute job elsewhere.
+
 Notes:
 - If the vault is nearly empty (a fresh install), say so plainly and show what little there is
   rather than inventing content. It'll get better as they use it.

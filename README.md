@@ -96,6 +96,9 @@ That's it. From here you just talk to it.
 | `digest [window]` | Rolls up recent activity: what happened, patterns across it, what's stalled |
 | `maintain` | Health pass — close the day, drain the inbox, reconcile contradictions, link orphans, rebuild the index |
 | `ingest-sessions` | Distils your past AI coding sessions into notes you can search |
+| `infer <question>` | Answers something your notes *don't* contain, by reasoning from what they do — every assumption labelled, evidenced and falsifiable |
+| `review-assumptions` | Two-minute pass over what it's assumed about you: right, wrong, skip |
+| `interview` | The brain asks *you* — what happened to the thing you never followed up, what it's guessing, what it has no idea about |
 
 In Claude Code these are slash commands (`/capture`). In any other agent, just say the word.
 
@@ -104,6 +107,30 @@ In Claude Code these are slash commands (`/capture`). In any other agent, just s
 
 `digest` is the one that surprises people. It doesn't just summarise — it reads across unrelated
 notes and names themes you never wrote down, including the things you keep avoiding.
+
+### The last three are a different thing
+
+`ask` returns what you put in. `infer` answers questions you never wrote the answer to — *would I
+actually finish this?*, *what do I keep avoiding?* — by reasoning from the notes you do have. That's
+the part a general chat model can't do, because it doesn't know you.
+
+It's also the part that can quietly go wrong, so it's built to be checkable rather than trusted:
+
+- Every assumption is **labelled**, lands in `03_Resources/Assumptions.md` with its evidence, its
+  reasoning, and **what would prove it wrong**, and stays labelled forever.
+- **Only you can turn one into a fact.** `review-assumptions` shows you a few at a time — `1y 2n 3s`
+  — and a confirmed one gets promoted into your profile carrying `(was ASM-0007)`. A refuted one is
+  never deleted: a wrong guess on the record is what stops the same wrong guess next month.
+- **Below ten notes it won't guess about you at all.** Four notes can't support a character sketch,
+  and one built on them is the fastest way to stop trusting the whole thing.
+- `brain/bin/check` enforces the mechanical half — an unregistered id, a missing falsifier, an
+  assumption that has crept into your profile as though you'd said it. Rules in a prompt are
+  suggestions; this one exits non-zero.
+
+`interview` is the only command that talks to you first, and it's the one to be most sceptical of —
+a brain that pings you with nothing to say gets muted in a week. It's capped at three questions,
+every one has to cite the note or the gap that produced it, and its default is silence. **Nothing
+runs it on a timer**; it goes when you say so.
 
 > **Tip for Claude Code:** you'll be asked to approve each file the agent writes. Once you've
 > watched it a few times and trust it, press `shift+tab` to switch to accept-edits mode and it
@@ -284,9 +311,11 @@ The design decisions — how it stays vendor-neutral, why provenance is tracked 
 PARA comes with a caveat, and what the vault looks like after a few months of use — are in
 [**`DESIGN.md`**](DESIGN.md). None of it is required reading.
 
-The one rule worth knowing without reading that file: **anything the agent inferred rather than
-heard from you gets marked as an AI synthesis, permanently.** That's what keeps a second brain from
-turning into a pile of confident AI text you slowly stop trusting.
+The one rule worth knowing without reading that file: **anything the agent concluded rather than
+heard from you stays marked as such, permanently — and only you can promote it to a fact.** A read
+across your notes is marked *AI synthesis*; a guess about *you* becomes a numbered assumption with
+a falsifier attached. That's what keeps a second brain from turning into a pile of confident AI
+text you slowly stop trusting.
 
 ---
 

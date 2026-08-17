@@ -42,6 +42,21 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    doesn't license making it — and a young vault is a trap here, because most of its notes are
    *about the vault*. Reading those as a portrait of the person reads the scaffolding as the human.
 
+   **If the honest answer needs a claim the vault doesn't hold**, don't smuggle it into the prose.
+   Switch to the three-block form and keep it short:
+
+   ```
+   **Known** — what the vault actually holds, with [[links]].
+   **Assumed** — the claim · confidence · basis-kind · because <the leap, one line>.
+   **Would change my mind** — the falsifier.
+   ```
+
+   Cap it at three, obey the gates in `AGENTS.md` (ten notes, not the scaffolding, not your
+   session's environment), and check `03_Resources/Assumptions.md` first so you don't re-raise
+   something already refuted. If the question is *mostly* that — a question about them rather than
+   about their notes — say so and offer `infer`, which does this properly and registers what's
+   worth keeping. `ask` answers from the vault; `infer` reasons past it.
+
 5. **Be honest about gaps, including when the gap is most of it.** If the vault doesn't cover this,
    say so plainly. Don't pad with general knowledge, don't fabricate a citation, and don't
    compensate for a thin vault by inferring harder. "Barely anything yet — here's the little

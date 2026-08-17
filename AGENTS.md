@@ -93,7 +93,7 @@ a Resource.
 
 | `type:` | Lives in |
 | --- | --- |
-| `note`, `concept`, `person`, `moc` | `03_Resources/` |
+| `note`, `concept`, `person`, `moc`, `register` | `03_Resources/` |
 | `source` | `03_Resources/` (the original goes to `raw/`) |
 | `project` | `01_Projects/` |
 | `area` | `02_Areas/` |
@@ -253,20 +253,39 @@ In a vault an agent writes into, the most important distinction is **who said it
 inference is later mistaken for a fact, it gets cited as evidence for the next inference, and the
 vault quietly fills with confident conclusions nobody ever made.
 
-- Something the human said or decided → write it plainly.
-- Something **you** inferred, synthesised, or concluded → mark it:
+Every claim in this vault is exactly one of four things, and each has one marker:
+
+- **A fact** — the human said it, or it's verbatim from a source preserved in `raw/` → write it
+  plainly, no marker.
+- **A synthesis** — a read *across* notes that are already here: a count, a recurrence, a
+  connection nobody had drawn. Mechanical, and another session re-reading the vault reaches the
+  same place. It stays inside the record:
 
   ```
   > [!NOTE]
   > **AI synthesis** — what you concluded, and what you concluded it from.
   ```
 
-- Something you couldn't decide and need the human for → mark it:
+- **An assumption** — a claim that goes *beyond* the record: something the vault doesn't contain
+  and the human never said. Never write one without reading
+  [Assumptions](#assumptions--what-this-brain-concludes-about-the-human) first:
+
+  ```
+  > [!WARNING]
+  > **Assumption — ASM-0001 · confidence: medium · basis-kind: personal**
+  > …
+  ```
+
+- **A question you can't answer** — you couldn't decide and need the human:
 
   ```
   > [!IMPORTANT]
   > **Open question** — what you'd need in order to file this.
   ```
+
+The line between synthesis and assumption is the one that matters: *"these four notes are all about
+retries"* is a synthesis; *"they're avoiding the retry work"* is an assumption. If you had to guess
+at a motive, a preference or a trait, it's an assumption — and it needs the register.
 
 - Never promote a marked inference into an unmarked fact in a later pass. If evidence later
   confirms it, say so and keep the trail.
@@ -276,12 +295,141 @@ honest, not to make any conclusion permissible. Inference is proportional to evi
 support almost none. A labelled character sketch built on a nearly empty vault is still slop, and
 it's the kind that costs you trust fastest — because the human can see exactly how little you had.
 
-**Why these two markers and not prettier ones.** The alert type must be one of GitHub's five
+**Why these markers and not prettier ones.** The alert type must be one of GitHub's five
 (`NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`) on a line by itself, because github.com is the
 only viewer of this vault that needs nothing installed — and a provenance marker that renders as a
 plain blockquote in the place people actually browse is a provenance marker nobody sees. The bold
 lead-in carries the meaning and keeps it greppable: `grep -rn "AI synthesis"` finds every
-unverified inference in the vault. Don't swap these for custom types.
+unverified synthesis, `grep -rn "Assumption —"` every assumption. Don't swap these for custom types.
+
+---
+
+## Assumptions — what this brain concludes about the human
+
+A brain that only hands back what was put in loses to a chat window. The thing it can do that
+nothing else can is reason about *this person* — how they work, what they'll actually do, what
+they'd choose. That's worth having, and it's dangerous for exactly one reason: **an assumption
+mistaken for a fact gets cited as evidence for the next assumption**, and the vault fills with
+confident conclusions nobody ever made.
+
+So the rule is not "don't guess". It's **guess in the open, in a form that can be checked and
+killed.**
+
+### The one-way rule
+
+**An assumption never becomes a fact by age, repetition, or usefulness.** The only promotion path
+is the human confirming it, and a promoted claim keeps its history: `(confirmed 2026-09-01, was
+ASM-0007)`. Everything else stays labelled, forever.
+
+- A **refuted** assumption is never deleted. It's the most valuable row in the register: it records
+  a specific way the model of them was wrong, and it stops the same guess being made next month.
+- **Never** write an assumption into a `## Facts` section or into `03_Resources/About me.md`.
+  `brain/bin/check` fails if you do.
+- An assumption informs *the human's* decisions. It never authorises *yours* — nothing gets sent,
+  booked, bought, or changed on the strength of one.
+
+### The register
+
+Every assumption worth keeping lives in **`03_Resources/Assumptions.md`**, and the full block lives
+there and nowhere else. Notes elsewhere carry a one-line pointer, so the reasoning can never drift
+from a copy:
+
+```markdown
+- **The claim in one sentence.** — ASM-0007 · medium · personal → [[Assumptions]]
+```
+
+The register is created by the first `infer` run — don't ship or pre-build an empty one. It belongs
+to the human, like `[[About me]]`, which is why it sits in `03_Resources/` and not under `brain/`:
+a harness update must never overwrite what the brain concluded about its owner.
+
+### The block
+
+```markdown
+> [!WARNING]
+> **Assumption — ASM-0007 · confidence: medium · basis-kind: personal**
+> **They act on work handed to them for approval and stall on work that needs a decision first.**
+> Basis: [[A recurring unactioned item should escalate to execution]] · [[Reviews go unread]]
+> Reasoning: throughput is high when the next step is "approve", near zero when it's "choose".
+> Falsifier: a ready-to-approve change sits as long as an open decision does.
+> Status: open · raised 2026-08-17
+```
+
+Every field is required:
+
+- **ID** — `ASM-nnnn`, allocated from the register's `Next ID`. Never reused, never renumbered.
+- **Claim** — bold, one sentence, falsifiable. Not "they may perhaps tend to".
+- **Basis** — the evidence as `[[wikilinks]]`. **Two or more**, or a single link plus the words
+  `thin basis`. No basis, no assumption — say "the vault doesn't know" instead.
+- **Reasoning** — the actual leap, in one line. If you can't state it, you don't have one.
+- **Falsifier** — what observation would kill this. An assumption with no falsifier is a horoscope.
+- **Status** — `open` · `confirmed` · `refuted` · `stale` · `withdrawn`, plus the date.
+
+### basis-kind — where the leap comes from
+
+The most important label after the id, because two very different things get called inference:
+
+- **`personal`** — the leap rests on facts about *this specific person* in this vault.
+- **`population`** — it rests on a correlation that holds for most people. That's a **prior**, not
+  knowledge about them, and it's the weakest claim this vault can make. Cross-domain personality
+  prediction (they like X, so probably Y) is almost always `population` wearing a personal costume.
+- **`mixed`** — both. Say which part is which.
+
+### confidence — a rubric, not a vibe
+
+| Level | Bar |
+| --- | --- |
+| **high** | ≥3 independent facts about them converging, and you can state the mechanism in one sentence |
+| **medium** | 2+ personal facts, or 1 strong one plus a well-attested general pattern, and nothing in the vault contradicts it |
+| **low** | one fact, mostly a population prior, or built on another open assumption |
+
+An assumption resting on another **open** assumption is capped at `low` and must name the parent id.
+
+### Before you raise one — four gates
+
+1. **Ten notes.** Below ten notes the human actually wrote, don't raise assumptions about them at
+   all. There is nothing to reason from, and a confident sketch off four notes is the fastest way
+   to lose their trust. Say the vault doesn't know yet, and offer to capture. (The shipped example
+   notes are tagged `pkm, example` and don't count.)
+2. **Not the scaffolding.** Notes *about this vault* — its setup, its structure, these commands —
+   are not evidence about the person. A young brain is mostly scaffolding, and reading it as a
+   portrait produces a profile of the software.
+3. **Not the room you're standing in.** Per
+   [Answer from the vault](#answer-from-the-vault-not-from-the-room-youre-standing-in): the
+   connectors, skills, neighbouring repos and shell history your session can see are not evidence.
+   Every basis link is a note in this vault.
+4. **Retrieve first.** Search before you infer. If a fact answers it, use the fact — manufacturing
+   an assumption where the vault already knows is the worst possible trade.
+
+### Answering with one
+
+Never mix an assumption into the prose of the facts. Three blocks, in this order, skipping the
+empty ones:
+
+```
+**Known** — what the vault actually holds, with links. Say plainly what's missing.
+**Assumed** — the claim · confidence · basis-kind · because <the leap in one line>.
+**Would change my mind** — the falsifier, or the one thing worth capturing to settle it.
+```
+
+Never open with an unlabelled guess. Cap it at **three assumptions per answer** — a wall of hedged
+maybes is slop. Check the register before inferring, and don't re-raise something already refuted;
+if new evidence genuinely reopens it, say so and cite the old row.
+
+### About other people
+
+The vault holds notes on people who never agreed to be modelled. An assumption about a partner,
+a colleague or a client is for the human's own thinking — it stays `open` speculation, never gets
+stated back as if that person had said it, never hardens into a `## Facts` line, and never leaves
+the vault.
+
+### Lifecycle
+
+`open` → the human confirms it (`confirmed`, promoted to a plain fact with provenance) · they
+refute it (`refuted`, kept forever) · new facts contradict it (`refuted` by `maintain`, naming the
+note that did it) · nothing tests it for 90 days (`stale`) · the reasoning turns out invalid
+(`withdrawn`, with why).
+
+Run `brain/bin/check` after touching the register. Prose doesn't hold a line; code does.
 
 ---
 
@@ -333,6 +481,9 @@ wrappers (see `.claude/commands/` for the Claude Code versions).
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
 | `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
 | `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search |
+| `infer` | `brain/prompts/infer.md` | Answer something the vault has no facts for, by reasoning from the facts it does have — every assumption labelled, evidenced, falsifiable |
+| `review-assumptions` | `brain/prompts/review-assumptions.md` | Confirm, refute or skip open assumptions. Confirmed ones become facts; refuted ones are kept as calibration |
+| `interview` | `brain/prompts/interview.md` | The brain asks *them*: perishable follow-ups, open assumptions, blank dimensions, stalled work. Sourced, capped at three, silent when it has nothing worth asking |
 
 If the human just talks to you without naming a command, treat it as `capture`.
 
@@ -358,6 +509,12 @@ one. Earn it first.
 Scheduling `maintain` later is a good idea and entirely the human's call — `brain/bin/run maintain`
 is one line in whatever scheduler they already trust. If they ask you to set that up, help. Don't
 set it up unasked.
+
+**`interview` is the one to be careful with.** It's the only command that talks *to* the human
+rather than answering them, so it's the only one that can become nagging. It runs when they invoke
+it — nothing here fires it on a timer. If they later want it on a schedule, that's their call, and
+its silence rules are written to survive that; until then, don't offer it unprompted more than once
+at the end of a session.
 
 ---
 

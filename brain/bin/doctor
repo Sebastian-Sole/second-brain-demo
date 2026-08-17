@@ -116,7 +116,7 @@ else
        "You're probably not in the vault directory. cd into it and try again."
 fi
 
-for s in run sync sessions doctor; do
+for s in run sync sessions doctor check; do
   if [ -x "brain/bin/$s" ]; then
     :
   elif [ -f "brain/bin/$s" ]; then
@@ -160,6 +160,18 @@ elif [ "$notes" -eq 1 ]; then
   ok "1 note"
 else
   ok "$notes notes"
+fi
+
+# The register only exists once the brain has concluded something about you. Its
+# absence is normal; a malformed one is not, because an assumption that loses its
+# label is the one kind of note that quietly turns into a fact.
+if [ -f '03_Resources/Assumptions.md' ]; then
+  if [ -x brain/bin/check ] && brain/bin/check >/dev/null 2>&1; then
+    ok "the assumption register is well-formed"
+  else
+    warn "the assumption register has problems" \
+         "Run:  brain/bin/check   — it prints each one and what to do about it"
+  fi
 fi
 
 echo

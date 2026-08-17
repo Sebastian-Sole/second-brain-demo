@@ -134,3 +134,10 @@ they can delete them whenever they like. Offer to do it now.
 Don't reorganise the vault, don't pre-build projects or areas, and don't write notes they didn't
 ask for. They're getting a canvas, not a finished system — the folders fill in as they use it, and
 a vault pre-populated with an agent's guesses about someone's life is worse than an empty one.
+
+**In particular, don't raise a single assumption here, and don't pitch `infer`.** Five answers to
+five questions is not evidence, the ten-note floor in `AGENTS.md` means the command would refuse
+anyway, and a brain that starts profiling someone in its first conversation is the exact thing
+people fear about this. It earns that after they've filled it. Everything they told you in step 2 is
+a **fact** they stated — write it plainly in `[[About me]]`, with no callouts and no conclusions
+drawn from it.
