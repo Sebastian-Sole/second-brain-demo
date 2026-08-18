@@ -728,7 +728,7 @@ exception you can see beats a rule that quietly isn't true.
 | `location` | `brain/tools/location.md` | The host's idea of where they are | Nothing |
 | `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]`, plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
 | `email` | `brain/tools/email.md` | The connected mailbox — read, plus drafts | Drafts only |
-| `calendar` | `brain/tools/calendar.md` | The connected calendar — read, plus tentative events | Tentative events only |
+| `calendar` | `brain/tools/calendar.md` | The connected calendar — read only | Nothing |
 
 Adding either kind is still **one markdown file plus a row in the right table above.** Where the
 table and a tool's own frontmatter disagree, **the frontmatter wins** — it's what the tool actually
@@ -783,10 +783,13 @@ the answer.
 
 ### Mail and calendar have a ceiling
 
-These **read**, and they may create **drafts** — an unsent mail draft, a tentative event. That is
-the whole ceiling.
+Mail **reads and drafts**: an unsent draft is the most it makes. Calendar **only reads** — it
+creates nothing at all, because creating an event and inviting people to it are the same connector
+call, and a permission layer cannot allow one argument while refusing another. That is the whole
+ceiling.
 
-They never **send, reply, forward, trash, label, mark, move, accept, decline or delete.** Not when
+Neither ever **sends, replies, forwards, trashes, labels, marks, moves, creates, invites, accepts,
+declines or deletes.** Not when
 asked nicely, not when it's obviously what was meant, not when the draft already exists and sending
 is one click. If asked, say so plainly and offer the text to paste:
 

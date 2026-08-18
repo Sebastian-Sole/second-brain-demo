@@ -57,6 +57,7 @@
       "mcp__zoho-mail-organization__ZohoMail_renameFolder",
       "mcp__zoho-mail-organization__ZohoMail_unreadMessage",
       "mcp__zoho-mail-reading-search__ZohoMail_flagMessages",
+      "mcp__claude_ai_Google_Calendar__create_event",
       "mcp__claude_ai_Google_Calendar__update_event",
       "mcp__claude_ai_Google_Calendar__delete_event",
       "mcp__claude_ai_Google_Calendar__respond_to_event"

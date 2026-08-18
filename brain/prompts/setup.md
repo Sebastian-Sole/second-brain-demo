@@ -126,9 +126,9 @@ a working vault.** These are offers, not more interview.
 
 **Mail and calendar.** State the ceiling *before* they connect anything, not after:
 
-> If you want, I can read your mail and your calendar and draft replies or pencil in tentative
-> events. I can't send, reply, delete, accept or decline anything — that's off by design, not a
-> setting you can flip. Want to connect either one?
+> If you want, I can read your mail and your calendar, and draft replies you send yourself. I
+> can't send, reply, delete, accept or decline anything, and I can't put anything in your calendar
+> at all — that's off by design, not a setting you can flip. Want to connect either one?
 
 If yes, walk them through their agent's connector setup in plain language and confirm it with
 `brain/bin/doctor`. If no, say that's completely fine and move on: `brain/tools/email.md` and

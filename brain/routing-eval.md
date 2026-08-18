@@ -109,7 +109,7 @@ model problem.
 | 47 | `draft something back to the landlord about the deposit` | `email` | | Drafting is inside the ceiling. It creates a draft, so it owes a correction footer. |
 | 48 | `whats on today` | `calendar` | | Verbatim from the table. |
 | 49 | `am i free thursday afternoon` | `calendar` | | Verbatim from the table. |
-| 50 | `pencil in coffee with mats friday` | `calendar` | | "pencil something in" = a tentative event, which is the top of `calendar`'s ceiling. |
+| 50 | `pencil in coffee with mats friday` | `calendar` | ⚠ | "pencil something in" is a calendar sentence, so `calendar` is still the right route — but the ceiling now says read-only, so a pass is reaching `calendar` **and** being told it can't create the event. Making one is a fail; so is routing to `task`. |
 | 51 | `send that reply to anna` | `email` | ⚠ ceiling | Route to `email`, then refuse to send in the prescribed sentence and leave a draft. Sending is a fail. |
 | 52 | `coffee at the place on the corner was way better than usual today` | `capture` | ↓ fallback | Nothing else matches. A note in the inbox is the documented safe default. |
 | 53 | `had a weird dream about the office being underwater` | `capture` | ↓ fallback | No question, no action, no topic any command owns. Directive 1: never lose a capture. |

@@ -329,8 +329,10 @@ Read this before you connect anything:
 
 That's the whole ceiling, and it holds when you ask directly, when it's obviously what you meant,
 and when the draft already exists and sending is one click. Email never sends, replies, forwards,
-trashes, labels, marks spam or archives. Calendar never accepts, declines, moves, cancels or
-invites anyone; the most it will do is put a tentative, uninvited hold in your own calendar.
+trashes, labels, marks spam or archives. Calendar only reads: it never creates an event, accepts,
+declines, moves, cancels or invites anyone. It used to offer a tentative hold on your own calendar,
+and that was removed — the call that makes a hold is the same call that invites people, and the
+connector notifies them by default, so there was no way to keep one without the other.
 
 If you ask it to send, it says so and hands you the text to paste.
 
