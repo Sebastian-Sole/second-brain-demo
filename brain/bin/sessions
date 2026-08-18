@@ -85,6 +85,23 @@ case "$cmd" in
     pattern=${1:-}
     [ -n "$pattern" ] || { echo "usage: sessions stage <pattern> [n]" >&2; exit 64; }
     limit=${2:-5}
+
+    # The path fix above is one way the destination goes wrong; this checks
+    # the property that matters — will git commit what lands there? A probe
+    # file *inside* stage_dir is asked about, since the gitignore rule ends in
+    # a slash and the directory may not exist yet. 0 = ignored, continue.
+    # 1 = not ignored, refuse. 128 = no git repo, nothing to leak into.
+    # `rc=$?` guards this: exit 1 is the *normal* answer, and a bare call
+    # would end the script silently under `set -e`.
+    rc=0
+    git check-ignore -q "$stage_dir/probe.jsonl" 2>/dev/null || rc=$?
+    if [ "$rc" -eq 1 ]; then
+      echo "sessions: git is NOT ignoring $stage_dir, so anything copied there would be committed and pushed on the next turn." >&2
+      echo "          Transcripts hold credentials, client code and anything you ever pasted into a session." >&2
+      echo "          Nothing was copied. Check that .gitignore still has the line: cortex/raw/sessions/transcripts/" >&2
+      exit 1
+    fi
+
     mkdir -p "$stage_dir"
 
     # Collect every match first, then sort by recency across ALL of them, so
