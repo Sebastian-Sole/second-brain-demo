@@ -1,29 +1,52 @@
 #!/usr/bin/env sh
-# Check that this vault has everything it needs to work.
+# Check that this vault has everything it needs to work, and repair the small
+# structural things itself.
 #
-#   brain/bin/doctor
+#   brain/bin/doctor            check, and fix missing folders and lost +x bits
+#   brain/bin/doctor --check    report only, change nothing
 #
-# One line per check: [ok] fine · [!!] worth fixing · [XX] blocking. Every
-# problem comes with the exact thing to do about it, in words rather than
-# jargon — this is the file you run when something isn't working and you
-# don't yet know enough to guess why.
+# One line per check: [ok] fine · [fx] fixed for you · [!!] worth fixing ·
+# [XX] blocking. Every problem comes with the exact thing to do about it, in
+# words rather than jargon — this is the file you run when something isn't
+# working and you don't yet know enough to guess why.
+#
+# Use --check when nobody is watching — a scheduler, a CI job, a pre-commit
+# hook — so a run can never surprise you with a change you didn't ask for.
 #
 # Exits 1 if anything is blocking, 0 otherwise, so a script can call it too.
 # Portable on purpose: POSIX shell, no jq, no runtime.
 
 set -u
 
+fixing=1
+for arg in "$@"; do
+  case "$arg" in
+    --check) fixing=0 ;;
+    *) echo "doctor: unknown option '$arg' — usage: brain/bin/doctor [--check]" >&2
+       exit 64 ;;
+  esac
+done
+
 root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 cd "$root" || exit 1
 
 blockers=0
 warnings=0
+fixes=0
 
-ok()   { printf '  [ok] %s\n' "$1"; }
-warn() { printf '  [!!] %s\n' "$1"; [ -n "${2:-}" ] && printf '       -> %s\n' "$2"
-         warnings=$((warnings + 1)); }
-fail() { printf '  [XX] %s\n' "$1"; [ -n "${2:-}" ] && printf '       -> %s\n' "$2"
-         blockers=$((blockers + 1)); }
+ok()    { printf '  [ok] %s\n' "$1"; }
+fixed() { printf '  [fx] %s\n' "$1"; fixes=$((fixes + 1)); }
+warn()  { printf '  [!!] %s\n' "$1"; [ -n "${2:-}" ] && printf '       -> %s\n' "$2"
+          warnings=$((warnings + 1)); }
+fail()  { printf '  [XX] %s\n' "$1"; [ -n "${2:-}" ] && printf '       -> %s\n' "$2"
+          blockers=$((blockers + 1)); }
+
+# Findings come back from awk through a file rather than a pipe: a `while read`
+# on the far side of a `|` runs in a subshell, and the warning counts it bumps
+# there die with it.
+tmp=${TMPDIR:-/tmp}/brain-doctor.$$
+trap 'rm -f "$tmp"' EXIT INT TERM
+tab=$(printf '\t')
 
 echo
 echo "Second brain — checkup"
@@ -45,6 +68,18 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
 else
   fail "this folder is not a git repository — nothing here can be undone" \
        "Run:  git init && git add -A && git commit -m 'my second brain'"
+fi
+
+# git refuses to commit for someone it can't name. The vault commits after every
+# turn, so an unset identity isn't a style problem — it is the whole save loop
+# failing quietly inside a hook nobody reads the output of.
+gname=$(git config user.name 2>/dev/null || true)
+gmail=$(git config user.email 2>/dev/null || true)
+if [ -n "$gname" ] && [ -n "$gmail" ]; then
+  ok "git knows who you are ($gname <$gmail>)"
+else
+  fail "git has no name or email set, so nothing here can be committed" \
+       "Run:  git config --global user.name 'Your Name' && git config --global user.email 'you@example.com'"
 fi
 
 # A remote is optional, but it is the difference between "backed up" and not.
@@ -105,24 +140,95 @@ echo
 
 echo "The vault"
 
+# --------------------------------------------------------------------------
+# The line this script will not cross: STRUCTURE YES, CONTENT AND PATHS NEVER.
+#
+# Everything below may create an empty folder, drop a .gitkeep into one, or put
+# back an executable bit. None of those can destroy anything: an empty folder
+# holds no meaning, and a missing +x is a fact about the filesystem, not about
+# you.
+#
+# It may never create, move, rename, delete or rewrite a note — not even an
+# obviously misfiled one, not even to fix frontmatter. Those are the operations
+# that break inbound [[wikilinks]] and quietly change what a note means, and a
+# health check running unattended is the worst possible place for them. They
+# belong to  maintain , which is conservative, explains itself, and is read by
+# a human before it lands.
+# --------------------------------------------------------------------------
+
+# Distinguish "the vault is missing a folder" from "you are not in the vault".
+# Creating 00_Inbox/ in someone's home directory would be its own small disaster,
+# so the harness has to be here before anything gets made.
+in_vault=0
+[ -f AGENTS.md ] && [ -d brain/bin ] && in_vault=1
+
+# A folder counts as empty for git's purposes if the only things in it are the
+# gitkeep itself and macOS's litter, so both are excluded from the look. Globs
+# rather than find, because -mindepth isn't POSIX; an unmatched glob stays
+# literal, which is what the -e test is there to catch.
+otherwise_empty() {
+  for e in "$1"/* "$1"/.[!.]*; do
+    [ -e "$e" ] || continue
+    case "${e##*/}" in .gitkeep|.DS_Store) continue ;; esac
+    return 1
+  done
+  return 0
+}
+
 missing=""
-for d in 00_Inbox 01_Projects 02_Areas 03_Resources 04_Archive 05_Attachments Daily raw brain/prompts brain/bin; do
+unfixed=0
+for d in 00_Inbox 01_Projects 02_Areas 03_Resources 04_Archive 05_Attachments Tasks Daily raw; do
+  if [ ! -d "$d" ]; then
+    if [ "$in_vault" -eq 0 ]; then
+      missing="$missing $d"
+    elif [ "$fixing" -eq 1 ] && mkdir -p "$d" 2>/dev/null && : > "$d/.gitkeep" 2>/dev/null; then
+      fixed "created the missing $d/ folder (with a .gitkeep so git keeps it)"
+    else
+      warn "the $d/ folder is missing" \
+           "Run:  brain/bin/doctor   — without --check it makes the folder for you"
+      unfixed=$((unfixed + 1))
+    fi
+  elif [ ! -f "$d/.gitkeep" ] && otherwise_empty "$d"; then
+    # An empty folder without a .gitkeep doesn't exist as far as a clone is
+    # concerned, so the next machine to pull silently loses it.
+    if [ "$fixing" -eq 1 ] && : > "$d/.gitkeep" 2>/dev/null; then
+      fixed "put a .gitkeep back in the empty $d/ (git doesn't track empty folders)"
+    else
+      warn "$d/ is empty and has no .gitkeep, so a fresh clone won't have it" \
+           "Run:  brain/bin/doctor   — without --check it puts the .gitkeep back"
+      unfixed=$((unfixed + 1))
+    fi
+  fi
+done
+
+# The harness folders are a different kind of missing: an empty brain/prompts/
+# is no more useful than no brain/prompts/, so there is nothing to fix here.
+for d in brain/prompts brain/bin; do
   [ -d "$d" ] || missing="$missing $d"
 done
-if [ -z "$missing" ]; then
-  ok "all folders present"
-else
+
+if [ -n "$missing" ]; then
   fail "missing folders:$missing" \
        "You're probably not in the vault directory. cd into it and try again."
+elif [ "$unfixed" -eq 0 ]; then
+  ok "all folders present"
 fi
 
 for s in run sync sessions doctor check; do
-  if [ -x "brain/bin/$s" ]; then
-    :
-  elif [ -f "brain/bin/$s" ]; then
-    warn "brain/bin/$s isn't executable" "Run:  chmod +x brain/bin/*"
+  [ -f "brain/bin/$s" ] || fail "brain/bin/$s is missing" \
+                                "Re-download the repo — part of the harness is gone"
+done
+
+# A lost +x usually arrives by way of a zip file, a Windows checkout or a copy
+# onto a FAT drive. It says nothing about the contents, so it is safe to restore.
+for f in brain/bin/*; do
+  [ -f "$f" ] || continue
+  [ -x "$f" ] && continue
+  if [ "$fixing" -eq 1 ] && chmod +x "$f" 2>/dev/null; then
+    fixed "made $f executable again"
   else
-    fail "brain/bin/$s is missing" "Re-download the repo — part of the harness is gone"
+    warn "$f isn't executable, so nothing can run it" \
+         "Run:  chmod +x brain/bin/*"
   fi
 done
 [ -x brain/bin/run ] && [ -x brain/bin/sync ] && ok "the scripts can run"
@@ -146,6 +252,18 @@ elif [ ! -f "$profile" ] || grep -qE '^- \*\*Name:\*\*[[:space:]]*$' "$profile" 
   fi
 else
   ok "the vault knows who you are"
+fi
+
+# The profile is read at the start of every session, which is exactly what makes
+# it valuable and exactly why it has to stay short. Report only — trimming
+# someone's own words is not a health check's business.
+profile_cap=40
+if [ -f "$profile" ]; then
+  plines=$(wc -l < "$profile" 2>/dev/null | tr -d ' ')
+  if [ "${plines:-0}" -gt "$profile_cap" ]; then
+    warn "'$profile' is $plines lines long — the cap is $profile_cap" \
+         "Every line here is re-read at the start of every session and on every turn after it, so you pay for it over and over. Keep the hub to the five headings and move the detail out into linked spoke notes."
+  fi
 fi
 
 # Count only the human's notes — the shipped examples are tagged, so a fresh
@@ -175,6 +293,166 @@ if [ -f '03_Resources/Assumptions.md' ]; then
 fi
 
 echo
+
+# ------------------------------------------------------------------- tasks
+#
+# Tasks/ holds one note per open task; a task that stops being open keeps its
+# note and gains a closing date. The date is the entire point. Without it,
+# "how long was this open?" is unanswerable, and a task quietly abandoned in
+# March looks exactly like one finished this morning.
+
+task_dirs=""
+[ -d Tasks ]      && task_dirs="$task_dirs Tasks"
+[ -d 04_Archive ] && task_dirs="$task_dirs 04_Archive"
+
+if [ -n "$task_dirs" ]; then
+  echo "Tasks"
+
+  : > "$tmp"
+  # shellcheck disable=SC2086  # the list is ours; splitting it is how find takes it
+  find $task_dirs -name '*.md' -type f 2>/dev/null -exec awk '
+    function verdict() {
+      if (fn == "") return
+      if (task == "done" || task == "dropped") {
+        closed++
+        if (!dated) print "nodate\t" fn "\t" task
+      } else if (task == "open") {
+        opened++
+        if (dated) print "opendated\t" fn "\t" task
+        if (fn ~ /^04_Archive\//) print "stranded\t" fn "\t" task
+      }
+    }
+    FNR == 1 {
+      verdict()
+      fn = FILENAME; sub(/^\.\//, "", fn)
+      infm = ($0 ~ /^---[ \t]*$/) ? 1 : 0
+      task = ""; dated = 0
+      next
+    }
+    !infm { next }
+    /^---[ \t]*$/      { infm = 0; next }
+    /^task:[ \t]/      { v = $2; gsub(/"/, "", v); task = v; next }
+    /^completed:[ \t]/ { v = $2; gsub(/"/, "", v); if (v ~ /[0-9]/) dated = 1; next }
+    END { verdict(); print "tally\t" opened + 0 "\t" closed + 0 }
+  ' {} + >> "$tmp" 2>/dev/null
+
+  tasks_open=0
+  tasks_closed=0
+  task_problems=0
+  while IFS="$tab" read -r kind f extra; do
+    case "${kind:-}" in
+      tally)
+        tasks_open=$((tasks_open + f))
+        tasks_closed=$((tasks_closed + extra))
+        ;;
+      nodate)
+        warn "$f is  task: $extra  but has no  completed:  date" \
+             "Add  completed: YYYY-MM-DD  to its frontmatter — the day you actually stopped. Until it's there, nothing can tell you how long this one ran."
+        task_problems=$((task_problems + 1))
+        ;;
+      opendated)
+        warn "$f is still  task: open  yet already carries a  completed:  date" \
+             "One of the two is wrong. Set  task: done  (or  task: dropped ) if it's over, or delete the  completed:  line if it isn't."
+        task_problems=$((task_problems + 1))
+        ;;
+      stranded)
+        warn "$f is archived but still  task: open  — it was filed away without being closed out" \
+             "Decide which it was: add  task: done  or  task: dropped  plus  completed: YYYY-MM-DD . If it's genuinely still live, move the note back to Tasks/ yourself."
+        task_problems=$((task_problems + 1))
+        ;;
+    esac
+  done < "$tmp"
+
+  if [ "$task_problems" -eq 0 ]; then
+    if [ "$((tasks_open + tasks_closed))" -eq 0 ]; then
+      echo "  [--] no tasks yet — Tasks/ takes one note per open task"
+      echo "       -> Try:  capture <something you owe someone>"
+    else
+      ok "$tasks_open open, $tasks_closed closed — and every closed one is dated"
+    fi
+  fi
+
+  echo
+fi
+
+# ------------------------------------------------- the commands and the tools
+#
+# Two ways a command is broken before anyone runs it: a tool that never says
+# what it needs, and a wrapper pointing at a prompt that isn't there any more.
+# Both fail in the middle of a session, which is the expensive place to find out.
+
+if [ -d .claude/commands ] || [ -d brain/tools ]; then
+  echo "Commands and tools"
+
+  cmd_problems=0
+
+  # brain/tools/ is newer than the rest of the harness and may simply not exist
+  # yet — that's not a fault, so say nothing about it.
+  ntools=0
+  if [ -d brain/tools ]; then
+    for f in brain/tools/*.md; do
+      [ -f "$f" ] && ntools=$((ntools + 1))
+    done
+  fi
+
+  if [ "$ntools" -gt 0 ]; then
+    awk '
+      function verdict() {
+        if (fn == "") return
+        if (!hasfm)         print fn "\thas no YAML frontmatter, so it declares nothing"
+        else if (!req && !fb) print fn "\tdeclares neither  requires:  nor  fallback:"
+        else if (!req)      print fn "\tdeclares no  requires:"
+        else if (!fb)       print fn "\tdeclares no  fallback:"
+      }
+      FNR == 1 {
+        verdict()
+        fn = FILENAME; sub(/^\.\//, "", fn)
+        hasfm = ($0 ~ /^---[ \t]*$/) ? 1 : 0
+        infm = hasfm; req = 0; fb = 0
+        next
+      }
+      !infm { next }
+      /^---[ \t]*$/ { infm = 0; next }
+      /^requires:/  { req = 1; next }
+      /^fallback:/  { fb = 1; next }
+      END { verdict() }
+    ' brain/tools/*.md > "$tmp" 2>/dev/null
+
+    while IFS="$tab" read -r f miss; do
+      [ -n "${f:-}" ] || continue
+      warn "$f $miss" \
+           "Add both to its frontmatter.  requires:  names what has to be installed or reachable;  fallback:  says what to do when it isn't. A tool without them strands whoever called it halfway through."
+      cmd_problems=$((cmd_problems + 1))
+    done < "$tmp"
+  fi
+
+  # A wrapper is meant to be thin — a pointer at the shared prompt every agent
+  # reads. Pointing at nothing is worse than not existing: the command still
+  # shows up in the menu.
+  nwrap=0
+  for w in .claude/commands/*.md; do
+    [ -f "$w" ] || continue
+    nwrap=$((nwrap + 1))
+    target=$(grep -oE 'brain/(prompts|tools)/[A-Za-z0-9._-]+\.md' "$w" 2>/dev/null | head -1)
+    if [ -z "$target" ]; then
+      warn "$w names no brain/prompts/ or brain/tools/ file — it's a command with nothing behind it" \
+           "Point it at the shared prompt, e.g. a line reading:  Read \`brain/prompts/<name>.md\` and follow it exactly."
+      cmd_problems=$((cmd_problems + 1))
+    elif [ ! -f "$target" ]; then
+      warn "$w points at $target, which doesn't exist" \
+           "Restore $target, or delete the wrapper. As it stands the command fails the moment anyone runs it."
+      cmd_problems=$((cmd_problems + 1))
+    fi
+  done
+
+  if [ "$cmd_problems" -eq 0 ] && [ "$((nwrap + ntools))" -gt 0 ]; then
+    summary="all $nwrap command wrappers point at prompts that exist"
+    [ "$ntools" -gt 0 ] && summary="$summary, and all $ntools tools declare what they need"
+    ok "$summary"
+  fi
+
+  echo
+fi
 
 # ------------------------------------------------- Claude Code, if it's here
 
@@ -228,6 +506,11 @@ fi
 
 plural() { [ "$1" -eq 1 ] && echo "$1 thing" || echo "$1 things"; }
 
+if [ "$fixes" -gt 0 ]; then
+  echo "Fixed $(plural "$fixes") along the way — structure only, nothing that holds meaning."
+  echo "Run  brain/bin/sync  to commit it, or  --check  next time to look without touching."
+fi
+
 if [ "$blockers" -gt 0 ]; then
   echo "$(plural "$blockers") need fixing before this will work."
   [ "$warnings" -gt 0 ] && echo "$(plural "$warnings") worth doing after that."
@@ -237,8 +520,10 @@ fi
 
 if [ "$warnings" -gt 0 ]; then
   echo "Everything works. $(plural "$warnings") worth doing when you have a minute."
-else
+elif [ "$fixes" -eq 0 ]; then
   echo "All good."
+else
+  echo "Everything else is fine."
 fi
 echo
 exit 0
