@@ -16,7 +16,7 @@ pass at `bec2c00`.
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
 | 001 | Anchor all four scripts to the vault they ship in, and refuse to stage transcripts git would commit | P1 | M | — | TODO |
-| 002 | Correct five places that still promise mail and calendar never write | P1 | S | — | TODO |
+| 002 | Correct five places that still promise mail and calendar never write | P1 | S | — | DONE (approved 2026-08-18, **not merged** — branch `advisor/002-correct-stale-mail-and-calendar-promises`, commit `87b4623`) |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).
@@ -31,6 +31,34 @@ private repository `Sebastian-Sole/second-brain` at `~/Documents/Obsidian Vault`
 That vault was not inspected during this audit. Run `brain/bin/doctor` there
 first: if its copy of the harness predates `bec2c00`, both plans apply to it
 unchanged.
+
+## Execution log
+
+**002 — APPROVED 2026-08-18, not merged.** Executor: one `general-purpose`
+subagent on Sonnet, isolated worktree, branch
+`advisor/002-correct-stale-mail-and-calendar-promises`, one commit `87b4623`.
+
+Reviewed by re-running all 13 machine-checkable done criteria in the worktree
+rather than trusting the executor's report. All 13 pass. Scope is exactly the
+four in-scope files, 5 insertions and 5 deletions, and all five replacements
+match the plan's specified text verbatim. `brain/bin/doctor --check` exits 0
+with zero `[XX]` lines.
+
+**The executor found a defect in the plan and was right to.** Step 5 originally
+ran one grep across all four files and expected no output — an expectation that
+could only be met by deleting `AGENTS.md:784` and `:804`, which the same plan's
+"Out of scope" section requires be left alone. The executor did not edit them to
+make the command pass; it reported the contradiction and completed the rest.
+Step 5 has since been corrected into two commands, and both were verified
+against the executor's own worktree. The lesson is written into the plan: a
+verification you can only pass by editing an out-of-scope file is a defect in
+the plan, not a task.
+
+One observation, not a defect: the `calendar` row's third column is the "Not
+for" column, and after this change it contains no pointer to another command.
+It contained none before either — the row's whole column was the stale "never"
+sentence — so this is not a regression, but if that column is ever tightened,
+that row is the one with nothing in it.
 
 ## Decisions taken during the audit
 

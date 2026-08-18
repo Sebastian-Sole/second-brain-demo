@@ -283,14 +283,33 @@ sed -n '891,892p' AGENTS.md | grep -c 'see the ceiling'
 
 ### Step 5: Confirm no stale claim survives, and nothing correct was over-corrected
 
-**Verify** — no stale phrasing left in the in-scope files:
+**Verify** — no stale phrasing left. This is two commands, not one, and the
+split is deliberate. The three small files must come back completely clean:
 
 ```sh
-grep -nE 'never (sends?|responds?|reschedul)|read-only by design|never, see the ceiling' \
-  .claude/commands/email.md .claude/commands/calendar.md README.md AGENTS.md
+grep -nE 'never (sends?|responds?|reschedul)|read-only by design' \
+  .claude/commands/email.md .claude/commands/calendar.md README.md
 ```
 
 → no output, exit 1.
+
+`AGENTS.md` cannot be checked the same way, because it legitimately contains the
+words "never sends" twice — at line 784 and line 804 — and both are correct and
+out of scope. Check it for its own two stale phrases instead:
+
+```sh
+grep -n 'never, see the ceiling' AGENTS.md
+```
+
+→ no output, exit 1.
+
+> **Corrected 2026-08-18.** An earlier version of this step ran a single grep
+> across all four files and expected no output. That expectation was impossible
+> to satisfy without deleting `AGENTS.md:784` and `:804`, which this plan's own
+> "Out of scope" section requires you to leave alone. If you are ever handed a
+> verification you can only pass by editing an out-of-scope file, that is a
+> defect in the plan — stop and report it, exactly as the executor of this plan
+> did. Do not edit the file to make the command pass.
 
 **Verify** — the three *correct* statements elsewhere are still there. This
 command must still find exactly three lines:
