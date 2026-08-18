@@ -433,9 +433,11 @@ if [ -d .claude/commands ] || [ -d brain/tools ]; then
   for w in .claude/commands/*.md; do
     [ -f "$w" ] || continue
     nwrap=$((nwrap + 1))
-    target=$(grep -oE 'brain/(prompts|tools)/[A-Za-z0-9._-]+\.md' "$w" 2>/dev/null | head -1)
+    # A handful of commands are shell scripts rather than prompts, so their
+    # wrapper points at brain/bin/<name> — no .md, and just as real a target.
+    target=$(grep -oE 'brain/(prompts|tools)/[A-Za-z0-9._-]+\.md|brain/bin/[A-Za-z0-9._-]+' "$w" 2>/dev/null | head -1)
     if [ -z "$target" ]; then
-      warn "$w names no brain/prompts/ or brain/tools/ file — it's a command with nothing behind it" \
+      warn "$w names no brain/prompts/, brain/tools/ or brain/bin/ file — it's a command with nothing behind it" \
            "Point it at the shared prompt, e.g. a line reading:  Read \`brain/prompts/<name>.md\` and follow it exactly."
       cmd_problems=$((cmd_problems + 1))
     elif [ ! -f "$target" ]; then
