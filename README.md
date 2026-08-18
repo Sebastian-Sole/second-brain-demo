@@ -112,10 +112,11 @@ connecting first:
 `digest` surprises people: it names themes across unrelated notes that you never wrote down,
 including the things you keep avoiding. `infer` is the one a general chat model can't do, because it
 doesn't know you — and every guess it makes is labelled, evidenced, falsifiable, and promotable to a
-fact only by you. **Mail and calendar read, and can prepare a draft. They never send anything**,
-however you ask — that ceiling is written into the tools themselves, and on Claude Code a deny list
-in `.claude/settings.json` enforces it for the mail and calendar connectors it names. Under another
-agent, or a connector it doesn't name, the rule is the prompt and nothing else.
+fact only by you. **Mail and calendar read and draft. They send only when you ask and then
+approve** — that rule is written into the tools themselves, and on Claude Code an `ask` list in
+`.claude/settings.json` makes the harness stop and ask you, for the mail and calendar connectors it
+names. Under another agent, a connector it doesn't name, or any mode that turns prompts off, the
+rule is the prompt and nothing else.
 
 The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `cortex/00_Inbox/`,
 `cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/03_Resources/`, `cortex/04_Archive/`, plus `cortex/Tasks/`, `cortex/Daily/` and `cortex/raw/`.

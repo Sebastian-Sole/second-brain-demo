@@ -126,9 +126,10 @@ a working vault.** These are offers, not more interview.
 
 **Mail and calendar.** State the ceiling *before* they connect anything, not after:
 
-> If you want, I can read your mail and your calendar, and draft replies you send yourself. I
-> can't send, reply, delete, accept or decline anything, and I can't put anything in your calendar
-> at all — that's off by design, not a setting you can flip. Want to connect either one?
+> If you want, I can read your mail and your calendar and answer from them. Reading never
+> interrupts you. Writing always does: I draft by default, and I only send a mail or put something
+> in your calendar if you ask me to and then say yes to the prompt. I'll never suggest deleting or
+> declining anything. Want to connect either one?
 
 If yes, walk them through their agent's connector setup in plain language and confirm it with
 `brain/bin/doctor`. If no, say that's completely fine and move on: `brain/tools/email.md` and

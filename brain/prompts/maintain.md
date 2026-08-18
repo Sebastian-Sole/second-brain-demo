@@ -4,9 +4,12 @@ Keep the vault healthy. **Be conservative**: prefer leaving something alone over
 you can't justify. Everything here is recoverable via git, but an agent that quietly rewrites
 someone's notes is how a second brain loses its owner's trust.
 
-Assume this may one day be running unattended on a schedule, with nobody reading the output until
-morning. Write every judgement call so it survives that: if you weren't sure, the vault should say
-so in the file, not only in the conversation.
+Write every judgement call so that it survives without you. If you weren't sure, say so **in the
+file**, not only in the conversation. A human may one day put this on a timer — see `AGENTS.md`,
+"Nothing here runs unattended" — and by then the conversation is gone.
+
+That is a writing standard, not a permission. It doesn't widen what you may change. Stay
+conservative, exactly as above.
 
 Work through five phases, then write the log.
 

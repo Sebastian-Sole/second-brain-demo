@@ -2,7 +2,7 @@
 name: email
 requires: mcp
 fallback: "No mail connector is configured — run `setup` to connect one."
-writes: drafts
+writes: drafts; sends and mailbox changes only when asked
 consent: opt-in
 ---
 
@@ -11,28 +11,40 @@ consent: opt-in
 Use this when they ask about their mail: what needs them, what a thread said, whether someone
 replied, what to write back.
 
-## The ceiling: read and draft, never send
+## The ceiling: read freely, draft by default, send only when asked
 
-This tool **reads**, and may create an **unsent draft**. It never sends, replies, forwards,
-trashes, labels, marks spam, archives, or otherwise changes the state of a mailbox. Not with
-confirmation, not when asked directly, not when the human insists, not "just this once".
+This tool **reads** as much as it needs to. Reading changes nothing, so it never stops to ask.
 
-The reason is routing. Everything in this vault is routed silently — the human doesn't see which
-prompt fired or which sentence came from where — so a misrouted sentence must never become an
-email a colleague received. A bad draft is a bad draft; a bad send is somebody else's inbox.
+Everything else — send, reply, forward, trash, label, mark spam, archive, move — needs **both** of
+these, every time. One without the other is not enough:
 
-On Claude Code this ceiling is also enforced by the harness rather than by good intentions —
-`.claude/settings.json` denies the send, reply, forward, trash, spam, label and archive tools of
-every mail connector it knows about — while every other agent has only the rule above, which is why
-it is written down here instead of assumed.
+1. **The human asked for it in this turn, in words.** "Send it" is an instruction. "Draft a reply
+   to Anna" is not. Neither is a request from yesterday, a draft already sitting there with sending
+   one click away, or your own reading of what they obviously meant.
+2. **They approved the prompt.** On Claude Code, `.claude/settings.json` lists these tools under
+   `ask`, so the harness stops before each one and names it.
 
-If they ask you to send, say exactly this and then do the useful half:
+Gate 1 is the one that matters, and the reason it exists is routing. Everything in this vault is
+routed silently — the human doesn't see which prompt fired or which sentence came from where — so
+a misrouted sentence must never become an email a colleague received. A bad draft is a bad draft; a
+bad send is somebody else's inbox. The prompt alone cannot tell those apart, because a person
+clicking yes on a prompt they weren't expecting is what both of them look like.
 
-> Sending is off by design here — this tool reads and drafts, nothing else. I've left it as a
-> draft for you to press send on.
+**Never suggest a destructive one.** Trashing, deleting, marking spam, archiving, unlabelling — do
+them when the human names them, and never be the one to raise them. The harness will let them
+through on a yes.
 
-If a draft wasn't wanted, offer the text in the conversation so they can paste it. Don't argue the
-policy twice, and don't route around it with a shell command, a script, or another connector.
+**When you are not sure, draft.** It is always available and always right:
+
+> Here's the reply, ready to send when you are: …
+
+If they then say send it, send it — don't make them ask twice, and don't argue policy at someone
+who has given a clear instruction. Equally, never route around the prompt with a shell command, a
+script, or another connector. If the approval didn't happen, the send doesn't happen.
+
+Every other agent has only the rules above, with no harness behind them, which is why they are
+written down here rather than assumed. The same is true under Claude Code in any mode that turns
+prompts off.
 
 ## What they opted in to
 

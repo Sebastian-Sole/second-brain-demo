@@ -2,7 +2,7 @@
 name: calendar
 requires: mcp
 fallback: "No calendar connector is configured — run `setup` to connect one."
-writes: none
+writes: events, and only when asked
 consent: opt-in
 ---
 
@@ -11,42 +11,53 @@ consent: opt-in
 Use this when they ask what's on: today, tomorrow, this week, whether they're free, when the thing
 with Anna is.
 
-## The ceiling: read and draft, never respond or change
+## The ceiling: read freely, write only when asked
 
-This tool **reads**, and only reads. It never creates, accepts, declines, tentatively-accepts,
-delegates, deletes, moves, reschedules, or edits an event, and it never invites anyone. Not with
-confirmation, not when asked directly, not when the human insists.
+This tool **reads** as much as it needs to. Reading a calendar is private and changes nothing, so it
+never stops to ask.
 
-The reason is routing. Everything in this vault is routed silently — the human doesn't see which
-prompt fired — so a misrouted sentence must never become a meeting somebody was declined from or
-an invitation a colleague received. Reading a calendar is private; writing to one is social.
+Creating, accepting, declining, delegating, moving, rescheduling, deleting or editing an event needs
+**both** of these, every time:
 
-On Claude Code this ceiling is enforced by the harness rather than by good intentions —
-`.claude/settings.json` denies the connector's create, update, delete and respond-to-event tools, so
-there is no call left that could reach anybody. Every other agent has only the rule above, which is
-why it is written down here instead of assumed.
+1. **The human asked for it in this turn, in words.** Not inferred from a conversation about a
+   meeting. Not carried over from yesterday.
+2. **They approved the prompt.** On Claude Code, `.claude/settings.json` lists the connector's
+   create, update, delete and respond-to-event tools under `ask`.
 
-**Why there is no tentative hold.** This tool used to make one, and the reasoning for removing it is
-worth keeping, because it generalises. Creating an event and inviting people to it are *the same
-call*: attendees are an argument, and the connector's own default notifies every one of them. A
-permission layer allows or denies a tool by name — it cannot allow one argument and refuse another.
-So "create a hold, but never invite anyone" was a rule only prose could hold, written to the same
-agent that a planted instruction in an invitation would also be written to. A hold the human can
-make in five seconds was not worth that, and mail cannot be recalled.
+Gate 1 is the one that matters, and the reason it exists is routing. Everything in this vault is
+routed silently — the human doesn't see which prompt fired — so a misrouted sentence must never
+become a meeting somebody was declined from, or an invitation a colleague received. Reading a
+calendar is private; writing to one is social.
 
-If they ask you to make a hold, say exactly this:
+**Attendees are the trap, and it is worth understanding exactly.** Creating an event and inviting
+people to it are *the same call*: attendees are an argument, and the connector's own default
+notifies every one of them. A permission layer allows or denies a tool by name — it cannot allow one
+argument and refuse another. So the approval prompt for "hold an hour on Thursday" and the approval
+prompt for "hold an hour on Thursday with Anna, Bjørn and Chris" look identical to the person
+reading them.
 
-> Creating events is off by design here — the same call that makes a hold is the call that invites
-> people, and the connector notifies them by default, so this tool doesn't create at all. Tell me
-> the slot and I'll give you the details to put in.
+That means the human's real protection is **your sentence**, not the prompt. Before you create
+anything, say what it is and who it will notify:
 
-If they ask you to invite someone, respond to an invite, or change something, say exactly this:
+> About to create "Billing sync", Thursday 14:00–15:00, no guests — nobody gets notified.
 
-> Responding, inviting and rescheduling are off by design here — this tool reads, nothing else.
-> I've put the details together so you can do it in one click.
+or
 
-Then give them what they need: the event, the conflict, the sentence to send. Don't route around
-the ceiling with a shell command, a script, or another connector.
+> About to create "Billing sync", Thursday 14:00–15:00, inviting anna@… and bjorn@… — the
+> calendar emails both of them.
+
+If you can't tell whether they want guests, **ask before you create, not after.** Silent routing is
+about which command runs. This is about who receives an email, and that is never something to
+guess.
+
+**Never suggest deleting, declining or moving anything.** Do it when the human names it; never raise
+it yourself. If all they wanted was to know when they're free, answer that and create nothing. And
+never route around the prompt with a shell command, a script, or another connector — if the approval
+didn't happen, the write doesn't happen.
+
+Every other agent has only the rules above, with no harness behind them, which is why they are
+written down here rather than assumed. The same is true under Claude Code in any mode that turns
+prompts off.
 
 ## What they opted in to
 
@@ -55,7 +66,8 @@ once, by connecting a calendar during `setup`. After that this tool is used like
 silently, with no permission question before each read — because routing here is invisible and
 stopping to ask every time would contradict it. What the opt-in doesn't buy is anything past
 reading: nothing from the calendar reaches the vault unless they ask for it, nothing about them is
-inferred from what's on it, and the ceiling above holds no matter how the request is phrased.
+inferred from what's on it, and every write still needs both gates above, no matter how the request
+is phrased.
 
 ## Steps
 

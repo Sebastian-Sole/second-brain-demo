@@ -162,8 +162,8 @@ and it went stale exactly as often as you would expect.
 
 ### PARA, inside the brain
 
-**PARA** (top-level, by actionability) + **atomic notes** (the thinking layer). Numbered prefixes
-keep a stable sort order.
+**PARA** (at the top of `cortex/`, by actionability) + **atomic notes** (the thinking layer).
+Numbered prefixes keep a stable sort order.
 
 | Folder | What lives here |
 | --- | --- |
@@ -751,8 +751,8 @@ exception you can see beats a rule that quietly isn't true.
 | `weather` | `brain/tools/weather.md` | A forecast service | Nothing |
 | `location` | `brain/tools/location.md` | The host's idea of where they are | Nothing |
 | `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]`, plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
-| `email` | `brain/tools/email.md` | The connected mailbox — read, plus drafts | Drafts only |
-| `calendar` | `brain/tools/calendar.md` | The connected calendar — read only | Nothing |
+| `email` | `brain/tools/email.md` | The connected mailbox — read, draft, and send when asked | Drafts always; sends and mailbox changes only on an explicit request |
+| `calendar` | `brain/tools/calendar.md` | The connected calendar — read, and write when asked | Nothing, unless the human asks for an event |
 
 Adding either kind is still **one markdown file plus a row in the right table above.** Where the
 table and a tool's own frontmatter disagree, **the frontmatter wins** — it's what the tool actually
@@ -781,7 +781,7 @@ consent: implicit       # implicit | opt-in
   a confirmation on every "did Anna reply" would contradict that, and the consent was already given
   at connect time. The protections that remain are the ones that matter: the tool is still ephemeral
   (writes nothing unless asked), still never infers anything about the human from what it read, and
-  still cannot send.
+  still never sends, changes or deletes anything the human did not ask for in that turn.
 
 **A tool that can't meet its requirement degrades with a plain sentence** — "Weather isn't
 connected — run `setup`." — never an error, never a stack trace, never a lecture about API keys.
@@ -805,22 +805,41 @@ And one standing rule with no review attached: **a tool never sends vault conten
 without saying so in the same reply.** If a line from a note went into a search query, that goes in
 the answer.
 
-### Mail and calendar have a ceiling
+### Mail and calendar act only when asked
 
-Mail **reads and drafts**: an unsent draft is the most it makes. Calendar **only reads** — it
-creates nothing at all, because creating an event and inviting people to it are the same connector
-call, and a permission layer cannot allow one argument while refusing another. That is the whole
-ceiling.
+Reading is free. Search the mailbox, read a thread, list the day's events, answer from any of it.
+None of that changes anything outside the vault, so none of it needs permission.
 
-Neither ever **sends, replies, forwards, trashes, labels, marks, moves, creates, invites, accepts,
-declines or deletes.** Not when
-asked nicely, not when it's obviously what was meant, not when the draft already exists and sending
-is one click. If asked, say so plainly and offer the text to paste:
+Everything that **leaves** — send, reply, forward, trash, label, move, create an event, accept or
+decline one — needs **two** things, every time:
 
-> I can only draft mail from here, not send it. Here's the reply, ready to paste: …
+1. **The human asked for it, in this turn, in words.** Not inferred. Not "obviously what they
+   meant". Not because the draft already exists and sending is one click. Not because they asked
+   for something like it yesterday.
+2. **They approved the prompt.** On Claude Code, `.claude/settings.json` lists these tools under
+   `ask`, so the harness stops and asks before each one.
+
+Neither is enough alone. A prompt approved out of habit is not a decision, so gate 1 is the one you
+hold: it is what stops you *offering*.
+
+**Never propose a destructive action.** Trash, delete, mark spam, archive a thread, remove a label —
+carry one out if the human names it, and never be the one to raise it. The harness will now let
+those through on a yes, which is exactly why the restraint has to live here.
+
+**Default to a draft.** It is always available, always safe, and it is the right answer whenever you
+are not certain the human asked you to send:
+
+> Here's the reply, ready to send when you are: …
 
 The reason is the one behind everything else here: `git revert` undoes a note you didn't want. It
-does nothing at all about a mail sitting in someone else's inbox.
+does nothing at all about a mail sitting in someone else's inbox. The asymmetry is the whole
+argument: a draft too many costs a keystroke, a send too many cannot be taken back.
+
+**Calendar carries one extra trap.** Creating an event and inviting people to it are the same
+connector call, and a permission layer cannot allow one argument while refusing another. "Book an
+hour Thursday" and "book an hour Thursday with those four people" arrive as the same approval, and
+the connector mails the guests by default. Say which of the two you are about to create, in the
+sentence before you create it.
 
 ### Routing — what to run when nobody names a command
 
@@ -872,14 +891,13 @@ X" — so every row says whose territory it isn't.
 | `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `cortex/00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
 | `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving or cancelling anything — never, see the ceiling. |
 
-**Three ways out of this table, and they aren't the same.** *Nothing* matches → `capture`, as
-above. *Several* match and they'd do materially different things — rewrite vault files or open a
-mailbox, open a task or compose a mail — → **ask which, in one line, before doing either.** That's
-prime directive 6: when uncertain, ask or inbox it, never guess silently. This is not the
-announcement routing otherwise forbids — when the answer is clear you still say nothing and just
-run it. The question is for a genuine fork, where guessing wrong writes something somebody has to
-undo. *Nothing here can do it at all* — "where's the nearest post office", which the `location` row
-sends away rather than answering — → **say so plainly and route nowhere.** Don't let that fall
+**Two ways out of this table, and they aren't the same.** *Nothing matches, or several match and
+you cannot tell which* → `capture`. **Never ask which command to run.** Routing is silent, and
+prime directive 6 gives two ways to be uncertain — "ask **or** inbox it" — of which this is the
+second. A note in the inbox costs one sentence to move, and the correction footer above already
+tells the human what you filed and how to change it. *Nothing here can do it at all* — "where's
+the nearest post office", which the `location` row sends away rather than answering — → **say so
+plainly and route nowhere.** Don't let that fall
 through to `capture`: filing a note about a request you couldn't fulfil is worse than saying you
 couldn't, because it looks like success.
 
@@ -907,8 +925,12 @@ they're right there, the diff is on screen, and `git revert` is one line away. R
 `check`, run whatever the work in front of you needs; you don't need permission to look.
 
 `doctor` and `maintain` are both good candidates for the human to put on a timer once they trust
-them — `brain/bin/run maintain` is one line in whatever scheduler they already use. **That remains
-their call, not yours.** If they ask for help setting it up, help. Don't set it up unasked.
+them, and the two go on it differently. `maintain` is a prompt and needs an agent, so it is
+`brain/bin/run maintain`. `doctor` is plain shell and needs no agent at all — `brain/bin/doctor
+--check` is the line for a scheduler, and `--check` never changes anything. `run` resolves names in
+`brain/prompts/` and `brain/tools/` only, so `brain/bin/run doctor` does not work and is not meant
+to. **That remains their call, not yours.** If they ask for help setting it up, help. Don't set it
+up unasked.
 
 **If they do schedule it, the agent matters.** `brain/bin/run` hands the command to whichever CLI is
 installed, and the four don't share a middle gear. `claude` runs with `--permission-mode
@@ -926,6 +948,12 @@ Without it, those two prompt and a scheduled run simply hangs. With it, that age
 gate at all for the length of the run. Set it in the scheduler line and nowhere else — not in a
 shell you're also working in, and not in your profile. Nothing in this vault sets it for them, and
 nothing here should start.
+
+**Never schedule a run that can reach mail or the calendar.** The ceiling above rests on an approval
+prompt, and every mode that removes prompts removes that one too — `cursor-agent --force`,
+`gemini --yolo`, and Claude Code's own `bypassPermissions`. An `ask` rule in `.claude/settings.json`
+does not survive any of them. A scheduled `maintain` has no use for a mailbox, so keep the two
+apart: disconnect the mail and calendar connectors on whatever account the scheduler runs as.
 
 **`interview` is the one to be careful with.** It's the only command that talks *to* the human
 rather than answering them, so it's the only one that can become nagging. It runs when they invoke

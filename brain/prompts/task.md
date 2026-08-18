@@ -14,8 +14,9 @@ of the question.
 
 ## The model
 
-Open tasks live in **`cortex/Tasks/`** — top-level, unnumbered, alongside `cortex/Daily/` and `cortex/raw/`. The
-`00_`–`05_` prefixes belong to PARA; this isn't a PARA bucket.
+Open tasks live in **`cortex/Tasks/`** — at the top of `cortex/`, unnumbered, alongside
+`cortex/Daily/` and `cortex/raw/`. The `00_`–`05_` prefixes belong to PARA; this isn't a PARA
+bucket.
 
 **While open, the filename is the title:** `cortex/Tasks/Call the bank.md`. It's a linkable note, so a
 project can say `[[Call the bank]]`.

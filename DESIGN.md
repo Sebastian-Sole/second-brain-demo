@@ -28,7 +28,8 @@ brain/bin/check    lints the assumption register — the guardrail that isn't a 
 brain/bin/sessions finds and stages AI transcripts that agents can't reach themselves.
 
 .claude/commands/  18 thin wrappers, pointing at brain/prompts/, brain/tools/ and brain/bin/
-.claude/settings.json  a hook that calls brain/bin/sync, plus a read-only permission allowlist
+.claude/settings.json  a hook that calls brain/bin/sync, a read-only permission allowlist,
+                       and an ask list for every mail and calendar write
 ```
 
 Teaching the vault a new agent means adding **one case** to `brain/bin/run` and one pointer file.
@@ -265,6 +266,7 @@ cortex/03_Resources/               ~40 atomic notes — the actual knowledge
                                    Kaufmann — The Undoing Project.md
                                    About me.md · Assumptions.md
 cortex/04_Archive/                 3 finished projects
+cortex/05_Attachments/             the images and PDFs those notes point at
 cortex/06_Sessions/                ~200 distilled session notes + their own index.md
 cortex/Daily/                      2026-06-14.md … 2026-08-14.md
 cortex/Tasks/                      4 open tasks — the finished ones are in cortex/04_Archive/

@@ -159,8 +159,8 @@ you said you don't. The first time you run it there's nothing to go on, so it as
 and offers to write it down; after that it just runs. You say "Hacker News" — finding the actual
 feed URL is its job, not yours. It links every item to the original.
 
-**`email`** and **`calendar`** — read your mail and your schedule and answer from them. They can
-prepare a draft. They will never send anything. Read [Connecting mail and
+**`email`** and **`calendar`** — read your mail and your schedule and answer from them. They draft
+by default, and they send only when you ask them to and then approve it. Read [Connecting mail and
 calendar](#connecting-mail-and-calendar) before you connect either.
 
 **None of these file what they fetched.** A forecast or a headline is answered in the conversation
@@ -319,20 +319,31 @@ plain sentence — "No mail connector is configured" — rather than an error. O
 like every other command: you won't be asked permission again each time you ask what's on today.
 
 So it's worth being precise about what you agreed to that once, because three limits hold from then
-on, whatever you ask: **it can never send**, **nothing from your mail or calendar is written into the
-vault unless you ask for it**, and **nothing it reads there becomes a fact about you**. The rest of
-this section is those three, in full.
+on, whatever you ask: **it never sends unless you ask it to and then approve it**, **nothing from
+your mail or calendar is written into the vault unless you ask for it**, and **nothing it reads
+there becomes a fact about you**. The rest of this section is those three, in full.
 
 Read this before you connect anything:
 
-> **They read, and they can prepare a draft. They will never send.**
+> **They read and they draft. They touch your mailbox or your calendar only when you ask, and only
+> after you approve it.**
 
-That's the whole ceiling, and it holds when you ask directly, when it's obviously what you meant,
-and when the draft already exists and sending is one click. Email never sends, replies, forwards,
-trashes, labels, marks spam or archives. Calendar only reads: it never creates an event, accepts,
-declines, moves, cancels or invites anyone. It used to offer a tentative hold on your own calendar,
-and that was removed — the call that makes a hold is the same call that invites people, and the
-connector notifies them by default, so there was no way to keep one without the other.
+Reading is free — what's in my inbox, did Anna reply, am I free Thursday. None of that changes
+anything, so none of it stops to ask you.
+
+Anything that *leaves* — a send, a reply, a forward, a trash, a label, an event, an invitation —
+needs two separate things, and neither happens on its own. You have to ask for it, in words, in
+that message. Then Claude Code puts a prompt in front of you naming the exact tool, and you approve
+it. Asking yesterday doesn't count. A draft already sitting there doesn't count.
+
+If you didn't ask it to send, you get a draft. That's the default, and it's what you get whenever
+the agent is at all unsure.
+
+**One trap worth knowing about, on the calendar.** Creating an event and inviting people to it are
+the same call underneath, and the connector emails the guests by default. So "book an hour on
+Thursday" and "book an hour on Thursday with those four people" reach you as the same approval
+prompt. The agent is told to say which of the two it's about to make, in the sentence before it
+makes it. Read that sentence before you press yes.
 
 If you ask it to send, it says so and hands you the text to paste.
 
@@ -396,12 +407,13 @@ note got clobbered. `doctor` checks for exactly that and prints the one line tha
 
 Short and honest:
 
-- **Send anything.** No email sent, replied to or forwarded. No calendar invite accepted, declined
-  or issued. Drafts only, always. What holds that line is worth stating exactly: the tool files
-  themselves — plus, on Claude Code, a deny list in `.claude/settings.json` naming the send, reply,
-  trash and modify tools of the mail and calendar connectors it knows about. Connect one it doesn't
-  name, or run the vault under Codex, Cursor or Gemini, and the ceiling is a rule the agent is
-  following rather than a wall it can't cross.
+- **Send anything you didn't ask for.** Mail and calendar draft by default. A send, reply, forward,
+  trash, label, event or invitation happens only when you asked for it in that message and then
+  approved the prompt. What holds that line is worth stating exactly: the tool files themselves —
+  plus, on Claude Code, an `ask` list in `.claude/settings.json` naming the send, reply, trash and
+  modify tools of the mail and calendar connectors it knows about. Connect one it doesn't name, run
+  the vault under Codex, Cursor or Gemini, or turn prompts off in any mode, and the rule is one the
+  agent is following rather than a wall it can't cross.
 - **Run unattended.** No cron job, no CI workflow, no background agent ships with this. Every
   command is something you invoked, with the changes in front of you. You can put `maintain` on a
   timer later once you trust it — that's your call, not its.

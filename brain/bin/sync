@@ -43,6 +43,35 @@ if [ "$top" != "$root" ]; then
   exit 1
 fi
 
+# This hook runs after every turn, and turns can end together — six agents
+# finished within seconds of each other while this vault was being built. Git's
+# own index.lock already makes that safe, but not quiet: the loser's commit
+# fails and the message below says THE COMMIT FAILED, which is written for a
+# full disk or a missing identity, not for two turns overlapping. A false alarm
+# there is how someone learns to ignore the real one. So take a turn properly
+# and wait for it. mkdir is atomic on every POSIX filesystem; that is why the
+# lock is a directory and not a file.
+lock="$(git rev-parse --git-dir)/brain-sync.lock"
+waited=0
+until mkdir "$lock" 2>/dev/null; do
+  waited=$((waited + 1))
+  if [ "$waited" -gt 10 ]; then
+    echo "sync: another sync has held the lock for over 10s and hasn't finished. Your notes are NOT committed — they are safe on disk and the next turn will pick them up. If this repeats, delete $lock by hand." >&2
+    exit 1
+  fi
+  # A run killed mid-flight leaves the directory behind, and it would block
+  # every turn from then on. Nothing here takes a minute, so a lock older than
+  # that belongs to a process that is already gone.
+  if [ -n "$(find "$lock" -maxdepth 0 -mmin +1 2>/dev/null)" ]; then
+    rmdir "$lock" 2>/dev/null
+    continue
+  fi
+  sleep 1
+done
+# Only set after we hold it, so a run that gave up waiting never removes the
+# lock that somebody else is still working under.
+trap 'rmdir "$lock" 2>/dev/null' EXIT INT TERM
+
 msg=${1:-"brain: sync $(date +%F)"}
 
 # Refuse on a detached HEAD, before anything gets staged. A commit made here
