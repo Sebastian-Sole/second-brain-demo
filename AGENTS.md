@@ -886,6 +886,23 @@ they're right there, the diff is on screen, and `git revert` is one line away. R
 them — `brain/bin/run maintain` is one line in whatever scheduler they already use. **That remains
 their call, not yours.** If they ask for help setting it up, help. Don't set it up unasked.
 
+**If they do schedule it, the agent matters.** `brain/bin/run` hands the command to whichever CLI is
+installed, and the four don't share a middle gear. `claude` runs with `--permission-mode
+acceptEdits`, `codex` with `--sandbox workspace-write`: both write notes without stopping to ask,
+both stay bounded by everything else, and neither needs anything extra to run from a scheduler.
+`cursor-agent` and `gemini` have no equivalent tier — their only non-interactive modes are `--force`
+and `--yolo`, which waive **every** approval rather than just the file writes. So `run` keeps those
+two behind an explicit opt-in:
+
+```sh
+BRAIN_UNATTENDED=1 brain/bin/run maintain
+```
+
+Without it, those two prompt and a scheduled run simply hangs. With it, that agent has no approval
+gate at all for the length of the run. Set it in the scheduler line and nowhere else — not in a
+shell you're also working in, and not in your profile. Nothing in this vault sets it for them, and
+nothing here should start.
+
 **`interview` is the one to be careful with.** It's the only command that talks *to* the human
 rather than answering them, so it's the only one that can become nagging. It runs when they invoke
 it — nothing here fires it on a timer. If they later want it on a schedule, that's their call, and
