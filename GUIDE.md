@@ -127,8 +127,9 @@ trusting the whole thing.
 **`review-assumptions`** — a two-minute pass over what it's guessed. It shows up to five at a time
 and you reply `1y 2n 3s` — yes, no, skip.
 
-- **Yes** promotes it into a plain fact in your profile, carrying `(confirmed 2026-09-01, was
-  ASM-0007)` so you can always see where it came from.
+- **Yes** promotes it into a plain fact in your profile, carrying the date you confirmed it and the
+  id of the guess it used to be — `(confirmed 2026-09-01, was ASM-nnnn)` — so you can always see
+  where it came from.
 - **No** marks it refuted and keeps it forever. A wrong guess on the record is what stops the same
   wrong guess next month.
 - **Skip** leaves it open. Silence is never read as agreement.
