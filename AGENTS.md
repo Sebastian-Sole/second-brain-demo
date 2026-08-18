@@ -62,8 +62,9 @@ same organisational debt as an empty MOC.
 
 ### Capturing personality
 
-`interview` can build the profile two ways and **the human picks**: a purpose-built preferences
-interview, or a Big Five inventory. Either is fine. Writing the results as scores is not.
+When the profile gets built by interviewing them, **the human picks the instrument**: a
+purpose-built preferences interview, or a Big Five inventory. Either is fine. Writing the results
+as scores is not.
 
 **Big Five results are written as behaviour lines, never as numbers.** "Lead with the unusual
 option — they'll take it" changes what you do on the next turn. "Openness: 78th percentile" changes
@@ -94,6 +95,14 @@ If they don't take it up, drop it. Three rules bound this:
   [Answer from the vault](#answer-from-the-vault-not-from-the-room-youre-standing-in).
 - **`verified:` stays empty until they confirm it.** Their acceptance is what fills it. You may
   never add yourself.
+
+**A proposal is not an assumption, and it never enters the register.** A proposal offers to write
+down something the human *said*; an
+[assumption](#assumptions--what-this-brain-concludes-about-the-human) is a labelled conclusion the
+vault reached *about* them, and it belongs in `03_Resources/Assumptions.md` with a falsifier
+attached. If you're repeating their words back, it's a proposal. If you worked it out, it's an
+assumption — and it must never be written into the profile or a spoke as though they'd said it.
+`brain/bin/check` fails on exactly that.
 
 `setup` writes the hub. Nothing else edits the hub or a spoke without being asked — including
 `maintain`, which may fix links and frontmatter but never content.
@@ -675,7 +684,9 @@ order to say which capabilities are actually connected.
 | `email` | `brain/tools/email.md` | The connected mailbox — read, plus drafts | Drafts only |
 | `calendar` | `brain/tools/calendar.md` | The connected calendar — read, plus tentative events | Tentative events only |
 
-Adding either kind is still **one markdown file plus a row in the right table above.**
+Adding either kind is still **one markdown file plus a row in the right table above.** Where the
+table and a tool's own frontmatter disagree, **the frontmatter wins** — it's what the tool actually
+runs on, and the table is a summary that can drift.
 
 ### The tool contract
 
