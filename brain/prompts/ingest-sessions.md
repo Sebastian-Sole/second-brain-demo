@@ -20,7 +20,7 @@ history almost certainly contains client work, employer code, and other people's
 material, and a second brain is a git repo that gets pushed. Ingesting the wrong project is not a
 tidiness problem.
 
-Write their answer to `06_Sessions/scope.md` as an allowlist of path fragments, so later runs don't
+Write their answer to `cortex/06_Sessions/scope.md` as an allowlist of path fragments, so later runs don't
 re-ask. Anything not matching the allowlist is skipped silently.
 
 That file is **gitignored, deliberately**. It is a list of the human's clients and employers, and
@@ -41,7 +41,7 @@ invoked. Don't fight this and don't ask for a permission escalation. Use the hel
 ```sh
 brain/bin/sessions list                    # every project with sessions on this machine
 brain/bin/sessions list <pattern>          # just the ones matching
-brain/bin/sessions stage <pattern> [n]     # copy the n newest into raw/sessions/transcripts/
+brain/bin/sessions stage <pattern> [n]     # copy the n newest into cortex/raw/sessions/transcripts/
 brain/bin/sessions clean                   # delete them again when you're done
 ```
 
@@ -58,7 +58,7 @@ become `-`), so `list` output is for matching and display, not for constructing 
 is unset or low, say so before you do anything else — everything outside that window is already
 gone, and this command cannot get it back.
 
-Skip any session already ingested — `grep -rl "session-id" 06_Sessions/` is enough, no state file.
+Skip any session already ingested — `grep -rl "session-id" cortex/06_Sessions/` is enough, no state file.
 Skip trivial ones too: a session under ~10 KB or a handful of turns is someone opening a CLI and
 closing it, and it does not deserve a note.
 
@@ -82,7 +82,7 @@ last few assistant turns — not the middle.
 
 ## Phase 3 — Write one note per session
 
-Into `06_Sessions/`, named `YYYY-MM-DD <project> — <what happened>.md`:
+Into `cortex/06_Sessions/`, named `YYYY-MM-DD <project> — <what happened>.md`:
 
 ```yaml
 ---
@@ -118,7 +118,7 @@ don't turn them into changelog entries.
 
 ## Phase 4 — Catalogue
 
-Write `06_Sessions/index.md`: one line per session, newest first —
+Write `cortex/06_Sessions/index.md`: one line per session, newest first —
 `- YYYY-MM-DD · project · [[Note Title]] — one line`. Group by month once there are more than ~30.
 
 Add **one** line to the root `index.md` pointing at it. Do not list individual sessions there; a
@@ -126,7 +126,7 @@ thousand session lines would destroy the catalog that makes retrieval work.
 
 ## Phase 5 — Report
 
-**Output surface:** session notes as markdown in `06_Sessions/`, plus a plain-text summary in the
+**Output surface:** session notes as markdown in `cortex/06_Sessions/`, plus a plain-text summary in the
 conversation. No artifact, no rendered report, and never a transcript copied into the vault.
 
 Say how many sessions you scanned, ingested, and skipped (and why), how many remain outside the
@@ -136,7 +136,7 @@ window, and name the two or three notes most worth reading.
 carries a **count and a folder, never a list** — a footer you have to scroll isn't one:
 
 ```
-Ingested: 14 session notes into 06_Sessions/, plus its index and one line in index.md
+Ingested: 14 session notes into cortex/06_Sessions/, plus its index and one line in cortex/index.md
 (say "drop the Moelven ones" if a project shouldn't be in here)
 ```
 

@@ -117,10 +117,10 @@ however you ask — that ceiling is written into the tools themselves, and on Cl
 in `.claude/settings.json` enforces it for the mail and calendar connectors it names. Under another
 agent, or a connector it doesn't name, the rule is the prompt and nothing else.
 
-The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `00_Inbox/`,
-`01_Projects/`, `02_Areas/`, `03_Resources/`, `04_Archive/`, plus `Tasks/`, `Daily/` and `raw/`.
+The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `cortex/00_Inbox/`,
+`cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/03_Resources/`, `cortex/04_Archive/`, plus `Tasks/`, `Daily/` and `raw/`.
 **You mostly won't think about it.** The structure is for the agent to reason over, not for you to
-maintain. Two example notes ship in `03_Resources/` so it isn't empty on day one; delete them
+maintain. Two example notes ship in `cortex/03_Resources/` so it isn't empty on day one; delete them
 whenever you like. github.com renders the vault for free, and [Obsidian](https://obsidian.md) reads
 this layout as-is if you want something nicer.
 
@@ -193,7 +193,7 @@ Your agent CLIs have been recording every session you've ever had with them — 
 `~/.claude/projects/`, Codex in `~/.codex/sessions/`. On a machine that's seen a year of work
 that's several gigabytes of your own decisions and reasoning, sitting in files you cannot search.
 `ingest-sessions` reads them and writes a short note per session — what you were doing, what you
-decided, what you learned — into `06_Sessions/`, wired into the rest of the vault.
+decided, what you learned — into `cortex/06_Sessions/`, wired into the rest of the vault.
 
 Then `ask` can answer "why did we go with the queue instead of cron?" about a session from eight
 months ago.
@@ -254,7 +254,7 @@ runs: it sits inside `brain/`, so the update would overwrite it with the empty v
 ships. That's what the second line is for — it puts your copy back from your last save. (Your vault
 saves itself after every turn, so "your last save" is a few minutes ago at worst.)
 
-**Your profile is a note (`03_Resources/About me.md`), not part of the manual, and this is why.**
+**Your profile is a note (`cortex/03_Resources/About me.md`), not part of the manual, and this is why.**
 Anything personal stored inside `AGENTS.md` would be overwritten by the command above without a
 word, and you'd find out from an agent that had quietly stopped knowing who you are. If you ever
 suspect that happened, `doctor` checks for it specifically and prints the one line that restores it
@@ -267,7 +267,7 @@ from git.
 1. **Write your own command** — run `new-feature`, which is the only way this vault grows one. It takes the problem in your words, decides whether the new thing stays inside the vault (`brain/prompts/`) or reaches outside it (`brain/tools/`), and writes a security review into the file before it writes the file. That review is the step you'd skip by copying a prompt by hand, and it matters most for the things that reach outside, because those run with your connectors attached. Fastest way to make the system yours.
 2. **Connect your mail and calendar.** The `email` and `calendar` tools are already here and read-only by design; connecting them turns everything already written down about your week into free context. Highest-leverage move available.
 3. **Schedule something, once you trust it** — `maintain` nightly, a morning brief, a weekly review.
-4. **Put a real interface on it.** The vault exposes exactly two operations: *write a file into `00_Inbox/`*, and *run `brain/bin/run <prompt>`*. Every UI is a thin client over those two — a Slack bot, a Telegram bot, an iOS Shortcut, an email address.
+4. **Put a real interface on it.** The vault exposes exactly two operations: *write a file into `cortex/00_Inbox/`*, and *run `brain/bin/run <prompt>`*. Every UI is a thin client over those two — a Slack bot, a Telegram bot, an iOS Shortcut, an email address.
 
 ---
 

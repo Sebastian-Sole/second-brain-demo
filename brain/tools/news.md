@@ -2,7 +2,7 @@
 name: news
 requires: http
 fallback: "Say you can't reach the network from this session, and offer to run again from an agent that can — don't summarise from memory."
-writes: "03_Resources/My news sources.md, and only when they say yes — never the roundup itself"
+writes: "cortex/03_Resources/My news sources.md, and only when they say yes — never the roundup itself"
 consent: implicit
 ---
 
@@ -12,7 +12,7 @@ Not a news roundup. A roundup of *their* feeds, cut down to what they said they'
 If you find yourself about to report the general news of the day, you have already failed — that's
 the thing this tool exists not to be.
 
-1. **Read `03_Resources/My news sources.md`.** It holds their feeds, their interests, and their
+1. **Read `cortex/03_Resources/My news sources.md`.** It holds their feeds, their interests, and their
    stated non-interests.
 
    **If it's missing or empty — the normal first-run state — stop and ask.** What do they read,
@@ -47,7 +47,7 @@ the thing this tool exists not to be.
    hole in it.
 
    **Privacy, once:** a web search hands the query to a third party, and the query is built from
-   what's in `03_Resources/My news sources.md` — their interests, their non-interests, the sources
+   what's in `cortex/03_Resources/My news sources.md` — their interests, their non-interests, the sources
    they named. Anything from that note that went into a search gets named in the same reply, as the
    query you actually ran. Worth a clause, not a paragraph.
 
@@ -73,12 +73,12 @@ the thing this tool exists not to be.
    search forever. If they explicitly want an item kept, that's `capture` — one item, as a note in
    their words, not the whole digest.
 
-   The one thing this tool may write is `03_Resources/My news sources.md` from step 1 — their
+   The one thing this tool may write is `cortex/03_Resources/My news sources.md` from step 1 — their
    sources, not the news — and only when they said yes to the offer. If you created or changed it,
    end with a one-line correction footer naming it:
 
    ```
-   Wrote 03_Resources/My news sources.md — 4 feeds, 2 things you don't want to hear about
+   Wrote cortex/03_Resources/My news sources.md — 4 feeds, 2 things you don't want to hear about
    (say "drop the Reddit one" if a source shouldn't be in there)
    ```
 

@@ -17,8 +17,12 @@ set -u
 root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 cd "$root" || exit 1
 
-REGISTER='03_Resources/Assumptions.md'
-PROFILE='03_Resources/About me.md'
+# The brain is what lives under cortex/. Everything else in this repo -- the
+# manual, the onboarding, the harness, whatever else the human keeps here -- is
+# the repository, not the knowledge, and nothing reasons about it.
+CORTEX='cortex'
+REGISTER="$CORTEX/03_Resources/Assumptions.md"
+PROFILE="$CORTEX/03_Resources/About me.md"
 FLOOR=10
 STALE_DAYS=90
 
@@ -41,13 +45,15 @@ trap 'rm -f "$tmp"' EXIT INT TERM
 #
 # The manual and the prompts quote the assumption format as an example. Linting
 # their examples as if they were claims is how a checker teaches people to
-# ignore it.
+# ignore it. This used to be a hand-written list of every harness file, and it
+# went stale exactly as often as you would expect. Now it is structural: if it
+# isn't under cortex/, it isn't the brain.
 exempt() {
   case "$1" in
-    AGENTS.md|README.md|DESIGN.md|GUIDE.md|CLAUDE.md|GEMINI.md|index.md) return 0 ;;
-    brain/*|.claude/*|.github/*|raw/*|"$REGISTER") return 0 ;;
+    "$CORTEX"/raw/*|"$REGISTER") return 0 ;;   # originals as captured; the register itself
+    "$CORTEX"/*) return 1 ;;                   # everything else in the brain is checked
+    *) return 0 ;;                             # not the brain
   esac
-  return 1
 }
 
 # ------------------------------------------------------------- the register
@@ -227,7 +233,7 @@ spokes=' '
 if [ -f "$PROFILE" ]; then
   spokes=" $(grep -o '\[\[[^]]*\]\]' "$PROFILE" 2>/dev/null \
       | sed 's/^\[\[//; s/\]\]$//; s/|.*$//; s/#.*$//' \
-      | sed 's|^|03_Resources/|; s|$|.md|' | sort -u | tr '\n' ' ')"
+      | sed "s|^|$CORTEX/03_Resources/|; s|\$|.md|" | sort -u | tr '\n' ' ')"
 fi
 
 # "!" rather than "-not": the spelling POSIX actually defines. This pipeline only
@@ -277,7 +283,7 @@ done >> "$tmp"
 # on top. Below the floor there is nothing to reason from.
 
 if [ -f "$REGISTER" ] && grep -qE "$OPEN_RE" "$REGISTER" 2>/dev/null; then
-  notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' \
+  notes=$(find "$CORTEX/03_Resources" "$CORTEX/01_Projects" "$CORTEX/02_Areas" -name '*.md' \
             ! -path "$PROFILE" ! -path "$REGISTER" 2>/dev/null \
             -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
   if [ "${notes:-0}" -lt "$FLOOR" ]; then

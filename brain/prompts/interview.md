@@ -23,10 +23,10 @@ three worth interrupting someone for, right now, and staying quiet otherwise.
 that produced it.** A question you can't cite is small talk, and small talk is how this channel gets
 muted.
 
-Read `index.md`, `03_Resources/About me.md`, the last ~10 daily notes, active `01_Projects/`, and
-`03_Resources/Assumptions.md` if it exists.
+Read `index.md`, `cortex/03_Resources/About me.md`, the last ~10 daily notes, active `cortex/01_Projects/`, and
+`cortex/03_Resources/Assumptions.md` if it exists.
 
-Read the spoke `03_Resources/What I'm into.md` too, **where it would sharpen a question** —
+Read the spoke `cortex/03_Resources/What I'm into.md` too, **where it would sharpen a question** —
 `AGENTS.md` names this command as one of its readers. It's what turns "anything on the reading
 pile?" into a question about the thing they actually care about, and it's often what breaks a tie
 between two candidates of equal rank. **If it doesn't exist, that's normal** in a young vault —
@@ -40,7 +40,7 @@ Six sources. Each yields candidates; each candidate carries its citation:
 | 1 | **Perishable follow-up** | A dated thing that has now happened with no outcome recorded — a deadline, a meeting, a shipped thing, a reply that was due | *"You had X on Tuesday — how did it go?"* |
 | 2 | **Open assumption** | `open` rows in the register, ranked as in `review-assumptions` | *"I've been assuming X — right, wrong, or nearly?"* |
 | 3 | **Blank dimension** | An empty dimension in the register, especially one that blocked an answer you gave | *"The vault knows nothing about X — <one concrete question>"* |
-| 4 | **Stalled commitment** | A project untouched for >14 days, a task carried forward repeatedly, a question rotting in `00_Inbox/` | *"X hasn't moved in N days — dead, blocked, or want me to take it?"* |
+| 4 | **Stalled commitment** | A project untouched for >14 days, a task carried forward repeatedly, a question rotting in `cortex/00_Inbox/` | *"X hasn't moved in N days — dead, blocked, or want me to take it?"* |
 | 5 | **Coverage imbalance** | An area with almost nothing against one that's overflowing | *"Is X dormant, or just not getting captured?"* |
 | 6 | **Contradiction** | Two notes that disagree and `maintain` couldn't resolve | *"These two disagree — which is current?"* |
 
@@ -127,7 +127,7 @@ you touched the register.
 into the daily note, and neither of those is visible from the conversation:
 
 ```
-Captured: [[Note title]] · logged 2 questions to Daily/2026-08-18.md
+Captured: [[Note title]] · logged 2 questions to cortex/Daily/2026-08-18.md
 (say "that's not what I meant" and I'll rewrite it)
 ```
 
@@ -169,7 +169,7 @@ still yields usable lines for the factors they got through. Score it privately t
 tendencies are pronounced enough to be worth writing down; most people are unremarkable on most
 factors, and an unremarkable factor gets no line.
 
-### Writing `03_Resources/Big Five profile.md`
+### Writing `cortex/03_Resources/Big Five profile.md`
 
 The spoke `infer` reads when a claim about their character is at stake. Normal frontmatter per
 `AGENTS.md`, linked from `[[About me]]` and listed in `index.md`. Two rules govern what goes in it,

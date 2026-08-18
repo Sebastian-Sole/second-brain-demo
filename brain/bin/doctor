@@ -178,7 +178,8 @@ otherwise_empty() {
 
 missing=""
 unfixed=0
-for d in 00_Inbox 01_Projects 02_Areas 03_Resources 04_Archive 05_Attachments Tasks Daily raw; do
+for d in cortex cortex/00_Inbox cortex/01_Projects cortex/02_Areas cortex/03_Resources \
+         cortex/04_Archive cortex/05_Attachments cortex/Tasks cortex/Daily cortex/raw; do
   if [ ! -d "$d" ]; then
     if [ "$in_vault" -eq 0 ]; then
       missing="$missing $d"
@@ -235,8 +236,8 @@ done
 [ -x brain/bin/run ] && [ -x brain/bin/sync ] && ok "the scripts can run"
 
 # The single highest-leverage thing a new user can do, and the one they skip.
-profile='03_Resources/About me.md'
-register='03_Resources/Assumptions.md'
+profile='cortex/03_Resources/About me.md'
+register='cortex/03_Resources/Assumptions.md'
 if [ ! -f AGENTS.md ]; then
   fail "AGENTS.md is missing — this is the manual every agent reads" \
        "Re-download the repo"
@@ -275,7 +276,7 @@ fi
 # said, and counting it would let the vault cite its own output as evidence about
 # its owner. brain/bin/check excludes both for that reason and the two have to
 # agree, or the same vault gets two different answers to "how much is here".
-notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' \
+notes=$(find cortex/03_Resources cortex/01_Projects cortex/02_Areas -name '*.md' \
           ! -path "$profile" ! -path "$register" 2>/dev/null \
         -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
 if [ "$notes" -eq 0 ]; then
@@ -309,8 +310,8 @@ echo
 # March looks exactly like one finished this morning.
 
 task_dirs=""
-[ -d Tasks ]      && task_dirs="$task_dirs Tasks"
-[ -d 04_Archive ] && task_dirs="$task_dirs 04_Archive"
+[ -d cortex/Tasks ]      && task_dirs="$task_dirs cortex/Tasks"
+[ -d cortex/04_Archive ] && task_dirs="$task_dirs cortex/04_Archive"
 
 if [ -n "$task_dirs" ]; then
   echo "Tasks"
@@ -326,7 +327,7 @@ if [ -n "$task_dirs" ]; then
       } else if (task == "open") {
         opened++
         if (dated) print "opendated\t" fn "\t" task
-        if (fn ~ /^04_Archive\//) print "stranded\t" fn "\t" task
+        if (fn ~ /^cortex\/04_Archive\//) print "stranded\t" fn "\t" task
       }
     }
     FNR == 1 {

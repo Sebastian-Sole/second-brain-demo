@@ -14,8 +14,8 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    confidently answering from a gap.
 
 1. **Search broadly, then read narrowly.**
-   - Grep across `03_Resources/`, `01_Projects/`, `02_Areas/`, `Tasks/`, `Daily/`, and
-     `00_Inbox/` — titles, `aliases`, and body text. Try synonyms and entity names, not just their
+   - Grep across `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `Tasks/`, `Daily/`, and
+     `cortex/00_Inbox/` — titles, `aliases`, and body text. Try synonyms and entity names, not just their
      exact words. That's the retrieval order from `AGENTS.md`, plus the inbox — an unprocessed
      capture is still their material. **`Tasks/` is in the set**: "do I still owe the landlord
      anything" is answered there and nowhere else.
@@ -23,7 +23,7 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    - Then actually open and read the handful that look relevant. Depth on the right 3–6 notes
      beats skimming forty.
    - **If the question is about past work** — "what did I decide about X", "when did I last touch
-     Y", "why did we go with Z" — also search `06_Sessions/`, starting from its `index.md`. Don't
+     Y", "why did we go with Z" — also search `cortex/06_Sessions/`, starting from its `index.md`. Don't
      search it otherwise: there may be thousands of session notes and they'll out-match your real
      notes on any keyword.
 
@@ -57,7 +57,7 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    ```
 
    Cap it at three, obey the gates in `AGENTS.md` (ten notes, not the scaffolding, not your
-   session's environment), and check `03_Resources/Assumptions.md` first so you don't re-raise
+   session's environment), and check `cortex/03_Resources/Assumptions.md` first so you don't re-raise
    something already refuted. If the question is *mostly* that — a question about them rather than
    about their notes — say so and offer `infer`, which does this properly and registers what's
    worth keeping. `ask` answers from the vault; `infer` reasons past it.

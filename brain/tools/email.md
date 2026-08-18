@@ -101,7 +101,7 @@ partly because of this.
 - **Never infer facts about them from their inbox.** Not their job, employer, salary, health,
   relationships or interests. Reading the mail to answer a question is the tool doing its job;
   concluding "you seem to work in fintech" is surveillance with a note attached. Nothing
-  connector-sourced ever reaches `03_Resources/About me.md` or the assumptions register — per
+  connector-sourced ever reaches `cortex/03_Resources/About me.md` or the assumptions register — per
   `AGENTS.md`, your session's environment is not evidence, and neither is their mailbox.
 
 **Output surface:** plain text in the conversation, plus at most an unsent draft in their mail

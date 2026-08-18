@@ -8,7 +8,7 @@ vault gets smarter over time.
 > The folder structure exists mainly for *you* to reason over. The human should rarely have to
 > think about where something goes — that's your job.
 
-**Read [`index.md`](index.md) and `03_Resources/About me.md` at the start of any non-trivial
+**Read [`index.md`](cortex/index.md) and `cortex/03_Resources/About me.md` at the start of any non-trivial
 session** — the catalog of what exists, and who you're doing it for. Reading both beats searching
 blind.
 
@@ -20,7 +20,7 @@ blind.
 
 ## About the human
 
-**Their profile is a note: `03_Resources/About me.md`. Read it at the start of every session,
+**Their profile is a note: `cortex/03_Resources/About me.md`. Read it at the start of every session,
 alongside `index.md`.** It carries `type: person` and holds **Name**, **What I do**, **What this
 brain is for**, **How I like to work**, and **Current focus**.
 
@@ -62,7 +62,7 @@ same organisational debt as an empty MOC.
 
 `review-assumptions` adds more of them as claims get confirmed — one per subject, named the same
 way (`[[How I work]]`, `[[How I handle money]]`), read by `infer`, `interview` and `ask`. The
-naming rule is load-bearing rather than decorative: `Money` and `Health` are `02_Areas/` names
+naming rule is load-bearing rather than decorative: `Money` and `Health` are `cortex/02_Areas/` names
 under PARA, and two notes sharing a name make `[[Money]]` ambiguous.
 
 ### Capturing personality
@@ -104,7 +104,7 @@ If they don't take it up, drop it. Three rules bound this:
 **A proposal is not an assumption, and it never enters the register.** A proposal offers to write
 down something the human *said*; an
 [assumption](#assumptions--what-this-brain-concludes-about-the-human) is a labelled conclusion the
-vault reached *about* them, and it belongs in `03_Resources/Assumptions.md` with a falsifier
+vault reached *about* them, and it belongs in `cortex/03_Resources/Assumptions.md` with a falsifier
 attached. If you're repeating their words back, it's a proposal. If you worked it out, it's an
 assumption — and it must never be written into the profile or a spoke as though they'd said it.
 `brain/bin/check` fails on exactly that.
@@ -120,7 +120,7 @@ the hub.
 ## Prime directives
 
 1. **Never lose a capture.** Anything the human dumps must be persisted somewhere sensible before
-   the session ends. If you can't fully process it, put it in `00_Inbox/` with a note on what's
+   the session ends. If you can't fully process it, put it in `cortex/00_Inbox/` with a note on what's
    pending. Silence is failure.
 2. **Preserve sources immutably.** External material (an article, a PDF, a transcript, a pasted
    thread) is saved verbatim under `raw/` and **never edited**. Your notes *reference* the
@@ -143,15 +143,15 @@ keep a stable sort order.
 
 | Folder | What lives here |
 | --- | --- |
-| `00_Inbox/` | Unprocessed captures, anything ambiguous. Drained by maintenance. |
-| `01_Projects/` | Active efforts with a goal and an end |
-| `02_Areas/` | Ongoing responsibilities with no end date |
-| `03_Resources/` | **Atomic notes** + reference material — the actual knowledge |
-| `04_Archive/` | Finished projects, dormant areas, completed and dropped tasks |
-| `05_Attachments/` | Images, PDFs, binaries referenced by notes |
-| `06_Sessions/` | Distilled notes about past AI coding sessions. Created by `ingest-sessions`; absent until then |
+| `cortex/00_Inbox/` | Unprocessed captures, anything ambiguous. Drained by maintenance. |
+| `cortex/01_Projects/` | Active efforts with a goal and an end |
+| `cortex/02_Areas/` | Ongoing responsibilities with no end date |
+| `cortex/03_Resources/` | **Atomic notes** + reference material — the actual knowledge |
+| `cortex/04_Archive/` | Finished projects, dormant areas, completed and dropped tasks |
+| `cortex/05_Attachments/` | Images, PDFs, binaries referenced by notes |
+| `cortex/06_Sessions/` | Distilled notes about past AI coding sessions. Created by `ingest-sessions`; absent until then |
 | `Daily/` | Daily notes — journal and capture log, `YYYY-MM-DD.md` |
-| `Tasks/` | One note per **open** task. Completed ones move to `04_Archive/`. See [Tasks](#tasks) |
+| `Tasks/` | One note per **open** task. Completed ones move to `cortex/04_Archive/`. See [Tasks](#tasks) |
 | `raw/` | **Immutable** original source material — never edit |
 | `brain/` | The harness itself: prompts, tools, scripts, run log. Not knowledge — don't file notes here. |
 
@@ -170,12 +170,12 @@ a Resource.
 
 | `type:` | Lives in |
 | --- | --- |
-| `note`, `concept`, `person`, `moc`, `register` | `03_Resources/` |
-| `source` | `03_Resources/` (the original goes to `raw/`) |
-| `project` | `01_Projects/` |
-| `area` | `02_Areas/` |
-| `task` | `Tasks/` (and `04_Archive/` once done — see [Tasks](#tasks)) |
-| `session` | `06_Sessions/` (the transcript stays outside the vault) |
+| `note`, `concept`, `person`, `moc`, `register` | `cortex/03_Resources/` |
+| `source` | `cortex/03_Resources/` (the original goes to `raw/`) |
+| `project` | `cortex/01_Projects/` |
+| `area` | `cortex/02_Areas/` |
+| `task` | `Tasks/` (and `cortex/04_Archive/` once done — see [Tasks](#tasks)) |
+| `session` | `cortex/06_Sessions/` (the transcript stays outside the vault) |
 | `daily` | `Daily/` |
 | `digest` | `Daily/` |
 
@@ -184,17 +184,17 @@ editing these rows, and every command keeps working — which is the point.
 
 ### Retrieval order
 
-When answering a question, search `03_Resources/`, `01_Projects/`, `02_Areas/`, `Tasks/` and
+When answering a question, search `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `Tasks/` and
 `Daily/` first. **Read `raw/`, `index.md` history, and `brain/log.md` only to verify a citation or
 re-derive a note — never to answer from.** Long raw transcripts and append-only logs outrank short
 canonical notes on keyword match, which is a measured retrieval failure, not a theoretical one.
 
-`06_Sessions/` is a third tier: read it when the question is *about past work* — "what did I decide
+`cortex/06_Sessions/` is a third tier: read it when the question is *about past work* — "what did I decide
 about X", "when did I last touch Y", "why did we go with Z" — and leave it alone otherwise. There
 can be thousands of session notes against a few dozen real ones, so searching it by default would
 drown the vault in its own history.
 
-`04_Archive/` is outside the default set too. Finished projects and completed tasks stay reachable
+`cortex/04_Archive/` is outside the default set too. Finished projects and completed tasks stay reachable
 by path and by link; they just don't compete with live notes for a keyword match.
 
 ### Answer from the vault, not from the room you're standing in
@@ -209,7 +209,7 @@ line isn't *whether* live data may be used. It's what live data may be used to c
 | The human invokes a tool, you fetch live data, you answer, you write nothing | **Allowed** |
 | They say "capture that" about what you fetched | **Allowed** — write the note with `source:` set to where the data came from and `generated.by` naming you |
 | Inferring facts *about the human* — who they are, what they do, what they care about — from connector data, shell history, other repos on disk, or which MCP servers are installed | **Banned**, with or without an **AI synthesis** callout |
-| Any connector-sourced write to `03_Resources/About me.md` or one of its spokes | **Banned** |
+| Any connector-sourced write to `cortex/03_Resources/About me.md` or one of its spokes | **Banned** |
 
 The ban is narrow and absolute. "Your toolchain says you do agency work" is a profile of someone's
 machine dressed up as a note about them: it reads as surveillance, and it's unreproducible — the
@@ -220,13 +220,13 @@ in the answer. Live data about the *world* is a different thing — answer with 
 promote it into evidence about them.
 
 ### Where a fresh dump goes
-- **A thought or idea** → an atomic note in `03_Resources/`, linked to a relevant Area
-- **A link / article / PDF / transcript** → original into `raw/`, then a *source note* in `03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
-- **An image or screenshot** → the binary into `05_Attachments/`, referenced from a note
+- **A thought or idea** → an atomic note in `cortex/03_Resources/`, linked to a relevant Area
+- **A link / article / PDF / transcript** → original into `raw/`, then a *source note* in `cortex/03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
+- **An image or screenshot** → the binary into `cortex/05_Attachments/`, referenced from a note
 - **A task or reminder** → its own note in `Tasks/`, linked to the relevant project if one exists. Never a checkbox — see [Tasks](#tasks)
-- **Project news** → the relevant `01_Projects/` note
+- **Project news** → the relevant `cortex/01_Projects/` note
 - **Journal / life log** → today's daily note
-- **Can't tell** → `00_Inbox/` with an **Open question** callout saying what you were unsure about
+- **Can't tell** → `cortex/00_Inbox/` with an **Open question** callout saying what you were unsure about
 
 ---
 
@@ -315,11 +315,11 @@ starting a new note", the number is in the wrong place.
 
 **Files you link to are named by their title. Files you reach by path are named by slug or date.**
 
-- **Linkable notes** (`03_Resources/`, `01_Projects/`, `02_Areas/`, `Tasks/`) — the filename *is*
+- **Linkable notes** (`cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `Tasks/`) — the filename *is*
   the title, spaces, capitals and all, because `[[wikilinks]]` resolve by filename and have to read
   well inside a sentence.
 - **Path-addressed files** — `raw/YYYY-MM-DD-<slug>.md`, `Daily/YYYY-MM-DD.md`,
-  `Daily/YYYY-MM-DD — Digest.md`, `06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
+  `Daily/YYYY-MM-DD — Digest.md`, `cortex/06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
   links these by title; they sort chronologically instead. That split is deliberate — don't "fix"
   it in either direction.
 
@@ -377,7 +377,7 @@ project: "[[Some project]]"   # the project it belongs to, as a quoted wikilink 
 You write it, not the human, so the filename costs them nothing — and a project note needs to be
 able to say `[[Call the bank]]`.
 
-**On completion or drop the file moves** to `04_Archive/Call the bank (done 2026-08-17).md` — or
+**On completion or drop the file moves** to `cortex/04_Archive/Call the bank (done 2026-08-17).md` — or
 `(dropped 2026-08-17)` if it was dropped, because a dropped task that archives as "done" lies about
 itself forever, and the `title:` rule below makes the lie durable. The suffix follows `task:`. Set
 `task:` and `completed:`, `stage: archived`, `title:` updated to match the new filename, and every
@@ -390,7 +390,7 @@ inbound link repointed in the same pass.
   That rule bans *volatile* values. A completion date is settled forever the moment it's written.
 - **Why archived and not deleted.** Git history is not a recovery path for someone who doesn't know
   git. "Where did that task go" has to be answerable by opening a folder.
-- **Nothing new is needed for retrieval.** `04_Archive/` is already outside the default search set,
+- **Nothing new is needed for retrieval.** `cortex/04_Archive/` is already outside the default search set,
   so a thousand finished tasks never compete with live notes.
 
 **Completion is logged with pointers, not copies.** The archived file holds the detail; one line
@@ -501,12 +501,12 @@ ASM-0007)`. Everything else stays labelled, forever.
 
 A confirmed claim about the human goes to the **spoke for its subject** — `[[How I work]]`,
 `[[How I handle money]]` — never into the hub, which is capped and paid for on every turn. Spokes
-are named for the person, not for the domain: a bare `Money.md` or `Health.md` is an `02_Areas/`
+are named for the person, not for the domain: a bare `Money.md` or `Health.md` is an `cortex/02_Areas/`
 name under PARA and collides with it. The hub carries the link; the spoke carries the claim.
 
 - A **refuted** assumption is never deleted. It's the most valuable row in the register: it records
   a specific way the model of them was wrong, and it stops the same guess being made next month.
-- **Never** write an *open* assumption into a `## Facts` section, into `03_Resources/About me.md`,
+- **Never** write an *open* assumption into a `## Facts` section, into `cortex/03_Resources/About me.md`,
   or into one of its spokes. `brain/bin/check` fails if you do. A **confirmed** one is no longer an
   assumption: it is a fact, it goes where the one-way rule above sends it, and it carries its
   provenance. `check` permits that form for exactly as long as the register still says `confirmed`.
@@ -515,7 +515,7 @@ name under PARA and collides with it. The hub carries the link; the spoke carrie
 
 ### The register
 
-Every assumption worth keeping lives in **`03_Resources/Assumptions.md`**, and the full block lives
+Every assumption worth keeping lives in **`cortex/03_Resources/Assumptions.md`**, and the full block lives
 there and nowhere else. Notes elsewhere carry a one-line pointer, so the reasoning can never drift
 from a copy:
 
@@ -524,7 +524,7 @@ from a copy:
 ```
 
 The register is created by the first `infer` run — don't ship or pre-build an empty one. It belongs
-to the human, like `[[About me]]`, which is why it sits in `03_Resources/` and not under `brain/`:
+to the human, like `[[About me]]`, which is why it sits in `cortex/03_Resources/` and not under `brain/`:
 a harness update must never overwrite what the brain concluded about its owner.
 
 ### The block
@@ -811,7 +811,7 @@ invisible, so every command that created or changed something says what it made 
 it:
 
 ```
-Filed as a task: Tasks/Cancel the insurance.md
+Filed as a task: cortex/Tasks/Cancel the insurance.md
 (say "make it a note" if that's wrong)
 ```
 
@@ -836,7 +836,7 @@ X" — so every row says whose territory it isn't.
 | `explain` | "explain X", "I don't get Y", "walk me through Z" — they want to *understand*, not to retrieve | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`. |
 | `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
 | `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
-| `maintain` | "tidy up", "drain the inbox" meaning `00_Inbox/`, "close out the day", `00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
+| `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
 | `doctor` | "something's broken", "is this thing working", a command failing, just after a harness update | Messy vault *contents* rather than a broken install — `maintain`. |
 | `new-feature` | "add a command", "I want it to also do X", "connect it to my <service>" **when `brain/tools/` has nothing for that service** — check the listing before you answer | Connecting a service a tool already exists for — `setup`, which is what every tool's `fallback:` sends them to. Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. |
 | `ingest-sessions` | "read my old Claude/Codex sessions", "make my history searchable" | Capturing *this* session — `capture`. |
@@ -845,7 +845,7 @@ X" — so every row says whose territory it isn't.
 | `weather` | "what's it like out", "do I need a coat", a forecast for a place or a day | Writing any of it down — the answer is ephemeral by default. |
 | `location` | "where am I", "what time is it here" — city, coordinates and timezone off an IP lookup, which is all it returns | Finding somewhere nearby: nothing in this vault searches for places, so say that rather than routing here. Recording where they live — that's profile detail, and only the human writes it. |
 | `news` | "what's happening with X", "anything new in Y" | "What do *I* think about X" — `ask`. Filing an article they handed you — `capture`. |
-| `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
+| `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `cortex/00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
 | `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving or cancelling anything — never, see the ceiling. |
 
 **Three ways out of this table, and they aren't the same.** *Nothing* matches → `capture`, as

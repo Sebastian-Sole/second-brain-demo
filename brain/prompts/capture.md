@@ -35,7 +35,7 @@ Follow the workflow in `AGENTS.md`. Concretely:
    body text, plus obvious synonyms. If a note on this already exists, **extend it** rather than
    creating a near-duplicate. Note what you found.
 
-4. **Write atomically.** One idea per note in `03_Resources/`, with the full frontmatter block
+4. **Write atomically.** One idea per note in `cortex/03_Resources/`, with the full frontmatter block
    from `AGENTS.md`. Titles are claims, not labels. Write it in the human's voice — their idea
    sharpened, not replaced by a neutral summary. A big dump becomes several small linked notes,
    not one long one.
@@ -57,7 +57,7 @@ Follow the workflow in `AGENTS.md`. Concretely:
 
    **If what they just told you settles an open assumption**, say so and record it now. A dump
    that contradicts one is a refutation — `Status: refuted`, their words as the reason, moved to
-   **Refuted & withdrawn** in `03_Resources/Assumptions.md` and never deleted. One that confirms
+   **Refuted & withdrawn** in `cortex/03_Resources/Assumptions.md` and never deleted. One that confirms
    one is *not* a confirmation you can make on their behalf; note that it adds evidence and leave
    the verdict to `review-assumptions`. Most verdicts will arrive this way rather than in a review
    pass, so don't let one slide past unrecorded. Run `brain/bin/check` if you touched the register.
@@ -68,7 +68,7 @@ Follow the workflow in `AGENTS.md`. Concretely:
    current is what lets the next session find this without searching for it.
 
 7. **Report, and end with the correction footer.** Tell them briefly what you created, updated, and
-   linked — and surface anything you left in `00_Inbox/` as an explicit question.
+   linked — and surface anything you left in `cortex/00_Inbox/` as an explicit question.
 
    `capture` writes, and routing is silent, so a misroute is invisible unless you say what you did.
    The last line names what you made and how to change it:
@@ -81,7 +81,7 @@ Follow the workflow in `AGENTS.md`. Concretely:
    One line, at the end, no ceremony. Name the actual title and the actual likely correction.
 
 Rules that matter here:
-- **Never lose anything.** If you can't process a piece, it goes to `00_Inbox/` with an
+- **Never lose anything.** If you can't process a piece, it goes to `cortex/00_Inbox/` with an
   **Open question** callout describing what you were unsure about. Don't silently drop it.
 - **Don't pad.** Five well-linked atomic notes beat one sprawling essay. If the dump only
   contains one idea, write one note.

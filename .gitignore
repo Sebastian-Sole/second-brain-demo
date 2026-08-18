@@ -32,7 +32,7 @@ service-account*.json
 # into the vault and leaves the transcripts themselves outside git — they are
 # enormous (gigabytes) and full of credentials, client code and pasted secrets.
 # If you ever copy one in for reference, it lands here and stays uncommitted.
-raw/sessions/transcripts/
+cortex/raw/sessions/transcripts/
 
 # Local agent worktrees, never commit
 .claude/worktrees/
@@ -40,4 +40,4 @@ raw/sessions/transcripts/
 # The ingest allowlist names the human's clients and employers. ingest-sessions
 # writes it, and sync commits and pushes on the very next turn -- before anyone
 # has seen the file. It exists so later runs don't re-ask; that job is local.
-06_Sessions/scope.md
+cortex/06_Sessions/scope.md

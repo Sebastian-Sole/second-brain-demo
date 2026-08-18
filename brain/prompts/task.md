@@ -81,7 +81,7 @@ Reads only — this operation writes nothing.
 5. Accept natural filters — "what's due this week", "what's open on the billing project",
    "anything about the flat". Filter on `project:`, `area:`, dates and body text.
 
-Archived tasks aren't in the default set. Search `04_Archive/` only if they ask about finished ones.
+Archived tasks aren't in the default set. Search `cortex/04_Archive/` only if they ask about finished ones.
 
 ## complete / drop
 
@@ -92,8 +92,8 @@ Archived tasks aren't in the default set. Search `04_Archive/` only if they ask 
 3. Set `task: done` (or `dropped`), set `completed:` to today's date, set `stage: archived`, bump
    `updated:`. Leave `id:` exactly as it is.
 4. **Move the file — never delete it, and let the suffix follow `task:`:**
-   `Tasks/Call the bank.md` → `04_Archive/Call the bank (done 2026-08-18).md` when it was completed,
-   or `04_Archive/Call the bank (dropped 2026-08-18).md` when it was dropped. A dropped task that
+   `Tasks/Call the bank.md` → `cortex/04_Archive/Call the bank (done 2026-08-18).md` when it was completed,
+   or `cortex/04_Archive/Call the bank (dropped 2026-08-18).md` when it was dropped. A dropped task that
    archives as "done" lies about itself forever, and `id:` is the only identity left to contradict
    it. Update `title:` to match the new filename.
 5. **Fix every inbound link in the same pass.** Grep the vault for `[[Call the bank]]` and repoint
@@ -111,7 +111,7 @@ Archived tasks aren't in the default set. Search `04_Archive/` only if they ask 
    line you just wrote.
 
 Why archive rather than delete: git history is not a recovery path for someone who doesn't know
-git. "Where did that task go" has to be answerable by opening a folder. And `04_Archive/` is
+git. "Where did that task go" has to be answerable by opening a folder. And `cortex/04_Archive/` is
 already outside the default search set, so a thousand finished tasks pollute nothing.
 
 ## edit
@@ -134,7 +134,7 @@ Re-title, re-date, re-project, sharpen the body.
   fix it.
 
   ```
-  Filed as a task: Tasks/Cancel the insurance.md
+  Filed as a task: cortex/Tasks/Cancel the insurance.md
   (say "make it a note" if that's wrong)
   ```
 

@@ -6,7 +6,7 @@ the two.
 
 Optional argument: a subject, a dimension, or `stale` to review only the aged ones.
 
-Rules: the Assumptions section of `AGENTS.md`. Register: `03_Resources/Assumptions.md`.
+Rules: the Assumptions section of `AGENTS.md`. Register: `cortex/03_Resources/Assumptions.md`.
 
 If the register doesn't exist yet, say so in one line and stop — there's nothing to review, and
 `infer` is what creates it.
@@ -58,10 +58,10 @@ claim as plain prose where it belongs, carrying its provenance:
 
 Where it goes:
 
-- **About them** → the spoke for that subject in `03_Resources/`, named for *them* and not for the
+- **About them** → the spoke for that subject in `cortex/03_Resources/`, named for *them* and not for the
   domain — `[[How I work]]`, `[[How I handle money]]`, `[[How I decide]]`. Create the spoke if it
   doesn't exist yet and link it from `[[About me]]`. A bare domain name like `Money.md` is an
-  `02_Areas/` name and collides with it. **Not the hub itself**: `[[About me]]` is capped at 40
+  `cortex/02_Areas/` name and collides with it. **Not the hub itself**: `[[About me]]` is capped at 40
   lines and re-read on every turn, so it carries the link, never the claim.
 - **About someone else** → that person's note, under `## Facts`.
 

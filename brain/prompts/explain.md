@@ -30,7 +30,7 @@ subject they've already written notes on.
    Don't interrogate them up front, don't block on the answer, and don't ask twice. You propose,
    they accept — see `AGENTS.md`.
 
-2. **Calibrate against what they already know.** Grep `03_Resources/` for the topic and its
+2. **Calibrate against what they already know.** Grep `cortex/03_Resources/` for the topic and its
    neighbours before you explain anything. Two payoffs, both worth the search:
    - You don't explain something they wrote a note about last month. Being taught what you already
      know is how someone learns to stop asking.

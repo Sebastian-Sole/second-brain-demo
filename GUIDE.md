@@ -22,13 +22,13 @@ your life admin without turning into a filing cabinet with forty subject folders
 
 | Folder | What's in it |
 | --- | --- |
-| `00_Inbox/` | Anything it wasn't sure about. Should be near-empty most of the time. |
-| `01_Projects/` | Things with a goal and an end. "Ship the new pricing page." |
-| `02_Areas/` | Things you're on the hook for forever. "Health", "Finances", "The team." |
-| `03_Resources/` | The actual knowledge — one idea per note. Also your profile. |
-| `04_Archive/` | Finished projects, dormant areas, completed tasks. |
-| `05_Attachments/` | Images, PDFs, anything that isn't text. |
-| `06_Sessions/` | Notes about your past AI coding sessions. Appears after `ingest-sessions`. |
+| `cortex/00_Inbox/` | Anything it wasn't sure about. Should be near-empty most of the time. |
+| `cortex/01_Projects/` | Things with a goal and an end. "Ship the new pricing page." |
+| `cortex/02_Areas/` | Things you're on the hook for forever. "Health", "Finances", "The team." |
+| `cortex/03_Resources/` | The actual knowledge — one idea per note. Also your profile. |
+| `cortex/04_Archive/` | Finished projects, dormant areas, completed tasks. |
+| `cortex/05_Attachments/` | Images, PDFs, anything that isn't text. |
+| `cortex/06_Sessions/` | Notes about your past AI coding sessions. Appears after `ingest-sessions`. |
 | `Daily/` | One note per day: what you captured, what happened. |
 | `Tasks/` | One note per open task. |
 | `raw/` | Untouched originals of anything that came from outside. Never edited. |
@@ -67,11 +67,11 @@ and adds them to `index.md`.
 capture — decided against the queue for now, cron is fine at this volume
 ```
 
-> Wrote `03_Resources/Cron is enough until the queue actually backs up.md`, linked to
+> Wrote `cortex/03_Resources/Cron is enough until the queue actually backs up.md`, linked to
 > `[[Infrastructure]]`, logged to today's daily note.
 
 If a dump contains three ideas you get three small linked notes, not one long one. If it can't tell
-what something is, it goes to `00_Inbox/` with an explicit question rather than being guessed at.
+what something is, it goes to `cortex/00_Inbox/` with an explicit question rather than being guessed at.
 
 **`task`** — anything with a next action. See [Tasks](#tasks) below.
 
@@ -91,7 +91,7 @@ hang a link off a claim that didn't come from that note.
 ask what did I decide about retries?
 ```
 
-It searches your notes, projects, areas and daily notes. It only digs into `06_Sessions/` when the
+It searches your notes, projects, areas and daily notes. It only digs into `cortex/06_Sessions/` when the
 question is clearly about past work ("why did we go with Z", "when did I last touch Y") — otherwise
 a thousand session notes would drown out the real ones.
 
@@ -124,7 +124,7 @@ actually finish this? What am I avoiding?* Every guess comes back in three label
 **Would change my mind** — what would prove it wrong.
 ```
 
-Guesses worth keeping get a number and a permanent home in `03_Resources/Assumptions.md`, each with
+Guesses worth keeping get a number and a permanent home in `cortex/03_Resources/Assumptions.md`, each with
 its evidence, its reasoning, and its falsifier. **Below ten notes you actually wrote, it refuses to
 guess about you at all** and says so — a character sketch off four notes is the fastest way to stop
 trusting the whole thing.
@@ -182,7 +182,7 @@ carries a completion date, and — on Claude Code — whether your session histo
 report without changing anything.
 
 **`maintain`** — the health pass over your notes, as opposed to the install. It closes out the day,
-files what it can from `00_Inbox/` and leaves an explicit question on what it can't, finds notes
+files what it can from `cortex/00_Inbox/` and leaves an explicit question on what it can't, finds notes
 that contradict each other and keeps *both* with dates rather than picking one, links up orphans,
 fixes broken links, and rebuilds `index.md`. It writes one line to `brain/log.md` so you can see
 what it did without opening a single note.
@@ -218,7 +218,7 @@ two commands. Both of those are good outcomes.
 
 **`ingest-sessions`** — the thing worth doing on day one. Your agent CLIs have been recording every
 session you've ever had, on disk, in files you can't search. This reads them and writes a short note
-per session — what you were doing, what you decided, what you learned — into `06_Sessions/`, wired
+per session — what you were doing, what you decided, what you learned — into `cortex/06_Sessions/`, wired
 into the rest of the vault. Then `ask` can answer questions about work you did eight months ago.
 
 Three things it does deliberately: **it asks which projects to ingest and the default is none** (your
@@ -247,12 +247,12 @@ silent routing: if it guessed wrong, you can see that it did.
 ```
 you:   need to cancel the insurance before the 30th
 
-brain: Filed as a task: Tasks/Cancel the insurance.md
+brain: Filed as a task: cortex/Tasks/Cancel the insurance.md
        (say "make it a note" if that's wrong)
 
 you:   no, that's not a task, I was just thinking out loud
 
-brain: Moved it — it's now 03_Resources/The insurance renews at a worse rate.md,
+brain: Moved it — it's now cortex/03_Resources/The insurance renews at a worse rate.md,
        linked to [[Finances]]. The task is dropped, reason recorded.
 ```
 
@@ -275,7 +275,7 @@ Add one:
 ```
 you:   remind me to call the bank about the standing order
 
-brain: Filed as a task: Tasks/Call the bank.md
+brain: Filed as a task: cortex/Tasks/Call the bank.md
        (say "make it a note" if that's wrong)
 ```
 
@@ -300,11 +300,11 @@ Finish one:
 ```
 you:   called the bank, sorted
 
-brain: Done: 04_Archive/Call the bank (done 2026-08-18).md — opened 2026-08-14
+brain: Done: cortex/04_Archive/Call the bank (done 2026-08-18).md — opened 2026-08-14
 ```
 
-**Finished tasks move to `04_Archive/`, they are never deleted.** Two reasons: "where did that task
-go" has to be answerable by opening a folder rather than by knowing git, and `04_Archive/` is
+**Finished tasks move to `cortex/04_Archive/`, they are never deleted.** Two reasons: "where did that task
+go" has to be answerable by opening a folder rather than by knowing git, and `cortex/04_Archive/` is
 already outside the default search, so a thousand finished tasks never clutter up your real notes.
 Dropping a task requires a reason, recorded in the file — a dropped task with no reason is
 indistinguishable from one that got lost.

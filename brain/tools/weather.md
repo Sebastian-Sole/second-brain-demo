@@ -71,7 +71,7 @@ consent: implicit
    only when they asked for one. A table for a one-line question is slop.
 
 6. **Units follow the human.** Open-Meteo returns Celsius, km/h and mm by default, which is right
-   for most of the world. If `03_Resources/About me.md` states a preference, honour it — add
+   for most of the world. If `cortex/03_Resources/About me.md` states a preference, honour it — add
    `&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch` rather than
    converting in your head.
 

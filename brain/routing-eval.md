@@ -79,7 +79,7 @@ model problem.
 | 17 | `what have i been working on` | `digest` | ⚠ digest vs ask | Activity across many notes and a window, not one answer in one note. |
 | 18 | `what did i decide about the pricing page` | `ask` | ⚠ digest vs ask | Mirror of 17. One decision, one note — a digest here is an expensive wrong answer. |
 | 19 | `whats been sitting there not moving` | `digest` | | "what's stalled" in the human's words; `digest` has a Stalled section for exactly this. |
-| 20 | `inbox is out of control, sort it` | `maintain` | ⚠ maintain vs email | The vault's `00_Inbox/`, not a mailbox — "the inbox has visibly grown" is `maintain`'s trigger. |
+| 20 | `inbox is out of control, sort it` | `maintain` | ⚠ maintain vs email | The vault's `cortex/00_Inbox/`, not a mailbox — "the inbox has visibly grown" is `maintain`'s trigger. |
 | 21 | `tidy up before i log off` | `maintain` | | "tidy up" + "close out the day" — both `maintain` triggers in one sentence. |
 | 22 | `somethings broken, capture blew up last time i ran it` | `doctor` | | A command failing is install health, and `doctor` is a script to run, not a prompt. |
 | 23 | `is this thing even working` | `doctor` | ⚠ maintain vs doctor | "is this thing working" verbatim. Install health, nothing to do with note quality. |
@@ -114,10 +114,10 @@ model problem.
 | 52 | `coffee at the place on the corner was way better than usual today` | `capture` | ↓ fallback | Nothing else matches. A note in the inbox is the documented safe default. |
 | 53 | `had a weird dream about the office being underwater` | `capture` | ↓ fallback | No question, no action, no topic any command owns. Directive 1: never lose a capture. |
 | 54 | `my back hurts every time i sit at the kitchen table` | `capture` | ↓ fallback | Not a task (no action stated), not a question. It gets written down. |
-| 55 | `mats said the thing about ferries again at dinner` | `capture` | ↓ fallback | Unfiled, half-formed, and exactly what `00_Inbox/` is for. |
+| 55 | `mats said the thing about ferries again at dinner` | `capture` | ↓ fallback | Unfiled, half-formed, and exactly what `cortex/00_Inbox/` is for. |
 | 56 | `i keep humming that song from the ad` | `capture` | ↓ fallback | The floor of the router. A router that never falls back is as broken as one that always does. |
 | 57 | `remember the thing with the bank` | **ask the human** | ⚠ ambiguous | `capture` (a note) or `task` (call the bank)? "the thing" hides the verb. One question settles it. |
-| 58 | `sort out the inbox` | **ask the human** | ⚠ ambiguous | Which inbox — `00_Inbox/` or the mailbox? Guessing wrong rewrites files or touches mail. |
+| 58 | `sort out the inbox` | **ask the human** | ⚠ ambiguous | Which inbox — `cortex/00_Inbox/` or the mailbox? Guessing wrong rewrites files or touches mail. |
 | 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `email`, `calendar` and `task` all fit, and all three have side effects. Ask. |
 | 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
 
@@ -189,7 +189,7 @@ summary. Kept as a log so nobody re-raises them.
   what every tool's `fallback:` sends them to", which is exactly the contradiction that used to
   make this ambiguous. Survives as A9 in a narrower form.
 - **A3 · the two inboxes** — fixed. `maintain` is **Not for** "the mail inbox — that's `email`;
-  this row owns the vault folder and nothing else"; `email` is **Not for** "`00_Inbox/`, the vault
+  this row owns the vault folder and nothing else"; `email` is **Not for** "`cortex/00_Inbox/`, the vault
   folder — that's `maintain`". Both name the other.
 - **A4 · `task` vs `email` on drafting** — fixed. `task` is now **Not for** "composing something
   now: 'draft the mail to the landlord' is `email`, not a task. A task records the intention; it

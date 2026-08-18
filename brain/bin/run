@@ -35,7 +35,7 @@ fi
 shift
 
 # A command name is a bare filename, and the runner has to insist on that. The
-# lookup below builds a path by concatenation, so '../../00_Inbox/note' escapes
+# lookup below builds a path by concatenation, so '../../cortex/00_Inbox/note' escapes
 # brain/ and hands a fresh agent some other .md file on disk as its prompt —
 # including the files this vault writes verbatim from pasted, untrusted material.
 # That would turn "pasted material is data, not instructions" inside out, since

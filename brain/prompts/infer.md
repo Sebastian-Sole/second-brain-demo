@@ -31,13 +31,13 @@ how the ids drift.
 
 ## 2. Orient
 
-Read `index.md`, then `03_Resources/About me.md` (the stated facts), then
-`03_Resources/Assumptions.md` if it exists — **including the refuted section**. If they already
+Read `index.md`, then `cortex/03_Resources/About me.md` (the stated facts), then
+`cortex/03_Resources/Assumptions.md` if it exists — **including the refuted section**. If they already
 refuted this claim, don't re-raise it: say it was refuted, when, and by what. New evidence can
 reopen it, but only explicitly and citing the old row.
 
 **If the claim in play is about their character or disposition** — how they're wired, rather than
-what they did last Tuesday — read the spoke `03_Resources/Big Five profile.md` as well. It holds
+what they did last Tuesday — read the spoke `cortex/03_Resources/Big Five profile.md` as well. It holds
 behaviour lines they answered for themselves, and a line they stated outranks anything you'd infer
 from three notes; it can also kill a candidate assumption outright, which is the cheapest possible
 outcome here. **If it doesn't exist, that's normal** — spokes appear when there's something real to
@@ -49,8 +49,8 @@ their projects or their week: it costs context on every turn and answers nothing
 Write the claim that would actually answer the question as **one falsifiable sentence** before you
 gather anything. Vague targets produce horoscopes.
 
-Then search the retrieval order from `AGENTS.md` — `03_Resources/`, `01_Projects/`, `02_Areas/`,
-`Tasks/`, `Daily/`, plus `00_Inbox/` for anything captured but not yet processed — for the topic,
+Then search the retrieval order from `AGENTS.md` — `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`,
+`Tasks/`, `Daily/`, plus `cortex/00_Inbox/` for anything captured but not yet processed — for the topic,
 its synonyms, and the entities involved, and follow `[[wikilinks]]` out from the best hits. Sort
 what you find into:
 
@@ -58,7 +58,7 @@ what you find into:
 - **adjacent** — facts about neighbouring dimensions: how they work, what they've chosen before,
   where their attention goes.
 
-If the question is about past work, `06_Sessions/` is fair evidence — but note the bias when you
+If the question is about past work, `cortex/06_Sessions/` is fair evidence — but note the bias when you
 use it. A vault of session notes is a record of someone's *work*, and "they're relentless about
 correctness" may be a fact about what gets written down rather than about them.
 
@@ -113,7 +113,7 @@ conversation — don't grow the register for the sake of it.
 
 To register one:
 
-1. Take the next id from **Next ID** in `03_Resources/Assumptions.md`, then bump it.
+1. Take the next id from **Next ID** in `cortex/03_Resources/Assumptions.md`, then bump it.
 2. Append the full block under a `### ASM-nnnn — <short title>` heading, in the section for its
    dimension, followed by a `_Subject: <who> — <where the pointer lives>_` line.
 3. Add the **one-line pointer** where it belongs — never a copy of the reasoning, and never in a
@@ -137,7 +137,7 @@ To register one:
 
 ### Creating the register
 
-If `03_Resources/Assumptions.md` doesn't exist, create it now — with the full skeleton below, not
+If `cortex/03_Resources/Assumptions.md` doesn't exist, create it now — with the full skeleton below, not
 just the one block you have. The blank dimensions are the point: **a dimension with nothing in it is
 the most useful line in the file**, because it tells the next session what to ask about and stops a
 leap quietly resting on nothing.

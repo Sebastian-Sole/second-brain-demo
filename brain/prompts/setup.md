@@ -2,7 +2,7 @@
 
 This is the human's **first session** with this second brain. Everything here is a stock template
 until you finish this conversation. Your job is to learn enough about them to write
-`03_Resources/About me.md`, which every future session reads at the start and which is what stops
+`cortex/03_Resources/About me.md`, which every future session reads at the start and which is what stops
 this from writing generic notes about a stranger.
 
 Treat them as someone who has never used a tool like this and may not be a programmer. No jargon,
@@ -43,7 +43,7 @@ up front that one-line answers are fine and they can skip any of them.
 
 **Question 6 rides along; the profile interview is still the five above.** Its answer doesn't go in
 `[[About me]]` at all — write it to the spoke
-`03_Resources/How I learn.md`, in their words — the hub is capped at 40 lines and paid for on every
+`cortex/03_Resources/How I learn.md`, in their words — the hub is capped at 40 lines and paid for on every
 turn, and fluency is only needed by the command that's teaching them something. Ask it now anyway:
 a level-adaptive tutorial can't pitch itself without it, and adding the question later means
 re-interviewing everyone who has already set up.
@@ -56,7 +56,7 @@ you have, and tell them `setup` can be run again any time.
 
 ## Step 3 — Write it
 
-Create `03_Resources/About me.md` with what they told you, in their words:
+Create `cortex/03_Resources/About me.md` with what they told you, in their words:
 
 ```markdown
 ---
@@ -136,7 +136,7 @@ If yes, walk them through their agent's connector setup in plain language and co
 command notices.
 
 **News sources.** Ask what they actually read, watch or follow — and what they emphatically don't
-want to hear about. Write the answer to `03_Resources/My news sources.md`, **resolving each name to
+want to hear about. Write the answer to `cortex/03_Resources/My news sources.md`, **resolving each name to
 a feed yourself**: they say "Hacker News", you store `https://news.ycombinator.com/rss`. The human
 never goes hunting for an XML endpoint. If they'd rather not, don't create the note — an empty
 spoke is organisational debt, and `news` knows how to ask for itself later.
@@ -156,7 +156,7 @@ Not a tour. Three lines, then stop:
   history they already have into notes they can search. Mention it only if `brain/bin/doctor`
   found Claude Code or Codex on the machine.
 
-Finally, mention the example notes in `03_Resources/` are there to show the shape of things and
+Finally, mention the example notes in `cortex/03_Resources/` are there to show the shape of things and
 they can delete them whenever they like. Offer to do it now.
 
 **One closing offer, one line, genuinely optional.** Five answers is a thin profile, and per
@@ -177,7 +177,7 @@ system" rule below. The offer is the whole of it — if they say yes, hand off t
 one-line correction footer. Name what now exists and how to change it:
 
 ```
-Set up: [[About me]], [[How I learn]] and [[Your first note]], all listed in index.md
+Set up: [[About me]], [[How I learn]] and [[Your first note]], all listed in cortex/index.md
 (say what's wrong with any of them and I'll fix it — nothing here is permanent)
 ```
 
