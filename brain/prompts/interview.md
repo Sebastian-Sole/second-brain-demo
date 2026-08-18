@@ -202,8 +202,12 @@ These are **their stated answers**, so they're facts, not assumptions: plain pro
 nothing in the register. And they're preferences about how to work with them, not a diagnosis —
 don't write anything you wouldn't say to their face.
 
-Footer as in section 7, naming the spoke: `Wrote [[Big Five profile]] — 6 behaviour lines
-(say "cut the third one" if any of it's wrong)`.
+Then the correction footer, as in section 7, naming the spoke:
+
+```
+Wrote [[Big Five profile]] — 6 behaviour lines, linked from [[About me]]
+(say "cut the third one" if any of it's wrong)
+```
 
 ## Guardrails
 

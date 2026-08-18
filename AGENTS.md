@@ -816,12 +816,16 @@ X" — so every row says whose territory it isn't.
 | `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
 | `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving or cancelling anything — never, see the ceiling. |
 
-**Two ways out of this table, and they aren't the same.** *Nothing* matches → `capture`, as above.
-*Several* match and they'd do materially different things — rewrite vault files or open a mailbox,
-open a task or compose a mail — → **ask which, in one line, before doing either.** That's prime
-directive 6: when uncertain, ask or inbox it, never guess silently. This is not the announcement
-routing otherwise forbids — when the answer is clear you still say nothing and just run it. The
-question is for a genuine fork, where guessing wrong writes something somebody has to undo.
+**Three ways out of this table, and they aren't the same.** *Nothing* matches → `capture`, as
+above. *Several* match and they'd do materially different things — rewrite vault files or open a
+mailbox, open a task or compose a mail — → **ask which, in one line, before doing either.** That's
+prime directive 6: when uncertain, ask or inbox it, never guess silently. This is not the
+announcement routing otherwise forbids — when the answer is clear you still say nothing and just
+run it. The question is for a genuine fork, where guessing wrong writes something somebody has to
+undo. *Nothing here can do it at all* — "where's the nearest post office", which the `location` row
+sends away rather than answering — → **say so plainly and route nowhere.** Don't let that fall
+through to `capture`: filing a note about a request you couldn't fulfil is worse than saying you
+couldn't, because it looks like success.
 
 ### When something isn't working
 
