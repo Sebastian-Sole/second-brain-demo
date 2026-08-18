@@ -31,7 +31,7 @@ how the ids drift.
 
 ## 2. Orient
 
-Read `index.md`, then `cortex/03_Resources/About me.md` (the stated facts), then
+Read `cortex/index.md`, then `cortex/03_Resources/About me.md` (the stated facts), then
 `cortex/03_Resources/Assumptions.md` if it exists — **including the refuted section**. If they already
 refuted this claim, don't re-raise it: say it was refuted, when, and by what. New evidence can
 reopen it, but only explicitly and citing the old row.
@@ -50,7 +50,7 @@ Write the claim that would actually answer the question as **one falsifiable sen
 gather anything. Vague targets produce horoscopes.
 
 Then search the retrieval order from `AGENTS.md` — `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`,
-`Tasks/`, `Daily/`, plus `cortex/00_Inbox/` for anything captured but not yet processed — for the topic,
+`cortex/Tasks/`, `cortex/Daily/`, plus `cortex/00_Inbox/` for anything captured but not yet processed — for the topic,
 its synonyms, and the entities involved, and follow `[[wikilinks]]` out from the best hits. Sort
 what you find into:
 
@@ -213,7 +213,7 @@ Kept forever. A wrong guess, recorded, is what stops the same wrong guess next m
 _(none yet)_
 ```
 
-Add it to `index.md` under **People & concepts**, and log a line to today's daily note.
+Add it to `cortex/index.md` under **People & concepts**, and log a line to today's daily note.
 
 ## What this command must never do
 

@@ -23,7 +23,7 @@ three worth interrupting someone for, right now, and staying quiet otherwise.
 that produced it.** A question you can't cite is small talk, and small talk is how this channel gets
 muted.
 
-Read `index.md`, `cortex/03_Resources/About me.md`, the last ~10 daily notes, active `cortex/01_Projects/`, and
+Read `cortex/index.md`, `cortex/03_Resources/About me.md`, the last ~10 daily notes, active `cortex/01_Projects/`, and
 `cortex/03_Resources/Assumptions.md` if it exists.
 
 Read the spoke `cortex/03_Resources/What I'm into.md` too, **where it would sharpen a question** —
@@ -172,7 +172,7 @@ factors, and an unremarkable factor gets no line.
 ### Writing `cortex/03_Resources/Big Five profile.md`
 
 The spoke `infer` reads when a claim about their character is at stake. Normal frontmatter per
-`AGENTS.md`, linked from `[[About me]]` and listed in `index.md`. Two rules govern what goes in it,
+`AGENTS.md`, linked from `[[About me]]` and listed in `cortex/index.md`. Two rules govern what goes in it,
 both from `AGENTS.md`:
 
 **Behaviour lines, never scores.** Write what to *do* differently:

@@ -121,7 +121,7 @@ don't turn them into changelog entries.
 Write `cortex/06_Sessions/index.md`: one line per session, newest first —
 `- YYYY-MM-DD · project · [[Note Title]] — one line`. Group by month once there are more than ~30.
 
-Add **one** line to the root `index.md` pointing at it. Do not list individual sessions there; a
+Add **one** line to the root `cortex/index.md` pointing at it. Do not list individual sessions there; a
 thousand session lines would destroy the catalog that makes retrieval work.
 
 ## Phase 5 — Report
@@ -148,9 +148,9 @@ Then stop.
 
 ## Rules that matter here
 
-- **Nothing staged ever gets committed.** `raw/sessions/transcripts/` is gitignored and temporary.
+- **Nothing staged ever gets committed.** `cortex/raw/sessions/transcripts/` is gitignored and temporary.
   Run `brain/bin/sessions clean` when you finish, and never move a transcript out of there into a
-  tracked folder — not into `raw/`, not anywhere. The notes are the deliverable; the transcripts are
+  tracked folder — not into `cortex/raw/`, not anywhere. The notes are the deliverable; the transcripts are
   scaffolding you borrowed for ten minutes.
 - **Scan every note you write for secrets before saving it.** You are summarising files full of
   API keys, tokens and pasted credentials, and a faithful summary of a credential is still a
@@ -166,5 +166,5 @@ Then stop.
 
 Session notes are **not** part of the default retrieval order. `ask` reads them when the question is
 about past work — "what did I decide about X", "when did I last touch Y" — and otherwise leaves them
-alone, for the same reason it leaves `raw/` alone: there are thousands of them and they will
+alone, for the same reason it leaves `cortex/raw/` alone: there are thousands of them and they will
 out-match your real notes on any keyword.

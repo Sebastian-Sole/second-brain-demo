@@ -26,7 +26,7 @@ Lead with it in the conversation, a line or two each, in this order:
 - **Calendar** — what's left today — `brain/tools/calendar.md`
 - **Inbox** — what actually needs them — `brain/tools/email.md`
 - **News** — their own sources only — `brain/tools/news.md`
-- **Open tasks** — today's, from `Tasks/` per `brain/prompts/task.md`
+- **Open tasks** — today's, from `cortex/Tasks/` per `brain/prompts/task.md`
 
 **These degrade quietly.** A tool that isn't configured gets one plain line — "Calendar isn't
 connected" — and the digest carries on. Never an error, never a stack trace, never a lecture about
@@ -56,7 +56,7 @@ recurring theme is worth naming in **Patterns**. **If it doesn't exist, that's n
 in a young vault: rank from what the notes themselves show and get on with it. Don't block on it and
 don't ask for it.
 
-Then write this half to `Daily/YYYY-MM-DD — Digest.md` (dated today) and show it in the
+Then write this half to `cortex/Daily/YYYY-MM-DD — Digest.md` (dated today) and show it in the
 conversation. It's a note like any other, so it carries the frontmatter block from `AGENTS.md`:
 
 ```yaml
@@ -97,7 +97,7 @@ worse than a short section. Mark these as yours:
 
 ### 3. Stalled
 A table: **what · how long · the smallest next action.** Anything open in a project note, anything
-in `Tasks/` that's been open a long time (age from `id:`), any question left in `cortex/00_Inbox/`.
+in `cortex/Tasks/` that's been open a long time (age from `id:`), any question left in `cortex/00_Inbox/`.
 
 The "smallest next action" column must be genuinely small and specific — the actual first move,
 not a restatement of the goal.

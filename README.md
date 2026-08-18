@@ -118,11 +118,12 @@ in `.claude/settings.json` enforces it for the mail and calendar connectors it n
 agent, or a connector it doesn't name, the rule is the prompt and nothing else.
 
 The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `cortex/00_Inbox/`,
-`cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/03_Resources/`, `cortex/04_Archive/`, plus `Tasks/`, `Daily/` and `raw/`.
+`cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/03_Resources/`, `cortex/04_Archive/`, plus `cortex/Tasks/`, `cortex/Daily/` and `cortex/raw/`.
 **You mostly won't think about it.** The structure is for the agent to reason over, not for you to
 maintain. Two example notes ship in `cortex/03_Resources/` so it isn't empty on day one; delete them
 whenever you like. github.com renders the vault for free, and [Obsidian](https://obsidian.md) reads
-this layout as-is if you want something nicer.
+this layout as-is if you want something nicer — **open `cortex/` as the vault, not the repo root**,
+or your graph fills up with the manual instead of your notes.
 
 > **Tip for Claude Code:** you'll be asked to approve each file the agent writes. Once you've
 > watched it a few times and trust it, press `shift+tab` to switch to accept-edits mode and it
@@ -248,7 +249,7 @@ git diff --stat            # look before you commit
 ./brain/bin/doctor
 ```
 
-Those paths are the harness — your notes, your daily notes and `index.md` aren't in the list, so
+Those paths are the harness — your notes, your daily notes and `cortex/index.md` aren't in the list, so
 they can't be touched. The one exception is `brain/log.md`, the history of your own maintenance
 runs: it sits inside `brain/`, so the update would overwrite it with the empty version this repo
 ships. That's what the second line is for — it puts your copy back from your last save. (Your vault

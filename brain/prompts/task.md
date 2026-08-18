@@ -14,10 +14,10 @@ of the question.
 
 ## The model
 
-Open tasks live in **`Tasks/`** — top-level, unnumbered, alongside `Daily/` and `raw/`. The
+Open tasks live in **`cortex/Tasks/`** — top-level, unnumbered, alongside `cortex/Daily/` and `cortex/raw/`. The
 `00_`–`05_` prefixes belong to PARA; this isn't a PARA bucket.
 
-**While open, the filename is the title:** `Tasks/Call the bank.md`. It's a linkable note, so a
+**While open, the filename is the title:** `cortex/Tasks/Call the bank.md`. It's a linkable note, so a
 project can say `[[Call the bank]]`.
 
 Frontmatter, on top of every normal field from `AGENTS.md` (`title`, `stage`, `status`, `created`,
@@ -51,14 +51,14 @@ Four of those look arbitrary without their reasons, so here they are:
 
 ## add
 
-1. **Search `Tasks/` first.** Grep titles and bodies for the thing and its obvious synonyms. If an
+1. **Search `cortex/Tasks/` first.** Grep titles and bodies for the thing and its obvious synonyms. If an
    equivalent task is already open, say so and extend it rather than creating a near-duplicate.
-2. Write `Tasks/<Title>.md` with the block above: `task: open`, `completed:` blank, `stage: active`,
+2. Write `cortex/Tasks/<Title>.md` with the block above: `task: open`, `completed:` blank, `stage: active`,
    `id:` set to now, `area:` filled in, `project:` set if it belongs to one.
 3. The body says why it exists and what "done" looks like — one or two lines, in their words. Link
    the project note and add the reverse link there.
-4. Log one line in today's daily note (`Daily/YYYY-MM-DD.md`), creating it if needed.
-5. **Add it to `index.md` under `## Open tasks`** — `- [[Call the bank]] — one line on what it is`.
+4. Log one line in today's daily note (`cortex/Daily/YYYY-MM-DD.md`), creating it if needed.
+5. **Add it to `cortex/index.md` under `## Open tasks`** — `- [[Call the bank]] — one line on what it is`.
    `AGENTS.md` has every session read that catalog first, and `capture` hands tasks straight here
    instead of cataloguing them itself, so if you skip this the task is missing from the catalog
    until somebody runs `maintain`.
@@ -71,7 +71,7 @@ five questions.
 
 Reads only — this operation writes nothing.
 
-1. Read every note in `Tasks/`. Default to `task: open`.
+1. Read every note in `cortex/Tasks/`. Default to `task: open`.
 2. Order by **relevance**, not by filename: what's due soonest, what belongs to whatever they're
    working on now, what they just mentioned. Say why the top one is on top if it isn't obvious.
 3. **Give each one its age**, computed from `id:` — "open 3 days", "open since 14 June".
@@ -92,7 +92,7 @@ Archived tasks aren't in the default set. Search `cortex/04_Archive/` only if th
 3. Set `task: done` (or `dropped`), set `completed:` to today's date, set `stage: archived`, bump
    `updated:`. Leave `id:` exactly as it is.
 4. **Move the file — never delete it, and let the suffix follow `task:`:**
-   `Tasks/Call the bank.md` → `cortex/04_Archive/Call the bank (done 2026-08-18).md` when it was completed,
+   `cortex/Tasks/Call the bank.md` → `cortex/04_Archive/Call the bank (done 2026-08-18).md` when it was completed,
    or `cortex/04_Archive/Call the bank (dropped 2026-08-18).md` when it was dropped. A dropped task that
    archives as "done" lies about itself forever, and `id:` is the only identity left to contradict
    it. Update `title:` to match the new filename.
@@ -106,7 +106,7 @@ Archived tasks aren't in the default set. Search `cortex/04_Archive/` only if th
    - Done: [[Call the bank (done 2026-08-18)]] — opened 2026-08-14
    ```
 
-7. **Take its line out of `## Open tasks` in `index.md`** rather than repointing it at the archived
+7. **Take its line out of `## Open tasks` in `cortex/index.md`** rather than repointing it at the archived
    title — that section lists what's open, and the note stays reachable by folder and by the pointer
    line you just wrote.
 

@@ -29,9 +29,9 @@ your life admin without turning into a filing cabinet with forty subject folders
 | `cortex/04_Archive/` | Finished projects, dormant areas, completed tasks. |
 | `cortex/05_Attachments/` | Images, PDFs, anything that isn't text. |
 | `cortex/06_Sessions/` | Notes about your past AI coding sessions. Appears after `ingest-sessions`. |
-| `Daily/` | One note per day: what you captured, what happened. |
-| `Tasks/` | One note per open task. |
-| `raw/` | Untouched originals of anything that came from outside. Never edited. |
+| `cortex/Daily/` | One note per day: what you captured, what happened. |
+| `cortex/Tasks/` | One note per open task. |
+| `cortex/raw/` | Untouched originals of anything that came from outside. Never edited. |
 | `brain/` | The machinery — prompts, scripts, log. Not your notes. |
 
 **The one distinction worth learning**, because it's the only one that's genuinely ambiguous:
@@ -59,9 +59,9 @@ it — see [the next section](#you-dont-have-to-use-the-commands).
 
 **`capture`** — the workhorse. Give it a thought, a link, a decision, a pasted article, a
 transcript, or nothing at all (in which case it captures what you two just did). It works out what
-each piece is, saves any external original into `raw/` untouched, writes the ideas up as short
+each piece is, saves any external original into `cortex/raw/` untouched, writes the ideas up as short
 notes **in your words**, links them to what's already there, logs a line in today's daily note,
-and adds them to `index.md`.
+and adds them to `cortex/index.md`.
 
 ```
 capture — decided against the queue for now, cron is fine at this volume
@@ -104,7 +104,7 @@ and it anchors the new idea to one you already understand. If you've written a n
 **`digest`** — rolls up recent activity. Defaults to the last 7 days; say `digest last month` or
 `digest since Tuesday` for something else. Four sections: what happened, **patterns**, what's
 stalled (with how long, and the smallest next action), and open loops. It saves the digest as
-`Daily/YYYY-MM-DD — Digest.md` and shows it to you.
+`cortex/Daily/YYYY-MM-DD — Digest.md` and shows it to you.
 
 The patterns section is the one that surprises people — it reads across unrelated notes and names
 themes you never wrote down, including things you keep starting and not finishing. Anything it
@@ -184,7 +184,7 @@ report without changing anything.
 **`maintain`** — the health pass over your notes, as opposed to the install. It closes out the day,
 files what it can from `cortex/00_Inbox/` and leaves an explicit question on what it can't, finds notes
 that contradict each other and keeps *both* with dates rather than picking one, links up orphans,
-fixes broken links, and rebuilds `index.md`. It writes one line to `brain/log.md` so you can see
+fixes broken links, and rebuilds `cortex/index.md`. It writes one line to `brain/log.md` so you can see
 what it did without opening a single note.
 
 Run it when the inbox has visibly grown, or once a week. **It never deletes a note** — it archives,
@@ -265,7 +265,7 @@ in your inbox with a question attached.
 
 ## Tasks
 
-**One note per task, in `Tasks/`.** No checkboxes anywhere in this vault — a `- [ ]` line has no
+**One note per task, in `cortex/Tasks/`.** No checkboxes anywhere in this vault — a `- [ ]` line has no
 date, no reason, no links, and nothing can tell you when it appeared or why. A thing worth
 remembering to do is worth a file. You never write that file; the agent does, so the extra
 ceremony costs you nothing.

@@ -8,7 +8,7 @@ vault gets smarter over time.
 > The folder structure exists mainly for *you* to reason over. The human should rarely have to
 > think about where something goes — that's your job.
 
-**Read [`index.md`](cortex/index.md) and `cortex/03_Resources/About me.md` at the start of any non-trivial
+**Read [`cortex/index.md`](cortex/index.md) and `cortex/03_Resources/About me.md` at the start of any non-trivial
 session** — the catalog of what exists, and who you're doing it for. Reading both beats searching
 blind.
 
@@ -21,7 +21,7 @@ blind.
 ## About the human
 
 **Their profile is a note: `cortex/03_Resources/About me.md`. Read it at the start of every session,
-alongside `index.md`.** It carries `type: person` and holds **Name**, **What I do**, **What this
+alongside `cortex/index.md`.** It carries `type: person` and holds **Name**, **What I do**, **What this
 brain is for**, **How I like to work**, and **Current focus**.
 
 > **← Start here. This is the single highest-leverage change available.** Everything else in this
@@ -123,7 +123,7 @@ the hub.
    the session ends. If you can't fully process it, put it in `cortex/00_Inbox/` with a note on what's
    pending. Silence is failure.
 2. **Preserve sources immutably.** External material (an article, a PDF, a transcript, a pasted
-   thread) is saved verbatim under `raw/` and **never edited**. Your notes *reference* the
+   thread) is saved verbatim under `cortex/raw/` and **never edited**. Your notes *reference* the
    original; they don't replace it.
 3. **Write in the human's voice, not AI voice.** These notes are their thinking, captured — not a
    textbook. See [Voice](#voice--anti-slop).
@@ -138,6 +138,30 @@ the hub.
 
 ## How the vault is organized
 
+### The repo is not the brain
+
+**Everything you know lives under `cortex/`. Nothing else in this repo is knowledge.**
+
+That line is the whole boundary, and it is worth being exact about, because the two things are
+easy to confuse when they share a folder:
+
+| | |
+| --- | --- |
+| `cortex/` | **The brain.** The human's notes, captures, tasks, daily notes, originals. This is what you read to answer them, what you search, what counts as evidence, and the only place you file anything. |
+| `AGENTS.md`, `README.md`, `GUIDE.md`, `DESIGN.md`, `brain/`, `.claude/` | **The repo.** The manual you are reading, the onboarding, the harness. You *follow* these. You never reason *from* them. |
+| anything else at the root | **Neither.** Whatever else the human keeps in this repo. Not yours. Don't file it, don't index it, don't cite it. |
+
+So "what does this vault know about X" is a question about `cortex/`, and a fact you find in
+`README.md` is not something the human told you — it is something *this project* told you, about
+itself. Answering from it is how a brain ends up quoting its own instruction manual back at its
+owner as though it were a memory.
+
+`brain/bin/check` enforces this structurally rather than by a list: if a file isn't under
+`cortex/`, it isn't linted as knowledge. That used to be a hand-written list of every harness file,
+and it went stale exactly as often as you would expect.
+
+### PARA, inside the brain
+
 **PARA** (top-level, by actionability) + **atomic notes** (the thinking layer). Numbered prefixes
 keep a stable sort order.
 
@@ -150,12 +174,12 @@ keep a stable sort order.
 | `cortex/04_Archive/` | Finished projects, dormant areas, completed and dropped tasks |
 | `cortex/05_Attachments/` | Images, PDFs, binaries referenced by notes |
 | `cortex/06_Sessions/` | Distilled notes about past AI coding sessions. Created by `ingest-sessions`; absent until then |
-| `Daily/` | Daily notes — journal and capture log, `YYYY-MM-DD.md` |
-| `Tasks/` | One note per **open** task. Completed ones move to `cortex/04_Archive/`. See [Tasks](#tasks) |
-| `raw/` | **Immutable** original source material — never edit |
+| `cortex/Daily/` | Daily notes — journal and capture log, `YYYY-MM-DD.md` |
+| `cortex/Tasks/` | One note per **open** task. Completed ones move to `cortex/04_Archive/`. See [Tasks](#tasks) |
+| `cortex/raw/` | **Immutable** original source material — never edit |
 | `brain/` | The harness itself: prompts, tools, scripts, run log. Not knowledge — don't file notes here. |
 
-The `00_`–`05_` prefixes belong to PARA. `Daily/`, `Tasks/` and `raw/` are unnumbered because they
+The `00_`–`05_` prefixes belong to PARA. `cortex/Daily/`, `cortex/Tasks/` and `cortex/raw/` are unnumbered because they
 aren't PARA buckets — they're mechanisms that feed it.
 
 **PARA sorts by how actionable something is right now, not by subject.** That's why one vault can
@@ -171,21 +195,21 @@ a Resource.
 | `type:` | Lives in |
 | --- | --- |
 | `note`, `concept`, `person`, `moc`, `register` | `cortex/03_Resources/` |
-| `source` | `cortex/03_Resources/` (the original goes to `raw/`) |
+| `source` | `cortex/03_Resources/` (the original goes to `cortex/raw/`) |
 | `project` | `cortex/01_Projects/` |
 | `area` | `cortex/02_Areas/` |
-| `task` | `Tasks/` (and `cortex/04_Archive/` once done — see [Tasks](#tasks)) |
+| `task` | `cortex/Tasks/` (and `cortex/04_Archive/` once done — see [Tasks](#tasks)) |
 | `session` | `cortex/06_Sessions/` (the transcript stays outside the vault) |
-| `daily` | `Daily/` |
-| `digest` | `Daily/` |
+| `daily` | `cortex/Daily/` |
+| `digest` | `cortex/Daily/` |
 
 Read this table to decide where something goes. Someone can swap PARA for a different scheme by
 editing these rows, and every command keeps working — which is the point.
 
 ### Retrieval order
 
-When answering a question, search `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `Tasks/` and
-`Daily/` first. **Read `raw/`, `index.md` history, and `brain/log.md` only to verify a citation or
+When answering a question, search `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/Tasks/` and
+`cortex/Daily/` first. **Read `cortex/raw/`, `cortex/index.md` history, and `brain/log.md` only to verify a citation or
 re-derive a note — never to answer from.** Long raw transcripts and append-only logs outrank short
 canonical notes on keyword match, which is a measured retrieval failure, not a theoretical one.
 
@@ -221,9 +245,9 @@ promote it into evidence about them.
 
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `cortex/03_Resources/`, linked to a relevant Area
-- **A link / article / PDF / transcript** → original into `raw/`, then a *source note* in `cortex/03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
+- **A link / article / PDF / transcript** → original into `cortex/raw/`, then a *source note* in `cortex/03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping
 - **An image or screenshot** → the binary into `cortex/05_Attachments/`, referenced from a note
-- **A task or reminder** → its own note in `Tasks/`, linked to the relevant project if one exists. Never a checkbox — see [Tasks](#tasks)
+- **A task or reminder** → its own note in `cortex/Tasks/`, linked to the relevant project if one exists. Never a checkbox — see [Tasks](#tasks)
 - **Project news** → the relevant `cortex/01_Projects/` note
 - **Journal / life log** → today's daily note
 - **Can't tell** → `cortex/00_Inbox/` with an **Open question** callout saying what you were unsure about
@@ -315,11 +339,11 @@ starting a new note", the number is in the wrong place.
 
 **Files you link to are named by their title. Files you reach by path are named by slug or date.**
 
-- **Linkable notes** (`cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `Tasks/`) — the filename *is*
+- **Linkable notes** (`cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/Tasks/`) — the filename *is*
   the title, spaces, capitals and all, because `[[wikilinks]]` resolve by filename and have to read
   well inside a sentence.
-- **Path-addressed files** — `raw/YYYY-MM-DD-<slug>.md`, `Daily/YYYY-MM-DD.md`,
-  `Daily/YYYY-MM-DD — Digest.md`, `cortex/06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
+- **Path-addressed files** — `cortex/raw/YYYY-MM-DD-<slug>.md`, `cortex/Daily/YYYY-MM-DD.md`,
+  `cortex/Daily/YYYY-MM-DD — Digest.md`, `cortex/06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
   links these by title; they sort chronologically instead. That split is deliberate — don't "fix"
   it in either direction.
 
@@ -373,7 +397,7 @@ project: "[[Some project]]"   # the project it belongs to, as a quoted wikilink 
 
 ### Naming and lifecycle
 
-**While open, a task is title-addressed like any other linkable note:** `Tasks/Call the bank.md`.
+**While open, a task is title-addressed like any other linkable note:** `cortex/Tasks/Call the bank.md`.
 You write it, not the human, so the filename costs them nothing — and a project note needs to be
 able to say `[[Call the bank]]`.
 
@@ -433,7 +457,7 @@ vault quietly fills with confident conclusions nobody ever made.
 
 Every claim in this vault is exactly one of four things, and each has one marker:
 
-- **A fact** — the human said it, or it's verbatim from a source preserved in `raw/` → write it
+- **A fact** — the human said it, or it's verbatim from a source preserved in `cortex/raw/` → write it
   plainly, no marker.
 - **A synthesis** — a read *across* notes that are already here: a count, a recurrence, a
   connection nobody had drawn. Mechanical, and another session re-reading the vault reaches the

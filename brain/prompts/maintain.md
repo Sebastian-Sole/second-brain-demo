@@ -12,12 +12,12 @@ Work through five phases, then write the log.
 
 ## Phase 1 — Close the day
 
-Open today's daily note (`Daily/YYYY-MM-DD.md`), creating it if it doesn't exist.
+Open today's daily note (`cortex/Daily/YYYY-MM-DD.md`), creating it if it doesn't exist.
 
 - Make sure everything captured today is actually logged there.
-- **Surface what's open in `Tasks/` — don't copy any of it anywhere.** Tasks are notes now (see
+- **Surface what's open in `cortex/Tasks/` — don't copy any of it anywhere.** Tasks are notes now (see
   `brain/prompts/task.md`); nothing moves between daily notes, so there is no carry-forward and no
-  way for one to breed duplicates. Read `Tasks/`, give each open task its age from `id:`, and
+  way for one to breed duplicates. Read `cortex/Tasks/`, give each open task its age from `id:`, and
   **say so out loud** when something has been open a long time — "*Call the bank* has been open six
   weeks — still want it?" — rather than listing it silently for the tenth time.
 - If nothing happened today, say that in one line. Don't invent activity.
@@ -65,20 +65,20 @@ Five checks, in order of value:
 5. **The task invariant.** `completed:` must be present whenever `task:` is `done` or `dropped`,
    and absent while it's `open` — that's what makes "how long was this open" computable from `id:`
    and `completed:`. **`brain/bin/doctor` checks this mechanically**, so run it and report what it
-   found rather than re-walking `Tasks/` and `cortex/04_Archive/` by hand. Fix what it names: the missing
+   found rather than re-walking `cortex/Tasks/` and `cortex/04_Archive/` by hand. Fix what it names: the missing
    date belongs in the file, not in your reply.
 
 ## Phase 4 — Rebuild the index
 
-Regenerate `index.md` from what's actually on disk: one line per note,
+Regenerate `cortex/index.md` from what's actually on disk: one line per note,
 `- [[Note Title]] — one-line description`, grouped by section. Drop entries for notes that no
 longer exist; add any that were never catalogued.
 
-**Rebuild the `Open tasks` section too** — one line per `task: open` note in `Tasks/`, linked by
+**Rebuild the `Open tasks` section too** — one line per `task: open` note in `cortex/Tasks/`, linked by
 title, newest-relevant first. Archived tasks stay out: `cortex/04_Archive/` is outside the default search
 set, and a catalog listing a thousand finished tasks defeats the point of having one.
 
-**Do not enumerate `cortex/06_Sessions/` here.** It has its own `index.md` and there can be thousands of
+**Do not enumerate `cortex/06_Sessions/` here.** It has its own `cortex/index.md` and there can be thousands of
 session notes; listing them in the root catalog would drown the notes it exists to surface. One
 line pointing at `cortex/06_Sessions/index.md` is all the root index gets. If session notes are present,
 refresh their own index while you're here.

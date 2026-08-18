@@ -9,21 +9,21 @@ there's no question at all, ask what they want to know.
 
 This is **read-mostly** — don't create or edit knowledge notes in order to answer.
 
-0. **Start with `index.md`.** It lists what exists. Reading the catalog first is cheaper and more
+0. **Start with `cortex/index.md`.** It lists what exists. Reading the catalog first is cheaper and more
    accurate than searching blind, and it tells you what *isn't* there — which is how you avoid
    confidently answering from a gap.
 
 1. **Search broadly, then read narrowly.**
-   - Grep across `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `Tasks/`, `Daily/`, and
+   - Grep across `cortex/03_Resources/`, `cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/Tasks/`, `cortex/Daily/`, and
      `cortex/00_Inbox/` — titles, `aliases`, and body text. Try synonyms and entity names, not just their
      exact words. That's the retrieval order from `AGENTS.md`, plus the inbox — an unprocessed
-     capture is still their material. **`Tasks/` is in the set**: "do I still owe the landlord
+     capture is still their material. **`cortex/Tasks/` is in the set**: "do I still owe the landlord
      anything" is answered there and nowhere else.
    - Follow `[[wikilinks]]` out from the best hits to pull in neighbours.
    - Then actually open and read the handful that look relevant. Depth on the right 3–6 notes
      beats skimming forty.
    - **If the question is about past work** — "what did I decide about X", "when did I last touch
-     Y", "why did we go with Z" — also search `cortex/06_Sessions/`, starting from its `index.md`. Don't
+     Y", "why did we go with Z" — also search `cortex/06_Sessions/`, starting from its `cortex/index.md`. Don't
      search it otherwise: there may be thousands of session notes and they'll out-match your real
      notes on any keyword.
 

@@ -3,8 +3,8 @@
 Thumbs.db
 
 # Obsidian per-machine UI state (safe to ignore; the notes are the vault)
-.obsidian/workspace*.json
-.obsidian/cache
+cortex/.obsidian/workspace*.json
+cortex/.obsidian/cache
 .trash/
 
 # Local settings that shouldn't be shared

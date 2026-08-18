@@ -67,7 +67,7 @@ model problem.
 | 5 | `what do you know about me` | `ask` | ⚠ interview vs ask | Mirror of 4. Same shape, opposite direction: retrieve the profile, don't start asking. |
 | 6 | `remember that retry budgets beat retry counts` | `capture` | ⚠ capture vs task | "remember that" + a claim = a note. There is no next action in this sentence. |
 | 7 | `remember to cancel the insurance before the 30th` | `task` | ⚠ capture vs task | "remember to" + a deadline = a task. One word apart from 6 and a different file. |
-| 8 | `here, read this https://example.com/post — want to keep it` | `capture` | | A pasted link is `capture`'s bread and butter; the original goes to `raw/` first. |
+| 8 | `here, read this https://example.com/post — want to keep it` | `capture` | | A pasted link is `capture`'s bread and butter; the original goes to `cortex/raw/` first. |
 | 9 | `what did i land on for auth in the end` | `ask` | | "why did we choose Z" phrased like a human. One decision, one note. |
 | 10 | `did i ever write anything down about connection pooling` | `ask` | | "did I write anything on Y" — a retrieval question with the word "write" in it. |
 | 11 | `tell me about retries` | `ask` | ⚠ ask vs explain | Their own past thinking played back. See ambiguity A1 — this one is contents-dependent. |

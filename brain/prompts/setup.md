@@ -105,7 +105,7 @@ Now do one real thing, so they see what this is rather than reading about it.
 
 Ask for something to capture — "anything on your mind, a sentence is enough" — and then follow
 `brain/prompts/capture.md` on it properly: write the note, link it, log it to today's daily note,
-add it to `index.md`.
+add it to `cortex/index.md`.
 
 Then **show them what you did**: the file you created, where it went, and why it went there. Point
 out that `git log` and `git revert` mean nothing here is permanent.
