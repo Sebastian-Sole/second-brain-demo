@@ -35,7 +35,7 @@ trap 'rm -f "$tmp"' EXIT INT TERM
 # ignore it.
 exempt() {
   case "$1" in
-    AGENTS.md|README.md|DESIGN.md|CLAUDE.md|GEMINI.md|index.md) return 0 ;;
+    AGENTS.md|README.md|DESIGN.md|GUIDE.md|CLAUDE.md|GEMINI.md|index.md) return 0 ;;
     brain/*|.claude/*|.github/*|raw/*|"$REGISTER") return 0 ;;
   esac
   return 1
@@ -182,6 +182,31 @@ fi
 # Two things matter outside the register: an id must resolve to a real entry,
 # and an assumption must never sit where only facts belong.
 
+# The ids the human has actually ruled on. A promoted claim is legal for exactly
+# as long as this says so — refute it later and the promoted line becomes an error
+# that points at itself, which is how it finds its way back out of the profile.
+confirmed_ids=' '
+if [ -f "$REGISTER" ]; then
+  confirmed_ids=" $(awk '
+    /\*\*Assumption/ {
+      cur = ""
+      if (match($0, /ASM-[0-9][0-9][0-9][0-9]/)) cur = substr($0, RSTART, RLENGTH)
+      next
+    }
+    /Status:[ ]*confirmed/ { if (cur != "") { print cur; cur = "" } }
+  ' "$REGISTER" 2>/dev/null | sort -u | tr '\n' ' ')"
+fi
+
+# The self-model is the hub plus everything it links. AGENTS.md bans an open
+# assumption from "the profile or a spoke"; the spokes are whatever the hub
+# points at, so the guard follows the links rather than a hardcoded list.
+spokes=' '
+if [ -f "$PROFILE" ]; then
+  spokes=" $(grep -o '\[\[[^]]*\]\]' "$PROFILE" 2>/dev/null \
+      | sed 's/^\[\[//; s/\]\]$//; s/|.*$//; s/#.*$//' \
+      | sed 's|^|03_Resources/|; s|$|.md|' | sort -u | tr '\n' ' ')"
+fi
+
 find . -name '*.md' -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r f; do
   exempt "$f" && continue
   [ -f "$f" ] || continue
@@ -189,16 +214,32 @@ find . -name '*.md' -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | 
   grep -o 'ASM-[0-9][0-9][0-9][0-9]' "$f" 2>/dev/null | sort -u | while IFS= read -r id; do
     if [ ! -f "$REGISTER" ]; then
       printf 'ERROR\t%s references %s, but %s does not exist. A labelled claim with no traceable evidence is exactly what the rules forbid.\n' "$f" "$id" "$REGISTER"
-    elif ! grep -q "^### $id" "$REGISTER" 2>/dev/null; then
-      printf 'ERROR\t%s references %s, which has no "### %s" entry in %s.\n' "$f" "$id" "$id" "$REGISTER"
+    elif ! grep -q "^### $id" "$REGISTER" 2>/dev/null &&
+         ! grep -q "\*\*Assumption[^*]*$id" "$REGISTER" 2>/dev/null; then
+      printf 'ERROR\t%s references %s, which has no entry in %s. The register writes one as a callout: "> **Assumption — %s · confidence: ... · basis-kind: ...**".\n' "$f" "$id" "$REGISTER" "$id"
     fi
   done
 
-  awk -v f="$f" -v profile="$PROFILE" '
+  awk -v f="$f" -v profile="$PROFILE" -v spokes="$spokes" -v confirmed="$confirmed_ids" '
     /^#+[ ]+/ { infacts = ($0 ~ /^#+[ ]+[Ff]acts[ ]*:?[ ]*$/) ? 1 : 0 }
     {
-      if ((infacts || f == profile) && (/ASM-[0-9][0-9][0-9][0-9]/ || /\*\*Assumption/))
-        print "ERROR\t" f ":" NR " — an assumption sits where only facts belong. Facts are what the human said; assumptions live in the register, and only the human promotes one."
+      if (!(infacts || f == profile || index(spokes, " " f " ") > 0)) next
+      if (!(/ASM-[0-9][0-9][0-9][0-9]/ || /\*\*Assumption/)) next
+
+      # A promoted claim is not an assumption any more. The human confirmed it, it
+      # carries its provenance, and that is the most labelled line in the vault --
+      # the opposite of a guess dressed as a fact. Punctuation is deliberately loose
+      # here: the register status is the gate, not the comma.
+      if (match($0, /\(confirmed [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*was ASM-[0-9][0-9][0-9][0-9]\)/)) {
+        prov = substr($0, RSTART, RLENGTH)
+        match(prov, /ASM-[0-9][0-9][0-9][0-9]/)
+        pid = substr(prov, RSTART, RLENGTH)
+        if (index(confirmed, " " pid " ") > 0) next
+        print "ERROR\t" f ":" NR " — this line says it was promoted from " pid ", but the register does not record " pid " as confirmed. Either the verdict was reversed and this line outlived it, or nobody promoted it. Take it back out."
+        next
+      }
+
+      print "ERROR\t" f ":" NR " — an assumption sits where only facts belong. Facts are what the human said; assumptions live in the register, and only the human promotes one."
     }
   ' "$f"
 done >> "$tmp"

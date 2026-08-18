@@ -60,6 +60,11 @@ otherwise.
 None of these ship. Each appears when there's something real to put in it — an empty spoke is the
 same organisational debt as an empty MOC.
 
+`review-assumptions` adds more of them as claims get confirmed — one per subject, named the same
+way (`[[How I work]]`, `[[How I handle money]]`), read by `infer`, `interview` and `ask`. The
+naming rule is load-bearing rather than decorative: `Money` and `Health` are `02_Areas/` names
+under PARA, and two notes sharing a name make `[[Money]]` ambiguous.
+
 ### Capturing personality
 
 When the profile gets built by interviewing them, **the human picks the instrument**: a
@@ -105,7 +110,10 @@ assumption — and it must never be written into the profile or a spoke as thoug
 `brain/bin/check` fails on exactly that.
 
 `setup` writes the hub. Nothing else edits the hub or a spoke without being asked — including
-`maintain`, which may fix links and frontmatter but never content.
+`maintain`, which may fix links and frontmatter but never content. Two commands are asked by
+construction, and only in that moment: `interview`, when the human runs an inventory, and
+`review-assumptions`, when a `y` verdict promotes a claim into its spoke and links that spoke from
+the hub.
 
 ---
 
@@ -491,10 +499,17 @@ killed.**
 is the human confirming it, and a promoted claim keeps its history: `(confirmed 2026-09-01, was
 ASM-0007)`. Everything else stays labelled, forever.
 
+A confirmed claim about the human goes to the **spoke for its subject** — `[[How I work]]`,
+`[[How I handle money]]` — never into the hub, which is capped and paid for on every turn. Spokes
+are named for the person, not for the domain: a bare `Money.md` or `Health.md` is an `02_Areas/`
+name under PARA and collides with it. The hub carries the link; the spoke carries the claim.
+
 - A **refuted** assumption is never deleted. It's the most valuable row in the register: it records
   a specific way the model of them was wrong, and it stops the same guess being made next month.
-- **Never** write an assumption into a `## Facts` section or into `03_Resources/About me.md`.
-  `brain/bin/check` fails if you do.
+- **Never** write an *open* assumption into a `## Facts` section, into `03_Resources/About me.md`,
+  or into one of its spokes. `brain/bin/check` fails if you do. A **confirmed** one is no longer an
+  assumption: it is a fact, it goes where the one-way rule above sends it, and it carries its
+  provenance. `check` permits that form for exactly as long as the register still says `confirmed`.
 - An assumption informs *the human's* decisions. It never authorises *yours* — nothing gets sent,
   booked, bought, or changed on the strength of one.
 

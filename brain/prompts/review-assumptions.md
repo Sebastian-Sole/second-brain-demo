@@ -53,9 +53,21 @@ rest stay open.
 In the register, and only there for the reasoning.
 
 **y → confirmed.** Set `Status: confirmed · <date> · by <them>`. Then **promote it**: write the
-claim as plain prose where it belongs — `03_Resources/About me.md` if it's about them, the person's
-`## Facts` section if it's about someone else — carrying its provenance:
+claim as plain prose where it belongs, carrying its provenance:
 `(confirmed 2026-09-01, was ASM-0007)`. Keep the register row; mark the pointer as confirmed.
+
+Where it goes:
+
+- **About them** → the spoke for that subject in `03_Resources/`, named for *them* and not for the
+  domain — `[[How I work]]`, `[[How I handle money]]`, `[[How I decide]]`. Create the spoke if it
+  doesn't exist yet and link it from `[[About me]]`. A bare domain name like `Money.md` is an
+  `02_Areas/` name and collides with it. **Not the hub itself**: `[[About me]]` is capped at 40
+  lines and re-read on every turn, so it carries the link, never the claim.
+- **About someone else** → that person's note, under `## Facts`.
+
+`brain/bin/check` permits the provenance form in exactly those places, and only while the register
+still records that id as `confirmed`. Refute it later and the check will point at the promoted line
+so it can come back out.
 
 **n → refuted.** Set `Status: refuted · <date>`, append `Refuted because: <their words>`, and move
 the whole block to **Refuted & withdrawn**. **Never delete it.** Remove the pointer from wherever it

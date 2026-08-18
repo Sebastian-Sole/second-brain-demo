@@ -163,8 +163,9 @@ What this brain has concluded about me that **I never said**. Facts I stated liv
 [[About me]]; this is the layer above them, and every claim here is open until I confirm it.
 
 > [!WARNING]
-> Nothing in this file is a fact. The rules are in `AGENTS.md`. Never quote a line from here back
-> to me without its label, and never copy one into [[About me]].
+> Nothing in this file is a fact while it is open. The rules are in `AGENTS.md`. Never quote an
+> open line from here back to me without its label, and never copy one into [[About me]] or into a
+> spoke. Only I promote one, and only through `review-assumptions`.
 
 **Next ID: ASM-0001**
 
