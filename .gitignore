@@ -16,3 +16,6 @@ Thumbs.db
 # If you ever copy one in for reference, it lands here and stays uncommitted.
 raw/sessions/transcripts/
 
+
+# Local agent worktrees, never commit
+.claude/worktrees/
