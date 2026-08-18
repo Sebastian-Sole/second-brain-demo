@@ -500,14 +500,21 @@ find "$FIX/outer/myvault/cortex/raw" -name '*.jsonl' | wc -l
 ```
 → `0`
 
-**Verify** — a vault with no git at all is still allowed:
+**Verify** — a vault with no git at all is still allowed. Note that removing
+the vault's own `.git` is **not enough**: Step 1's `outer` repository still
+encloses it, so git finds that one and answers about it instead. Both must go:
 
 ```sh
-rm -rf "$FIX/outer/myvault/.git"
+rm -rf "$FIX/outer/myvault/.git" "$FIX/outer/.git"
 cd "$FIX/outer/myvault" && HOME="$FAKEHOME" ./brain/bin/sessions stage secretproj; echo "EXIT=$?"
 ```
-→ stages the file, exit 0. There is no repository, so there is nothing to
-commit into.
+→ stages the file, exit 0. There is no repository anywhere above this
+directory, so there is nothing to commit into, and `rc` is 128.
+
+> **Corrected 2026-08-18.** An earlier version removed only the vault's `.git`
+> and expected exit 0. That is not a no-repository state, and the guard
+> correctly refused. The executor of this plan diagnosed it and removed the
+> outer `.git` as well, which is the right test.  
 
 ### Step 7: Clean up
 
@@ -548,7 +555,12 @@ Machine-checkable. ALL must hold:
       rather than the ignore guard
 - [ ] `git status --porcelain` shows exactly four modified files, all under
       `brain/bin/`
-- [ ] `git diff --stat` shows fewer than 70 changed lines in total
+- [ ] `git diff --stat` shows roughly 60-80 changed lines. **This is a smell
+      test, not a gate.** If your comments are good and the total runs a little
+      over, leave them — the "Repository conventions" section asks for prose
+      that explains the *why*, and that costs lines. Do not compress a comment
+      to hit a number. If the total is far larger, something outside the four
+      anchor blocks and the Step 6 guard has changed; that is the real signal.
 - [ ] `plans/README.md` status row for 001 updated
 
 ## STOP conditions

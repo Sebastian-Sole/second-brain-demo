@@ -15,7 +15,7 @@ pass at `bec2c00`.
 
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
-| 001 | Anchor all four scripts to the vault they ship in, and refuse to stage transcripts git would commit | P1 | M | — | TODO |
+| 001 | Anchor all four scripts to the vault they ship in, and refuse to stage transcripts git would commit | P1 | M | — | DONE (approved 2026-08-18, **not merged** — branch `advisor/001-anchor-scripts-to-vault-root`, commits `fbe91fc` and `2ade4d3`) |
 | 002 | Correct five places that still promise mail and calendar never write | P1 | S | — | DONE (approved 2026-08-18, **not merged** — branch `advisor/002-correct-stale-mail-and-calendar-promises`, commit `87b4623`) |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
@@ -33,6 +33,49 @@ first: if its copy of the harness predates `bec2c00`, both plans apply to it
 unchanged.
 
 ## Execution log
+
+**001 — APPROVED 2026-08-18, not merged.** Executor: one `general-purpose`
+subagent on Sonnet, isolated worktree, branch
+`advisor/001-anchor-scripts-to-vault-root`, two commits — `fbe91fc` for the path
+fix, `2ade4d3` for the guard.
+
+Reviewed by re-running all 10 done criteria in the worktree, reading the full
+diff, and building an independent fixture rather than reusing the executor's.
+Scope is exactly the four in-scope files, all under `brain/bin/`, 63 insertions
+and 6 deletions. All four scripts still parse under `sh -n`, and no bashism was
+introduced. Each script's anchor comment is written for that script rather than
+copied, which is what the conventions section asked for.
+
+The guard was verified in four states on a reviewer-built fixture:
+
+| State | Expected | Observed |
+|---|---|---|
+| Standalone vault, `.gitignore` intact | allow | exit 0, 1 file staged inside the vault |
+| Same vault, `.gitignore` line removed | refuse | exit 1, **0 files copied** |
+| No git repository anywhere above the vault | allow | exit 0, 1 file staged |
+| Vault nested in another repo, no `.git` of its own | stage inside the vault | 1 file inside, **0 outside**, and the enclosing repo ignores it |
+
+The original defect was also reproduced side by side in the same nested vault:
+the shipped `brain/bin/check` prints `no assumption register yet` and exits 0,
+while the fixed one reads the register and applies the evidence floor.
+
+**The executor exposed two defects in this plan, and was right about both.**
+First, Step 6's "no git at all" test removed only the vault's `.git`, leaving
+the fixture's outer repository enclosing it — not a no-repository state, so the
+guard correctly refused. The executor diagnosed this, removed the outer `.git`
+too, and got the documented result. Second, the done criteria carried a hard
+"fewer than 70 changed lines" budget, which collided with the same plan's
+requirement for house-style comments explaining the *why*; the executor's first
+pass came in at 92 lines and it trimmed prose to hit the number. It kept the
+required content, but the budget was the wrong instrument. Both are now fixed in
+the plan: the fixture removes both `.git` directories, and the line count is
+stated as a smell test with an explicit instruction not to compress a comment to
+hit a number.
+
+One observation, not a defect: the second comment block — "The same guard doctor
+uses for in_vault" — is copied verbatim into all four scripts, including
+`doctor`, where it reads oddly from inside the file it names. Worth a word
+change if anyone touches these lines again.
 
 **002 — APPROVED 2026-08-18, not merged.** Executor: one `general-purpose`
 subagent on Sonnet, isolated worktree, branch
