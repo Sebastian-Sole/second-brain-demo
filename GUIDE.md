@@ -50,11 +50,10 @@ so in a sentence and it moves it. That's the entire filing workflow.
 
 ## The commands, grouped by what you want
 
-**Just say the word.** `capture this`, `what's on today`, `digest`. Nine of them also ship as
-Claude Code slash commands (`/capture`, `/ask`, `/digest`, `/infer`, `/ingest-sessions`,
-`/interview`, `/maintain`, `/review-assumptions`, `/setup`) if you like the autocomplete; the rest
-work the same way by name. And you can skip all of it — see
-[the next section](#you-dont-have-to-use-the-commands).
+**Just say the word.** `capture this`, `what's on today`, `digest`. Every command below also ships
+as a Claude Code slash command — `/capture`, `/ask`, `/digest`, and so on for all of them — if you
+like the autocomplete; saying the name in a sentence works exactly the same. And you can skip all of
+it — see [the next section](#you-dont-have-to-use-the-commands).
 
 ### Getting things in
 
@@ -78,9 +77,15 @@ what something is, it goes to `00_Inbox/` with an explicit question rather than 
 
 ### Getting things out
 
-**`ask`** — answers from your own notes, with links to the notes it used. It answers from the vault
-and nothing else: if your notes don't cover something, it says so plainly rather than padding the
-answer out with general knowledge.
+**`ask`** — answers from your own notes first, then from general knowledge, and always shows you
+which is which. Anything that came from the vault sits under **From your notes**, with links to the
+notes it used; anything it added from outside sits under **Not from your notes**. A question your
+notes say nothing about still gets a real, useful answer — it just arrives entirely under the second
+heading, along with a one-line offer to save it as a note if it's worth keeping.
+
+**The labels are the point.** You can always see which half of an answer came from you, so a thin
+patch in your notes shows up as a thin patch rather than being quietly papered over. It will never
+hang a link off a claim that didn't come from that note.
 
 ```
 ask what did I decide about retries?
@@ -195,11 +200,18 @@ asked one at a time, and it stops the moment you sound uninterested. **Its defau
 a young vault most runs have nothing worth asking, and it says so in one line rather than inventing
 an icebreaker. Nothing runs it on a timer.
 
-**`new-feature`** — adding a command of your own. **The prompt file for this isn't in the repo yet**,
-so treat the name as a label rather than something you can run today. In the meantime, adding a
-command is genuinely two steps: copy an existing file in `brain/prompts/` and edit it, then add a row
-to the table in `AGENTS.md`. Anything that reaches outside the vault goes in `brain/tools/` instead,
-with a small frontmatter block declaring what it needs and what it's allowed to write.
+**`new-feature`** — adding a command of your own, and the only way this vault grows one. It walks
+you through six steps: it gets the problem in your words, restates it back as a five-line spec and
+waits for a yes, decides whether the new thing stays inside the vault or reaches outside it, writes a
+security review into the file itself, then writes the file and wires it up — and finally hands you
+the exact sentence to type, because you test it, not it.
+
+The security step is never skipped, not even for something that looks like a one-liner: it has to say
+in writing what the new command can read, what it can send outward and to whom, and what happens if
+something it fetches turns out to be hostile. That's the step you'd be skipping if you added a file
+by hand, so don't — run `new-feature` and let it refuse the idea if the idea deserves refusing. It
+will happily tell you that what you asked for already exists under another name, or that it's really
+two commands. Both of those are good outcomes.
 
 ### Your history
 
@@ -300,8 +312,15 @@ indistinguishable from one that got lost.
 
 ## Connecting mail and calendar
 
-Both are **opt-in**. Nothing is connected until you connect it, and until then asking about your
-inbox gets you one plain sentence — "No mail connector is configured" — rather than an error.
+Both are **opt-in**, and what you're opting into is the connection itself. Nothing is connected
+until you connect it, which you do once, in `setup`; until then, asking about your inbox gets you one
+plain sentence — "No mail connector is configured" — rather than an error. Once connected, they work
+like every other command: you won't be asked permission again each time you ask what's on today.
+
+So it's worth being precise about what you agreed to that once, because three limits hold from then
+on, whatever you ask: **it can never send**, **nothing from your mail or calendar is written into the
+vault unless you ask for it**, and **nothing it reads there becomes a fact about you**. The rest of
+this section is those three, in full.
 
 Read this before you connect anything:
 

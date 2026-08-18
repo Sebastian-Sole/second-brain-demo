@@ -169,6 +169,7 @@ a Resource.
 | `task` | `Tasks/` (and `04_Archive/` once done — see [Tasks](#tasks)) |
 | `session` | `06_Sessions/` (the transcript stays outside the vault) |
 | `daily` | `Daily/` |
+| `digest` | `Daily/` |
 
 Read this table to decide where something goes. Someone can swap PARA for a different scheme by
 editing these rows, and every command keeps working — which is the point.
@@ -226,7 +227,7 @@ promote it into evidence about them.
 ```yaml
 ---
 title: Human-readable title
-type: note            # note | source | daily | project | area | moc | person | concept | task
+type: note            # note | source | daily | digest | project | area | moc | person | concept | task
 stage: inbox          # inbox | active | evergreen | archived   — how processed is it
 status: draft         # draft | stable | deprecated             — how much should you trust it
 created: 2026-01-01
@@ -310,8 +311,9 @@ starting a new note", the number is in the wrong place.
   the title, spaces, capitals and all, because `[[wikilinks]]` resolve by filename and have to read
   well inside a sentence.
 - **Path-addressed files** — `raw/YYYY-MM-DD-<slug>.md`, `Daily/YYYY-MM-DD.md`,
-  `06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody links these by title; they sort
-  chronologically instead. That split is deliberate — don't "fix" it in either direction.
+  `Daily/YYYY-MM-DD — Digest.md`, `06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
+  links these by title; they sort chronologically instead. That split is deliberate — don't "fix"
+  it in either direction.
 
 When a title contains a character the filesystem rejects (`:` `/` `\` `?` `*` `|` `<` `>` `"`),
 **strip or replace only that character** and keep the true form in frontmatter `title:`. Never
@@ -367,9 +369,11 @@ project: "[[Some project]]"   # the project it belongs to, as a quoted wikilink 
 You write it, not the human, so the filename costs them nothing — and a project note needs to be
 able to say `[[Call the bank]]`.
 
-**On completion or drop the file moves** to `04_Archive/Call the bank (done 2026-08-17).md`, with
-`task:` and `completed:` set, `stage: archived`, `title:` updated to match the new filename, and
-every inbound link repointed in the same pass.
+**On completion or drop the file moves** to `04_Archive/Call the bank (done 2026-08-17).md` — or
+`(dropped 2026-08-17)` if it was dropped, because a dropped task that archives as "done" lies about
+itself forever, and the `title:` rule below makes the lie durable. The suffix follows `task:`. Set
+`task:` and `completed:`, `stage: archived`, `title:` updated to match the new filename, and every
+inbound link repointed in the same pass.
 
 - **Why the rename is legal.** [Naming](#naming) forbids breaking inbound links, not renaming — and
   it already permits a move whose links are fixed in the same pass. The completion pass is exactly
@@ -661,6 +665,16 @@ The split exists so that **"what can this thing reach" is a directory listing ra
 paragraph.** That's what a security review needs to start from, and it's what `doctor` needs in
 order to say which capabilities are actually connected.
 
+**Two skills break that, and are named here rather than hidden.** `ingest-sessions` reads the
+transcripts under `~/.claude/projects` and `~/.codex/sessions` and needs `jq` — by its own
+description the highest-risk reader in this vault, since those transcripts contain other people's
+confidential code and files holding credentials. `doctor` reads `$HOME/.claude.json` and
+`$HOME/.claude/settings.json`. Both live in `brain/prompts/` and `brain/bin/` and reach the host
+anyway. They aren't in `brain/tools/` because neither needs a connector or any configuration, and
+the tool contract exists for the things a human must set up and consent to. **So the directory
+listing is not a complete answer to "what reaches outside": it's complete except for these two.**
+An exception you can see beats a rule that quietly isn't true.
+
 ### Skills
 
 | Command | Prompt file | What it does |
@@ -672,9 +686,9 @@ order to say which capabilities are actually connected.
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
 | `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
-| `doctor` | `brain/bin/doctor` | Check the install and say what to fix. A script, not a prompt — run it |
+| `doctor` | `brain/bin/doctor` | Check the install and say what to fix. A script, not a prompt — run it. **Reads outside the vault** — see the two exceptions above |
 | `new-feature` | `brain/prompts/new-feature.md` | Add a skill or a tool to this vault, including the security review below |
-| `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search |
+| `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search. **Reads outside the vault** — see the two exceptions above |
 | `infer` | `brain/prompts/infer.md` | Answer something the vault has no facts for, by reasoning from the facts it does have — every assumption labelled, evidenced, falsifiable |
 | `review-assumptions` | `brain/prompts/review-assumptions.md` | Confirm, refute or skip open assumptions. Confirmed ones become facts; refuted ones are kept as calibration |
 | `interview` | `brain/prompts/interview.md` | The brain asks *them*: perishable follow-ups, open assumptions, blank dimensions, stalled work. Sourced, capped at three, silent when it has nothing worth asking |
@@ -708,8 +722,13 @@ consent: implicit       # implicit | opt-in
 - **`requires:`** — what must exist for it to work at all.
 - **`fallback:`** — the plain sentence to say when that thing isn't there.
 - **`writes:`** — `none`, or exactly what it may create. A tool declaring `none` never writes a file.
-- **`consent:`** — `implicit` means invoking it is the consent; `opt-in` means ask first, every
-  time, and take silence as no.
+- **`consent:`** — `implicit` means invoking it is the consent: nothing to connect, nothing to opt
+  into. `opt-in` means **the connection** is what's opted into — the human connects the service once
+  during `setup`, and from then on the tool is used without asking again. Routing here is silent, so
+  a confirmation on every "did Anna reply" would contradict that, and the consent was already given
+  at connect time. The protections that remain are the ones that matter: the tool is still ephemeral
+  (writes nothing unless asked), still never infers anything about the human from what it read, and
+  still cannot send.
 
 **A tool that can't meet its requirement degrades with a plain sentence** — "Weather isn't
 connected — run `setup`." — never an error, never a stack trace, never a lecture about API keys.
