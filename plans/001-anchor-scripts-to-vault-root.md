@@ -34,7 +34,7 @@ Every consequence is silent, which is what makes them expensive:
   transcripts into `cortex/raw/sessions/transcripts/`, a path that
   `.gitignore:35` excludes from git. `.gitignore:31-34` describes those files
   as "enormous (gigabytes) and full of credentials, client code and pasted
-  secrets", and `brain/prompts/ingest-sessions.md:44` promises the human that
+  secrets", and `brain/prompts/ingest-sessions.md:48` promises the human that
   `stage` puts them "into a gitignored folder inside the vault". With the wrong
   root, the copies land *outside* the vault, where the vault's `.gitignore`
   cannot reach them — and the script prints a success message naming a relative
@@ -58,6 +58,25 @@ two different directions, which is the right shape for the one script in this
 repository that moves credentials around. The guard also covers cases the path
 fix does not — a vault whose `.gitignore` was edited, or replaced by a harness
 update that dropped the line.
+
+### This is preventive, not an active fire — read before you panic
+
+Verified on 2026-08-18: the defect **does not trigger in this repository**.
+This vault has its own `.git`, so `git rev-parse --show-toplevel` answers with
+the vault and all four scripts currently behave. The fault needs a vault nested
+inside another git repository with no `.git` of its own — the state
+`brain/bin/sync:32-44` already detects and refuses.
+
+That does not make this plan optional. It means you are removing a trap rather
+than putting out a fire, so **prefer a careful diff over a fast one**. If a
+verification disagrees with this plan, stop and report; nothing here is urgent
+enough to justify guessing.
+
+The same reasoning applies to Step 6. Its guard is not repairing a live leak in
+this repository — `.gitignore:35` is doing its job here today. It is making the
+promise in `brain/prompts/ingest-sessions.md:48` enforced rather than merely
+written down, which matters because the operator is about to start using that
+feature regularly.
 
 ## Current state
 
@@ -446,7 +465,7 @@ Three behaviours, and your comment must explain why each is right:
 
 | `rc` | Meaning | Action | Why |
 |---|---|---|---|
-| `0` | git ignores the destination | continue | The promise in `ingest-sessions.md:44` holds. |
+| `0` | git ignores the destination | continue | The promise in `ingest-sessions.md:48` holds. |
 | `1` | git does **not** ignore it | refuse, exit 1 | A copy here becomes a commit, then a push. |
 | `128` | no git repository at all | continue | Nothing can be committed, so nothing can leak this way. `sync` already reports this state. |
 
@@ -584,3 +603,12 @@ For whoever owns this code next:
   as `backed up to <url>` without checking whether it is public. That is audit
   finding 4 and is unplanned. It belongs to the same family as the Step 6 guard
   — both ask "where is this actually going?" — and would sit naturally beside it.
+  Measured on 2026-08-18: `Sebastian-Sole/second-brain-demo` is **PUBLIC**, and
+  while the staged transcripts and `cortex/06_Sessions/scope.md` are both
+  ignored, the session notes at `cortex/06_Sessions/<note>.md` are **tracked**,
+  committed by the `Stop` hook and pushed. Step 6 stops transcripts reaching a
+  remote; nothing yet stops the notes distilled from them reaching a public one.
+- **Apply this plan to the operator's working vault too.** The private
+  repository `Sebastian-Sole/second-brain` at `~/Documents/Obsidian Vault` was
+  not inspected during this audit. Run `brain/bin/doctor` there first; if its
+  harness predates `bec2c00`, this plan applies unchanged.

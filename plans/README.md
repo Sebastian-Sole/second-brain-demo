@@ -26,6 +26,49 @@ REJECTED (with one-line rationale).
 The two plans are independent and touch no common file. They can be executed in
 either order, or in parallel by two executors.
 
+**Both plans should also be applied to the operator's working vault**, the
+private repository `Sebastian-Sole/second-brain` at `~/Documents/Obsidian Vault`.
+That vault was not inspected during this audit. Run `brain/bin/doctor` there
+first: if its copy of the harness predates `bec2c00`, both plans apply to it
+unchanged.
+
+## Decisions taken during the audit
+
+Recorded so they are not re-litigated. Each names the evidence it rested on.
+
+**Keep `sessions` and `ingest-sessions`.** The operator weighed removing the
+feature entirely — 351 lines across three files, 34 references in ten others,
+and the only component `AGENTS.md` calls "the highest-risk reader in this
+vault". It stays, for three reasons:
+
+1. It is the only mechanism here that reaches backwards in time, so it is the
+   only answer to the cold-start problem that makes a new vault worth using
+   before months of capture. `brain/prompts/setup.md` calls it "the day-one win".
+2. `~/.claude/settings.json` sets `cleanupPeriodDays` to 3650 against a default
+   of 30. Something raised it deliberately, and this feature is the only thing
+   in this repository that benefits.
+3. What is lost by deleting it is not recoverable later — deleted transcripts
+   do not come back.
+
+The state to avoid, which is where the repository stood at `bec2c00`, is keeping
+the feature and never running it: the full surface area, including the security
+surface, for no value. `cortex/06_Sessions/` has never existed in this
+repository's history. The operator intends to start running it.
+
+**Run `ingest-sessions` in the private vault, not this one.** Verified
+2026-08-18 with `git check-ignore` and `gh repo view`:
+
+| Path | Ignored by git? |
+|---|---|
+| `cortex/raw/sessions/transcripts/` — the staged transcripts | Yes |
+| `cortex/06_Sessions/scope.md` — the allowlist naming clients and employers | Yes |
+| `cortex/06_Sessions/<note>.md` — **the notes the feature exists to produce** | **No. Tracked, committed by the `Stop` hook, pushed.** |
+
+`Sebastian-Sole/second-brain-demo` is **PUBLIC**. `Sebastian-Sole/second-brain`
+is **PRIVATE**. The transcripts and the client list are protected in both; the
+distilled notes are not. That gap is audit finding 4, and it is why finding 4
+was re-ranked below.
+
 ## Findings audited but not planned
 
 The operator selected findings 1, 2, 3 and 7 from the audit. The rest were
@@ -34,7 +77,7 @@ re-audits them.
 
 | # | Finding | Why not planned |
 |---|---|---|
-| 4 | `brain/bin/doctor:87-97` reports any git remote as `backed up to <url>`. Nothing checks whether the remote is public, although `README.md:53` tells new users to create a **private** repository and the `Stop` hook pushes after every turn. | Not selected. Nothing is exposed today — `cortex/` holds only the two shipped example notes. A `doctor` check using `gh repo view --json visibility`, degrading silently when `gh` is absent, is the small version. |
+| 4 | `brain/bin/doctor:87-97` reports any git remote as `backed up to <url>`. Nothing checks whether the remote is **public**, although `README.md:53` tells new users to create a private repository and the `Stop` hook commits and pushes after every turn. | Not selected, but **re-ranked upward on 2026-08-18**. The operator has decided to start running `ingest-sessions` — see "Decisions taken during the audit" above — which is the one command here that writes notes summarising client and employer work, and those notes are tracked. The small version of the fix is a `doctor` check using `gh repo view --json visibility`, staying silent when `gh` is absent, matching how `doctor` already treats the optional `jq` trust check at lines 494-497. Ask the operator before planning it. |
 | 5 | No tests, no CI, no `shellcheck` wiring for 1,336 lines of POSIX shell and awk that enforce every invariant in `AGENTS.md`. The scripts' own comments record three earlier regressions (`brain/bin/check:29-35`, `brain/bin/sessions:83-88` and `:101-105`). | Not selected. Should follow plan 001, so the tests cover fixed behaviour rather than being rewritten. |
 | 6 | `brain/routing-eval.md` holds 60 utterances and 28 marked collisions. Its Results table at lines 214-227 is empty — it has never been run — and commit `bec2c00` changed 80 lines of the routing and ceiling rules it tests. Plan 002 changes two of its rows again. | Not selected. Worth a run before either plan is called finished. |
 | 8 | Two near-duplicate presentation files, `Ai Assistant Pitch.html` (17 MB, repository root) and `presentations/ai-assistant-pitch.html` (23 MB), put `.git` at 97 MB — in a repository whose `README.md:41` instructs new users to `git clone` it. | Not selected. Deleting the root duplicate is small; removing it from history is a separate, larger decision. |
@@ -57,4 +100,6 @@ Checked and found not to be problems. Recorded so they are not re-audited.
   of `ingest-sessions.md`. All five files in `brain/tools/` were read in full.
 - `tools/draw_handdrawn_objects.py`, the contents of the two presentation HTML
   files, and everything under `assets/`.
+- The operator's working vault at `~/Documents/Obsidian Vault`. A different
+  repository; out of scope for this audit.
 - Dependency and supply-chain review — this repository has no dependencies.
