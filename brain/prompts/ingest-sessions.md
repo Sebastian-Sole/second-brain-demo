@@ -23,6 +23,11 @@ tidiness problem.
 Write their answer to `06_Sessions/scope.md` as an allowlist of path fragments, so later runs don't
 re-ask. Anything not matching the allowlist is skipped silently.
 
+That file is **gitignored, deliberately**. It is a list of the human's clients and employers, and
+the paragraph above is the reason: this is a git repo that gets pushed, and `sync` would publish it
+on the next turn before they had seen it. The cost is that a second machine asks once more. Say so
+if they wonder why — and don't "fix" it by committing the file.
+
 **Then agree a window.** Default to the **last 30 days**. Never attempt an entire history in one
 run — it's thousands of sessions and it will cost more than it's worth. Report what remains at the
 end so they can run it again.

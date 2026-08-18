@@ -36,3 +36,8 @@ raw/sessions/transcripts/
 
 # Local agent worktrees, never commit
 .claude/worktrees/
+
+# The ingest allowlist names the human's clients and employers. ingest-sessions
+# writes it, and sync commits and pushes on the very next turn -- before anyone
+# has seen the file. It exists so later runs don't re-ask; that job is local.
+06_Sessions/scope.md
