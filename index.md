@@ -19,6 +19,10 @@ _(none yet)_
 
 _(none yet)_
 
+## Open tasks
+
+_(none yet)_
+
 ## Notes
 
 - [[A note with no links is nearly worthless]] — links, not folders, are what make a note findable later

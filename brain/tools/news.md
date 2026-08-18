@@ -26,7 +26,7 @@ the thing this tool exists not to be.
 
 2. **Fetch each feed with `curl`.** RSS/Atom over `curl` is the floor, because it works in every
    agent with no API key and no account — that portability is worth more than any richer source.
-   Verified from this machine (2026-08-17):
+   Verified from this machine (2026-08-18):
 
    | Feed | Result |
    | --- | --- |

@@ -250,7 +250,7 @@ aliases: []
 - Bump `updated` whenever you meaningfully change a note.
 - For facts from sources, add a recency marker in the body: `(as of 2026-01, example.com)`. If two
   sources conflict, keep both with markers rather than silently picking one.
-- `type: task` carries four extra fields on top of all of the above — see [Tasks](#tasks).
+- `type: task` carries five extra fields on top of all of the above — see [Tasks](#tasks).
 
 ### Two axes, deliberately separate
 
@@ -336,6 +336,7 @@ id: 2026-08-17T09:14   # immutable. Set once, at creation. Never edit it.
 task: open             # open | done | dropped
 completed:             # a date. Required when task is done or dropped, absent otherwise.
 recurs:                # reserved — not implemented yet
+project: "[[Some project]]"   # the project it belongs to, as a quoted wikilink — or blank
 # …plus every normal field: stage, status, created, updated, generated, verified, area, tags, source
 ---
 ```
@@ -351,6 +352,10 @@ recurs:                # reserved — not implemented yet
   otherwise**. That invariant is what makes "how long was this open" computable from `id` and
   `completed`. `brain/bin/doctor` checks it.
 - **`recurs:`** — reserved. **Not implemented.** Don't write it, don't act on one if you find it.
+- **`project:`** — a **quoted wikilink** to the project note (`project: "[[Flat renovation]]"`), or
+  blank. Quoted so YAML doesn't choke on the brackets, and a link rather than a bare string so the
+  project is reachable from the task rather than merely named by it. It's what completion follows
+  when it writes its pointer line into the project note.
 - **No priority field, deliberately.** An agent that can read the calendar and the project notes
   ranks better than a letter grade does, and a priority written once rots: everything filed urgent
   in March is still urgent in September, at which point nothing is. If ordering matters, work it

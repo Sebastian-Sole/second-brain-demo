@@ -15,9 +15,11 @@ Work through five phases, then write the log.
 Open today's daily note (`Daily/YYYY-MM-DD.md`), creating it if it doesn't exist.
 
 - Make sure everything captured today is actually logged there.
-- Carry unfinished tasks forward to today from the most recent daily note that has them, noting
-  how long each has been carried. **Do not silently drop a task** — if it's been carried more than
-  a week, say so explicitly rather than moving it again without comment.
+- **Surface what's open in `Tasks/` — don't copy any of it anywhere.** Tasks are notes now (see
+  `brain/prompts/task.md`); nothing moves between daily notes, so there is no carry-forward and no
+  way for one to breed duplicates. Read `Tasks/`, give each open task its age from `id:`, and
+  **say so out loud** when something has been open a long time — "*Call the bank* has been open six
+  weeks — still want it?" — rather than listing it silently for the tenth time.
 - If nothing happened today, say that in one line. Don't invent activity.
 
 ## Phase 2 — Drain the inbox
@@ -31,7 +33,7 @@ For each item in `00_Inbox/`:
 
 ## Phase 3 — Reconcile and connect
 
-Four checks, in order of value:
+Five checks, in order of value:
 
 1. **Contradictions.** Look for notes making claims that disagree. When you find a pair, don't
    delete either — keep both, add recency markers `(as of YYYY-MM, source)`, and state plainly in
@@ -51,6 +53,11 @@ Four checks, in order of value:
    open. Mark anything open more than 90 days as `stale`, recount the header, and run
    `brain/bin/check` — fix every `[XX]` it reports. Never promote an assumption to a fact here, no
    matter how much evidence has piled up. Only the human does that.
+5. **The task invariant.** `completed:` must be present whenever `task:` is `done` or `dropped`,
+   and absent while it's `open` — that's what makes "how long was this open" computable from `id:`
+   and `completed:`. **`brain/bin/doctor` checks this mechanically**, so run it and report what it
+   found rather than re-walking `Tasks/` and `04_Archive/` by hand. Fix what it names: the missing
+   date belongs in the file, not in your reply.
 
 ## Phase 4 — Rebuild the index
 

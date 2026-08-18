@@ -5,10 +5,18 @@ Capture what the human gave you: a thought, a link, a decision, a transcript, wh
 If they gave you nothing specific, capture what you just did or discussed in this session. If
 there's nothing to capture at all, ask what they want to put in.
 
+**This is the routing fallback.** Per `AGENTS.md`, anything that matches no other command lands
+here — the worst outcome is a note in the inbox, and prime directive 1 says never lose a capture.
+
 Follow the workflow in `AGENTS.md`. Concretely:
 
 1. **Triage.** Decide what each piece is — a thought, external source material, a task, a journal
    entry, or a project update. One dump can be several of these; split it.
+
+   **A task is handed off, not filed here.** Anything with a next action or a deadline becomes its
+   own note in `Tasks/` — follow `brain/prompts/task.md` and let it do the writing, rather than
+   restating the task model. **Never a checkbox in the daily note**; there are no inline checkboxes
+   anywhere in this vault. A mixed dump splits: the task goes to `task`, the rest carries on below.
 
 2. **Preserve first.** If any of it is external material (an article, a transcript, a pasted
    thread, a PDF), write the original verbatim into `raw/` as
@@ -46,8 +54,18 @@ Follow the workflow in `AGENTS.md`. Concretely:
    under the right section as `- [[Note Title]] — one-line description`. Keeping the catalog
    current is what lets the next session find this without searching for it.
 
-7. **Report.** Tell them briefly what you created, updated, and linked — and surface anything you
-   left in `00_Inbox/` as an explicit question.
+7. **Report, and end with the correction footer.** Tell them briefly what you created, updated, and
+   linked — and surface anything you left in `00_Inbox/` as an explicit question.
+
+   `capture` writes, and routing is silent, so a misroute is invisible unless you say what you did.
+   The last line names what you made and how to change it:
+
+   ```
+   Captured: [[Note title]]
+   (say "make it a task" if that's wrong)
+   ```
+
+   One line, at the end, no ceremony. Name the actual title and the actual likely correction.
 
 Rules that matter here:
 - **Never lose anything.** If you can't process a piece, it goes to `00_Inbox/` with an
