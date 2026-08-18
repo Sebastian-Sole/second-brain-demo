@@ -113,7 +113,9 @@ connecting first:
 including the things you keep avoiding. `infer` is the one a general chat model can't do, because it
 doesn't know you — and every guess it makes is labelled, evidenced, falsifiable, and promotable to a
 fact only by you. **Mail and calendar read, and can prepare a draft. They never send anything**,
-however you ask.
+however you ask — that ceiling is written into the tools themselves, and on Claude Code a deny list
+in `.claude/settings.json` enforces it for the mail and calendar connectors it names. Under another
+agent, or a connector it doesn't name, the rule is the prompt and nothing else.
 
 The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `00_Inbox/`,
 `01_Projects/`, `02_Areas/`, `03_Resources/`, `04_Archive/`, plus `Tasks/`, `Daily/` and `raw/`.
@@ -262,7 +264,7 @@ from git.
 
 ## Where to take it next
 
-1. **Write your own command.** Copy a file from `brain/prompts/`, change it, add a row to the table in `AGENTS.md`. Anything that reaches outside the vault goes in `brain/tools/` instead, with frontmatter declaring what it needs and what it may write. Fastest way to make the system yours.
+1. **Write your own command** — run `new-feature`, which is the only way this vault grows one. It takes the problem in your words, decides whether the new thing stays inside the vault (`brain/prompts/`) or reaches outside it (`brain/tools/`), and writes a security review into the file before it writes the file. That review is the step you'd skip by copying a prompt by hand, and it matters most for the things that reach outside, because those run with your connectors attached. Fastest way to make the system yours.
 2. **Connect your mail and calendar.** The `email` and `calendar` tools are already here and read-only by design; connecting them turns everything already written down about your week into free context. Highest-leverage move available.
 3. **Schedule something, once you trust it** — `maintain` nightly, a morning brief, a weekly review.
 4. **Put a real interface on it.** The vault exposes exactly two operations: *write a file into `00_Inbox/`*, and *run `brain/bin/run <prompt>`*. Every UI is a thin client over those two — a Slack bot, a Telegram bot, an iOS Shortcut, an email address.

@@ -105,13 +105,18 @@ better ones. Say which one you think it is.
 Log a line to today's daily note.
 
 **Then the correction footer.** This pass rewrote the register and, on every `y`, added a line to
-`[[About me]]` or someone's `## Facts` — writes the human can't see from the conversation. One
-line, at the end, naming both and how to undo them:
+a spoke or to someone's `## Facts` — and it may have created that spoke and linked it from
+`[[About me]]`. Those are writes the human can't see from the conversation. One line, at the end,
+naming every note you touched and how to undo it:
 
 ```
-Register updated: 2 confirmed, 1 refuted, 2 still open · [[About me]] gained one line
+Register updated: 2 confirmed, 1 refuted, 2 still open · [[How I work]] gained one line
 (say "ASM-0007 was wrong" and I'll reverse that verdict)
 ```
+
+Name the spoke you actually wrote, not `[[About me]]` — the hub only ever gains a link, and only
+the first time a subject gets a spoke. If you created one, say so: that's a new note, and it's the
+write the human is least expecting.
 
 A pass where they answered nothing changed nothing, so it gets no footer. Don't commit — whatever
 invoked you handles that.

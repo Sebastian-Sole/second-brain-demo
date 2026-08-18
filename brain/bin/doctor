@@ -2,7 +2,8 @@
 # Check that this vault has everything it needs to work, and repair the small
 # structural things itself.
 #
-#   brain/bin/doctor            check, and fix missing folders and lost +x bits
+#   brain/bin/doctor            check, and fix missing folders, missing .gitkeeps
+#                               and lost +x bits
 #   brain/bin/doctor --check    report only, change nothing
 #
 # One line per check: [ok] fine · [fx] fixed for you · [!!] worth fixing ·
@@ -235,6 +236,7 @@ done
 
 # The single highest-leverage thing a new user can do, and the one they skip.
 profile='03_Resources/About me.md'
+register='03_Resources/Assumptions.md'
 if [ ! -f AGENTS.md ]; then
   fail "AGENTS.md is missing — this is the manual every agent reads" \
        "Re-download the repo"
@@ -269,7 +271,12 @@ fi
 # Count only the human's notes — the shipped examples are tagged, so a fresh
 # vault reads as empty rather than as "2 notes" the human never wrote. The profile
 # isn't a capture either: a vault that's had setup run and nothing else is empty.
-notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' ! -path "$profile" 2>/dev/null \
+# Nor is the register: it is what the brain concluded, not something the human
+# said, and counting it would let the vault cite its own output as evidence about
+# its owner. brain/bin/check excludes both for that reason and the two have to
+# agree, or the same vault gets two different answers to "how much is here".
+notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' \
+          ! -path "$profile" ! -path "$register" 2>/dev/null \
         -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
 if [ "$notes" -eq 0 ]; then
   echo "  [--] no notes yet — that's expected on day one"
@@ -283,7 +290,7 @@ fi
 # The register only exists once the brain has concluded something about you. Its
 # absence is normal; a malformed one is not, because an assumption that loses its
 # label is the one kind of note that quietly turns into a fact.
-if [ -f '03_Resources/Assumptions.md' ]; then
+if [ -f "$register" ]; then
   if [ -x brain/bin/check ] && brain/bin/check >/dev/null 2>&1; then
     ok "the assumption register is well-formed"
   else
@@ -396,32 +403,43 @@ if [ -d .claude/commands ] || [ -d brain/tools ]; then
   fi
 
   if [ "$ntools" -gt 0 ]; then
+    # All five fields of the contract, not the two that are easiest to check.
+    # writes: is the one that earns its place: a tool saying  writes: none  and
+    # then leaving a file behind is a broken promise, and nothing catches it if
+    # the field is never read in the first place.
     awk '
-      function verdict() {
+      function verdict(   miss) {
         if (fn == "") return
-        if (!hasfm)         print fn "\thas no YAML frontmatter, so it declares nothing"
-        else if (!req && !fb) print fn "\tdeclares neither  requires:  nor  fallback:"
-        else if (!req)      print fn "\tdeclares no  requires:"
-        else if (!fb)       print fn "\tdeclares no  fallback:"
+        if (!hasfm) { print fn "\thas no YAML frontmatter, so it declares nothing"; return }
+        miss = ""
+        if (!nm)   miss = miss "  name:"
+        if (!req)  miss = miss "  requires:"
+        if (!fb)   miss = miss "  fallback:"
+        if (!wr)   miss = miss "  writes:"
+        if (!cons) miss = miss "  consent:"
+        if (miss != "") print fn "\tdeclares no" miss
       }
       FNR == 1 {
         verdict()
         fn = FILENAME; sub(/^\.\//, "", fn)
         hasfm = ($0 ~ /^---[ \t]*$/) ? 1 : 0
-        infm = hasfm; req = 0; fb = 0
+        infm = hasfm; nm = 0; req = 0; fb = 0; wr = 0; cons = 0
         next
       }
       !infm { next }
       /^---[ \t]*$/ { infm = 0; next }
+      /^name:/      { nm = 1; next }
       /^requires:/  { req = 1; next }
       /^fallback:/  { fb = 1; next }
+      /^writes:/    { wr = 1; next }
+      /^consent:/   { cons = 1; next }
       END { verdict() }
     ' brain/tools/*.md > "$tmp" 2>/dev/null
 
     while IFS="$tab" read -r f miss; do
       [ -n "${f:-}" ] || continue
       warn "$f $miss" \
-           "Add both to its frontmatter.  requires:  names what has to be installed or reachable;  fallback:  says what to do when it isn't. A tool without them strands whoever called it halfway through."
+           "Add them to its frontmatter.  name:  is what it's called;  requires:  names what has to be installed or reachable;  fallback:  says what to do when it isn't;  writes:  is  none  or exactly what it may leave behind;  consent:  is  implicit  or  opt-in . A tool that declares none of this strands whoever called it halfway through, and nothing can hold it to a promise it never made."
       cmd_problems=$((cmd_problems + 1))
     done < "$tmp"
   fi

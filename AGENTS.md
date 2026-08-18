@@ -680,15 +680,27 @@ The split exists so that **"what can this thing reach" is a directory listing ra
 paragraph.** That's what a security review needs to start from, and it's what `doctor` needs in
 order to say which capabilities are actually connected.
 
-**Two skills break that, and are named here rather than hidden.** `ingest-sessions` reads the
-transcripts under `~/.claude/projects` and `~/.codex/sessions` and needs `jq` — by its own
-description the highest-risk reader in this vault, since those transcripts contain other people's
-confidential code and files holding credentials. `doctor` reads `$HOME/.claude.json` and
-`$HOME/.claude/settings.json`. Both live in `brain/prompts/` and `brain/bin/` and reach the host
-anyway. They aren't in `brain/tools/` because neither needs a connector or any configuration, and
-the tool contract exists for the things a human must set up and consent to. **So the directory
-listing is not a complete answer to "what reaches outside": it's complete except for these two.**
-An exception you can see beats a rule that quietly isn't true.
+**Five things break that, and are named here rather than hidden.**
+
+- **`ingest-sessions`** (`brain/prompts/`) reads the transcripts under `~/.claude/projects` and
+  `~/.codex/sessions`, and prefers `jq` — by its own description the highest-risk reader in this
+  vault, since those transcripts contain other people's confidential code and files holding
+  credentials.
+- **`doctor`** (`brain/bin/`) reads `$HOME/.claude.json` and `$HOME/.claude/settings.json`.
+- **`digest`** (`brain/prompts/`) calls `weather`, `calendar`, `email` and `news`. It reaches
+  nothing itself — it inherits the reach of the four tools it invokes, and each of those is still
+  governed by its own frontmatter.
+- **`sync`** (`brain/bin/`) runs `git pull` and `git push`: the entire vault to a network remote,
+  unattended, after every turn on Claude Code's `Stop` hook.
+- **`run`** (`brain/bin/`) starts a fresh agent process with a command file's contents as its
+  prompt.
+
+The first three aren't in `brain/tools/` because none of them needs a connector or any
+configuration of its own, and the tool contract exists for the things a human must set up and
+consent to — what `digest` reaches, it reaches through tools that carry one. `sync` and `run`
+aren't commands at all; they're the plumbing every command runs on. **So the directory listing is
+not a complete answer to "what reaches outside": it's complete except for these five.** An
+exception you can see beats a rule that quietly isn't true.
 
 ### Skills
 
@@ -701,9 +713,9 @@ An exception you can see beats a rule that quietly isn't true.
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
 | `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
-| `doctor` | `brain/bin/doctor` | Check the install and say what to fix. A script, not a prompt — run it. **Reads outside the vault** — see the two exceptions above |
+| `doctor` | `brain/bin/doctor` | Check the install and say what to fix. A script, not a prompt — run it. **Reads outside the vault** — see the exceptions above |
 | `new-feature` | `brain/prompts/new-feature.md` | Add a skill or a tool to this vault, including the security review below |
-| `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search. **Reads outside the vault** — see the two exceptions above |
+| `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search. **Reads outside the vault** — see the exceptions above |
 | `infer` | `brain/prompts/infer.md` | Answer something the vault has no facts for, by reasoning from the facts it does have — every assumption labelled, evidenced, falsifiable |
 | `review-assumptions` | `brain/prompts/review-assumptions.md` | Confirm, refute or skip open assumptions. Confirmed ones become facts; refuted ones are kept as calibration |
 | `interview` | `brain/prompts/interview.md` | The brain asks *them*: perishable follow-ups, open assumptions, blank dimensions, stalled work. Sourced, capped at three, silent when it has nothing worth asking |
@@ -714,7 +726,7 @@ An exception you can see beats a rule that quietly isn't true.
 | --- | --- | --- | --- |
 | `weather` | `brain/tools/weather.md` | A forecast service | Nothing |
 | `location` | `brain/tools/location.md` | The host's idea of where they are | Nothing |
-| `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]` | Nothing |
+| `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]`, plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
 | `email` | `brain/tools/email.md` | The connected mailbox — read, plus drafts | Drafts only |
 | `calendar` | `brain/tools/calendar.md` | The connected calendar — read, plus tentative events | Tentative events only |
 

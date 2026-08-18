@@ -98,17 +98,24 @@ case "$cmd" in
       done
     fi
     if [ -d "$codex_dir" ]; then
-      # A pipeline's while runs in a subshell and can't append to $matches, so
-      # it prints its hits and the substitution collects them. Reading the list
-      # instead of word-splitting it also keeps a truncated half-path from
-      # reaching codex_cwd, where the failed sed used to kill the whole script.
-      found=$(find "$codex_dir" -name 'rollout-*.jsonl' 2>/dev/null |
-        while IFS= read -r f; do
-          proj=$(codex_cwd "$f")
-          case "$proj" in *"${pattern}"*) echo "$f" ;; esac
-        done)
-      [ -n "$found" ] && matches="$matches$found
+      # Same defect, same fix. Word-splitting find's output handed codex_cwd a
+      # truncated half-path; its sed then failed on a file that isn't there and,
+      # under set -e, took the whole script down with it — no message, exit 1.
+      # Splitting on newline instead keeps each path whole. A `while read`
+      # pipeline would too, but it runs in a subshell that can't reach $matches.
+      found=$(find "$codex_dir" -name 'rollout-*.jsonl' 2>/dev/null)
+      ifs=$IFS
+      IFS='
+'
+      # shellcheck disable=SC2086  # splitting on newlines only — that is the point
+      set -- $found
+      IFS=$ifs
+      for f in "$@"; do
+        proj=$(codex_cwd "$f")
+        case "$proj" in *"${pattern}"*) ;; *) continue ;; esac
+        matches="$matches$f
 "
+      done
     fi
 
     [ -n "$matches" ] || {

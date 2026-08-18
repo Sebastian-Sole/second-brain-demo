@@ -163,9 +163,9 @@ feed URL is its job, not yours. It links every item to the original.
 prepare a draft. They will never send anything. Read [Connecting mail and
 calendar](#connecting-mail-and-calendar) before you connect either.
 
-**None of these write notes.** A forecast or a headline is answered in the conversation and saved
-nowhere, because "12°C, rain from 14:00" is true for four hours and then competes with your real
-notes in search forever. If you want one kept, say so and it becomes an ordinary capture.
+**None of these file what they fetched.** A forecast or a headline is answered in the conversation
+and saved nowhere, because "12°C, rain from 14:00" is true for four hours and then competes with
+your real notes in search forever. If you want one kept, say so and it becomes an ordinary capture.
 
 ### Keeping it healthy
 
@@ -395,7 +395,11 @@ note got clobbered. `doctor` checks for exactly that and prints the one line tha
 Short and honest:
 
 - **Send anything.** No email sent, replied to or forwarded. No calendar invite accepted, declined
-  or issued. Drafts only, always.
+  or issued. Drafts only, always. Be exact about what holds that line, though: the tool files
+  themselves — plus, on Claude Code, a deny list in `.claude/settings.json` naming the send, reply,
+  trash and modify tools of the mail and calendar connectors it knows about. Connect one it doesn't
+  name, or run the vault under Codex, Cursor or Gemini, and the ceiling is a rule the agent is
+  following rather than a wall it can't cross.
 - **Run unattended.** No cron job, no CI workflow, no background agent ships with this. Every
   command is something you invoked, with the changes in front of you. You can put `maintain` on a
   timer later once you trust it — that's your call, not its.

@@ -106,8 +106,9 @@ Archived tasks aren't in the default set. Search `04_Archive/` only if they ask 
    - Done: [[Call the bank (done 2026-08-18)]] — opened 2026-08-14
    ```
 
-7. **Take its line out of `## Open tasks` in `index.md`.** That section lists what's open; the
-   archived note stays reachable by folder and by the pointer line you just wrote.
+7. **Take its line out of `## Open tasks` in `index.md`** rather than repointing it at the archived
+   title — that section lists what's open, and the note stays reachable by folder and by the pointer
+   line you just wrote.
 
 Why archive rather than delete: git history is not a recovery path for someone who doesn't know
 git. "Where did that task go" has to be answerable by opening a folder. And `04_Archive/` is

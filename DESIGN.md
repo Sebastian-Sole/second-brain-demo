@@ -16,17 +16,18 @@ lives in a portable core, and each tool gets a thin adapter.**
 
 ```
 AGENTS.md          the operating manual — read natively by 20+ agents
-CLAUDE.md          three lines: "read AGENTS.md". No instructions of its own.
-GEMINI.md          same three lines, because Gemini only opts in to AGENTS.md
+CLAUDE.md          points at AGENTS.md, then lists the Claude wrappers. No rules of its own.
+GEMINI.md          the same pointer, because Gemini only opts in to AGENTS.md
 
-brain/prompts/     the commands, as plain markdown. Any agent can read them.
+brain/prompts/     the skills, as plain markdown — the vault, nothing else. Any agent reads them.
+brain/tools/       the tools — same markdown, but they reach outside: network, connector, host.
 brain/bin/sync     commit + push, in POSIX shell. Callable by a hook, cron, CI, or you.
 brain/bin/run      runs a prompt with whichever agent CLI is installed.
 brain/bin/doctor   checks the install and says what to fix, in plain language.
 brain/bin/check    lints the assumption register — the guardrail that isn't a prompt.
 brain/bin/sessions finds and stages AI transcripts that agents can't reach themselves.
 
-.claude/commands/  six-line wrappers pointing at brain/prompts/
+.claude/commands/  18 thin wrappers, pointing at brain/prompts/, brain/tools/ and brain/bin/
 .claude/settings.json  a hook that calls brain/bin/sync, plus a read-only permission allowlist
 ```
 
@@ -187,8 +188,9 @@ A fresh clone has two notes, both about the vault itself. The tempting failure i
 confident character analysis built on them — labelled, technically, and still worthless, because
 you can see exactly how little it had. So there's a hard gate: **no assumptions about you until ten
 notes you actually wrote exist**, notes about the vault don't count as evidence about the person,
-and neither does anything the agent can see in its environment rather than in the folder. The first
-two are checked by `brain/bin/check`; the third is the same rule as
+and neither does anything the agent can see in its environment rather than in the folder. Only the
+first is checked by `brain/bin/check` — it counts the notes, discounting the two that ship. The
+other two are prompt rules, the last being the same rule as
 [answering from the vault, not the room](AGENTS.md).
 
 ### Why a shell script and not just the prompt
@@ -265,6 +267,7 @@ index.md                    ~60 lines, one per note, grouped
 04_Archive/                 3 finished projects
 06_Sessions/                ~200 distilled session notes + their own index.md
 Daily/                      2026-06-14.md … 2026-08-14.md
+Tasks/                      4 open tasks — the finished ones are in 04_Archive/
 raw/                        the originals of 12 articles and 3 transcripts
 ```
 

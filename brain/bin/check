@@ -145,7 +145,7 @@ if [ -f "$REGISTER" ]; then
       }
     }
 
-    # A heading over the block is nobody's house style but somebody has written
+    # A heading over the block is not the house style, but somebody has written
     # one, so it still counts towards the ids in play.
     /^### ASM-[0-9][0-9][0-9][0-9]/ {
       hid = substr($2, 1, 8); heading[hid]++
@@ -172,8 +172,8 @@ if [ -f "$REGISTER" ]; then
         if (heading[id] > 1)
           emit("ERROR", reg " — " id " has " heading[id] " headings. Ids are never reused or renumbered.")
 
-      # Two blocks under one id is the same failure wearing the register's own
-      # format: whichever one gets read second silently replaces the first.
+      # Two blocks under one id is the same failure wearing the format the
+      # register actually uses: whichever gets read second replaces the first.
       for (id in block_seen)
         if (block_seen[id] > 1)
           emit("ERROR", reg " — " id " has " block_seen[id] " blocks. Ids are never reused or renumbered.")
@@ -276,7 +276,7 @@ done >> "$tmp"
 # three of them about the vault itself, and a confident character sketch built
 # on top. Below the floor there is nothing to reason from.
 
-if [ -f "$REGISTER" ] && grep -q '^Status:[ ]*open\|^>[ ]*Status:[ ]*open' "$REGISTER" 2>/dev/null; then
+if [ -f "$REGISTER" ] && grep -qE "$OPEN_RE" "$REGISTER" 2>/dev/null; then
   notes=$(find 03_Resources 01_Projects 02_Areas -name '*.md' \
             ! -path "$PROFILE" ! -path "$REGISTER" 2>/dev/null \
             -exec grep -L 'pkm, example' {} + 2>/dev/null | wc -l | tr -d ' ')
@@ -313,7 +313,7 @@ while IFS="$(printf '\t')" read -r tier msg; do
 done < "$tmp"
 
 if [ "$errors" -eq 0 ] && [ "$warnings" -eq 0 ] && [ "$infos" -eq 0 ]; then
-  open=$(grep -c '^>[ ]*Status:[ ]*open' "$REGISTER" 2>/dev/null | tr -d ' ')
+  open=$(grep -cE "$OPEN_RE" "$REGISTER" 2>/dev/null | tr -d ' ')
   echo "  [ok] the register is well-formed (${open:-0} open)"
 fi
 

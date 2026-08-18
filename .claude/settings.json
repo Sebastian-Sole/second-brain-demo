@@ -2,6 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(brain/bin/doctor)",
+      "Bash(brain/bin/doctor:*)",
+      "Bash(./brain/bin/doctor)",
+      "Bash(./brain/bin/doctor:*)",
       "Bash(brain/bin/check)",
       "Bash(brain/bin/sync)",
       "Bash(brain/bin/sync:*)",
