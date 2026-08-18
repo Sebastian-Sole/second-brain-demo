@@ -10,12 +10,29 @@ Thumbs.db
 # Local settings that shouldn't be shared
 .claude/settings.local.json
 
+# Credentials. `sync` runs `git add -A` unattended after every agent turn, so
+# anything that lands in this folder is committed — and pushed — before the
+# human has finished reading the reply that put it there. A key pasted into
+# 00_Inbox/ is a key on GitHub. These patterns are the cheap half of the fix;
+# the other half is not pasting secrets into your notes.
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ecdsa*
+id_ed25519*
+.netrc
+credentials.json
+service-account*.json
+
 # Ingested AI session transcripts. `ingest-sessions` writes short session notes
 # into the vault and leaves the transcripts themselves outside git — they are
 # enormous (gigabytes) and full of credentials, client code and pasted secrets.
 # If you ever copy one in for reference, it lands here and stays uncommitted.
 raw/sessions/transcripts/
-
 
 # Local agent worktrees, never commit
 .claude/worktrees/

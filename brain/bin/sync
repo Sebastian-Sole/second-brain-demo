@@ -6,27 +6,82 @@
 #
 #   brain/bin/sync ["commit message"]
 #
-# Exits 0 even when there is nothing to do, so it is safe to call unconditionally.
+# Exits 0 when there was nothing to do, and non-zero — loudly, on stderr — any
+# time the notes did not get committed. It runs unattended after every turn, so
+# silence has to mean "your work is safe" and nothing else.
 
 set -u
 
-# Run from the repo root regardless of where we were invoked.
-root=$(git rev-parse --show-toplevel 2>/dev/null) || {
-  echo "sync: not a git repository — skipping" >&2
+# Anchor to the script's own location, never to the working directory. Asking
+# git for the toplevel walks *up*: clone this vault inside any other repo and
+# every turn would commit that repo instead — its .env, its keys, all of it,
+# with nobody watching.
+root=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd -P) || root=''
+
+# The same guard doctor uses for in_vault: structure is what proves we are in
+# the vault, rather than in some directory that merely contains one.
+if [ -z "$root" ] || [ ! -f "$root/AGENTS.md" ] || [ ! -d "$root/brain/bin" ]; then
+  echo "sync: ${root:-$0} is not a vault — AGENTS.md and brain/bin/ should both be there. Nothing was committed." >&2
+  exit 1
+fi
+cd "$root" || exit 1
+
+# A vault with no git at all is a supported state — people clone the template
+# and delete .git. Nothing to sync and nothing broken, but worth saying out
+# loud, because it also means there is no undo button.
+top=$(git rev-parse --show-toplevel 2>/dev/null) || top=''
+[ -n "$top" ] && top=$(cd "$top" 2>/dev/null && pwd -P)
+if [ -z "$top" ]; then
+  echo "sync: not a git repository — skipping. Your notes are on disk, but nothing here is versioned or backed up; 'git init' turns the undo button on." >&2
   exit 0
-}
-cd "$root" || exit 0
+fi
+
+# Sitting *inside* someone else's repo is the dangerous version of the same
+# state: git is perfectly happy to commit their tree from in here.
+if [ "$top" != "$root" ]; then
+  echo "sync: this vault has no git of its own — it lives inside the repository at $top. Refusing to commit someone else's repo; run 'git init' here first. Nothing was committed." >&2
+  exit 1
+fi
 
 msg=${1:-"brain: sync $(date +%F)"}
 
+# Refuse on a detached HEAD, before anything gets staged. A commit made here
+# belongs to no branch, so the next checkout takes the notes with it and only
+# the reflog remembers where they went — which is not a thing anyone should
+# have to know about their own diary. Leaving the work uncommitted and saying
+# so is the recoverable failure.
+if ! git symbolic-ref -q HEAD >/dev/null 2>&1; then
+  echo "sync: HEAD is detached, so a commit here would belong to no branch and vanish on the next checkout. Your work is UNCOMMITTED. Run 'git status' — if a rebase or merge is half-finished, 'git rebase --abort' undoes it; otherwise 'git checkout main' gets you back." >&2
+  exit 1
+fi
+
 if [ -n "$(git status --porcelain)" ]; then
-  git add -A
-  git commit -q -m "$msg" || true
+  # A commit can fail for reasons that have nothing to do with the notes — no
+  # git identity, a hook that says no, a full disk. Reporting that as success
+  # is how someone ends a session believing git has their back when the work is
+  # sitting staged and unsaved.
+  if ! git add -A || ! git commit -q -m "$msg"; then
+    echo "sync: THE COMMIT FAILED — your notes are staged but not committed (git said why, just above). Fix that, then run 'brain/bin/sync' again. Nothing is lost; nothing is saved either." >&2
+    exit 1
+  fi
 fi
 
 # Only touch the network if this branch actually tracks something.
 if git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
-  git pull --rebase --autostash -q 2>/dev/null || git rebase --abort -q 2>/dev/null
+  if ! git pull --rebase --autostash -q 2>/dev/null; then
+    # A conflicted rebase stops mid-flight and leaves a detached HEAD behind.
+    # Left there, the next turn's `git add -A` commits the <<<<<<< markers
+    # straight into a note and every commit after that lands somewhere
+    # unreachable — quietly, forever. So put the branch back the way it was and
+    # hand the conflict to the human, who is the only one who can settle it.
+    if [ -d "$(git rev-parse --git-path rebase-merge)" ] || [ -d "$(git rev-parse --git-path rebase-apply)" ]; then
+      git rebase --abort >/dev/null 2>&1
+      echo "sync: the pull conflicted with the remote, so the rebase was rolled back and nothing was left half-applied. Your work IS committed locally but was NOT pushed — run 'git pull --rebase' and resolve it by hand before the next session." >&2
+      exit 1
+    fi
+    # Anything else — offline, remote down, no permission — isn't a conflict,
+    # and the push below fails the same way and says so once.
+  fi
   git push -q 2>/dev/null || echo "sync: push failed — commits are safe locally" >&2
 fi
 
