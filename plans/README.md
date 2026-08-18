@@ -15,7 +15,7 @@ pass at `bec2c00`.
 
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
-| 001 | Anchor `check`, `doctor` and `run` to the vault they ship in | P1 | S | — | TODO |
+| 001 | Anchor all four scripts to the vault they ship in, and refuse to stage transcripts git would commit | P1 | M | — | TODO |
 | 002 | Correct five places that still promise mail and calendar never write | P1 | S | — | TODO |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
@@ -28,13 +28,12 @@ either order, or in parallel by two executors.
 
 ## Findings audited but not planned
 
-The operator selected findings 2, 3 and 7 from the audit. These were confirmed
-but deliberately left unplanned. They are recorded here so nobody re-audits
-them.
+The operator selected findings 1, 2, 3 and 7 from the audit. The rest were
+confirmed but deliberately left unplanned. They are recorded here so nobody
+re-audits them.
 
 | # | Finding | Why not planned |
 |---|---|---|
-| 1 | `brain/bin/sessions:19` has the same root-resolution defect as plan 001, and copies AI session transcripts — described by `.gitignore:31-34` as "full of credentials, client code and pasted secrets" — into an unignored folder outside the vault, while reporting success. Confirmed by execution. | Not selected. **This is the same one-line edit as plan 001** and is the highest-consequence instance of it. Plan 001 lists it as explicitly out of scope so an executor does not widen its own diff. Ask the operator before folding it in. |
 | 4 | `brain/bin/doctor:87-97` reports any git remote as `backed up to <url>`. Nothing checks whether the remote is public, although `README.md:53` tells new users to create a **private** repository and the `Stop` hook pushes after every turn. | Not selected. Nothing is exposed today — `cortex/` holds only the two shipped example notes. A `doctor` check using `gh repo view --json visibility`, degrading silently when `gh` is absent, is the small version. |
 | 5 | No tests, no CI, no `shellcheck` wiring for 1,336 lines of POSIX shell and awk that enforce every invariant in `AGENTS.md`. The scripts' own comments record three earlier regressions (`brain/bin/check:29-35`, `brain/bin/sessions:83-88` and `:101-105`). | Not selected. Should follow plan 001, so the tests cover fixed behaviour rather than being rewritten. |
 | 6 | `brain/routing-eval.md` holds 60 utterances and 28 marked collisions. Its Results table at lines 214-227 is empty — it has never been run — and commit `bec2c00` changed 80 lines of the routing and ceiling rules it tests. Plan 002 changes two of its rows again. | Not selected. Worth a run before either plan is called finished. |
