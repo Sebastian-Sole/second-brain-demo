@@ -248,7 +248,7 @@ elif [ ! -f "$profile" ] || grep -qE '^- \*\*Name:\*\*[[:space:]]*$' "$profile" 
          "It was added in $had. Get it back with:  git checkout $had -- '$profile'   (then run  setup  again if it's out of date)"
   else
     warn "this vault doesn't know who you are yet" \
-         "Say  setup  to your agent — it'll ask you five questions and write '$profile'. This one change matters more than everything else here."
+         "Say  setup  to your agent — it'll ask you six questions and write '$profile'. This one change matters more than everything else here."
   fi
 else
   ok "the vault knows who you are"

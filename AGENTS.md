@@ -26,7 +26,7 @@ brain is for**, **How I like to work**, and **Current focus**.
 
 > **← Start here. This is the single highest-leverage change available.** Everything else in this
 > file is a sensible default; that note is what makes the brain *yours*. Say `setup` and your agent
-> will ask five questions and write it.
+> will ask six questions and write it.
 >
 > **If you are an agent and `[[About me]]` is missing or its bullets are blank, say so** — offer
 > `setup` before doing anything substantial. Working without it means writing notes about a
