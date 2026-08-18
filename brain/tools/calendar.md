@@ -21,6 +21,13 @@ The reason is routing. Everything in this vault is routed silently — the human
 prompt fired — so a misrouted sentence must never become a meeting somebody was declined from or
 an invitation a colleague received. Reading a calendar is private; writing to one is social.
 
+On Claude Code this ceiling is also enforced by the harness rather than by good intentions —
+`.claude/settings.json` denies the connector's create, update, delete and respond-to-event tools,
+creation included, because that same call is what invites attendees and the harness can't tell the
+two apart, so the tentative hold in step 6 is something you offer there rather than something you
+make; every other agent has only the rule above, which is why it is written down here instead of
+assumed.
+
 If they ask you to respond to an invite or change something, say exactly this:
 
 > Responding and rescheduling are off by design here — this tool reads and drafts, nothing else.
@@ -28,6 +35,15 @@ If they ask you to respond to an invite or change something, say exactly this:
 
 Then give them what they need: the event, the conflict, the sentence to send. Don't route around
 the ceiling with a shell command, a script, or another connector.
+
+## What they opted in to
+
+`consent: opt-in` in the frontmatter is about the connection, not the call: the human opted in
+once, by connecting a calendar during `setup`. After that this tool is used like any other prompt —
+silently, with no permission question before each read — because routing here is invisible and
+stopping to ask every time would contradict it. What the opt-in doesn't buy is anything past
+reading: nothing from the calendar reaches the vault unless they ask for it, nothing about them is
+inferred from what's on it, and the ceiling above holds no matter how the request is phrased.
 
 ## Steps
 

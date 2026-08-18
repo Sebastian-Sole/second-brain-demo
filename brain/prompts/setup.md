@@ -159,6 +159,31 @@ Not a tour. Three lines, then stop:
 Finally, mention the example notes in `03_Resources/` are there to show the shape of things and
 they can delete them whenever they like. Offer to do it now.
 
+**One closing offer, one line, genuinely optional.** Five answers is a thin profile, and per
+`AGENTS.md` the human — not this command — picks how a fuller one gets built. Say it once and don't
+sell it:
+
+> If you ever want a fuller profile than that, `interview` can build one — either by asking how you
+> like to work, or with a short Big Five inventory if you'd rather answer statements. Entirely
+> optional, and nothing here needs it.
+
+**Don't run an inventory now.** Twenty statements in the first ten minutes is a personality test
+before they've seen the tool do anything, and it's the opposite of the "canvas, not a finished
+system" rule below. The offer is the whole of it — if they say yes, hand off to `interview`.
+
+## Step 7 — The correction footer
+
+`setup` writes more than anything else here, and per `AGENTS.md` anything that wrote ends with a
+one-line correction footer. Name what now exists and how to change it:
+
+```
+Set up: [[About me]], [[How I learn]] and [[Your first note]], all listed in index.md
+(say what's wrong with any of them and I'll fix it — nothing here is permanent)
+```
+
+Name the files you actually wrote — drop `[[How I learn]]` if they skipped question 6, add
+`[[My news sources]]` if they gave you feeds. One line, at the end, no ceremony.
+
 ---
 
 ## What this command is not

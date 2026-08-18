@@ -36,12 +36,21 @@ Read `index.md`, then `03_Resources/About me.md` (the stated facts), then
 refuted this claim, don't re-raise it: say it was refuted, when, and by what. New evidence can
 reopen it, but only explicitly and citing the old row.
 
+**If the claim in play is about their character or disposition** — how they're wired, rather than
+what they did last Tuesday — read the spoke `03_Resources/Big Five profile.md` as well. It holds
+behaviour lines they answered for themselves, and a line they stated outranks anything you'd infer
+from three notes; it can also kill a candidate assumption outright, which is the cheapest possible
+outcome here. **If it doesn't exist, that's normal** — spokes appear when there's something real to
+put in them. Reason without it and don't mention it. Don't read it for a question about their work,
+their projects or their week: it costs context on every turn and answers nothing there.
+
 ## 3. State the target, then retrieve
 
 Write the claim that would actually answer the question as **one falsifiable sentence** before you
 gather anything. Vague targets produce horoscopes.
 
-Then search — `03_Resources/`, `01_Projects/`, `02_Areas/`, `Daily/`, `00_Inbox/` — for the topic,
+Then search the retrieval order from `AGENTS.md` — `03_Resources/`, `01_Projects/`, `02_Areas/`,
+`Tasks/`, `Daily/`, plus `00_Inbox/` for anything captured but not yet processed — for the topic,
 its synonyms, and the entities involved, and follow `[[wikilinks]]` out from the best hits. Sort
 what you find into:
 
@@ -114,6 +123,17 @@ To register one:
    - about a project → that project note, under `## Assumptions`
 4. Update the status counts in the register header.
 5. Run `brain/bin/check` and fix every error it reports.
+6. **End with the correction footer.** Registering an assumption is a write, and routing is silent,
+   so the last line names what went into the register and how to take it back out:
+
+   ```
+   Registered: ASM-0012 in [[Assumptions]] — open until you rule on it
+   (say "drop it" if that's not worth keeping)
+   ```
+
+   If you created the register in this run, say that instead: `Started [[Assumptions]] and
+   registered ASM-0001`. One line, at the end, no ceremony. **An answer that registered nothing
+   wrote nothing and gets no footer** — the three blocks are the whole reply.
 
 ### Creating the register
 

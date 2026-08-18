@@ -40,6 +40,11 @@ Follow the workflow in `AGENTS.md`. Concretely:
    sharpened, not replaced by a neutral summary. A big dump becomes several small linked notes,
    not one long one.
 
+   **Read one spoke before writing in their voice: `[[How I talk]]`.** Per `AGENTS.md`, that's the
+   spoke that says what their voice actually is. Don't walk the others — this turn needs exactly
+   one of them. **If it doesn't exist, that's normal**, especially in a young vault: take the voice
+   from the dump in front of you and get on with it. Don't block on it and don't ask for it.
+
    If you generated a synthesis or an inference the human didn't say, mark it:
 
    ```
@@ -85,4 +90,4 @@ Rules that matter here:
 **Output surface:** markdown notes in the vault, plus a short plain-text report in the
 conversation. Never an artifact, PDF or rendered document — see `AGENTS.md`.
 
-The `Stop` hook commits for you — you don't need to run git.
+Don't commit — whatever invoked you handles that.

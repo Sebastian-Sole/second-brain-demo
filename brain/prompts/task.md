@@ -87,9 +87,11 @@ Archived tasks aren't in the default set. Search `04_Archive/` only if they ask 
    A dropped task with no reason is indistinguishable from one that was lost.
 3. Set `task: done` (or `dropped`), set `completed:` to today's date, set `stage: archived`, bump
    `updated:`. Leave `id:` exactly as it is.
-4. **Move the file — never delete it:**
-   `Tasks/Call the bank.md` → `04_Archive/Call the bank (done 2026-08-18).md`. Update `title:` to
-   match the new filename.
+4. **Move the file — never delete it, and let the suffix follow `task:`:**
+   `Tasks/Call the bank.md` → `04_Archive/Call the bank (done 2026-08-18).md` when it was completed,
+   or `04_Archive/Call the bank (dropped 2026-08-18).md` when it was dropped. A dropped task that
+   archives as "done" lies about itself forever, and `id:` is the only identity left to contradict
+   it. Update `title:` to match the new filename.
 5. **Fix every inbound link in the same pass.** Grep the vault for `[[Call the bank]]` and repoint
    it. This is what makes the rename legal under the vault's never-break-inbound-links rule — and
    you wrote those links, so you know all of them.
@@ -132,4 +134,4 @@ Re-title, re-date, re-project, sharpen the body.
 - Don't write `recurs:` and don't act on one if you find it. It's reserved and not implemented.
 - Never delete a task note. Archive it.
 
-The `Stop` hook commits for you — you don't need to run git.
+Don't commit — whatever invoked you handles that.

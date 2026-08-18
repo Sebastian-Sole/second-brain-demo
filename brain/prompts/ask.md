@@ -14,8 +14,11 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    confidently answering from a gap.
 
 1. **Search broadly, then read narrowly.**
-   - Grep across `03_Resources/`, `01_Projects/`, `02_Areas/`, `Daily/`, and `00_Inbox/` — titles,
-     `aliases`, and body text. Try synonyms and entity names, not just their exact words.
+   - Grep across `03_Resources/`, `01_Projects/`, `02_Areas/`, `Tasks/`, `Daily/`, and
+     `00_Inbox/` — titles, `aliases`, and body text. Try synonyms and entity names, not just their
+     exact words. That's the retrieval order from `AGENTS.md`, plus the inbox — an unprocessed
+     capture is still their material. **`Tasks/` is in the set**: "do I still owe the landlord
+     anything" is answered there and nowhere else.
    - Follow `[[wikilinks]]` out from the best hits to pull in neighbours.
    - Then actually open and read the handful that look relevant. Depth on the right 3–6 notes
      beats skimming forty.

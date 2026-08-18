@@ -90,7 +90,19 @@ That ratio is the calibration signal, and it cuts both ways. Near 100% means the
 timid to be worth making. Near 0% means the model of them is off and you should be raising fewer,
 better ones. Say which one you think it is.
 
-Log a line to today's daily note. Don't commit — whatever invoked you handles that.
+Log a line to today's daily note.
+
+**Then the correction footer.** This pass rewrote the register and, on every `y`, added a line to
+`[[About me]]` or someone's `## Facts` — writes the human can't see from the conversation. One
+line, at the end, naming both and how to undo them:
+
+```
+Register updated: 2 confirmed, 1 refuted, 2 still open · [[About me]] gained one line
+(say "ASM-0007 was wrong" and I'll reverse that verdict)
+```
+
+A pass where they answered nothing changed nothing, so it gets no footer. Don't commit — whatever
+invoked you handles that.
 
 ## Guardrails
 

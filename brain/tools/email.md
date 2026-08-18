@@ -21,6 +21,11 @@ The reason is routing. Everything in this vault is routed silently — the human
 prompt fired or which sentence came from where — so a misrouted sentence must never become an
 email a colleague received. A bad draft is a bad draft; a bad send is somebody else's inbox.
 
+On Claude Code this ceiling is also enforced by the harness rather than by good intentions —
+`.claude/settings.json` denies the send, reply, forward, trash, spam, label and archive tools of
+every mail connector it knows about — while every other agent has only the rule above, which is why
+it is written down here instead of assumed.
+
 If they ask you to send, say exactly this and then do the useful half:
 
 > Sending is off by design here — this tool reads and drafts, nothing else. I've left it as a
@@ -28,6 +33,15 @@ If they ask you to send, say exactly this and then do the useful half:
 
 If a draft wasn't wanted, offer the text in the conversation so they can paste it. Don't argue the
 policy twice, and don't route around it with a shell command, a script, or another connector.
+
+## What they opted in to
+
+`consent: opt-in` in the frontmatter is about the connection, not the call: the human opted in
+once, by connecting a mail account during `setup`. After that this tool is used like any other
+prompt — silently, with no permission question before each read — because routing here is invisible
+and stopping to ask every time would contradict it. What the opt-in doesn't buy is anything past
+reading: nothing from the mailbox reaches the vault unless they ask for it, nothing about them is
+inferred from what's in it, and the send ceiling above holds no matter how the request is phrased.
 
 ## Steps
 

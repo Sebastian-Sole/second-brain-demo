@@ -37,8 +37,29 @@ before reaching into either and take silence as no.
 ## The retrospective half — always
 
 Read the daily notes in that window, everything in `00_Inbox/`, and any notes whose `created` or
-`updated` frontmatter falls inside it. Then write this half to
-`Daily/YYYY-MM-DD — Digest.md` (dated today) and show it in the conversation.
+`updated` frontmatter falls inside it.
+
+**Read one spoke too: `[[What I'm into]]`.** It's what separates a roll-up that ranks from one that
+merely lists — which of the window's threads are the ones they actually care about, and which
+recurring theme is worth naming in **Patterns**. **If it doesn't exist, that's normal**, especially
+in a young vault: rank from what the notes themselves show and get on with it. Don't block on it and
+don't ask for it.
+
+Then write this half to `Daily/YYYY-MM-DD — Digest.md` (dated today) and show it in the
+conversation. It's a note like any other, so it carries the frontmatter block from `AGENTS.md`:
+
+```yaml
+title: 2026-08-18 — Digest
+type: digest
+stage: active
+status: draft
+created: 2026-08-18
+updated: 2026-08-18
+generated: { by: <agent>/<version>, at: 2026-08-18T09:00:00Z }
+```
+
+`status: draft` is the honest setting: a digest is your read across their notes, not something a
+person has confirmed.
 
 Structure the note in four sections:
 
@@ -85,7 +106,17 @@ If `03_Resources/Assumptions.md` exists and holds anything `open`, add **one mor
 are waiting on a verdict, and the oldest one — then offer `review-assumptions`. One line, not a
 section: the digest reports on the vault, and the assumptions are a two-minute job elsewhere.
 
+`digest` wrote a file, so end with the correction footer — the note you made and how to change it:
+
+```
+Digest: Daily/2026-08-18 — Digest.md (window: last 7 days)
+(say "make it the month" if that's wrong)
+```
+
+One line, at the end, no ceremony. Name the actual path and the actual likely correction — for a
+digest that's almost always the window.
+
 Notes:
 - If the vault is nearly empty (a fresh install), say so plainly and show what little there is
   rather than inventing content. It'll get better as they use it.
-- The `Stop` hook commits for you.
+- Don't commit — whatever invoked you handles that.

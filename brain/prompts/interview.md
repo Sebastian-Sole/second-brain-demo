@@ -4,8 +4,9 @@ Every other command answers a question. This one works out what the vault **need
 asks for it. It's the difference between a filing cabinet and an assistant: nothing gets collected
 unless somebody asks.
 
-Optional argument — a source to focus on (`followups`, `assumptions`, `gaps`, `stalled`), or
-`dry-run` to build the queue and show it without asking anything.
+Optional argument — a source to focus on (`followups`, `assumptions`, `gaps`, `stalled`),
+`dry-run` to build the queue and show it without asking anything, or `big-five` to run the
+personality inventory instead of the queue (see **Topic path — the profile instrument**, below).
 
 **The whole skill is question selection.** Anyone can ask questions. The value is asking the two or
 three worth interrupting someone for, right now, and staying quiet otherwise.
@@ -24,6 +25,13 @@ muted.
 
 Read `index.md`, `03_Resources/About me.md`, the last ~10 daily notes, active `01_Projects/`, and
 `03_Resources/Assumptions.md` if it exists.
+
+Read the spoke `03_Resources/What I'm into.md` too, **where it would sharpen a question** —
+`AGENTS.md` names this command as one of its readers. It's what turns "anything on the reading
+pile?" into a question about the thing they actually care about, and it's often what breaks a tie
+between two candidates of equal rank. **If it doesn't exist, that's normal** in a young vault —
+spokes appear when there's something real to put in them. Build the queue without it, don't block
+on it, and don't ask them to fill it in.
 
 Six sources. Each yields candidates; each candidate carries its citation:
 
@@ -115,7 +123,87 @@ One short block: what you captured, what changed, what's still open. Skip it ent
 disengaged. Log each question to today's daily note in the shape above, and run `brain/bin/check` if
 you touched the register.
 
+**Then the correction footer**, per `AGENTS.md`. Their answers became notes and every question went
+into the daily note, and neither of those is visible from the conversation:
+
+```
+Captured: [[Note title]] · logged 2 questions to Daily/2026-08-18.md
+(say "that's not what I meant" and I'll rewrite it)
+```
+
+One line, at the end, naming the actual notes. **A run that asked nothing wrote nothing and gets no
+footer** — silence stays silent, which is the whole point of section 4. A run they disengaged from
+still gets it if you already captured an answer.
+
 Don't commit — whatever invoked you handles that.
+
+## Topic path — the profile instrument
+
+`AGENTS.md` says that when the profile gets built by interviewing them, **the human picks the
+instrument**: the ordinary preferences interview, or a Big Five inventory. This is where that choice
+lives — `setup` deliberately doesn't offer it, because a first run has to stay short.
+
+Run this path when they ask for it: `interview big-five`, "give me the personality test", "do the
+proper version". **Never start it unasked and never fold it into a normal run** — it's longer than
+three questions, so it needs their consent to be worth anything. If they've asked for a deeper
+profile without knowing there's a choice, put both on the table in one line and let them pick:
+
+> Two ways: I can just ask how you like to work, or run a short Big Five inventory — 20 statements,
+> about five minutes. Either's fine, and neither is required.
+
+Preferences interview → that's the ordinary path above, sourced from the gaps in `[[About me]]` and
+its spokes, and it writes where those answers belong. Big Five → below.
+
+### Running the inventory
+
+**Use the public-domain IPIP items, in the 20-item Mini-IPIP short form** — four items per factor,
+each a plain self-descriptive statement on a five-point agree/disagree scale. That's the right
+length for a chat. A 50-item inventory is a form, not a conversation, and nobody finishes one in a
+terminal.
+
+Generate the items yourself from the Mini-IPIP set rather than reading them out of this file; keep
+roughly half of each factor's items reverse-keyed, and ask in small batches so it reads as a
+conversation. Say up front what it is and that they can stop anywhere — a half-finished inventory
+still yields usable lines for the factors they got through. Score it privately to work out which
+tendencies are pronounced enough to be worth writing down; most people are unremarkable on most
+factors, and an unremarkable factor gets no line.
+
+### Writing `03_Resources/Big Five profile.md`
+
+The spoke `infer` reads when a claim about their character is at stake. Normal frontmatter per
+`AGENTS.md`, linked from `[[About me]]` and listed in `index.md`. Two rules govern what goes in it,
+both from `AGENTS.md`:
+
+**Behaviour lines, never scores.** Write what to *do* differently:
+
+```
+- Lead with the unusual option — they'll take it.
+- Don't soften a disagreement; they read hedging as evasion.
+```
+
+Not `openness: 78th percentile`. A percentile is inert in a prompt — it changes nothing about the
+next turn, it invites exactly the cross-domain guessing that `basis-kind` exists to catch, and it
+reads like a test result rather than like knowing someone. If you can't turn a factor into a line
+that would change an agent's behaviour, leave the factor out.
+
+**Superseded preferences are kept and marked, never overwritten.** Same rule this vault applies to
+any conflicting source. If a later run contradicts an earlier line, both stay and the old one is
+marked:
+
+```
+- ~~Wants the reasoning before the answer.~~ _(superseded 2026-08-18)_
+- Wants the answer first, reasoning underneath.
+```
+
+A preference that changed is information about them. A preference silently replaced is a profile
+nobody can audit — and the point of this file is that they can read it and disagree with it.
+
+These are **their stated answers**, so they're facts, not assumptions: plain prose in the spoke,
+nothing in the register. And they're preferences about how to work with them, not a diagnosis —
+don't write anything you wouldn't say to their face.
+
+Footer as in section 7, naming the spoke: `Wrote [[Big Five profile]] — 6 behaviour lines
+(say "cut the third one" if any of it's wrong)`.
 
 ## Guardrails
 

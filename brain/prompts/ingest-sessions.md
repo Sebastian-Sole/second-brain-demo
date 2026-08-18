@@ -125,7 +125,19 @@ thousand session lines would destroy the catalog that makes retrieval work.
 conversation. No artifact, no rendered report, and never a transcript copied into the vault.
 
 Say how many sessions you scanned, ingested, and skipped (and why), how many remain outside the
-window, and name the two or three notes most worth reading. Then stop.
+window, and name the two or three notes most worth reading.
+
+**Then the correction footer**, per `AGENTS.md`. This run can write dozens of notes, so the footer
+carries a **count and a folder, never a list** — a footer you have to scroll isn't one:
+
+```
+Ingested: 14 session notes into 06_Sessions/, plus its index and one line in index.md
+(say "drop the Moelven ones" if a project shouldn't be in here)
+```
+
+Point the correction at the thing most likely to be wrong, which is scope: the wrong project got
+ingested far more often than the wrong summary did. **A run that wrote no notes gets no footer.**
+Then stop.
 
 ---
 

@@ -45,6 +45,11 @@ to catch. Likewise `infer`: its own gate makes it decline under ten human-writte
 **Scoring "ask the human".** Four rows expect no routing at all — the correct move is one short
 clarifying question. Routing anywhere without asking is a fail, *including* routing to `capture`.
 
+**Scoring "say it can't".** Row 41 also expects no routing, but it isn't a question to the human:
+the table instructs the router to *say* the vault can't do this. A short "I can't search for places
+from here" passes. Running `location` passes nothing, even if it volunteers the same caveat after —
+the table's wording is "say that **rather than routing here**".
+
 ---
 
 ## The set
@@ -80,7 +85,7 @@ model problem.
 | 23 | `is this thing even working` | `doctor` | ⚠ maintain vs doctor | "is this thing working" verbatim. Install health, nothing to do with note quality. |
 | 24 | `the vaults a mess` | `maintain` | ⚠ maintain vs doctor | Mirror of 23. Messy *contents* is `maintain`; `doctor` would report a clean bill and miss the point. |
 | 25 | `i want it to also do a weekly review thing` | `new-feature` | | "I want it to also do X" — adding capability, with the security review that entails. |
-| 26 | `can you hook this up to my strava` | `new-feature` | ⚠ setup vs new-feature | "connect it to my <service>" is `new-feature`'s row. But see ambiguity A2 — the tool fallbacks say `setup`. |
+| 26 | `can you hook this up to my strava` | `new-feature` | ⚠ setup vs new-feature | `new-feature` owns "connect it to my <service>" **when `brain/tools/` has nothing for it**, and nothing there covers Strava. See A9 — this answer flips to `setup` the day a Strava tool lands. |
 | 27 | `can you read my old codex chats and make them searchable` | `ingest-sessions` | | "make my history searchable" — and it must ask which projects before reading any. |
 | 28 | `pull in what i was doing in those claude sessions last month` | `ingest-sessions` | | Past sessions on disk, distilled. Not this session. |
 | 29 | `write down what we just did here` | `capture` | ⚠ capture vs ingest-sessions | *This* session is `capture`'s job; `ingest-sessions` is only for transcripts already on disk. |
@@ -88,14 +93,14 @@ model problem.
 | 31 | `what am i avoiding right now` | `infer` | | Named in the table. Expect labelled assumptions with falsifiers, or the young-vault refusal. |
 | 32 | `do i work better in the mornings` | `infer` | ⚠ capture vs infer | A question with no fact behind it. `ask` first, then reason — and label the leap. |
 | 33 | `i work better in the mornings` | `capture` | ⚠ capture vs infer | Mirror of 32. A stated fact about themselves is a note, not a prompt to go reasoning. |
-| 34 | `what have you been guessing about me` | `review-assumptions` | ⚠ vs interview | "what have you guessed about me" verbatim. See ambiguity A5. |
+| 34 | `what have you been guessing about me` | `review-assumptions` | ⚠ vs interview | "what have you guessed about me" verbatim, and `interview` now cedes the register to it explicitly. |
 | 35 | `lets go through those guesses, ill tell you which are wrong` | `review-assumptions` | | A verdict pass over open assumptions, five at most, tap-fast. |
 | 36 | `whats it like out` | `weather` | ⚠ needs `location` first | `weather` with no place named must call `location` for coordinates, not guess a city. |
 | 37 | `do i need a coat tomorrow` | `weather` | ⚠ needs `location` first | Named in the table. Also needs the multi-day parameters, and still needs coordinates. |
 | 38 | `whats the weather in bergen this weekend` | `weather` | | Contrast with 36/37: a named place means `weather` skips `location` entirely. |
 | 39 | `where am i` | `location` | | The one-line job of `location`, and the answer must say it came from the IP. |
 | 40 | `what time is it here` | `location` | | "what time is it here" is in the table — the answer depends on where they are. |
-| 41 | `wheres the nearest post office` | `location` | ⚠ | "nearest" is in `location`'s row, but see ambiguity A6 — nothing here can actually answer it. |
+| 41 | `wheres the nearest post office` | **say it can't** | ⚠ | `location`'s **Not for** now excludes this outright: "nothing in this vault searches for places, **so say that rather than routing here**." Routing to `location` and reciting the city is a fail. See A10. |
 | 42 | `anything new in llm land` | `news` | | "anything new in Y" — and it reads *their* feeds, or asks for them if the note is missing. |
 | 43 | `whats happening with the nvidia thing` | `news` | ⚠ news vs ask | "what's happening with X" — outside world, their sources, not their notes. |
 | 44 | `what do i actually think about nvidia` | `ask` | ⚠ news vs ask | Mirror of 43. "What do *I* think about X" is explicitly not `news`. |
@@ -118,66 +123,91 @@ model problem.
 
 **Per-command coverage:** setup 2 · interview 2 · capture 9 · ask 6 · explain 3 · task 3 · digest 2
 · maintain 3 · doctor 2 · new-feature 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
-weather 3 · location 3 · news 2 · email 4 · calendar 3 · ask-the-human 4.
+weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 
 Fallback-to-`capture` rows (nothing else matches): **52–56**.
 Ask-the-human rows: **57–60**.
+Decline-without-routing row: **41**.
 
 ---
 
 ## Known ambiguities in the routing table
 
-Found while building this set. These are table problems, not model problems — a fail on the linked
-row may be the table's fault, so read this before filing a bug against an agent.
+These are table problems, not model problems — a fail on the linked row may be the table's fault,
+so read this before filing a bug against an agent.
 
-**A1 · `ask` vs `explain` can't be decided from the sentence** (rows 11, 12).
-`ask` owns "what do I know about X"; `explain` owns "a concept the vault never covered". Both are
-statements about *vault contents*, not about the utterance — so "tell me about retries" is `ask`
-when a retries note exists and `explain` when it doesn't. The router must search before it can
-route. `explain`'s prompt handles the collision correctly ("stop and hand off to `ask`"), but the
-table reads as though the words alone decide it. Row 11's expected answer assumes a vault that has
-something on the topic.
+> **Reconciled against the routing table on 2026-08-18** (`AGENTS.md`, 889 lines). Six of the eight
+> items originally recorded here had since been fixed in the table and are gone; the wording that
+> resolved each is logged at the bottom, so a reader can tell a fix from a quiet deletion.
+>
+> **This section means nothing unless it is re-checked every time the routing table changes** — the
+> same trigger as [When to re-run](#when-to-re-run), and for the same reason. A resolved ambiguity
+> left standing here tells a tester to "fix" the manual backwards; a live one deleted here costs a
+> silent misroute nobody is looking for. Reconcile it in the same pass that re-runs the set.
+>
+> Retired numbers are not reused, so `A1` still means what row 11 says it means, and old entries in
+> the Results table stay readable.
 
-**A2 · connector setup routes two different ways.**
-The table sends "connect it to my <service>" to `new-feature` (row 26). Every tool's `fallback:`
-sends the same human to `setup` — `brain/tools/calendar.md` says *"No calendar connector is
-configured — run `setup` to connect one"*, and `AGENTS.md` repeats it in "A tool that can't meet
-its requirement degrades with a plain sentence". Both are reachable from "hook this up to my X" and
-they disagree. The set expects `new-feature`; a run that lands on `setup` is arguably correct.
+**A1 · `ask` vs `explain` can't be decided from the sentence** (rows 11, 12). **Still stands.**
+Both rows now cede to each other — `ask` is **Not for** "a concept the vault never covered —
+`explain`", and `explain` is **Not for** "handing back what they already wrote — `ask`" — so the
+table is no longer silent about the collision. But both of those tests are statements about *vault
+contents*, not about the utterance: "tell me about retries" is `ask` when a retries note exists and
+`explain` when it doesn't. The router must search before it can route, and the table never says so.
+`explain`'s prompt does handle it correctly ("stop and hand off to `ask`"); the table reads as
+though the words alone decide it. Row 11's expected answer assumes a vault that has something on
+the topic.
 
-**A3 · "inbox" is overloaded and neither row disowns the other** (rows 20, 46, 58).
-`maintain` claims "drain the inbox"; `email` claims "what's in my inbox". Neither **Not for**
-column mentions the other. This is the highest-consequence collision in the table: one branch
-rewrites vault files, the other reaches a mailbox.
+**A9 · row 26 is decided by a directory listing, not by the table** (row 26). **New.**
+The old `setup`/`new-feature` collision is gone, but the fix moved the decision outside the text:
+`new-feature` now owns "connect it to my <service>" only "**when `brain/tools/` has nothing for
+that service** — check the listing before you answer", and `setup` owns it when a tool exists. That
+is a clean partition and the right one. It also means row 26's expected answer is a fact about the
+filesystem on the day it was written: nothing in `brain/tools/` covers Strava (weather, location,
+news, email, calendar), so `new-feature` is correct **today**. Ship a Strava tool and row 26 flips
+to `setup` without a word of the table changing. Same class of problem as A1, and the reason a tool
+being added is listed as a re-run trigger below.
 
-**A4 · `task` vs `email`/`calendar` for "I need to <communicate>".**
-"i need to email the landlord" matches `task` ("I need to") and `email` ("draft a reply to Y").
-`task`'s **Not for** only excludes *actually sending or booking*, which doesn't cover drafting. Not
-in the set as a scored row precisely because I couldn't determine the intended answer — worth
-deciding and then adding.
+**A10 · the table has three exits but counts two** (row 41). **New.**
+"Two ways out of this table, and they aren't the same" names *nothing matches → `capture`* and
+*several match → ask which*. There is a third: `location`'s **Not for** says finding somewhere
+nearby is not a routing decision at all — "nothing in this vault searches for places, so say that
+rather than routing here" — and `weather`'s says writing the forecast down is refused rather than
+handed to `capture`. Both are correct answers and neither is `capture` or a question. Two rows
+quietly decline, and the paragraph that enumerates the exits doesn't mention that shape. Row 41 is
+scored against the `location` row, not the paragraph. Worth folding into that paragraph as a named
+third exit, so a router that has only read the summary doesn't fall through to `capture`.
 
-**A5 · `interview` vs `review-assumptions`** (row 34).
-`interview`'s source #2 is "open assumption", and its question shape — *"I've been assuming X —
-right, wrong, or nearly?"* — is `review-assumptions`' entire job. Neither row's **Not for** excludes
-the other. "what have you been guessing about me" plausibly reaches either.
+### Resolved since this set was written
 
-**A6 · `location` promises "nearest", nothing delivers it.**
-The table gives `location` questions like "nearest", but `brain/tools/location.md` only returns
-city, region, coordinates and timezone from an IP lookup. No command in the vault searches for
-nearby places. Row 41 expects `location` because that's what the table says; the honest answer is
-"here's where you are, I can't search from here".
+Verified line by line against the current table on 2026-08-18, each against the file rather than a
+summary. Kept as a log so nobody re-raises them.
 
-**A7 · the routing section has no documented "ask the human" path** (rows 57–60).
-It says **"Nothing matches → `capture`"** and stops. Prime directive 6 says *"When uncertain, ask
-or inbox it — never guess silently"*. Those cover different cases and the table never joins them:
-`capture` is right when *nothing* matches, and asking is right when *several* match with different
-side effects. Rows 57–60 are scored against directive 6. If you'd rather the router never asks,
-that's a legitimate choice — but then the table should say so, and these four rows become `capture`.
-
-**A8 · `new-feature` has no prompt file.**
-`AGENTS.md` points at `brain/prompts/new-feature.md`; it isn't on disk (checked 2026-08-18). Rows
-25 and 26 can be scored on routing intent, but the command has nothing to read when it gets there.
-May be mid-flight in another session — re-check before filing.
+- **A2 · `setup` vs `new-feature` on connecting a service** — fixed. The rows now partition on
+  whether a tool exists: `new-feature` takes it "when `brain/tools/` has nothing for that service",
+  and its **Not for** reads "connecting a service a tool already exists for — `setup`, which is
+  what every tool's `fallback:` sends them to", which is exactly the contradiction that used to
+  make this ambiguous. Survives as A9 in a narrower form.
+- **A3 · the two inboxes** — fixed. `maintain` is **Not for** "the mail inbox — that's `email`;
+  this row owns the vault folder and nothing else"; `email` is **Not for** "`00_Inbox/`, the vault
+  folder — that's `maintain`". Both name the other.
+- **A4 · `task` vs `email` on drafting** — fixed. `task` is now **Not for** "composing something
+  now: 'draft the mail to the landlord' is `email`, not a task. A task records the intention; it
+  doesn't write the text", and `email` claims "they want the text composed now" while ceding "an
+  intention to deal with someone later, with no text wanted yet — `task`".
+- **A5 · `interview` vs `review-assumptions`** — fixed. `interview` is **Not for** "working the
+  open-assumption register for verdicts — `review-assumptions`", and says it borrows that command's
+  format when an assumption surfaces; `review-assumptions` is **Not for** "anything the register
+  doesn't hold — perishable follow-ups, blank dimensions, stalled work — `interview`".
+- **A6 · `location` promised "nearest"** — fixed, and it flipped row 41. The row's triggers are now
+  only "where am I", "what time is it here", and its **Not for** disowns nearby search outright.
+  Rescored: row 41 expects a decline, not a route. Live residue tracked as A10.
+- **A7 · no documented "ask the human" path** — fixed. "Two ways out of this table, and they aren't
+  the same" now spells out *several match and they'd do materially different things → ask which, in
+  one line, before doing either*, and ties it to prime directive 6. Rows 57–60 are scored against
+  the table itself now, not against the directive.
+- **A8 · `new-feature` had no prompt file** — stale. `brain/prompts/new-feature.md` exists, 214
+  lines. It was mid-flight when this was written, as suspected.
 
 ---
 

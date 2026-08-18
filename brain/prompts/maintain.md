@@ -90,6 +90,18 @@ Leave the assumptions figures out of the line entirely if there's no register.
 
 Then say the same thing in the conversation, plus anything the human should actually look at.
 
+**End with the correction footer**, per `AGENTS.md`. This pass writes across the whole vault, so a
+per-file footer would be a wall — one line summarising what changed, and the one instruction that
+undoes all of it:
+
+```
+maintain: 3 inbox items filed, 2 orphans linked, 1 assumption refuted, index rebuilt
+(`git revert HEAD` undoes the whole pass — or name any one of them and I'll put it back)
+```
+
+Name the actual counts, not the template. **A pass that changed nothing gets no footer** — there's
+nothing to correct.
+
 If the vault is nearly empty, this whole pass should take one line and no edits. Say so and stop —
 a maintenance run that invents work to look busy is worse than one that reports nothing happened.
 

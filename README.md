@@ -78,7 +78,7 @@ ignores the settings that ship with this repo and will pester you for permission
 
 **4. Say `setup`.**
 
-It asks you five questions about who you are and what you're working on, writes the answers into a
+It asks you six questions about who you are and what you're working on, writes the answers into a
 note called `About me`, and walks you through your first capture. **Don't skip this** — it's two
 minutes and it's the difference between notes about you and notes about a generic person.
 
@@ -240,13 +240,17 @@ version of the manual and the commands, take the harness and leave your notes al
 ```bash
 git remote add upstream https://github.com/Sebastian-Sole/second-brain-demo.git
 git fetch upstream
-git checkout upstream/main -- AGENTS.md CLAUDE.md GEMINI.md README.md DESIGN.md brain/ .claude/
+git checkout upstream/main -- AGENTS.md CLAUDE.md GEMINI.md GUIDE.md README.md DESIGN.md brain/ .claude/
+git checkout HEAD -- brain/log.md   # your run log lives in brain/ — put yours back
 git diff --stat            # look before you commit
 ./brain/bin/doctor
 ```
 
-Those paths are the harness and nothing else — your notes, your daily notes and `index.md` aren't
-in the list, so they can't be touched.
+Those paths are the harness — your notes, your daily notes and `index.md` aren't in the list, so
+they can't be touched. The one exception is `brain/log.md`, the history of your own maintenance
+runs: it sits inside `brain/`, so the update would overwrite it with the empty version this repo
+ships. That's what the second line is for — it puts your copy back from your last save. (Your vault
+saves itself after every turn, so "your last save" is a few minutes ago at worst.)
 
 **Your profile is a note (`03_Resources/About me.md`), not part of the manual, and this is why.**
 Anything personal stored inside `AGENTS.md` would be overwritten by the command above without a
