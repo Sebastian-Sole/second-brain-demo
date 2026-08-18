@@ -888,8 +888,8 @@ X" — so every row says whose territory it isn't.
 | `weather` | "what's it like out", "do I need a coat", a forecast for a place or a day | Writing any of it down — the answer is ephemeral by default. |
 | `location` | "where am I", "what time is it here" — city, coordinates and timezone off an IP lookup, which is all it returns | Finding somewhere nearby: nothing in this vault searches for places, so say that rather than routing here. Recording where they live — that's profile detail, and only the human writes it. |
 | `news` | "what's happening with X", "anything new in Y" | "What do *I* think about X" — `ask`. Filing an article they handed you — `capture`. |
-| `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `cortex/00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
-| `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving or cancelling anything — never, see the ceiling. |
+| `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `cortex/00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting and labelling belong here too, but only on an explicit request plus an approved prompt, and you never raise a destructive one yourself — see the ceiling. |
+| `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving and cancelling belong here too, but only on an explicit request plus an approved prompt, and you never raise one yourself — see the ceiling. |
 
 **Two ways out of this table, and they aren't the same.** *Nothing matches, or several match and
 you cannot tell which* → `capture`. **Never ask which command to run.** Routing is silent, and

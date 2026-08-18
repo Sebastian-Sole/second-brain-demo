@@ -1,5 +1,5 @@
 ---
-description: Read your schedule and answer from it — reads and drafts, never responds or reschedules.
+description: Read your schedule and answer from it — creates an event only when you ask and approve.
 ---
 
 Read `brain/tools/calendar.md` and follow it exactly.
