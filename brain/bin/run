@@ -13,8 +13,18 @@
 
 set -eu
 
-root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-cd "$root"
+# Anchor to the script's own location, not the working directory: asking git
+# for the toplevel walks upward, so a vault nested in another repo makes this
+# resolve there instead, where none of the vault's commands exist to list.
+root=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd -P) || root=''
+
+# The same guard doctor uses for in_vault: structure is what proves we are in
+# the vault, rather than in some directory that merely contains one.
+if [ -z "$root" ] || [ ! -f "$root/AGENTS.md" ] || [ ! -d "$root/brain/bin" ]; then
+  echo "run: ${root:-$0} is not a vault — AGENTS.md and brain/bin/ should both be there. Nothing was run." >&2
+  exit 1
+fi
+cd "$root" || exit 1
 
 # Both directories are listed the same way, so the only difference a reader has
 # to hold on to is the heading above each block.

@@ -14,7 +14,17 @@
 
 set -u
 
-root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+# Anchor to the script's own location, not the working directory: asking git
+# for the toplevel walks upward, so a vault nested in another repo makes this
+# lint that repo instead — reporting a clean pass having read nothing.
+root=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd -P) || root=''
+
+# The same guard doctor uses for in_vault: structure is what proves we are in
+# the vault, rather than in some directory that merely contains one.
+if [ -z "$root" ] || [ ! -f "$root/AGENTS.md" ] || [ ! -d "$root/brain/bin" ]; then
+  echo "check: ${root:-$0} is not a vault — AGENTS.md and brain/bin/ should both be there. Nothing was checked." >&2
+  exit 1
+fi
 cd "$root" || exit 1
 
 # The brain is what lives under cortex/. Everything else in this repo -- the
