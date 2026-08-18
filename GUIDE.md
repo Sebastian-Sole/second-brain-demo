@@ -78,8 +78,9 @@ what something is, it goes to `00_Inbox/` with an explicit question rather than 
 
 ### Getting things out
 
-**`ask`** — answers from your own notes, with links to the notes it used. It reads nothing else:
-if the vault doesn't cover it, it says so rather than padding the answer with general knowledge.
+**`ask`** — answers from your own notes, with links to the notes it used. It answers from the vault
+and nothing else: if your notes don't cover something, it says so plainly rather than padding the
+answer out with general knowledge.
 
 ```
 ask what did I decide about retries?
@@ -238,7 +239,7 @@ brain: Filed as a task: Tasks/Cancel the insurance.md
 you:   no, that's not a task, I was just thinking out loud
 
 brain: Moved it — it's now 03_Resources/The insurance renews at a worse rate.md,
-       linked to [[Finances]]. Task removed.
+       linked to [[Finances]]. The task is dropped, reason recorded.
 ```
 
 Reads get no footer, because nothing was created and there's nothing to correct.
@@ -382,8 +383,8 @@ Short and honest:
 - **Put things in your profile you didn't say.** It may *offer* — "want me to add 'no bullet lists'
   to how you like things written?" — and if you ignore it, it drops the subject. It can never write a
   line about you on its own initiative, and it can never conclude something about you from your
-  inbox, your calendar, your other repos or your shell history. A check script fails the build if a
-  guess turns up in your profile dressed as a fact.
+  inbox, your calendar, your other repos or your shell history. `brain/bin/check` exits with an
+  error if a guess ever turns up in your profile dressed as a fact.
 - **Delete your notes.** Superseded notes get marked and kept. Finished tasks get archived. If two
   notes contradict each other, both survive with dates on them.
 - **Invent facts.** If it doesn't know, the correct answer is "the vault doesn't cover this" — and

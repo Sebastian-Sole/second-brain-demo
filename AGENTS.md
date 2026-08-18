@@ -778,24 +778,31 @@ X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
-| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine" | Adding a command or tool later — `new-feature`. Something broken — `doctor`. |
-| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps | Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. |
+| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar" | Building a capability no tool covers yet — `new-feature`. Something broken — `doctor`. |
+| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across six sources, three questions at most, one per source | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the six sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `explain`. Activity across many notes — `digest`. |
 | `explain` | "explain X", "I don't get Y", "walk me through Z" — they want to *understand*, not to retrieve | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`. |
-| `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped | A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
+| `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
 | `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
-| `maintain` | "tidy up", "drain the inbox", "close out the day", the inbox has visibly grown | A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
+| `maintain` | "tidy up", "drain the inbox" meaning `00_Inbox/`, "close out the day", `00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
 | `doctor` | "something's broken", "is this thing working", a command failing, just after a harness update | Messy vault *contents* rather than a broken install — `maintain`. |
-| `new-feature` | "add a command", "I want it to also do X", "connect it to my <service>" | Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. |
+| `new-feature` | "add a command", "I want it to also do X", "connect it to my <service>" **when `brain/tools/` has nothing for that service** — check the listing before you answer | Connecting a service a tool already exists for — `setup`, which is what every tool's `fallback:` sends them to. Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. |
 | `ingest-sessions` | "read my old Claude/Codex sessions", "make my history searchable" | Capturing *this* session — `capture`. |
 | `infer` | "would I actually finish this", "what am I avoiding", a question about them the vault never states outright | Anything a note answers — try `ask` first, always. |
-| `review-assumptions` | "what have you guessed about me", "let me go through those assumptions" | Raising a new one — `infer`. |
+| `review-assumptions` | "what have you guessed about me", "let me go through those assumptions" — a tap-fast verdict pass over the register, five at most, verdicts only | Anything the register doesn't hold — perishable follow-ups, blank dimensions, stalled work — `interview`. Raising a new one — `infer`. |
 | `weather` | "what's it like out", "do I need a coat", a forecast for a place or a day | Writing any of it down — the answer is ephemeral by default. |
-| `location` | "where am I", or a question whose answer depends on where they are — "nearest", "what time is it here" | Recording where they live — that's profile detail, and only the human writes it. |
+| `location` | "where am I", "what time is it here" — city, coordinates and timezone off an IP lookup, which is all it returns | Finding somewhere nearby: nothing in this vault searches for places, so say that rather than routing here. Recording where they live — that's profile detail, and only the human writes it. |
 | `news` | "what's happening with X", "anything new in Y" | "What do *I* think about X" — `ask`. Filing an article they handed you — `capture`. |
-| `email` | "what's in my inbox", "did X reply", "draft a reply to Y" | Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
+| `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting or labelling — never, see the ceiling. |
 | `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving or cancelling anything — never, see the ceiling. |
+
+**Two ways out of this table, and they aren't the same.** *Nothing* matches → `capture`, as above.
+*Several* match and they'd do materially different things — rewrite vault files or open a mailbox,
+open a task or compose a mail — → **ask which, in one line, before doing either.** That's prime
+directive 6: when uncertain, ask or inbox it, never guess silently. This is not the announcement
+routing otherwise forbids — when the answer is clear you still say nothing and just run it. The
+question is for a genuine fork, where guessing wrong writes something somebody has to undo.
 
 ### When something isn't working
 
