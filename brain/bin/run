@@ -1,11 +1,12 @@
 #!/usr/bin/env sh
-# Run one of the vault's prompts with whichever agent CLI is available.
+# Run one of the vault's commands with whichever agent CLI is available.
 #
-#   brain/bin/run maintain
+#   brain/bin/run maintain                 a skill, from brain/prompts/
+#   brain/bin/run weather "tomorrow"       a tool,  from brain/tools/
 #   brain/bin/run digest "last two weeks"
 #   BRAIN_AGENT=codex brain/bin/run maintain
 #
-# This is the seam that keeps the vault model-agnostic: prompts are plain
+# This is the seam that keeps the vault model-agnostic: commands are plain
 # markdown, and this script is the only place that knows how to invoke a
 # particular vendor's CLI. Teaching the vault a new agent means adding one
 # case below — nothing else changes.
@@ -15,17 +16,46 @@ set -eu
 root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 cd "$root"
 
+# Both directories are listed the same way, so the only difference a reader has
+# to hold on to is the heading above each block.
+list_commands() {
+  ls "$1"/*.md 2>/dev/null | sed 's|.*/|    |; s|\.md$||'
+}
+
 name=${1:-}
 if [ -z "$name" ]; then
-  echo "usage: brain/bin/run <prompt-name> [extra instructions]" >&2
+  echo "usage: brain/bin/run <command-name> [extra instructions]" >&2
   echo "available:" >&2
-  ls brain/prompts/*.md 2>/dev/null | sed 's|.*/|  |; s|\.md$||' >&2
+  echo "  skills (brain/prompts/) — the vault, and nothing else:" >&2
+  list_commands brain/prompts >&2
+  echo "  tools (brain/tools/) — reach outside the vault, may need configuring:" >&2
+  list_commands brain/tools >&2
   exit 64
 fi
 shift
 
-prompt_file="brain/prompts/${name}.md"
-[ -f "$prompt_file" ] || { echo "run: no such prompt: $prompt_file" >&2; exit 66; }
+# A command is either a skill or a tool. They differ in reach, not in how they
+# are invoked, so the runner has to look in both places. Skills win a name
+# clash — they're the ones that can't reach the network — but never silently:
+# with two files answering to one name, which of them just ran is exactly the
+# thing you'd want to have been told.
+prompt_file=""
+if [ -f "brain/tools/${name}.md" ]; then
+  prompt_file="brain/tools/${name}.md"
+fi
+if [ -f "brain/prompts/${name}.md" ]; then
+  if [ -n "$prompt_file" ]; then
+    echo "run: '$name' exists in both brain/prompts/ and brain/tools/." >&2
+    echo "     Running the skill, brain/prompts/${name}.md. Rename one of them." >&2
+  fi
+  prompt_file="brain/prompts/${name}.md"
+fi
+if [ -z "$prompt_file" ]; then
+  echo "run: no such command: '$name'" >&2
+  echo "     Looked in brain/prompts/${name}.md and brain/tools/${name}.md." >&2
+  echo "     Run  brain/bin/run  with no arguments to see what's there." >&2
+  exit 66
+fi
 
 # setup is an interview. Run non-interactively it asks its six questions into
 # a void that closes before anyone can answer, and the vault learns nothing.
@@ -36,6 +66,15 @@ if [ "$name" = setup ]; then
   exit 64
 fi
 
+# A tool's frontmatter goes to the agent along with the rest of the file. It
+# isn't metadata about the prompt, it's part of the prompt: requires: says what
+# has to be reachable, fallback: is the sentence to say when it isn't, consent:
+# decides whether to ask before acting at all. AGENTS.md settles it — where the
+# frontmatter and the docs disagree, the frontmatter wins, because it's what the
+# tool actually runs on. Stripping it would hand the agent a tool with its
+# safety rails removed, and would make this path differ from the one an agent
+# takes when it simply reads the file itself. Skills have no frontmatter, so
+# they are unaffected either way.
 prompt=$(cat "$prompt_file")
 [ $# -gt 0 ] && prompt="$prompt
 
@@ -55,7 +94,7 @@ if [ -z "$agent" ]; then
   fi
 fi
 
-echo "run: $name via $agent" >&2
+echo "run: $prompt_file via $agent" >&2
 
 case "$agent" in
   claude)
