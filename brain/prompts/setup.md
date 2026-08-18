@@ -28,7 +28,7 @@ interview is more valuable now.
 
 ## Step 2 — Ask
 
-Ask all of it in **one short message**, as a numbered list. Five questions, plain wording, and say
+Ask all of it in **one short message**, as a numbered list. Six questions, plain wording, and say
 up front that one-line answers are fine and they can skip any of them.
 
 1. **What should I call you?**
@@ -38,6 +38,15 @@ up front that one-line answers are fine and they can skip any of them.
    want me to ask before writing something long?
 5. **What are you actually working on right now?** — the one or two things on your mind this
    month. This is the one that makes captures land in the right place.
+6. **How technical are you, and how much have you used AI tools before?** — "never opened a
+   terminal" and "I write software for a living" are equally good answers.
+
+**Question 6 rides along; the profile interview is still the five above.** Its answer doesn't go in
+`[[About me]]` at all — write it to the spoke
+`03_Resources/How I learn.md`, in their words — the hub is capped at 40 lines and paid for on every
+turn, and fluency is only needed by the command that's teaching them something. Ask it now anyway:
+a level-adaptive tutorial can't pitch itself without it, and adding the question later means
+re-interviewing everyone who has already set up.
 
 Then wait. Do not fill anything in before they answer, and do not ask follow-ups one at a time
 like an interrogation — if an answer is thin, that's fine, write what you got.
@@ -109,11 +118,34 @@ and it's the kind of claim that's easy to make from an assumption about a hook y
 If they have nothing to give you, offer to capture what brought them to this tool in the first
 place. That's a real note and it's usually a good one.
 
-## Step 5 — Tell them the three things worth knowing
+## Step 5 — Offer the outside world (optional, and genuinely skippable)
 
-**Output surface:** two real notes in the vault — `[[About me]]` and their first capture — and plain
-text in the conversation. Never a rendered welcome document, and no edits to `AGENTS.md`. The first
-thing they see should be the vault working, not a brochure.
+Two offers, in **one** message, both easy to decline. Say up front that everything already works
+and neither of these is a prerequisite for anything — **someone who declines both must end up with
+a working vault.** These are offers, not more interview.
+
+**Mail and calendar.** State the ceiling *before* they connect anything, not after:
+
+> If you want, I can read your mail and your calendar and draft replies or pencil in tentative
+> events. I can't send, reply, delete, accept or decline anything — that's off by design, not a
+> setting you can flip. Want to connect either one?
+
+If yes, walk them through their agent's connector setup in plain language and confirm it with
+`brain/bin/doctor`. If no, say that's completely fine and move on: `brain/tools/email.md` and
+`brain/tools/calendar.md` degrade to one plain sentence when nothing is connected, and no other
+command notices.
+
+**News sources.** Ask what they actually read, watch or follow — and what they emphatically don't
+want to hear about. Write the answer to `03_Resources/My news sources.md`, **resolving each name to
+a feed yourself**: they say "Hacker News", you store `https://news.ycombinator.com/rss`. The human
+never goes hunting for an XML endpoint. If they'd rather not, don't create the note — an empty
+spoke is organisational debt, and `news` knows how to ask for itself later.
+
+## Step 6 — Tell them the three things worth knowing
+
+**Output surface:** real notes in the vault — `[[About me]]`, their first capture, and whatever
+they opted into above — plus plain text in the conversation. Never a rendered welcome document, and
+no edits to `AGENTS.md`. The first thing they see should be the vault working, not a brochure.
 
 Not a tour. Three lines, then stop:
 

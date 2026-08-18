@@ -5,11 +5,42 @@ Produce a digest of recent activity in the second brain.
 **Window:** if the human named one, interpret it loosely (`week`, `month`, `since Tuesday`, a date
 range). Default to the **last 7 days** if nothing is given. State the window you used at the top.
 
+**Two halves, and only one of them gets written down.**
+
+- The **live half** — weather, calendar, inbox, news, today's open tasks — runs **only when the
+  window includes now**. `digest last month` doesn't fetch a forecast; a retrospective has no use
+  for today's rain.
+- The **retrospective half** — the four sections below — is the digest proper, and it is the only
+  part that goes in the note.
+
+The live half is shown in the conversation and **written nowhere**. Per `AGENTS.md`, live data is
+ephemeral by default: a note saying "12°C, rain from 14:00" is true for four hours and then
+competes with real notes in keyword search forever. If they ask for a piece of it to be kept,
+that's an ordinary `capture`, not something this command does on its own.
+
+## The live half — only when the window includes now
+
+Lead with it in the conversation, a line or two each, in this order:
+
+- **Weather** — `brain/tools/weather.md`
+- **Calendar** — what's left today — `brain/tools/calendar.md`
+- **Inbox** — what actually needs them — `brain/tools/email.md`
+- **News** — their own sources only — `brain/tools/news.md`
+- **Open tasks** — today's, from `Tasks/` per `brain/prompts/task.md`
+
+**These degrade quietly.** A tool that isn't configured gets one plain line — "Calendar isn't
+connected" — and the digest carries on. Never an error, never a stack trace, never a lecture about
+API keys, and never a section silently missing with no explanation. Each tool's `fallback:` in
+`brain/tools/` is the sentence to use — and `email` and `calendar` are `consent: opt-in`, so ask
+before reaching into either and take silence as no.
+
+## The retrospective half — always
+
 Read the daily notes in that window, everything in `00_Inbox/`, and any notes whose `created` or
-`updated` frontmatter falls inside it. Then write the digest to
+`updated` frontmatter falls inside it. Then write this half to
 `Daily/YYYY-MM-DD — Digest.md` (dated today) and show it in the conversation.
 
-Structure it in four sections:
+Structure the note in four sections:
 
 ### 1. Shipped / Captured
 What actually happened, grouped by project or area. Every line links to the note it came from.
@@ -33,8 +64,8 @@ worse than a short section. Mark these as yours:
 ```
 
 ### 3. Stalled
-A table: **what · how long · the smallest next action.** Anything open in a project note, any task
-carried across multiple daily notes, any question left in `00_Inbox/`.
+A table: **what · how long · the smallest next action.** Anything open in a project note, anything
+in `Tasks/` that's been open a long time (age from `id:`), any question left in `00_Inbox/`.
 
 The "smallest next action" column must be genuinely small and specific — the actual first move,
 not a restatement of the goal.

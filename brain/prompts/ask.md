@@ -1,6 +1,8 @@
 # ask — answer from the vault
 
-Answer the human's question from what's in this second brain.
+Answer the human's question — **from the vault first, then from general knowledge, and always
+visibly labelled which is which.** A question their notes hold nothing on still gets a real answer;
+it just gets one under a heading saying it didn't come from them. See step 5.
 
 If they didn't give you a specific question, answer whatever they just asked in conversation. If
 there's no question at all, ask what they want to know.
@@ -57,11 +59,32 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    about their notes — say so and offer `infer`, which does this properly and registers what's
    worth keeping. `ask` answers from the vault; `infer` reasons past it.
 
-5. **Be honest about gaps, including when the gap is most of it.** If the vault doesn't cover this,
-   say so plainly. Don't pad with general knowledge, don't fabricate a citation, and don't
-   compensate for a thin vault by inferring harder. "Barely anything yet — here's the little
-   there is" is a good answer to a question about a two-day-old brain; four hundred words of
+5. **Be honest about gaps, including when the gap is most of it — then answer anyway, labelled.**
+   Say plainly what the vault does and doesn't cover, and never let the two blur into one voice.
+   When part of the answer comes from outside their notes, fence it off under its own heading:
+
+   ```
+   **From your notes** — … with [[links]].
+
+   **Not from your notes** — general knowledge; nothing in the vault says this.
+   …
+   ```
+
+   A question the vault has nothing at all on gets only the second heading — and gets answered, not
+   deflected. Then **offer to capture it** per step 6: one line, easy to ignore, and only write if
+   they say yes.
+
+   The labels are the whole point, so keep them strict. **Never fabricate a citation** to make the
+   unsourced half look sourced, never let a general-knowledge claim carry a `[[link]]` it didn't
+   come from, and don't compensate for a thin vault by inferring harder *about them* — the world is
+   fair game, the person is not. A claim about the human still needs the vault, the three-block form
+   above, or `infer`. "Barely anything yet — here's the little there is, and here's what I know
+   generally" is a good answer to a question about a two-day-old brain; four hundred words of
    character analysis off five notes is not.
+
+   **If what they want is teaching rather than retrieval** — "explain X", "walk me through Y", "I
+   don't get Z" — hand off to `explain` (`brain/prompts/explain.md`), which reads `[[How I learn]]`
+   and pitches it at them. `ask` answers a question; `explain` teaches a subject.
 
 6. **Offer to capture — don't just do it.** If answering surfaced something worth keeping (a
    synthesis across notes, a missing link you noticed), offer it. Only write if they say yes. You

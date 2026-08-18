@@ -50,8 +50,11 @@ so in a sentence and it moves it. That's the entire filing workflow.
 
 ## The commands, grouped by what you want
 
-In Claude Code these are slash commands — `/capture`, `/ask`. In any other agent, just say the
-word. And you can skip them entirely; see [the next section](#you-dont-have-to-use-the-commands).
+**Just say the word.** `capture this`, `what's on today`, `digest`. Nine of them also ship as
+Claude Code slash commands (`/capture`, `/ask`, `/digest`, `/infer`, `/ingest-sessions`,
+`/interview`, `/maintain`, `/review-assumptions`, `/setup`) if you like the autocomplete; the rest
+work the same way by name. And you can skip all of it — see
+[the next section](#you-dont-have-to-use-the-commands).
 
 ### Getting things in
 

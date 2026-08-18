@@ -86,51 +86,41 @@ That's it. From here you just talk to it.
 
 ---
 
-## The commands
+## Using it
 
-| Command | What it does |
+Everything day-to-day is in [**`GUIDE.md`**](GUIDE.md) — that's the file to read once you're
+installed. The summary:
+
+**Talk to it in plain sentences.** You don't have to learn any commands; it works out what you meant
+and does that, silently. Anything that wrote something ends with one line naming what it made, so a
+wrong guess is visible and one sentence to correct.
+
+If you'd rather name a command, there are about twenty, in two kinds — **skills**, which touch only
+the vault and work in every agent as shipped, and **tools**, which reach outside it and usually need
+connecting first:
+
+| | |
 | --- | --- |
-| `setup` | First run: checks the install, learns who you are, walks you through your first capture |
-| `capture <anything>` | Files a raw dump — triages it, writes it up in your voice, links it to related notes, logs it to today's daily note |
-| `ask <question>` | Answers from what's in your vault, with links to the notes it used |
-| `digest [window]` | Rolls up recent activity: what happened, patterns across it, what's stalled |
-| `maintain` | Health pass — close the day, drain the inbox, reconcile contradictions, link orphans, rebuild the index |
-| `ingest-sessions` | Distils your past AI coding sessions into notes you can search |
-| `infer <question>` | Answers something your notes *don't* contain, by reasoning from what they do — every assumption labelled, evidenced and falsifiable |
-| `review-assumptions` | Two-minute pass over what it's assumed about you: right, wrong, skip |
-| `interview` | The brain asks *you* — what happened to the thing you never followed up, what it's guessing, what it has no idea about |
+| **Getting things in** | `capture` anything at all · `task` for things with a next action |
+| **Getting things out** | `ask` your own notes · `explain` something new · `digest` recent activity |
+| **Reasoning past your notes** | `infer` what you never wrote down · `review-assumptions` to confirm or kill its guesses |
+| **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
+| **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
+| **Making it yours** | `setup` · `interview` · `new-feature` |
+| **Your history** | `ingest-sessions` |
 
-In Claude Code these are slash commands (`/capture`). In any other agent, just say the word.
+`digest` surprises people: it names themes across unrelated notes that you never wrote down,
+including the things you keep avoiding. `infer` is the one a general chat model can't do, because it
+doesn't know you — and every guess it makes is labelled, evidenced, falsifiable, and promotable to a
+fact only by you. **Mail and calendar read, and can prepare a draft. They never send anything**,
+however you ask.
 
-**You don't have to use them at all.** Talking to the agent in this folder counts as a capture —
-`AGENTS.md` tells it to treat whatever you say that way by default.
-
-`digest` is the one that surprises people. It doesn't just summarise — it reads across unrelated
-notes and names themes you never wrote down, including the things you keep avoiding.
-
-### The last three are a different thing
-
-`ask` returns what you put in. `infer` answers questions you never wrote the answer to — *would I
-actually finish this?*, *what do I keep avoiding?* — by reasoning from the notes you do have. That's
-the part a general chat model can't do, because it doesn't know you.
-
-It's also the part that can quietly go wrong, so it's built to be checkable rather than trusted:
-
-- Every assumption is **labelled**, lands in `03_Resources/Assumptions.md` with its evidence, its
-  reasoning, and **what would prove it wrong**, and stays labelled forever.
-- **Only you can turn one into a fact.** `review-assumptions` shows you a few at a time — `1y 2n 3s`
-  — and a confirmed one gets promoted into your profile carrying `(was ASM-0007)`. A refuted one is
-  never deleted: a wrong guess on the record is what stops the same wrong guess next month.
-- **Below ten notes it won't guess about you at all.** Four notes can't support a character sketch,
-  and one built on them is the fastest way to stop trusting the whole thing.
-- `brain/bin/check` enforces the mechanical half — an unregistered id, a missing falsifier, an
-  assumption that has crept into your profile as though you'd said it. Rules in a prompt are
-  suggestions; this one exits non-zero.
-
-`interview` is the only command that talks to you first, and it's the one to be most sceptical of —
-a brain that pings you with nothing to say gets muted in a week. It's capped at three questions,
-every one has to cite the note or the gap that produced it, and its default is silence. **Nothing
-runs it on a timer**; it goes when you say so.
+The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `00_Inbox/`,
+`01_Projects/`, `02_Areas/`, `03_Resources/`, `04_Archive/`, plus `Tasks/`, `Daily/` and `raw/`.
+**You mostly won't think about it.** The structure is for the agent to reason over, not for you to
+maintain. Two example notes ship in `03_Resources/` so it isn't empty on day one; delete them
+whenever you like. github.com renders the vault for free, and [Obsidian](https://obsidian.md) reads
+this layout as-is if you want something nicer.
 
 > **Tip for Claude Code:** you'll be asked to approve each file the agent writes. Once you've
 > watched it a few times and trust it, press `shift+tab` to switch to accept-edits mode and it
@@ -231,46 +221,16 @@ Three things it deliberately does:
 
 ---
 
-## How it's organised
+## Keeping it running
 
-```
-index.md         the catalog — what exists. The agent reads this first.
-00_Inbox/        anything unprocessed or ambiguous
-01_Projects/     active efforts with a goal and an end
-02_Areas/        ongoing responsibilities with no end date
-03_Resources/    atomic notes — the actual knowledge
-04_Archive/      finished and dormant things
-05_Attachments/  images, PDFs, binaries
-06_Sessions/     distilled notes from past AI sessions (appears once you run ingest-sessions)
-Daily/           daily notes: journal + capture log
-raw/             immutable originals of anything external
-brain/           the harness: prompts, scripts, run log
-```
+`brain/bin/doctor` is the first thing to run whenever something feels broken — it checks the install
+and prints the command that fixes each problem. `maintain` is the equivalent for your notes rather
+than the install; both are in [`GUIDE.md`](GUIDE.md).
 
-**You mostly won't think about this.** The structure is there for the agent to reason over, not for
-you to maintain — it decides where things go, and `maintain` keeps it tidy. The layout is
-[PARA](https://fortelabs.com/blog/para/) plus atomic notes; if you'd rather use something else,
-change the folder map in `AGENTS.md` and every command keeps working.
-
-Two example notes ship in `03_Resources/` so the vault isn't empty on day one. Delete them whenever
-you like — nothing depends on them.
-
-**Want to browse it visually?** You don't need to — your agent is the primary interface, and
-github.com renders it for free. But [Obsidian](https://obsidian.md) reads this layout as-is and is
-the nicest option. Logseq, Foam and VS Code also understand `[[wikilinks]]`.
-
----
-
-## Maintenance
-
-`maintain` is the health pass: it closes out the day, drains the inbox, reconciles notes that
-contradict each other, links up orphans, and rebuilds `index.md`. It appends one line to
-`brain/log.md` so you can see what it did without reading a single note.
-
-**You run it.** This repo ships no cron job and no background agent on purpose — an agent with
+**You run them.** This repo ships no cron job and no background agent on purpose — an agent with
 unattended access to your notes, before you've watched what it does, is how you stop trusting it in
-week two. Run it by hand a few times first. Scheduling it later is one line in whatever scheduler
-you already use; see [`DESIGN.md`](DESIGN.md#why-nothing-runs-on-a-schedule).
+week two. Scheduling `maintain` later is one line in whatever scheduler you already use; see
+[`DESIGN.md`](DESIGN.md#why-nothing-runs-on-a-schedule).
 
 ### Updating the harness
 
@@ -298,8 +258,8 @@ from git.
 
 ## Where to take it next
 
-1. **Write your own command.** Copy `brain/prompts/digest.md`, change it, add a row to the table in `AGENTS.md`. Fastest way to make the system yours.
-2. **Connect something that already records you** — email, calendar, your codebase. Anything already written down somewhere a machine can reach is free context; everything else you have to type. Highest-leverage move available.
+1. **Write your own command.** Copy a file from `brain/prompts/`, change it, add a row to the table in `AGENTS.md`. Anything that reaches outside the vault goes in `brain/tools/` instead, with frontmatter declaring what it needs and what it may write. Fastest way to make the system yours.
+2. **Connect your mail and calendar.** The `email` and `calendar` tools are already here and read-only by design; connecting them turns everything already written down about your week into free context. Highest-leverage move available.
 3. **Schedule something, once you trust it** — `maintain` nightly, a morning brief, a weekly review.
 4. **Put a real interface on it.** The vault exposes exactly two operations: *write a file into `00_Inbox/`*, and *run `brain/bin/run <prompt>`*. Every UI is a thin client over those two — a Slack bot, a Telegram bot, an iOS Shortcut, an email address.
 

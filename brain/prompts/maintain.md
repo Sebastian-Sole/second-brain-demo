@@ -65,6 +65,10 @@ Regenerate `index.md` from what's actually on disk: one line per note,
 `- [[Note Title]] — one-line description`, grouped by section. Drop entries for notes that no
 longer exist; add any that were never catalogued.
 
+**Rebuild the `Open tasks` section too** — one line per `task: open` note in `Tasks/`, linked by
+title, newest-relevant first. Archived tasks stay out: `04_Archive/` is outside the default search
+set, and a catalog listing a thousand finished tasks defeats the point of having one.
+
 **Do not enumerate `06_Sessions/` here.** It has its own `index.md` and there can be thousands of
 session notes; listing them in the root catalog would drown the notes it exists to surface. One
 line pointing at `06_Sessions/index.md` is all the root index gets. If session notes are present,
