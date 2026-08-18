@@ -23,7 +23,7 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    - Then actually open and read the handful that look relevant. Depth on the right 3–6 notes
      beats skimming forty.
    - **If the question is about past work** — "what did I decide about X", "when did I last touch
-     Y", "why did we go with Z" — also search `cortex/06_Sessions/`, starting from its `cortex/index.md`. Don't
+     Y", "why did we go with Z" — also search `cortex/06_Sessions/`, starting from its `index.md`. Don't
      search it otherwise: there may be thousands of session notes and they'll out-match your real
      notes on any keyword.
 

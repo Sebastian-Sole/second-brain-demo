@@ -257,15 +257,15 @@ months of ordinary use it looks roughly like this — no manual filing involved:
 cortex/index.md                    ~60 lines, one per note, grouped
 cortex/00_Inbox/                   2 items, both with Open question callouts
 cortex/01_Projects/                Rewriting the billing importer.md
-                            Learning Norwegian.md
+                                   Learning Norwegian.md
 cortex/02_Areas/                   Engineering practice.md
-                            Health.md
+                                   Health.md
 cortex/03_Resources/               ~40 atomic notes — the actual knowledge
-                            Retries need a budget, not just a count.md
-                            Kaufmann — The Undoing Project.md
-                            About me.md · Assumptions.md
+                                   Retries need a budget, not just a count.md
+                                   Kaufmann — The Undoing Project.md
+                                   About me.md · Assumptions.md
 cortex/04_Archive/                 3 finished projects
-cortex/06_Sessions/                ~200 distilled session notes + their own cortex/index.md
+cortex/06_Sessions/                ~200 distilled session notes + their own index.md
 cortex/Daily/                      2026-06-14.md … 2026-08-14.md
 cortex/Tasks/                      4 open tasks — the finished ones are in cortex/04_Archive/
 cortex/raw/                        the originals of 12 articles and 3 transcripts

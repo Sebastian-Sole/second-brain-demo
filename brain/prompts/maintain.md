@@ -78,7 +78,7 @@ longer exist; add any that were never catalogued.
 title, newest-relevant first. Archived tasks stay out: `cortex/04_Archive/` is outside the default search
 set, and a catalog listing a thousand finished tasks defeats the point of having one.
 
-**Do not enumerate `cortex/06_Sessions/` here.** It has its own `cortex/index.md` and there can be thousands of
+**Do not enumerate `cortex/06_Sessions/` here.** It has its own `index.md` and there can be thousands of
 session notes; listing them in the root catalog would drown the notes it exists to surface. One
 line pointing at `cortex/06_Sessions/index.md` is all the root index gets. If session notes are present,
 refresh their own index while you're here.

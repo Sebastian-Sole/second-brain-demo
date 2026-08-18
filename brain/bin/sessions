@@ -9,7 +9,7 @@
 # none of them can read ~/.claude/projects or ~/.codex/sessions no matter how
 # you invoke them. Rather than teaching every agent a different escape hatch,
 # this script — plain POSIX shell, no jq, no runtime — copies the transcripts
-# you asked for into raw/sessions/transcripts/, which is gitignored. The agent
+# you asked for into cortex/raw/sessions/transcripts/, which is gitignored. The agent
 # then reads them with the same tools it uses for everything else.
 #
 # Nothing staged here is ever committed. Run `clean` when you're done.
@@ -19,7 +19,7 @@ set -eu
 root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 cd "$root"
 
-stage_dir="raw/sessions/transcripts"
+stage_dir="cortex/raw/sessions/transcripts"
 claude_dir="$HOME/.claude/projects"
 codex_dir="$HOME/.codex/sessions"
 

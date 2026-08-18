@@ -525,7 +525,7 @@ ASM-0007)`. Everything else stays labelled, forever.
 
 A confirmed claim about the human goes to the **spoke for its subject** — `[[How I work]]`,
 `[[How I handle money]]` — never into the hub, which is capped and paid for on every turn. Spokes
-are named for the person, not for the domain: a bare `Money.md` or `Health.md` is an `cortex/02_Areas/`
+are named for the person, not for the domain: a bare `Money.md` or `Health.md` is a `cortex/02_Areas/`
 name under PARA and collides with it. The hub carries the link; the spoke carries the claim.
 
 - A **refuted** assumption is never deleted. It's the most valuable row in the register: it records

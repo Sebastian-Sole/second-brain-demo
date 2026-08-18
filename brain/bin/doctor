@@ -365,7 +365,7 @@ if [ -n "$task_dirs" ]; then
         ;;
       stranded)
         warn "$f is archived but still  task: open  — it was filed away without being closed out" \
-             "Decide which it was: add  task: done  or  task: dropped  plus  completed: YYYY-MM-DD . If it's genuinely still live, move the note back to Tasks/ yourself."
+             "Decide which it was: add  task: done  or  task: dropped  plus  completed: YYYY-MM-DD . If it's genuinely still live, move the note back to cortex/Tasks/ yourself."
         task_problems=$((task_problems + 1))
         ;;
     esac
@@ -373,7 +373,7 @@ if [ -n "$task_dirs" ]; then
 
   if [ "$task_problems" -eq 0 ]; then
     if [ "$((tasks_open + tasks_closed))" -eq 0 ]; then
-      echo "  [--] no tasks yet — Tasks/ takes one note per open task"
+      echo "  [--] no tasks yet — cortex/Tasks/ takes one note per open task"
       echo "       -> Try:  capture <something you owe someone>"
     else
       ok "$tasks_open open, $tasks_closed closed — and every closed one is dated"
