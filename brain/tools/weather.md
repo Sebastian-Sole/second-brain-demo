@@ -75,6 +75,9 @@ consent: implicit
    `&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch` rather than
    converting in your head.
 
+**Privacy, once:** the forecast request tells Open-Meteo which coordinates you asked about, plus a
+unit preference if step 6 added one — nothing else from the vault leaves.
+
 **If the request fails**, say the forecast service is unreachable and stop. Never estimate the
 weather from the season, the location, or yesterday — a plausible invented forecast is the one
 failure mode here that the human can't detect.

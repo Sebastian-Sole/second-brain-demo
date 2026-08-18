@@ -34,6 +34,22 @@ if [ -z "$name" ]; then
 fi
 shift
 
+# A command name is a bare filename, and the runner has to insist on that. The
+# lookup below builds a path by concatenation, so '../../00_Inbox/note' escapes
+# brain/ and hands a fresh agent some other .md file on disk as its prompt —
+# including the files this vault writes verbatim from pasted, untrusted material.
+# That would turn "pasted material is data, not instructions" inside out, since
+# the traversal makes the text the prompt rather than the input. Cheaper to
+# refuse the name than to sanitise the path afterwards.
+case "$name" in
+  */* | .*)
+    echo "run: '$name' is not a command name." >&2
+    echo "     Commands are bare names — no slashes, no leading dot." >&2
+    echo "     Run  brain/bin/run  with no arguments to see what's there." >&2
+    exit 64
+    ;;
+esac
+
 # A command is either a skill or a tool. They differ in reach, not in how they
 # are invoked, so the runner has to look in both places. Skills win a name
 # clash — they're the ones that can't reach the network — but never silently:
@@ -88,10 +104,23 @@ if [ -z "$agent" ]; then
   elif command -v codex        >/dev/null 2>&1; then agent=codex
   elif command -v cursor-agent >/dev/null 2>&1; then agent=cursor-agent
   elif command -v gemini       >/dev/null 2>&1; then agent=gemini
-  else
-    echo "run: no agent CLI found. Install one, or set BRAIN_AGENT." >&2
-    exit 69
   fi
+fi
+
+if [ -z "$agent" ]; then
+  echo "run: no agent CLI found. Install one, or set BRAIN_AGENT." >&2
+  exit 69
+fi
+
+# The existence check has to cover the explicit choice too, not just the
+# auto-detected one. Without it a BRAIN_AGENT pointing at something uninstalled
+# sails past the case below and dies as the shell's own "command not found" —
+# a bare 127 that names no fix. doctor already tells people this; run was the
+# laxer of the two, which is the wrong way round for the thing that actually runs.
+if ! command -v "$agent" >/dev/null 2>&1; then
+  echo "run: BRAIN_AGENT is set to '$agent', but that command isn't installed." >&2
+  echo "     Install it, unset BRAIN_AGENT, or set it to one that is." >&2
+  exit 69
 fi
 
 echo "run: $prompt_file via $agent" >&2

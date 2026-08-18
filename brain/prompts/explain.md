@@ -12,7 +12,8 @@ knowledge, and touches the vault only to calibrate the pitch. If what they actua
 own past thinking played back, stop and hand off to `ask` rather than lecturing them about a
 subject they've already written notes on.
 
-This is **read-only**. It creates and edits nothing.
+**This writes nothing on its own.** The one exception is step 1: if they take up the offer to start
+`[[How I learn]]`, you write that line and nothing else.
 
 1. **Read one spoke: `[[How I learn]]`.** Per `AGENTS.md`, `[[About me]]` is a hub read every
    session and the detail lives in linked spokes. Read that one. Don't walk the rest — each spoke
@@ -73,7 +74,11 @@ This is **read-only**. It creates and edits nothing.
    worth keeping came out of it — usually their reaction, the reframing that finally clicked, or the
    decision it unblocked. Not the explanation itself.
 
-**Output surface:** plain text in the conversation, and nothing else — this command doesn't write.
-Never an artifact or rendered document, however well a diagram would render. See `AGENTS.md`.
+**Output surface:** plain text in the conversation, plus `[[How I learn]]` if they accepted the
+offer in step 1 — nothing else. Never an artifact or rendered document, however well a diagram would
+render. See `AGENTS.md`.
+
+**If you wrote that line, end with the correction footer**, per `AGENTS.md` — one line naming the
+spoke and how to change it. An explanation that wrote nothing gets no footer.
 
 The win is that they understood it, not that you covered it.

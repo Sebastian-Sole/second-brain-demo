@@ -99,8 +99,14 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    reconstruct it from `git log` unless they ask, and don't close by handing back a bundle of
    chores in place of an answer. One offer, phrased so that "no" is a complete reply.
 
-**Output surface:** plain text in the conversation, and nothing else — this command doesn't write.
-Never an artifact or rendered document, however well the answer would format. See `AGENTS.md`.
+**Output surface:** plain text in the conversation — plus, only where steps 6 and 7 allow it, a
+note they said yes to or a broken `[[link]]` fixed in passing. Nothing else, and nothing written
+unasked. Never an artifact or rendered document, however well the answer would format. See
+`AGENTS.md`.
+
+**If you did write, end with the correction footer**, per `AGENTS.md` — one line naming what you
+wrote and how to change it. An answer that wrote nothing gets no footer: there's nothing to correct,
+and a footer on every answer is exactly the nagging this vault avoids.
 
 Keep it short enough that they read it rather than skim it. The win is that they got the answer
 without opening the vault — not that you produced a document.

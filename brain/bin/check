@@ -22,6 +22,15 @@ PROFILE='03_Resources/About me.md'
 FLOOR=10
 STALE_DAYS=90
 
+# One pattern, used everywhere a Status: line is looked for outside awk. The two
+# halves of this script drifted apart once already: awk strips indentation and a
+# leading ">" before it reads a line, so anything anchored at column 0 stops
+# agreeing with it the moment a callout sits under a bullet — ordinary markdown.
+# The register then reads as "0 open" and the evidence floor never runs. -E and a
+# real alternation because "\|" inside a BRE is a GNU/BSD extension: where it
+# isn't one, the pattern matches nothing and the floor disables itself in silence.
+OPEN_RE='^[[:blank:]]*(Status:|>[[:blank:]]*Status:)[[:blank:]]*open'
+
 today=$(date +%Y-%m-%d)
 
 tmp=${TMPDIR:-/tmp}/brain-check.$$
@@ -58,7 +67,7 @@ if [ -f "$REGISTER" ]; then
     function emit(tier, msg) { print tier "\t" msg }
     function has(set, v) { return index(set, " " v " ") > 0 }
 
-    function flush(   i, line, body, id, conf, kind, st, links, collecting, tail) {
+    function flush(   i, line, body, id, conf, kind, st, links, collecting, tail, n) {
       if (nb == 0) return
       body = "\n"
       for (i = 1; i <= nb; i++) {
@@ -85,7 +94,13 @@ if [ -f "$REGISTER" ]; then
              "leap past the record.")
         return
       }
+      # The id bookkeeping hangs off the block, not off a heading. A heading is
+      # optional and the register that infer actually writes has none, so hanging
+      # it off "### ASM-nnnn" left maxid at 0 — and with maxid 0 the whole
+      # never-reuse-an-id guard below is unreachable. The block always carries the
+      # id; it is the one thing that is never missing.
       block_seen[id]++
+      n = substr(id, 5) + 0; if (n > maxid) maxid = n
 
       if (body !~ /\nBasis:/)     emit("ERROR", reg ":" st_line " — " id " has no Basis: line. No basis, no assumption: say the vault does not know instead.")
       if (body !~ /\nReasoning:/) emit("ERROR", reg ":" st_line " — " id " has no Reasoning: line. If you cannot state the leap in one sentence, you do not have one.")
@@ -130,6 +145,8 @@ if [ -f "$REGISTER" ]; then
       }
     }
 
+    # A heading over the block is nobody's house style but somebody has written
+    # one, so it still counts towards the ids in play.
     /^### ASM-[0-9][0-9][0-9][0-9]/ {
       hid = substr($2, 1, 8); heading[hid]++
       n = substr(hid, 5) + 0; if (n > maxid) maxid = n
@@ -154,6 +171,12 @@ if [ -f "$REGISTER" ]; then
       for (id in heading)
         if (heading[id] > 1)
           emit("ERROR", reg " — " id " has " heading[id] " headings. Ids are never reused or renumbered.")
+
+      # Two blocks under one id is the same failure wearing the register's own
+      # format: whichever one gets read second silently replaces the first.
+      for (id in block_seen)
+        if (block_seen[id] > 1)
+          emit("ERROR", reg " — " id " has " block_seen[id] " blocks. Ids are never reused or renumbered.")
 
       for (id in heading)
         if (!(id in block_seen))
@@ -207,7 +230,10 @@ if [ -f "$PROFILE" ]; then
       | sed 's|^|03_Resources/|; s|$|.md|' | sort -u | tr '\n' ' ')"
 fi
 
-find . -name '*.md' -not -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r f; do
+# "!" rather than "-not": the spelling POSIX actually defines. This pipeline only
+# ever appends findings, so a find that dies on an unknown primary doesn't look
+# like an error — it looks like a clean pass, which is the worst way to be wrong.
+find . -name '*.md' ! -path './.git/*' 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r f; do
   exempt "$f" && continue
   [ -f "$f" ] || continue
 

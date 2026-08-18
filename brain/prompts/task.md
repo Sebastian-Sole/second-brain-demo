@@ -58,6 +58,10 @@ Four of those look arbitrary without their reasons, so here they are:
 3. The body says why it exists and what "done" looks like — one or two lines, in their words. Link
    the project note and add the reverse link there.
 4. Log one line in today's daily note (`Daily/YYYY-MM-DD.md`), creating it if needed.
+5. **Add it to `index.md` under `## Open tasks`** — `- [[Call the bank]] — one line on what it is`.
+   `AGENTS.md` has every session read that catalog first, and `capture` hands tasks straight here
+   instead of cataloguing them itself, so if you skip this the task is missing from the catalog
+   until somebody runs `maintain`.
 
 **Ask for a due date only if they implied one.** Don't interrogate them; a task with no date is a
 perfectly good task, and the fastest way to make someone stop capturing is to make capture cost
@@ -101,6 +105,9 @@ Archived tasks aren't in the default set. Search `04_Archive/` only if they ask 
    ```markdown
    - Done: [[Call the bank (done 2026-08-18)]] — opened 2026-08-14
    ```
+
+7. **Take its line out of `## Open tasks` in `index.md`.** That section lists what's open; the
+   archived note stays reachable by folder and by the pointer line you just wrote.
 
 Why archive rather than delete: git history is not a recovery path for someone who doesn't know
 git. "Where did that task go" has to be answerable by opening a folder. And `04_Archive/` is

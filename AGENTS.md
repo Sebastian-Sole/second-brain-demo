@@ -235,7 +235,7 @@ promote it into evidence about them.
 ```yaml
 ---
 title: Human-readable title
-type: note            # note | source | daily | digest | project | area | moc | person | concept | task
+type: note            # note | source | daily | digest | project | area | moc | person | concept | task | register | session
 stage: inbox          # inbox | active | evergreen | archived   — how processed is it
 status: draft         # draft | stable | deprecated             — how much should you trust it
 created: 2026-01-01
@@ -251,7 +251,7 @@ aliases: []
 ```
 
 - `type: note` = one atomic idea. `source` = a note *about* external material. **`type` is the
-  authoritative routing key** — see the folder map below.
+  authoritative routing key** — see the folder map above.
 - `area:` takes a **quoted wikilink** to the Area note (`area: "[[Health]]"`), or is left blank.
   Quoted so YAML doesn't choke on the brackets, and a link rather than a bare string so the Area
   is reachable from the note rather than merely named by it. Keep the form consistent — half the
@@ -727,11 +727,13 @@ runs on, and the table is a summary that can drift.
 Every file in `brain/tools/` opens with frontmatter declaring what it needs and what it can do:
 
 ```yaml
+---
 name: weather
 requires: http          # http | mcp | none
 fallback: "what to say/do when the requirement isn't met"
 writes: none            # none | <what it writes>
 consent: implicit       # implicit | opt-in
+---
 ```
 
 - **`requires:`** — what must exist for it to work at all.

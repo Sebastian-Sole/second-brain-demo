@@ -80,37 +80,72 @@ case "$cmd" in
     # Collect every match first, then sort by recency across ALL of them, so
     # "the 3 newest" means the 3 newest overall — not 3 from each directory.
     # A project with a git worktree has more than one directory here.
+    #
+    # One path per line, and it stays that way to the end. The old list was
+    # space-separated on the theory that these paths have no spaces — true of
+    # Claude Code's encoded directory names, false of the $HOME prepended to
+    # them. A "John Smith" home turned every match into two paths that don't
+    # exist, and the stage copied nothing while reporting success.
     matches=""
     if [ -d "$claude_dir" ]; then
       for d in "$claude_dir"/*/; do
         [ -d "$d" ] || continue
         proj=$(decode "$(basename "$d")")
         case "$proj" in *"${pattern}"*) ;; *) continue ;; esac
-        matches="$matches $(find "$d" -maxdepth 1 -name '*.jsonl' 2>/dev/null | tr '\n' ' ')"
+        found=$(find "$d" -maxdepth 1 -name '*.jsonl' 2>/dev/null)
+        [ -n "$found" ] && matches="$matches$found
+"
       done
     fi
     if [ -d "$codex_dir" ]; then
-      for f in $(find "$codex_dir" -name 'rollout-*.jsonl' 2>/dev/null); do
-        proj=$(codex_cwd "$f")
-        case "$proj" in *"${pattern}"*) ;; *) continue ;; esac
-        matches="$matches $f"
-      done
+      # A pipeline's while runs in a subshell and can't append to $matches, so
+      # it prints its hits and the substitution collects them. Reading the list
+      # instead of word-splitting it also keeps a truncated half-path from
+      # reaching codex_cwd, where the failed sed used to kill the whole script.
+      found=$(find "$codex_dir" -name 'rollout-*.jsonl' 2>/dev/null |
+        while IFS= read -r f; do
+          proj=$(codex_cwd "$f")
+          case "$proj" in *"${pattern}"*) echo "$f" ;; esac
+        done)
+      [ -n "$found" ] && matches="$matches$found
+"
     fi
 
-    [ -n "$(echo "$matches" | tr -d ' ')" ] || {
+    [ -n "$matches" ] || {
       echo "sessions: nothing matches '$pattern' — try: brain/bin/sessions list" >&2
       exit 66
     }
 
+    # ls -t does the newest-first sort, but only when it's handed the paths as
+    # separate arguments — so split on newline alone, the one character these
+    # filenames can't contain, and let ls re-emit them in order.
+    ifs=$IFS
+    IFS='
+'
+    # shellcheck disable=SC2086  # splitting on newlines only — that is the point
+    set -- $matches
+    matches=$(ls -t "$@" 2>/dev/null)
+    # shellcheck disable=SC2086
+    set -- $matches
+    IFS=$ifs
+
     staged=0
-    # shellcheck disable=SC2086  # deliberate word-splitting; these paths have no spaces
-    for f in $(ls -t $matches 2>/dev/null | head -"$limit"); do
+    for f in "$@"; do
+      [ "$staged" -lt "$limit" ] || break
       case "$f" in
         "$codex_dir"/*) cp "$f" "$stage_dir/codex--$(basename "$f")" ;;
         *)              cp "$f" "$stage_dir/claude--$(basename "$f")" ;;
       esac
       staged=$((staged + 1))
     done
+
+    # Matching files but staging none is a failure, not a quiet success:
+    # ingest-sessions reads this exit status, and a cheerful 0 tells it there
+    # was nothing to ingest — which is how the bug above stayed invisible.
+    [ "$staged" -gt 0 ] || {
+      echo "sessions: matched files for '$pattern' but staged none — are they readable?" >&2
+      exit 69
+    }
 
     echo "staged $staged transcript(s) matching '$pattern' into $stage_dir" >&2
     echo "remember to run: brain/bin/sessions clean" >&2

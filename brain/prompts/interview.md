@@ -141,7 +141,8 @@ Don't commit — whatever invoked you handles that.
 
 `AGENTS.md` says that when the profile gets built by interviewing them, **the human picks the
 instrument**: the ordinary preferences interview, or a Big Five inventory. This is where that choice
-lives — `setup` deliberately doesn't offer it, because a first run has to stay short.
+lives — `setup` mentions it in one line on its way out and deliberately runs neither, because a
+first run has to stay short.
 
 Run this path when they ask for it: `interview big-five`, "give me the personality test", "do the
 proper version". **Never start it unasked and never fold it into a normal run** — it's longer than

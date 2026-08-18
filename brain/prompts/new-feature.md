@@ -158,19 +158,22 @@ goes wrong. If the new command takes territory from a neighbour, edit that neigh
 too.
 
 **4. The thin `.claude/commands/<name>.md` wrapper**, copied from an existing one and changed in
-exactly two places:
+exactly two places — the description, and the path. **The path is `brain/prompts/<name>.md` for a
+skill and `brain/tools/<name>.md` for a tool**; copy a wrapper of the same kind and you get the
+right one for free. `brain/bin/doctor` resolves that path, so a tool wrapper left pointing at
+`brain/prompts/` is a command with nothing behind it and gets flagged the next time anyone runs it.
 
 ```markdown
 ---
 description: <the same one-line description as the AGENTS.md row>
 ---
 
-Read `brain/prompts/<name>.md` and follow it exactly.
+Read `brain/<prompts-or-tools>/<name>.md` and follow it exactly.
 
 The human's input, if any: $ARGUMENTS
 
-<!-- Thin adapter. The real prompt is in brain/prompts/ so every agent shares it.
-     Don't add instructions here — edit brain/prompts/<name>.md instead. -->
+<!-- Thin adapter. The real prompt lives under brain/ so every agent shares it.
+     Don't add instructions here — edit that file instead. -->
 ```
 
 **Never put an instruction in the wrapper.** It exists only so Claude Code gets a slash command;
@@ -179,6 +182,17 @@ and the vault silently stops behaving the same everywhere.
 
 If the new capability needs configuration that `brain/bin/doctor` doesn't check for, tell the human
 that. Don't grow the script unless they ask for it.
+
+**Then the correction footer**, per `AGENTS.md`. This phase wrote four files across the harness and
+none of them is visible from the conversation:
+
+```
+Added `weather`: brain/tools/weather.md, its AGENTS.md and routing rows, .claude/commands/weather.md
+(say "drop it" and I'll take all four back out)
+```
+
+One line, at the end, naming the files you actually wrote. A run that stopped in Discuss built
+nothing and gets no footer.
 
 ## Phase 6 — Test — the human runs it, not you
 
