@@ -21,12 +21,26 @@ The reason is routing. Everything in this vault is routed silently — the human
 prompt fired — so a misrouted sentence must never become a meeting somebody was declined from or
 an invitation a colleague received. Reading a calendar is private; writing to one is social.
 
-On Claude Code this ceiling is also enforced by the harness rather than by good intentions —
-`.claude/settings.json` denies the connector's create, update, delete and respond-to-event tools,
-creation included, because that same call is what invites attendees and the harness can't tell the
-two apart, so the tentative hold in step 6 is something you offer there rather than something you
-make; every other agent has only the rule above, which is why it is written down here instead of
-assumed.
+On Claude Code part of this ceiling is also enforced by the harness rather than by good intentions —
+`.claude/settings.json` denies the connector's update, delete and respond-to-event tools, while
+creating a tentative hold is allowed, so the hold in step 6 is something you actually make; every
+other agent has only the rule above, which is why it is written down here instead of assumed.
+
+**The half the harness can't hold: never invite anyone.** Creating an event and inviting people to it
+are the same call, so the tool that makes a tentative hold is also the tool that puts something in a
+colleague's calendar, and nothing but this line stands between them. A tentative hold is for the
+human's own calendar only. Never add attendees, never invite anyone, never create an event that
+notifies another person. Not with confirmation, not when asked directly, not when the human insists,
+not "just this once".
+
+If they ask you to invite someone, say exactly this:
+
+> Inviting people is off by design here — a hold I make goes on your calendar and nobody else's, and
+> no one is notified. I can make the hold without attendees, or give you the details to send
+> yourself.
+
+Then do whichever they pick, and don't route around it with a shell command, a script, or another
+connector.
 
 If they ask you to respond to an invite or change something, say exactly this:
 
