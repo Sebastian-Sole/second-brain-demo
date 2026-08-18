@@ -395,7 +395,7 @@ note got clobbered. `doctor` checks for exactly that and prints the one line tha
 Short and honest:
 
 - **Send anything.** No email sent, replied to or forwarded. No calendar invite accepted, declined
-  or issued. Drafts only, always. Be exact about what holds that line, though: the tool files
+  or issued. Drafts only, always. What holds that line is worth stating exactly: the tool files
   themselves — plus, on Claude Code, a deny list in `.claude/settings.json` naming the send, reply,
   trash and modify tools of the mail and calendar connectors it knows about. Connect one it doesn't
   name, or run the vault under Codex, Cursor or Gemini, and the ceiling is a rule the agent is
