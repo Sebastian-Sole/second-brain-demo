@@ -90,11 +90,61 @@ turn, and fluency is only needed by the command that's teaching them something. 
 a level-adaptive tutorial can't pitch itself without it, and adding the question later means
 re-interviewing everyone who has already set up.
 
-Then wait. Do not fill anything in before they answer, and do not ask follow-ups one at a time
-like an interrogation — if an answer is thin, that's fine, write what you got.
+Then wait. Do not fill anything in before they answer.
+
+**On a quick run, take what you get.** No follow-ups, no drawing them out — if an answer is thin,
+that's fine, write what you got. Quick promised two minutes and an interrogation isn't two minutes.
+
+**On a deep run, the six are the floor, not the script.** This is where depth has to start being
+felt. If the first ten minutes of "in depth" are word-for-word identical to quick, then the label
+was a lie regardless of what happens later — the deep parts are three steps away, and by the time
+they arrive the human has already decided nothing was different. Depth is not a section at the end.
+It's whether you actually listened to the answers.
+
+So **follow up on any answer thin enough to be useless.** One question, in their words, at most one
+per question, and only where the answer changes what the vault does:
+
+- **Question 5 answered with one thing, or with something that plainly isn't all of it.** This is
+  the bullet that decides where every future capture lands, so a half-answer here mis-files
+  everything for months. "Building closets in my bedroom", from someone who has just said they
+  manage projects for a living, is a true answer to *what's on my mind* and a useless `Current
+  focus`. Ask what's on at work as well — **and don't imply the closets don't count**, because they
+  do and they're probably the more interesting note.
+- **Question 3 vague.** That one has its own rule, below. It's the most important answer in the six.
+- **Question 4 contradicted by how they're actually writing to you.** Someone typing in fragments
+  who asks for "fuller and more explanatory" is worth one clarifying question.
+
+**Not worth following up:** anything they'd have to stop and think hard about, anything you'd ask
+only to seem perceptive, and anything they've signalled they'd rather leave. **Cap it at three
+follow-ups across all six**, ask one at a time, and stop the moment the answers start getting
+shorter. Depth is a service, not a quota.
 
 **If they'd rather not answer**, say so is fine and offer to come back to it: write what little
 you have, and tell them `setup` can be run again any time.
+
+### "I don't know what I can do with it" is not an answer to question 3
+
+It's the reason they're here, and it is the highest-signal sentence anyone says during setup. Some
+form of *not sure*, *no idea yet*, *you tell me* means the tool has failed to explain itself, and
+they have just said so out loud. **Writing it into the profile as a resigned bullet and carrying on
+is the worst available outcome** — it records the failure as a preference and moves past it.
+
+Answer it. Offer `guide` **there and then**, in one line, and be ready to actually run it:
+
+> Fair — almost nobody does at this point. Want me to show you rather than tell you? `guide` is
+> four short chapters and each one ends with something actually happening. I can run it now and
+> we'll finish this after, or carry on and say `guide` whenever you like.
+
+Three rules on it:
+
+- **Offer once.** If they'd rather push on, push on, and don't raise it again until step 6.
+- **Don't answer the question yourself with a list of features.** A paragraph about everything the
+  vault can do is exactly the brochure `guide` exists to replace, and you'd be handing it to the
+  person least equipped to parse it. Show, or say nothing.
+- **Write the honest bullet either way.** "Not sure yet — working that out" is true and useful: it
+  tells every later session not to assume a purpose, and `guide expand` reads it as an opening
+  rather than a gap. Never invent a purpose to fill the line. What isn't acceptable is leaving that
+  bullet there having offered nothing.
 
 ## Step 3 — Write it
 
@@ -139,7 +189,16 @@ Rules:
 - This note is exempt from the "every note links to another" rule on day one — there's nothing to
   link to yet. `maintain` will wire it up as the vault fills.
 
-Then show them the file you wrote and ask if it's right. Fix whatever they correct.
+**Their answer to question 4 takes effect in your very next message.** Not from tomorrow, not once
+the profile is loaded in some future session — now. If they said "short and blunt" and the message
+where you hand back their profile also explains why `[[How I learn]]` is a separate file, and that
+the hub is capped at 40 lines, and that it's paid for on every turn, then you have shown them in
+real time that their answer went into a file rather than into your behaviour. That is a worse first
+impression than not having asked.
+
+Show the file. Ask if it's right, and fix whatever they correct. Then stop. If a second note was
+written, name it in a clause — *"and `How I learn`, holding your answer to the last one"* — and
+leave the architecture in `GUIDE.md`, where anyone who cares can find it.
 
 ## Step 4 — Their first capture
 
