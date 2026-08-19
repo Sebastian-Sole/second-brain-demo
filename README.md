@@ -78,9 +78,18 @@ ignores the settings that ship with this repo and will pester you for permission
 
 **4. Say `setup`.**
 
-It asks you six questions about who you are and what you're working on, writes the answers into a
-note called `About me`, and walks you through your first capture. **Don't skip this** — it's two
-minutes and it's the difference between notes about you and notes about a generic person.
+It asks how deep you want to go — **quick** is six questions and about two minutes, **in depth**
+takes fifteen to twenty and gets a much sharper profile. Either way it writes the answers into a
+note called `About me` and walks you through your first capture. **Don't skip this** — it's the
+difference between notes about you and notes about a generic person, and you can deepen it later.
+
+**5. If you're not sure what you've just installed, say `guide`.**
+
+It explains what this actually is — the agent, the harness around it, and the vault — pitched at
+wherever you are, from never-having-used-AI upward. Four short chapters, each ending with something
+real happening rather than a summary. And `guide expand` is the half that shows you how far this
+goes: routines, connectors, dictation, using it from your phone. Optional, but it's the difference
+between a folder of markdown and something you actually use in six weeks.
 
 That's it. From here you just talk to it.
 
@@ -107,6 +116,7 @@ connecting first:
 | **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
 | **Making it yours** | `setup` · `interview` · `new-feature` |
+| **Working out what to do with it** | `guide` for what this is · `guide expand` for what to build next |
 | **Your history** | `ingest-sessions` |
 
 `digest` surprises people: it names themes across unrelated notes that you never wrote down,

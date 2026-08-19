@@ -26,6 +26,18 @@ muted.
 Read `cortex/index.md`, `cortex/03_Resources/About me.md`, the last ~10 daily notes, active `cortex/01_Projects/`, and
 `cortex/03_Resources/Assumptions.md` if it exists.
 
+**Never source a question from a note that shipped with the vault.** The examples in
+`cortex/03_Resources/` carry `example` in their `tags:` and exist to show the shape of a note —
+they are not the human's material, and nothing in them is evidence about the human. Skip them when
+building the queue, exactly as you'd skip a file in `brain/`.
+
+This is the single most likely way this command embarrasses itself, because it fails precisely when
+someone is least able to shrug it off. On a fresh vault the shipped notes are most of what there is
+to read, so the queue fills with them and the first question a new user ever gets is about a
+template — "you seem interested in note atomicity" — when they have not written a word. It reads as
+a brain that has confused its own packaging for knowing them, and it is worse than silence by a
+wide margin. **Silence is the correct output there. See section 4.**
+
 Read the spoke `cortex/03_Resources/What I'm into.md` too, **where it would sharpen a question** —
 `AGENTS.md` names this command as one of its readers. It's what turns "anything on the reading
 pile?" into a question about the thing they actually care about, and it's often what breaks a tie
@@ -88,9 +100,24 @@ End with **no message and no writes** unless at least one question clears the ba
 obliges you to speak. A run with nothing behind it trains someone to ignore the next one, and then
 the good questions never land either.
 
-On a nearly empty vault, that's most runs: there's no history to notice anything in. Say "nothing
-worth asking yet" in one line, or stay quiet, and don't manufacture an icebreaker. `setup` is where
-a new vault learns who someone is — not here.
+On a nearly empty vault, that's most runs: there's no history to notice anything in.
+
+**Check for that before building a queue at all.** If, after dropping the shipped examples above,
+the vault holds **fewer than about ten notes the human actually made** — or `[[About me]]` is
+missing or blank — then this command has nothing to work with and should say so in one line rather
+than scraping the bottom of the barrel:
+
+> Nothing worth asking yet — I need a bit of your material first. `setup` writes the profile, and
+> `guide` is worth ten minutes if you want to see what this is actually for.
+
+That's the whole output. **Don't manufacture an icebreaker, and don't fall back on the profile
+questions** — `setup` owns those, and asking them here produces an interview that duplicates the
+first-run one while pretending to be sourced. A gap this command genuinely cannot fill is a gap it
+should name and route away from, not paper over.
+
+`guide` earns its place in that line because the young-vault problem is almost never that the human
+won't answer questions. It's that nobody has shown them what the thing is for, so there is nothing
+in it to ask about — and answering that is exactly what `guide` does.
 
 ## 5. Ask like an assistant, not a form
 
@@ -140,9 +167,15 @@ Don't commit — whatever invoked you handles that.
 ## Topic path — the profile instrument
 
 `AGENTS.md` says that when the profile gets built by interviewing them, **the human picks the
-instrument**: the ordinary preferences interview, or a Big Five inventory. This is where that choice
-lives — `setup` mentions it in one line on its way out and deliberately runs neither, because a
-first run has to stay short.
+instrument**: the ordinary preferences interview, or a Big Five inventory. **This section is the
+single specification of that inventory**, and two callers read it:
+
+- **`interview big-five`** — this command, when they ask for it directly.
+- **`setup deep`** — part 3 of its in-depth path calls straight into this section rather than
+  restating it. `setup quick` runs no instrument at all and mentions the option once on its way out.
+
+Keep it that way. If the inventory ever needs changing, it should need changing here and nowhere
+else.
 
 Run this path when they ask for it: `interview big-five`, "give me the personality test", "do the
 proper version". **Never start it unasked and never fold it into a normal run** — it's longer than

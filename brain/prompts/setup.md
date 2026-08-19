@@ -26,7 +26,29 @@ If it only reports warnings, mention the ones that matter (no backup configured,
 being deleted after 30 days) but **don't stop for them** — they can be fixed later and the
 interview is more valuable now.
 
-## Step 2 — Ask
+## Step 2 — Ask which depth, then ask
+
+**Offer two depths, in one short message, before any question.** Both are real options and neither
+is the "proper" one — say that plainly, because a fork where one branch is obviously the good one
+isn't a choice, it's a nudge:
+
+> Two ways to do this. **Quick** is six questions, about two minutes, and gets you a working vault —
+> most people start here. **In depth** takes fifteen to twenty and gets a much sharper profile: the
+> same six, then how you like things written, what you're into, and a short research-backed
+> personality inventory if you want one. You can start quick and deepen it any time — nothing is
+> locked in either way.
+
+Then take the answer at face value. **Don't sell the deep one and don't apologise for it**, and if
+they don't pick, run quick — the reversible option is the right default, and it's reversible in one
+sentence (`setup deep`, or `interview`, whenever they like).
+
+An explicit argument skips the question entirely: `setup quick` and `setup deep` mean what they say.
+
+**Both paths run the six questions below.** Deep is a superset, not a different interview — it
+continues at *The in-depth path* near the end of this file, after they've seen the vault do
+something real.
+
+### The six
 
 Ask all of it in **one short message**, as a numbered list. Six questions, plain wording, and say
 up front that one-line answers are fine and they can skip any of them.
@@ -157,20 +179,29 @@ Not a tour. Three lines, then stop:
   history they already have into notes they can search. Mention it only if `brain/bin/doctor`
   found Claude Code or Codex on the machine.
 
+**Then one more line, and it matters most for the people least likely to ask for it:**
+
+> If you want to know what this actually is — what the thing in your terminal is, what it can be
+> wired into, what people build on top of it — say `guide`. It's pitched wherever you are, from
+> never-used-AI upward, and `guide expand` is the part with the ideas in it.
+
+Say it once. Someone who has just watched their first note get filed is at the exact moment where
+"what else can this do" is a live question, and `guide` is the answer to it — but a first run that
+turns into a tour is a first run nobody finishes, so **offer it and stop.** Don't run it here.
+
 Finally, mention the example notes in `cortex/03_Resources/` are there to show the shape of things and
 they can delete them whenever they like. Offer to do it now.
 
-**One closing offer, one line, genuinely optional.** Five answers is a thin profile, and per
-`AGENTS.md` the human — not this command — picks how a fuller one gets built. Say it once and don't
-sell it:
+**On a quick run, one closing offer, one line, genuinely optional.** Five answers is a thin
+profile, and per `AGENTS.md` the human — not this command — picks how a fuller one gets built. They
+already declined once in step 2, so this is a reminder that the door is open, not a second pitch.
+Say it once and drop it:
 
-> If you ever want a fuller profile than that, `interview` can build one — either by asking how you
-> like to work, or with a short Big Five inventory if you'd rather answer statements. Entirely
-> optional, and nothing here needs it.
+> That's a thin profile on purpose. `setup deep` picks up where this left off whenever you want it —
+> or `interview` will fill it in a few questions at a time as you go. Nothing here needs either.
 
-**Don't run an inventory now.** Twenty statements in the first ten minutes is a personality test
-before they've seen the tool do anything, and it's the opposite of the "canvas, not a finished
-system" rule below. The offer is the whole of it — if they say yes, hand off to `interview`.
+**On a deep run, skip this entirely** — they're doing it now, and offering someone the thing they
+are currently in the middle of reads as a system that isn't paying attention.
 
 ## Step 7 — The correction footer
 
@@ -183,7 +214,101 @@ Set up: [[About me]], [[How I learn]] and [[Your first note]], all listed in cor
 ```
 
 Name the files you actually wrote — drop `[[How I learn]]` if they skipped question 6, add
-`[[My news sources]]` if they gave you feeds. One line, at the end, no ceremony.
+`[[My news sources]]` if they gave you feeds, add `[[How I talk]]`, `[[What I'm into]]` and
+`[[Big Five profile]]` on a deep run. One line, at the end, no ceremony.
+
+---
+
+## The in-depth path — a fuller profile in one sitting
+
+Run this when they chose **in depth** in step 2, said `setup deep`, or came back for it later.
+
+**It slots in after step 4, not before it.** The ordering is the load-bearing part: by then they
+have watched a real note get filed, so they're answering questions about a tool they've seen work
+rather than about a folder they were promised. Twenty minutes of profiling before anything has
+happened is a personality test administered by a stranger, and it's the surest way to lose someone
+in the first ten minutes.
+
+**If they came back later and `[[About me]]` already exists**, don't re-run steps 1–4. Read the
+hub, check in one line that it's still true, and start here.
+
+**Three parts, each writing one spoke, each independently skippable.** Say up front that there are
+three and they can stop after any one of them — and then make that true by **writing each spoke as
+you finish that part**, never batching them to the end. A deep run abandoned halfway has to leave a
+better vault than no deep run at all, and it only does if the first spoke is already on disk.
+
+Why spokes and not a longer `[[About me]]`: the hub is capped at 40 lines and paid for on every
+single turn, including the turn where someone asked what the weather is. Detail belongs in files
+that are read only by the command that needs them — see *A hub, capped at 40 lines* in `AGENTS.md`.
+
+### Part 1 — How they want things written → `[[How I talk]]`
+
+Question 4 in step 2 got one line about this. This gets the detail that actually changes output.
+Four questions, one message:
+
+1. **Answer first, or reasoning first?**
+2. **Bullets, or prose?**
+3. **When I write something in your voice, what should it never sound like?** — the best question
+   here by some distance. People struggle to describe how they write and find it very easy to name
+   what makes them wince.
+4. **How long is too long before you'd rather I just asked you?**
+
+Write **behaviour lines, not adjectives.** "Answer in the first sentence, reasoning underneath"
+changes the next turn. "Prefers concise communication" changes nothing — it's a description of a
+person rather than an instruction to an agent, and it's the same inert-in-a-prompt failure that
+`AGENTS.md` bans percentile scores for.
+
+### Part 2 — What they're into → `[[What I'm into]]`
+
+Read by `digest` and `interview`. This is **taste, not credentials** — not what they're expert in,
+what they'd cheerfully lose an evening to.
+
+- What do you actually read, watch or follow?
+- What would you happily be interrupted about?
+- What do you emphatically not want to hear about?
+
+This overlaps step 5's news sources and the overlap is fine as long as you don't ask twice: **this
+spoke is the taste, `[[My news sources]]` is the URLs.** If they name a publication here, carry it
+into step 5 and confirm rather than re-asking.
+
+### Part 3 — The inventory → `[[Big Five profile]]`
+
+**Don't restate the instrument here.** It is specified once, in `brain/prompts/interview.md` under
+*Topic path — the profile instrument*: the public-domain 20-item Mini-IPIP, five-point scale, half
+the items reverse-keyed, scored privately, written as behaviour lines and never as numbers. Read
+that file and follow it. Two copies of an inventory spec is two things to keep in sync, and the
+second one is always the one that rots.
+
+What this step owns is the offer and the honesty around it:
+
+- **Say what it is, because "personality test" earns scepticism.** Big Five is the model with the
+  research actually behind it — decades of it, replicated cross-culturally, the standard instrument
+  in the field. People are right to distrust the quizzes they've met before; the fix is naming the
+  difference in a sentence, not asserting that this one is serious.
+- **Never substitute a pop instrument.** Not MBTI, not the enneagram, not DISC, not love languages.
+  They're better known and more fun and they don't replicate — and a profile is *permanent context*
+  here, so putting one in means every future session reasons from something that isn't true. If
+  they ask for MBTI by name, say what you know in one line, offer the Mini-IPIP instead, and drop
+  it if they'd rather not. Don't refuse, and don't lecture them about psychometrics.
+- **Say what comes out before they start.** Six or so behaviour lines they can read and argue with.
+  Not a score, not a four-letter type, not a label. And say where it's used: `infer` reads it when
+  a claim about their character is at stake, and nothing else touches it.
+- **Stoppable at any point.** A half-finished inventory still yields usable lines for the factors
+  they got through, and this is the part most likely to be declined by someone who wanted the other
+  two. Declining it is a normal outcome, not a gap to fill later.
+
+### Rules for the whole path
+
+- **Everything they say here is a fact they stated, not an assumption.** Plain prose in the spokes,
+  nothing in the register, no callouts. The one-way rule in `AGENTS.md` still holds without
+  exception: you may propose, only they may accept.
+- **Show them each spoke as you write it** and fix whatever they correct. This path writes four
+  times what quick does, and a profile they never read is one they can't disagree with — which is
+  the entire point of keeping it in files they can open.
+- **Link every spoke from `[[About me]]` and list it in `cortex/index.md`.** Hub and spokes, per
+  `AGENTS.md`. The hub gains a link per spoke and nothing else; it stays under 40 lines.
+- **Three parts, then step 5.** Don't let deep grow a fourth part because the conversation was
+  going well. If more comes out, that's what `interview` is for, later, in threes.
 
 ---
 

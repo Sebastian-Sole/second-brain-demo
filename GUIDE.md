@@ -192,7 +192,28 @@ flags, or asks.
 
 ### Making it yours
 
+**`guide`** — the one to run if any of this still feels like homework. It explains what you're
+actually holding — the agent, the harness around it, and this vault — pitched at wherever you are,
+whether you've never used AI or you already run your own setup. It's four short chapters and each
+one ends by *doing* something rather than describing it, so you finish with real notes rather than
+a summary. Stop after any chapter; it remembers where you got to.
+
+**`guide expand`** is the other half, and it's the one worth coming back to every few weeks: what
+people build on top of this once it's theirs. A morning brief you trigger with one word. Your mail,
+calendar or anything else with an MCP server wired in. Dictation, so capturing is talking rather
+than typing — which matters more than it sounds, because the way a second brain dies is that
+nothing goes into it. A private GitHub remote so it's on every machine you use. It picks three
+ideas out of *your* notes rather than reciting a list, offers to build one there and then, and
+writes down what you said yes to so it doesn't pitch you the same thing twice.
+
 **`setup`** — you've already run this. Run it again any time; it's how you correct your profile.
+
+It opens by asking how deep you want to go. **Quick** is six questions and about two minutes.
+**In depth** is fifteen to twenty and fills in the detail: how you want things written, what you're
+into, and — if you want it — a short Big Five inventory, which is the personality model with actual
+research behind it rather than the ones you've met in magazines. You get behaviour lines you can
+read and delete, never a score or a four-letter type, and only `infer` ever reads them. Start quick
+and say `setup deep` later if you'd rather; nothing is locked in.
 
 **`interview`** — the only command that talks to you first. It works out what the vault is missing
 and asks: how did the thing on Tuesday go, is this project dead or just quiet, this assumption —

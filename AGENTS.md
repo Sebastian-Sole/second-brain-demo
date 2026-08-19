@@ -26,11 +26,13 @@ brain is for**, **How I like to work**, and **Current focus**.
 
 > **← Start here. This is the single highest-leverage change available.** Everything else in this
 > file is a sensible default; that note is what makes the brain *yours*. Say `setup` and your agent
-> will ask six questions and write it.
+> will ask you for it — six questions if you want it quick, rather more if you pick the in-depth
+> path.
 >
 > **If you are an agent and `[[About me]]` is missing or its bullets are blank, say so** — offer
 > `setup` before doing anything substantial. Working without it means writing notes about a
-> stranger.
+> stranger. **If they also seem unsure what this whole thing is**, offer `guide` alongside it —
+> a profile written by someone who doesn't yet know what it's for is a thin profile.
 
 **Why it isn't in this file.** `AGENTS.md` is harness: it ships with the vault and gets replaced
 wholesale when someone pulls in an improved version. Who the human is belongs to *them*, and a
@@ -51,11 +53,12 @@ otherwise.
 
 | Spoke | Read by |
 | --- | --- |
-| `[[How I learn]]` | `explain` |
+| `[[How I learn]]` | `explain`, `guide` — it's how both work out what level to pitch at |
 | `[[How I talk]]` | anything writing a note in their voice |
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
 | `[[What I'm into]]` | `digest`, `interview` |
+| `[[What I want this brain to do]]` | `guide expand` — what they've said they want built, and what's already done |
 
 None of these ship. Each appears when there's something real to put in it — an empty spoke is the
 same organisational debt as an empty MOC.
@@ -70,6 +73,14 @@ under PARA, and two notes sharing a name make `[[Money]]` ambiguous.
 When the profile gets built by interviewing them, **the human picks the instrument**: a
 purpose-built preferences interview, or a Big Five inventory. Either is fine. Writing the results
 as scores is not.
+
+**They are offered that choice in exactly two places, and never anywhere else.** `setup` opens by
+asking whether they want the quick profile or the in-depth one, and only the in-depth path runs an
+instrument; `interview big-five` runs one on request. The inventory itself is specified once, in
+`brain/prompts/interview.md` — `setup` calls into that section rather than restating it. Nothing
+here ever administers a personality test someone didn't ask for, and **no pop instrument is
+substituted for the researched one** — MBTI, the enneagram and their relatives are better known and
+don't replicate, and a profile is permanent context that every later session reasons from.
 
 **Big Five results are written as behaviour lines, never as numbers.** "Lead with the unusual
 option — they'll take it" changes what you do on the next turn. "Openness: 78th percentile" changes
@@ -110,10 +121,11 @@ assumption — and it must never be written into the profile or a spoke as thoug
 `brain/bin/check` fails on exactly that.
 
 `setup` writes the hub. Nothing else edits the hub or a spoke without being asked — including
-`maintain`, which may fix links and frontmatter but never content. Two commands are asked by
-construction, and only in that moment: `interview`, when the human runs an inventory, and
-`review-assumptions`, when a `y` verdict promotes a claim into its spoke and links that spoke from
-the hub.
+`maintain`, which may fix links and frontmatter but never content. Four commands are asked by
+construction, and only in that moment: `setup deep`, whose in-depth path is the human choosing to
+have the spokes filled; `interview`, when the human runs an inventory; `review-assumptions`, when a
+`y` verdict promotes a claim into its spoke and links that spoke from the hub; and `guide expand`,
+which writes `[[What I want this brain to do]]` and only ever records what they said yes to.
 
 ---
 
@@ -739,7 +751,8 @@ nothing else, which is the ordinary case and needs no exception.
 
 | Command | Prompt file | What it does |
 | --- | --- | --- |
-| `setup` | `brain/prompts/setup.md` | First run: check the install, learn who the human is, write `[[About me]]` |
+| `setup` | `brain/prompts/setup.md` | First run: check the install, learn who the human is, write `[[About me]]`. Offers a quick profile or an in-depth one |
+| `guide` | `brain/prompts/guide.md` | Teach them what this *is* — the agent, the harness, this vault — pitched at their level. `guide expand` proposes what to build next |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `explain` | `brain/prompts/explain.md` | Teach a concept the way this human learns it — reads `[[How I learn]]` |
@@ -881,8 +894,9 @@ X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
-| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar" | Building a capability no tool covers yet — `new-feature`. Something broken — `doctor`. |
-| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across six sources, three questions at most, one per source | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the six sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. |
+| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar" | Building a capability no tool covers yet — `new-feature`. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `guide`. |
+| `guide` | "what is this", "what can it do", "I don't get what this is for", "what should I do with it", "how do I make more of this" — and any first session where they seem lost rather than merely unconfigured. `guide expand` for "what else could I build" | Writing the profile — `setup`, which this hands off to. Teaching a concept that isn't this vault — `explain`. Actually building a new capability — `new-feature`, which `guide expand` proposes and never performs. |
+| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across six sources, three questions at most, one per source | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the six sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `guide`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `explain`. Activity across many notes — `digest`. |
 | `explain` | "explain X", "I don't get Y", "walk me through Z" — they want to *understand*, not to retrieve | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`. |

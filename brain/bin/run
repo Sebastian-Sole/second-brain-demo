@@ -83,12 +83,14 @@ if [ -z "$prompt_file" ]; then
   exit 66
 fi
 
-# setup is an interview. Run non-interactively it asks its six questions into
-# a void that closes before anyone can answer, and the vault learns nothing.
-if [ "$name" = setup ]; then
-  echo "run: setup is an interview — it has to be able to ask you questions." >&2
-  echo "     Start your agent in this folder and say:  setup" >&2
-  echo "     (Claude Code: /setup)" >&2
+# Two commands are conversations rather than jobs. Run non-interactively they ask
+# their questions into a void that closes before anyone can answer, and the vault
+# learns nothing. setup is an interview; guide is a tour that stops after every
+# chapter to check whether the human wants the next one.
+if [ "$name" = setup ] || [ "$name" = guide ]; then
+  echo "run: $name has to be able to ask you questions — it's a conversation, not a job." >&2
+  echo "     Start your agent in this folder and say:  $name" >&2
+  echo "     (Claude Code: /$name)" >&2
   exit 64
 fi
 
