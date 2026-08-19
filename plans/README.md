@@ -15,8 +15,8 @@ pass at `bec2c00`.
 
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
-| 001 | Anchor all four scripts to the vault they ship in, and refuse to stage transcripts git would commit | P1 | M | — | DONE (approved 2026-08-18, **not merged** — branch `advisor/001-anchor-scripts-to-vault-root`, commits `fbe91fc` and `2ade4d3`) |
-| 002 | Correct five places that still promise mail and calendar never write | P1 | S | — | DONE (approved 2026-08-18, **not merged** — branch `advisor/002-correct-stale-mail-and-calendar-promises`, commit `87b4623`) |
+| 001 | Anchor all four scripts to the vault they ship in, and refuse to stage transcripts git would commit | P1 | M | — | **MERGED** 2026-08-19 in `375d855`, pushed. Approved 2026-08-18 from `advisor/001-anchor-scripts-to-vault-root` (`fbe91fc`, `2ade4d3`) |
+| 002 | Correct five places that still promise mail and calendar never write | P1 | S | — | **MERGED** 2026-08-19 in `b32f959`, pushed. Approved 2026-08-18 from `advisor/002-correct-stale-mail-and-calendar-promises` (`87b4623`) |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale).
@@ -34,7 +34,7 @@ unchanged.
 
 ## Execution log
 
-**001 — APPROVED 2026-08-18, not merged.** Executor: one `general-purpose`
+**001 — APPROVED 2026-08-18. MERGED 2026-08-19 (`375d855`) and pushed.** Executor: one `general-purpose`
 subagent on Sonnet, isolated worktree, branch
 `advisor/001-anchor-scripts-to-vault-root`, two commits — `fbe91fc` for the path
 fix, `2ade4d3` for the guard.
@@ -77,7 +77,7 @@ uses for in_vault" — is copied verbatim into all four scripts, including
 `doctor`, where it reads oddly from inside the file it names. Worth a word
 change if anyone touches these lines again.
 
-**002 — APPROVED 2026-08-18, not merged.** Executor: one `general-purpose`
+**002 — APPROVED 2026-08-18. MERGED 2026-08-19 (`b32f959`) and pushed.** Executor: one `general-purpose`
 subagent on Sonnet, isolated worktree, branch
 `advisor/002-correct-stale-mail-and-calendar-promises`, one commit `87b4623`.
 
@@ -139,6 +139,26 @@ repository's history. The operator intends to start running it.
 is **PRIVATE**. The transcripts and the client list are protected in both; the
 distilled notes are not. That gap is audit finding 4, and it is why finding 4
 was re-ranked below.
+
+## Post-merge verification (2026-08-19)
+
+Both branches merged with `--no-ff` onto `6ffb033`, no conflicts, and pushed.
+Local and `origin/main` both at `b32f959`. Re-verified in the real working tree,
+not a worktree:
+
+| Check | Result |
+|---|---|
+| `brain/bin/doctor --check` | exit 0, zero `[XX]` |
+| `[ok] this folder is trusted, so its settings actually apply` | **present** — the one criterion a worktree could not test. No regression from `pwd -P`. |
+| `[ok] all folders present` / `the scripts can run` / `all 18 command wrappers` | all present |
+| `brain/bin/check` | exit 0 |
+| `brain/bin/run` invoked from `/tmp` | 12 skills, 5 tools — was 0 and 0 before |
+| `brain/bin/sessions stage` in this vault | guard allows, reaches the pattern check |
+| `never, see the ceiling` in `AGENTS.md` | 0 |
+| `read-only by design` in `README.md` | 0 |
+
+The two executor worktrees under `.claude/worktrees/` are now redundant and can
+be removed. They are gitignored, so they cost nothing in the repository.
 
 ## Findings audited but not planned
 
