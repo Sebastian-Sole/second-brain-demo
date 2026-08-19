@@ -1,0 +1,13 @@
+# Thin adapter. The real prompt is brain/prompts/interview.md, shared by every agent — @{} inlines it here
+# rather than copying it, so there is still one manual. Gemini CLI and Claude Code can expand
+# a file and a command's output into the prompt before the agent sees it; Codex and Copilot
+# can do neither, and their wrappers still say "read the file", which costs them one round
+# trip and nothing else. Do not add instructions here — edit brain/prompts/interview.md instead.
+
+description = "The brain interviews you — perishable follow-ups, open assumptions, blank dimensions, stalled work. Sourced, capped at three, silent when it has nothing worth asking."
+
+prompt = """
+@{brain/prompts/interview.md}
+
+The human's input, if any: {{args}}
+"""

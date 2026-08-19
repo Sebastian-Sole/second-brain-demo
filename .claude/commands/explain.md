@@ -2,9 +2,12 @@
 description: Teach you something new, pitched at how you learn and what you already know.
 ---
 
-Read `brain/prompts/explain.md` and follow it exactly.
+@brain/prompts/explain.md
 
 The human's input, if any: $ARGUMENTS
 
-<!-- Thin adapter. The real prompt is in brain/prompts/ so every agent shares it.
-     Don't add instructions here — edit brain/prompts/explain.md instead. -->
+<!-- Thin adapter. The real prompt is brain/prompts/explain.md, shared by every agent — `@` inlines it
+     here rather than copying it, so there is still one manual. Claude Code and Gemini CLI can
+     expand a file and a command's output into the prompt before the agent sees it; Codex and
+     Copilot can do neither, and their wrappers still say "read the file", which costs them one
+     round trip and nothing else. Don't add instructions here — edit brain/prompts/explain.md instead. -->

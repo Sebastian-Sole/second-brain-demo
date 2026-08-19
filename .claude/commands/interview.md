@@ -2,9 +2,12 @@
 description: The brain interviews you — perishable follow-ups, open assumptions, blank dimensions, stalled work. Sourced, capped at three, silent when it has nothing worth asking.
 ---
 
-Read `brain/prompts/interview.md` and follow it exactly.
+@brain/prompts/interview.md
 
-A source to focus on (`followups`, `assumptions`, `gaps`, `stalled`), `dry-run`, or `big-five`, if given: $ARGUMENTS
+The human's input, if any: $ARGUMENTS
 
-<!-- Thin adapter. The real prompt is in brain/prompts/ so every agent shares it.
-     Don't add instructions here — edit brain/prompts/interview.md instead. -->
+<!-- Thin adapter. The real prompt is brain/prompts/interview.md, shared by every agent — `@` inlines it
+     here rather than copying it, so there is still one manual. Claude Code and Gemini CLI can
+     expand a file and a command's output into the prompt before the agent sees it; Codex and
+     Copilot can do neither, and their wrappers still say "read the file", which costs them one
+     round trip and nothing else. Don't add instructions here — edit brain/prompts/interview.md instead. -->

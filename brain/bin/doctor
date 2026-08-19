@@ -226,7 +226,7 @@ elif [ "$unfixed" -eq 0 ]; then
   ok "all folders present"
 fi
 
-for s in run sync sessions doctor check feeds; do
+for s in run sync sessions doctor check feeds weather recent; do
   [ -f "brain/bin/$s" ] || fail "brain/bin/$s is missing" \
                                 "Re-download the repo — part of the harness is gone"
 done
@@ -459,12 +459,16 @@ if [ -d .claude/commands ] || [ -d brain/tools ]; then
   # reads. Pointing at nothing is worse than not existing: the command still
   # shows up in the menu.
   nwrap=0
-  for w in .claude/commands/*.md; do
+  for w in .claude/commands/*.md .gemini/commands/*.toml; do
     [ -f "$w" ] || continue
     nwrap=$((nwrap + 1))
+    # The inlining marker first — `@file` on Claude Code, `@{file}` on Gemini —
+    # because a wrapper that injects a script also names brain/bin/<something>
+    # in its allowed-tools, and that would otherwise be read as the target.
     # A handful of commands are shell scripts rather than prompts, so their
     # wrapper points at brain/bin/<name> — no .md, and just as real a target.
-    target=$(grep -oE 'brain/(prompts|tools)/[A-Za-z0-9._-]+\.md|brain/bin/[A-Za-z0-9._-]+' "$w" 2>/dev/null | head -1)
+    target=$(grep -oE '@\{?brain/(prompts|tools)/[A-Za-z0-9._-]+\.md' "$w" 2>/dev/null | head -1 | sed 's/^@{\{0,1\}//')
+    [ -n "$target" ] || target=$(grep -oE 'brain/(prompts|tools)/[A-Za-z0-9._-]+\.md|brain/bin/[A-Za-z0-9._-]+' "$w" 2>/dev/null | head -1)
     if [ -z "$target" ]; then
       warn "$w names no brain/prompts/, brain/tools/ or brain/bin/ file — it's a command with nothing behind it" \
            "Point it at the shared prompt, e.g. a line reading:  Read \`brain/prompts/<name>.md\` and follow it exactly."
@@ -477,7 +481,7 @@ if [ -d .claude/commands ] || [ -d brain/tools ]; then
   done
 
   if [ "$cmd_problems" -eq 0 ] && [ "$((nwrap + ntools))" -gt 0 ]; then
-    summary="all $nwrap command wrappers point at prompts that exist"
+    summary="all $nwrap command wrappers (Claude and Gemini) point at prompts that exist"
     [ "$ntools" -gt 0 ] && summary="$summary, and all $ntools tools declare what they need"
     ok "$summary"
   fi

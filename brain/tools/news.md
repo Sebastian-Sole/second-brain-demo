@@ -43,6 +43,10 @@ around that: one call to fetch, one table to read, one answer to write. Resist t
    brain/bin/feeds --max-rows 300      more of the tail, when they ask for it
    ```
 
+   **If its output is already in front of you**, the command wrapper ran it before you were
+   asked — use that and don't run it again. If it isn't, run it now. Both are normal: some
+   agents can pre-run it, some can't.
+
    It reads the note, fetches every feed in parallel, parses RSS and Atom, and prints one
    tab-separated table — **source · lean · age · title · url** — newest first, capped per source so
    one wire service can't crowd out eleven others, and capped overall so the whole thing arrives in

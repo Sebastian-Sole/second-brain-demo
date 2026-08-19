@@ -2,9 +2,12 @@
 description: Answer something the vault has no facts for — reasoning from the facts it does have, with every assumption labelled, evidenced and falsifiable.
 ---
 
-Read `brain/prompts/infer.md` and follow it exactly.
+@brain/prompts/infer.md
 
-The question, if any: $ARGUMENTS
+The human's input, if any: $ARGUMENTS
 
-<!-- Thin adapter. The real prompt is in brain/prompts/ so every agent shares it.
-     Don't add instructions here — edit brain/prompts/infer.md instead. -->
+<!-- Thin adapter. The real prompt is brain/prompts/infer.md, shared by every agent — `@` inlines it
+     here rather than copying it, so there is still one manual. Claude Code and Gemini CLI can
+     expand a file and a command's output into the prompt before the agent sees it; Codex and
+     Copilot can do neither, and their wrappers still say "read the file", which costs them one
+     round trip and nothing else. Don't add instructions here — edit brain/prompts/infer.md instead. -->

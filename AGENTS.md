@@ -704,7 +704,7 @@ The split exists so that **"what can this thing reach" is a directory listing ra
 paragraph.** That's what a security review needs to start from, and it's what `doctor` needs in
 order to say which capabilities are actually connected.
 
-**Six things break that, and are named here rather than hidden.**
+**Seven things break that, and are named here rather than hidden.**
 
 - **`ingest-sessions`** (`brain/prompts/`) reads the transcripts under `~/.claude/projects` and
   `~/.codex/sessions`, and prefers `jq` — by its own description the highest-risk reader in this
@@ -721,13 +721,19 @@ order to say which capabilities are actually connected.
 - **`feeds`** (`brain/bin/`) fetches every URL in `[[My news sources]]` over the network. It is
   what `news` runs, and it reaches exactly what that note names and nothing else — the note is the
   allowlist, which is why the URLs live in the human's own file rather than in the script.
+- **`weather`** (`brain/bin/`) geolocates this machine by IP and fetches a forecast for the
+  result. Two keyless third-party services, two fixed endpoints, nothing configurable — it cannot
+  be pointed anywhere else. It reads `[[About me]]` for a units preference and nothing more.
 
 The first three aren't in `brain/tools/` because none of them needs a connector or any
 configuration of its own, and the tool contract exists for the things a human must set up and
-consent to — what `digest` reaches, it reaches through tools that carry one. `sync`, `run` and
-`feeds` aren't commands at all; they're plumbing that commands run on. **So the directory listing
-is not a complete answer to "what reaches outside": it's complete except for these six.** An
-exception you can see beats a rule that quietly isn't true.
+consent to — what `digest` reaches, it reaches through tools that carry one. `sync`, `run`,
+`feeds` and `weather` aren't commands at all; they're plumbing that commands run on. **So the
+directory listing is not a complete answer to "what reaches outside": it's complete except for
+these seven.** An exception you can see beats a rule that quietly isn't true.
+
+`brain/bin/recent` and `brain/bin/check` are not on this list on purpose: both read `cortex/` and
+nothing else, which is the ordinary case and needs no exception.
 
 ### Skills
 
@@ -995,3 +1001,29 @@ Nothing about this vault is tied to one agent or vendor. Keep it that way:
 When you add capability, add it to the portable layer first and write the adapter second. A tool
 that only works in one vendor's agent is a tool this vault can't rely on — declare the requirement
 in its frontmatter and give it a fallback that works everywhere else.
+
+### Speed is a portability decision too
+
+An answer that takes four minutes is a feature nobody uses, and almost none of that time is ever
+spent thinking. It goes on **round trips** — every step where the agent has to stop, run one
+thing, and wait to be handed the result before it can decide the next one. Five seconds each,
+serially, and the count is what you control.
+
+Two ways to bring it down, and they belong in different layers.
+
+- **Portable: put multi-step work in `brain/bin/`.** A script collapses forty fetches, a parser
+  and a filter into one result, for every agent equally, whichever one is running. This is the
+  half that matters. It is also the half that keeps the work honest — a script does the same thing
+  twice, where a prompt asking an agent to improvise a parser gets a different parser each morning
+  and debugs it in front of the human.
+- **Per-harness: inline the prompt and the data into the command itself.** Claude Code
+  (`@file`, `` !`cmd` ``) and Gemini CLI (`@{file}`, `!{cmd}`) both expand a file's contents and a
+  command's output into the prompt *before* the agent sees it — so the manual and the morning's
+  data arrive together and the first response can be the answer. Codex and Copilot have neither;
+  their wrappers say "read this file" and pay one round trip for it, which is what everyone paid
+  before. Nothing breaks, and nothing forks: `@` inlines `brain/tools/<name>.md` rather than
+  copying it, so there is still exactly one manual.
+
+The rule this leaves: **never write instructions into an adapter.** Inlining a shared file is not
+the same as owning a private copy of it, and the moment an adapter says something the portable
+prompt doesn't, the vault has two manuals and one of them is wrong.

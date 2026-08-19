@@ -68,21 +68,44 @@ inferred from what's in it, and the send ceiling above holds no matter how the r
 
    That's a sentence, not an error and not a silent no-op. Then answer whatever you can without it.
 
-2. **Default to what needs them, not what's unread.** Unread is a count; "needs you" is an answer.
+2. **Everything you need to run this is in this file.** Don't go and read `AGENTS.md`, don't open
+   `.claude/settings.json`, and don't fetch their profile before answering — the rules are here,
+   the permission layer enforces itself whether or not you have read it, and each of those is a
+   round trip taken while somebody waits to hear whether their inbox needs them. The one exception
+   is drafting in their voice at step 7, and even then only if a draft is actually being written.
+
+3. **One search, then answer.** Fetch the window once and reason over what comes back:
+
+   ```
+   in:inbox newer_than:14d
+   ```
+
+   Widen it only if that genuinely came back empty — not because the first pass looked thin. Three
+   exploratory searches to discover there were four real emails is most of a minute spent proving
+   a negative, and the second and third rarely change the answer.
+
+4. **Default to what needs them, not what's unread.** Unread is a count; "needs you" is an answer.
    Sort into things awaiting a reply or a decision from them, and things that merely arrived —
    newsletters, receipts, notifications, CI noise. Lead with the first list. Mention the second
    only as a count unless they asked.
 
-3. **Summarise threads, not messages.** One line per thread: who, what they want, whether the ball
+   **Open individual messages only when the thread summary genuinely won't do** — a decision you
+   have to state precisely, a question you would otherwise guess at. Each one is a round trip.
+   Two is usually plenty; if you find yourself opening a fifth, the answer you are writing is
+   longer than the answer they asked for.
+
+5. **Summarise threads, not messages.** One line per thread: who, what they want, whether the ball
    is with the human. Eight replies about one scheduling question is one item.
 
-4. **Answer at the size of the question.** "Anything urgent?" gets the two things that are urgent,
-   not an inventory of the inbox. If nothing needs them, say nothing needs them.
+6. **Answer at the size of the question.** "Anything urgent?" gets the two things that are urgent,
+   not an inventory of the inbox. If nothing needs them, say nothing needs them. **A morning check
+   is six or eight lines**, not two pages — this is a glance before coffee, and the length of the
+   answer is most of how long it takes to arrive.
 
-5. **Quote as little as the answer needs.** This is private correspondence, some of it about people
+7. **Quote as little as the answer needs.** This is private correspondence, some of it about people
    who never agreed to be in it. Paraphrase; quote a line only when the exact words matter.
 
-6. **Drafting.** Write it in their voice, at the length they'd actually write. Create it as a draft
+8. **Drafting.** Write it in their voice, at the length they'd actually write. Create it as a draft
    in their client, leave it unsent, and end with a one-line correction footer naming what you
    made:
 

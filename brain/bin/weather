@@ -1,0 +1,174 @@
+#!/usr/bin/env sh
+# Where the human is, and what the sky is doing there. One call, one answer.
+#
+#   brain/bin/weather                  here, right now
+#   brain/bin/weather Bergen           somewhere they named
+#   brain/bin/weather --days 3         a forecast instead of a snapshot
+#   brain/bin/weather --units imperial °F and mph
+#
+# This is the tool people reach for when they have thirty seconds, which is the
+# entire design constraint: if asking costs longer than looking out of the
+# window, nobody asks twice. Locating and forecasting used to be four separate
+# round trips -- read the location prompt, geolocate, read the weather prompt,
+# fetch -- for about two seconds of actual network. Now it is one.
+#
+# It also translates the WMO weather code here rather than making the agent
+# recall a table of thirty integers, because that is exactly the kind of lookup
+# a model will get subtly wrong at 3am and nobody will ever check.
+#
+# Portable on purpose: POSIX shell and curl. Both endpoints are keyless and
+# header-free, which is why they are these two and not better-known ones -- a
+# forecast nobody can fetch without registering first is not a forecast.
+#
+# Privacy: the geolocation lookup tells a third party this machine's IP, and the
+# forecast request tells Open-Meteo which coordinates were asked about. Nothing
+# else from the vault leaves. On a VPN the location is the exit node, not the
+# human, and the output says so rather than pretending to precision.
+
+set -u
+
+root=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd -P) || root=''
+if [ -z "$root" ] || [ ! -f "$root/AGENTS.md" ] || [ ! -d "$root/brain/bin" ]; then
+  echo "weather: ${root:-$0} is not a vault — AGENTS.md and brain/bin/ should both be there." >&2
+  exit 1
+fi
+cd "$root" || exit 1
+
+PROFILE='cortex/03_Resources/About me.md'
+DAYS=0
+UNITS='auto'
+PLACE=''
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    --days)  DAYS=${2:-3}; shift 2 ;;
+    --units) UNITS=${2:-auto}; shift 2 ;;
+    -h|--help) sed -n '2,8p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    --*) echo "weather: unknown option '$1'" >&2; exit 1 ;;
+    *) PLACE="$*"; break ;;
+  esac
+done
+
+case $DAYS in ''|*[!0-9]*) echo "weather: --days takes a whole number, not '$DAYS'" >&2; exit 1 ;; esac
+command -v curl >/dev/null 2>&1 || { echo "weather: curl is not installed." >&2; exit 1; }
+
+# The human's own units, from their own note, without a round trip to read it.
+# Only an explicit statement counts -- absence means metric, which is what
+# Open-Meteo returns anyway and what most of the world uses.
+if [ "$UNITS" = "auto" ]; then
+  UNITS=metric
+  if [ -f "$PROFILE" ] && grep -qiE 'fahrenheit|imperial|°F\b|\bmph\b|\bmiles\b' "$PROFILE" 2>/dev/null; then
+    UNITS=imperial
+  fi
+fi
+if [ "$UNITS" = "imperial" ]; then
+  unit_args='&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch'
+  t_u='°F'; w_u='mph'; p_u='in'
+else
+  unit_args=''
+  t_u='°C'; w_u='km/h'; p_u='mm'
+fi
+
+field() {  # pull "key":value out of a small flat JSON blob, string or number
+  sed -n 's/.*"'"$1"'"[[:space:]]*:[[:space:]]*"\{0,1\}\([^",}]*\).*/\1/p' | head -1
+}
+
+# ------------------------------------------------------------------- locating
+if [ -n "$PLACE" ]; then
+  # Named places go through Open-Meteo's own geocoder, so the coordinates and
+  # the forecast come from one vendor and cannot disagree about which Springfield.
+  q=$(printf '%s' "$PLACE" | sed 's/ /+/g')
+  geo=$(curl -s --max-time 15 "https://geocoding-api.open-meteo.com/v1/search?name=$q&count=1&language=en&format=json" 2>/dev/null)
+  lat=$(printf '%s' "$geo" | field latitude)
+  lon=$(printf '%s' "$geo" | field longitude)
+  city=$(printf '%s' "$geo" | field name)
+  country=$(printf '%s' "$geo" | field country)
+  origin="the place you named"
+  if [ -z "$lat" ] || [ -z "$lon" ]; then
+    echo "weather: could not find a place called \"$PLACE\". Ask which one they meant — do not guess."
+    exit 3
+  fi
+else
+  loc=$(curl -s --max-time 15 https://ipinfo.io/json 2>/dev/null)
+  city=$(printf '%s' "$loc" | field city)
+  country=$(printf '%s' "$loc" | field country)
+  latlon=$(printf '%s' "$loc" | field loc)
+  lat=${latlon%%,*}; lon=${latlon##*,}
+  origin="this machine's IP address — on a VPN that is the exit node, not the human"
+  if [ -z "$lat" ] || [ -z "$lon" ] || [ "$lat" = "$latlon" ]; then
+    loc=$(curl -s --max-time 15 'http://ip-api.com/json/?fields=status,country,city,lat,lon' 2>/dev/null)
+    if [ "$(printf '%s' "$loc" | field status)" = "success" ]; then
+      city=$(printf '%s' "$loc" | field city)
+      country=$(printf '%s' "$loc" | field country)
+      lat=$(printf '%s' "$loc" | field lat)
+      lon=$(printf '%s' "$loc" | field lon)
+    fi
+  fi
+  if [ -z "$lat" ] || [ -z "$lon" ]; then
+    echo "weather: could not work out where this machine is, so there is nowhere to forecast for. Say that, and ask where they are."
+    exit 3
+  fi
+fi
+
+# ----------------------------------------------------------------- forecasting
+url="https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation&timezone=auto$unit_args"
+[ "$DAYS" -gt 0 ] && url="$url&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&forecast_days=$DAYS"
+
+fc=$(curl -s --max-time 20 "$url" 2>/dev/null)
+if [ -z "$fc" ] || [ "${fc#*\"current\"}" = "$fc" ]; then
+  echo "weather: the forecast service is unreachable. Say that in one sentence — never estimate the weather from the season or the place."
+  exit 4
+fi
+
+describe() {
+  case $1 in
+    0) echo "clear sky" ;;            1) echo "mainly clear" ;;
+    2) echo "partly cloudy" ;;        3) echo "overcast" ;;
+    45) echo "fog" ;;                 48) echo "freezing fog" ;;
+    51) echo "light drizzle" ;;       53) echo "drizzle" ;;
+    55) echo "heavy drizzle" ;;       56) echo "light freezing drizzle" ;;
+    57) echo "freezing drizzle" ;;    61) echo "light rain" ;;
+    63) echo "rain" ;;                65) echo "heavy rain" ;;
+    66) echo "light freezing rain" ;; 67) echo "freezing rain" ;;
+    71) echo "light snow" ;;          73) echo "snow" ;;
+    75) echo "heavy snow" ;;          77) echo "snow grains" ;;
+    80) echo "light showers" ;;       81) echo "showers" ;;
+    82) echo "violent showers" ;;     85) echo "light snow showers" ;;
+    86) echo "snow showers" ;;        95) echo "thunderstorm" ;;
+    96) echo "thunderstorm with hail" ;; 99) echo "thunderstorm with heavy hail" ;;
+    *) echo "unknown conditions (WMO code $1)" ;;
+  esac
+}
+
+cur=${fc#*\"current\":\{}; cur=${cur%%\}*}
+temp=$(printf '%s' "$cur" | field temperature_2m)
+feels=$(printf '%s' "$cur" | field apparent_temperature)
+code=$(printf '%s' "$cur" | field weather_code)
+wind=$(printf '%s' "$cur" | field wind_speed_10m)
+prec=$(printf '%s' "$cur" | field precipitation)
+tz=$(printf '%s' "$fc" | field timezone)
+when=$(printf '%s' "$cur" | field time)
+
+printf 'place: %s%s (%s)\n' "${city:-unknown}" "${country:+, $country}" "$origin"
+printf 'local time: %s (%s)\n' "${when:-unknown}" "${tz:-unknown}"
+printf 'now: %s%s, feels like %s%s, %s\n' "$temp" "$t_u" "$feels" "$t_u" "$(describe "${code:-x}")"
+printf 'wind: %s %s · precipitation: %s %s\n' "$wind" "$w_u" "$prec" "$p_u"
+
+if [ "$DAYS" -gt 0 ] && [ "${fc#*\"daily\"}" != "$fc" ]; then
+  echo "forecast:"
+  daily=${fc#*\"daily\":\{}
+  list() { printf '%s' "$daily" | sed -n 's/.*"'"$1"'":\[\([^]]*\)\].*/\1/p' | tr -d '"' | tr ',' ' '; }
+  set -- $(list time);        i=0; for d in "$@"; do i=$((i+1)); eval "D$i=$d"; done; n=$i
+  set -- $(list temperature_2m_max); i=0; for v in "$@"; do i=$((i+1)); eval "H$i=$v"; done
+  set -- $(list temperature_2m_min); i=0; for v in "$@"; do i=$((i+1)); eval "L$i=$v"; done
+  set -- $(list precipitation_sum);  i=0; for v in "$@"; do i=$((i+1)); eval "P$i=$v"; done
+  set -- $(list weather_code);       i=0; for v in "$@"; do i=$((i+1)); eval "W$i=$v"; done
+  i=1
+  while [ "$i" -le "$n" ]; do
+    eval "d=\$D$i; h=\$H$i; l=\$L$i; p=\$P$i; w=\$W$i"
+    printf '  %s  %s–%s%s, %s, %s %s\n' "$d" "${l:-?}" "${h:-?}" "$t_u" "$(describe "${w:-x}")" "${p:-0}" "$p_u"
+    i=$((i+1))
+  done
+fi
+
+exit 0
