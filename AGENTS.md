@@ -704,7 +704,7 @@ The split exists so that **"what can this thing reach" is a directory listing ra
 paragraph.** That's what a security review needs to start from, and it's what `doctor` needs in
 order to say which capabilities are actually connected.
 
-**Five things break that, and are named here rather than hidden.**
+**Six things break that, and are named here rather than hidden.**
 
 - **`ingest-sessions`** (`brain/prompts/`) reads the transcripts under `~/.claude/projects` and
   `~/.codex/sessions`, and prefers `jq` — by its own description the highest-risk reader in this
@@ -718,12 +718,15 @@ order to say which capabilities are actually connected.
   unattended, after every turn on Claude Code's `Stop` hook.
 - **`run`** (`brain/bin/`) starts a fresh agent process with a command file's contents as its
   prompt.
+- **`feeds`** (`brain/bin/`) fetches every URL in `[[My news sources]]` over the network. It is
+  what `news` runs, and it reaches exactly what that note names and nothing else — the note is the
+  allowlist, which is why the URLs live in the human's own file rather than in the script.
 
 The first three aren't in `brain/tools/` because none of them needs a connector or any
 configuration of its own, and the tool contract exists for the things a human must set up and
-consent to — what `digest` reaches, it reaches through tools that carry one. `sync` and `run`
-aren't commands at all; they're the plumbing every command runs on. **So the directory listing is
-not a complete answer to "what reaches outside": it's complete except for these five.** An
+consent to — what `digest` reaches, it reaches through tools that carry one. `sync`, `run` and
+`feeds` aren't commands at all; they're plumbing that commands run on. **So the directory listing
+is not a complete answer to "what reaches outside": it's complete except for these six.** An
 exception you can see beats a rule that quietly isn't true.
 
 ### Skills
@@ -750,7 +753,7 @@ exception you can see beats a rule that quietly isn't true.
 | --- | --- | --- | --- |
 | `weather` | `brain/tools/weather.md` | A forecast service | Nothing |
 | `location` | `brain/tools/location.md` | The host's idea of where they are | Nothing |
-| `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]`, plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
+| `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]` — via `brain/bin/feeds` — plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
 | `email` | `brain/tools/email.md` | The connected mailbox — read, draft, and send when asked | Drafts always; sends and mailbox changes only on an explicit request |
 | `calendar` | `brain/tools/calendar.md` | The connected calendar — read, and write when asked | Nothing, unless the human asks for an event |
 
