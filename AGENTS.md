@@ -665,6 +665,24 @@ nobody — including future-you — trusts or wants to read.
 - **Don't invent facts.** If unsure, say so or leave it in the inbox.
 - **Quality over volume.** Five well-linked atomic notes beat one sprawling essay.
 
+### Don't narrate the machinery
+
+Several commands arrive with shell output already in your context — the Claude and Gemini wrappers
+pre-run `doctor`, `recent`, `feeds` and friends so the first reply can be the answer instead of a
+request to read a file. **That output is diagnostic context, not a script.** Use it; don't recite
+it.
+
+Concretely: **never open a reply with the state of the machine.** Not the checkup, not what you
+read to get here, not which files you searched, not a preamble about what you're about to do. The
+human asked for something — start with that thing.
+
+The tell is a first sentence that would still be true if they had asked something else entirely.
+*"Everything checks out — the vault works, though your branch doesn't push to a remote yet"* is
+that sentence, and shipping it in front of `setup`'s first question means someone's introduction to
+their own second brain is a git status report. Findings that genuinely matter still get said —
+**later, once, in one line, with the fix attached, at the point where the human can act on them.**
+Being early is what makes them noise.
+
 ---
 
 ## Where your output goes

@@ -10,23 +10,43 @@ no lectures on PARA or provenance. They can read `README.md` for that if they wa
 
 ---
 
-## Step 1 — Check the setup actually works
+## Step 1 — Check the setup works, and say nothing about it
 
-Run `brain/bin/doctor` and read the output.
+Run `brain/bin/doctor` and read the output. On Claude Code the wrapper has already run it and
+pasted the result into your context — either way, **the checkup is for you, not for them.** It is
+diagnostic context. It is not the first thing they hear.
 
-If it reports anything blocking, deal with that first — help them fix it, in plain language, then
-re-run. Don't start the interview on a vault that can't save itself.
+**Warnings do not get mentioned here. Not one, not briefly, not as a friendly preamble.** No
+backup remote, transcripts expiring in 30 days, an empty vault — none of it is spoken in the
+opening message. They can all be fixed in a minute, none of them stops anything, and step 6 is
+where they belong.
 
-If you can't run `doctor` at all because you'd need approval you can't get, that's the Claude Code
-trust prompt — this folder hasn't been trusted yet, so the settings in `.claude/` are being ignored.
-Say so plainly and tell them to restart `claude` here and accept it. Don't quietly hand-check the
-vault instead and carry on; a session where the repo's own settings aren't loaded is worth naming.
+This rule exists because it is the easiest one in the file to break and the most expensive. You
+have a checkup sitting in your context, it has findings in it, and reporting findings feels like
+being useful. It isn't: **the first sentence someone ever reads from their second brain decides
+whether it feels like an assistant or like a build pipeline.** "Your branch doesn't push to the
+remote yet — one command, `git push -u origin main`" is a fine sentence in the wrong place, and
+someone who came here to have their notes organised has just been handed homework about git before
+being asked their name. Open with the question. Nothing else.
 
-If it only reports warnings, mention the ones that matter (no backup configured, session history
-being deleted after 30 days) but **don't stop for them** — they can be fixed later and the
-interview is more valuable now.
+**Two things — and only these two — earn a word before the first question:**
+
+- **Something blocking.** The vault can't save itself. Deal with it first, in plain language, then
+  re-run. Don't start an interview on a vault that will lose the answers.
+- **You couldn't run `doctor` at all** because you'd need approval you can't get. That's the Claude
+  Code trust prompt — the folder hasn't been trusted, so everything in `.claude/` is being ignored.
+  Say so plainly and tell them to restart `claude` here and accept it. Don't quietly hand-check the
+  vault instead and carry on; a session where the repo's own settings aren't loaded is worth naming.
+
+Everything else: stay silent and go to step 2. **If the checkup was clean, don't announce that
+either** — "everything checks out, the vault works" is still a status report about machinery, and
+they didn't ask. The proof that it works is step 4, where they watch it file a real note.
 
 ## Step 2 — Ask which depth, then ask
+
+**This is your first message to them, and it opens cold.** No status report, no summary of what
+you just checked, no "great news". One line of context if you like — *"Let's make this yours"* —
+and then the fork. Per step 1, nothing from the checkup appears here.
 
 **Offer two depths, in one short message, before any question.** Both are real options and neither
 is the "proper" one — say that plainly, because a fork where one branch is obviously the good one
@@ -191,6 +211,25 @@ turns into a tour is a first run nobody finishes, so **offer it and stop.** Don'
 
 Finally, mention the example notes in `cortex/03_Resources/` are there to show the shape of things and
 they can delete them whenever they like. Offer to do it now.
+
+### Now — and only now — the checkup warnings
+
+**This is where step 1's warnings come out.** They've watched the vault file a real note, so
+"you've got no backup yet" is now a sentence about *their notes* rather than a sentence about a
+stranger's git config. Same fact, completely different weight.
+
+**At most two, one line each, each with the fix attached and no explanation of why it matters** —
+they can ask. The two that are ever worth saying:
+
+> Two things worth a minute sometime: this isn't backed up anywhere yet (`git push -u origin main`
+> once you've made a repo for it), and Claude Code deletes its session history after 30 days unless
+> you change that — which matters only if you ever want `ingest-sessions` to read it.
+
+**Skip any that don't apply, and skip the whole block if none do.** Don't read the checkup out.
+Don't list warnings that fix themselves — "no notes yet" stopped being true four steps ago, and
+repeating a stale finding is how someone learns the report isn't looking at their actual vault.
+And **don't offer to fix the backup for them**: it needs a repo that doesn't exist yet and a
+decision about where their private notes get hosted, which is theirs to make.
 
 **On a quick run, one closing offer, one line, genuinely optional.** Five answers is a thin
 profile, and per `AGENTS.md` the human — not this command — picks how a fuller one gets built. They
