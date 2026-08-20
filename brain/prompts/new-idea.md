@@ -74,7 +74,7 @@ things, **asked one at a time**, never as a list:
 Push back here, not four phases later:
 
 - **It already exists.** Name the command, route them to it, and stop. Most "can it also do X"
-  requests are `capture`, `ask` or `task` wearing a hat.
+  requests are `capture`, `ask`, `task` or `email` wearing a hat.
 - **It's two ideas.** An "and" in the one-line description is the tell. Split them, build the one
   they need first, and say you're doing that.
 - **It shouldn't exist.** Three shapes: it duplicates a command; it needs credentials this vault
@@ -116,7 +116,7 @@ The moment a service comes up (Gmail, Notion, Todoist, Strava, their company's J
 
 | | Verdict | What you say | What happens |
 | --- | --- | --- | --- |
-| **1** | **Already here** | "That one's built in." | `brain/tools/` covers it: weather, news, location. Route there, or to the connect path if it isn't connected yet. Nothing to build. |
+| **1** | **Already here** | "That one's built in." | `brain/tools/` covers it: mail, calendar, weather, news, location. Route there, or to the connect path if it isn't connected yet. Nothing to build. |
 | **2** | **One connector away** | "Yours has a proper connector, couple of minutes." | The connect path below. Still nothing to build. |
 | **3** | **Reachable, roughly** | "No official connector, but it publishes a feed / has an export. I can work with that." | This command's actual job. Carry on. |
 | **4** | **Closed** | "That one's a locked box. Nothing but the app itself can get in." | Say so plainly, then name what *is* open. |
@@ -214,9 +214,9 @@ When it's genuinely ambiguous it's a skill. A skill that later needs the network
 tool that never leaves the vault is a skill carrying failure modes it doesn't need.
 
 There is a third shape, and it's where most first builds land: **a routine composed of commands
-that already exist**, a named morning run of `weather`, `news` and the day's open tasks in an
-order that suits them, say. New reach: none, so it's a skill, and its Review is short because
-every capability it touches was reviewed when it shipped. Say that in the review rather than skipping it.
+that already exist**, a named morning run of `calendar`, `email` and `news` in an order that suits
+them, say. New reach: none, so it's a skill, and its Review is short because every capability it
+touches was reviewed when it shipped. Say that in the review rather than skipping it.
 
 **2. What it reaches for.** The actual endpoint or the class of connector. "The web" is not an
 answer, and neither is a product name you assumed. Connectors are per-human, so a tool resolves
@@ -279,7 +279,7 @@ Then three checks that decide whether it ships as designed:
 
 - **Do we know the consequences?** For each action it can take, say what happens in the world when
   it runs, and what happens when it runs by mistake. If you can't say, that's the finding.
-- **Does it need a permission ceiling?** A mail tool's would be read-and-draft-never-send. Anything that
+- **Does it need a permission ceiling?** Mail's is read-and-draft-never-send. Anything that
   **sends, deletes, publishes or spends money** gets a ceiling written into the file: a paragraph
   naming what it will never do, plus the exact sentence to say when asked. Routing in this vault is
   silent, so a misroute must never become an email in somebody else's inbox.

@@ -333,9 +333,9 @@ only; the inventory lives in
   moment, and a silence after a clearly-flagged proposal is a yes here because you told them so
   in the opening. Keep sections at three to five bullets; when one is full, propose which line
   the new one replaces.
-- Not asked here, learned on first need: who matters by name (the first task that names someone),
-  what eats their time (`new-idea`), which outside systems they use and whether to hook them up
-  (`new-idea`, the first time a task needs one), the shape of their week (after that).
+- Not asked here, learned on first need: who matters by name (first mail or calendar task), what
+  eats their time (`new-idea`), which mail and calendar they use and whether to connect them (the
+  first task that needs one), the shape of their week (after that).
 - Frontmatter per `AGENTS.md`, everything linked from `[[About me]]`, and it all lands on disk
   before the conversation ends — `sync` does the committing.
 

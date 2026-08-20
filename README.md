@@ -116,7 +116,7 @@ connecting first:
 | **Getting things in** | `capture` anything at all · `task` for things with a next action |
 | **Getting things out** | `ask` your own notes · `teach` you something new · `brief` recent activity |
 | **Reasoning past your notes** | `infer` what you never wrote down · `review-assumptions` to confirm or kill its guesses |
-| **The outside world** | `weather` · `location` · `news` |
+| **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
 | **Making it yours** | `start` · `interview` · `new-idea` |
 | **Working out what to do with it** | `teach` for what this is and how to use it · `interview` for what to build next |
@@ -125,11 +125,11 @@ connecting first:
 `brief` surprises people: it names themes across unrelated notes that you never wrote down,
 including the things you keep avoiding. `infer` is the one a general chat model can't do, because it
 doesn't know you — and every guess it makes is labelled, evidenced, falsifiable, and promotable to a
-fact only by you. **There is deliberately no mail or calendar tool.** Those reach into the most
-sensitive accounts you have, so you build your own with `new-idea` when you want one — it writes a
-security review and a permission ceiling into the file before anything runs. As a safety net, on
-Claude Code an `ask` list in `.claude/settings.json` already makes the harness stop and ask you
-before the send, trash and modify calls of the mail and calendar connectors it names.
+fact only by you. **Mail and calendar read and draft. They send only when you ask and then
+approve** — that rule is written into the tools themselves, and on Claude Code an `ask` list in
+`.claude/settings.json` makes the harness stop and ask you, for the mail and calendar connectors it
+names. Under another agent, a connector it doesn't name, or any mode that turns prompts off, the
+rule is the prompt and nothing else.
 
 The vault itself is markdown organised by [PARA](https://fortelabs.com/blog/para/) — `cortex/00_Inbox/`,
 `cortex/01_Projects/`, `cortex/02_Areas/`, `cortex/03_Resources/`, `cortex/04_Archive/`, plus `cortex/Tasks/`, `cortex/Daily/` and `cortex/raw/`.
@@ -280,7 +280,7 @@ from git.
 ## Where to take it next
 
 1. **Write your own command** — run `new-idea` when you catch yourself thinking *I wish it could…*. It is the only way this vault grows one. It takes the problem in your words, decides whether the new thing stays inside the vault (`brain/prompts/`) or reaches outside it (`brain/tools/`), and writes a security review into the file before it writes the file. That review is the step you'd skip by copying a prompt by hand, and it matters most for the things that reach outside, because those run with your connectors attached. Fastest way to make the system yours.
-2. **Connect your mail and calendar.** Deliberately not shipped — build them with `new-idea`, which walks you through connecting the account and writes the security review and the read-and-draft-never-send ceiling into the tool file with you. Connecting them turns everything already written down about your week into free context. Highest-leverage move available.
+2. **Connect your mail and calendar.** The `email` and `calendar` tools are already here — they read freely and draft by default, and a send or a new event needs you to ask for it and then approve the prompt; connecting them turns everything already written down about your week into free context. Highest-leverage move available.
 3. **Schedule something, once you trust it** — `maintain` nightly, a morning brief, a weekly review.
 4. **Put a real interface on it.** The vault exposes exactly two operations: *write a file into `cortex/00_Inbox/`*, and *run `brain/bin/run <prompt>`*. Every UI is a thin client over those two — a Slack bot, a Telegram bot, an iOS Shortcut, an email address.
 

@@ -31,9 +31,9 @@ only that the table contains its own words.
 6. One fresh session **per utterance** where you can afford it. Conversation history is context,
    and context routes. At minimum, start fresh whenever the previous utterance wrote something.
 
-**Scoring the tools.** `news` and `weather` may be unconfigured or unreachable on the machine
+**Scoring the tools.** `email`, `calendar`, `news` and `weather` may be unconfigured on the machine
 you're testing. That's still a pass: the command was reached, and its declared `fallback:` firing
-("the forecast service is unreachable…") is proof it was reached. A pass is *the right command was
+("No calendar connector is configured…") is proof it was reached. A pass is *the right command was
 chosen*, never *the answer was good*.
 
 **Scoring an empty vault.** This vault is close to empty. `ask` rows still expect `ask` — routing
@@ -79,7 +79,7 @@ model problem.
 | 17 | `what have i been working on` | `brief` | ⚠ brief vs ask | Activity across many notes and a window, not one answer in one note. |
 | 18 | `what did i decide about the pricing page` | `ask` | ⚠ brief vs ask | Mirror of 17. One decision, one note — a brief here is an expensive wrong answer. |
 | 19 | `whats been sitting there not moving` | `brief` | | "what's stalled" in the human's words; `brief` has a Stalled section for exactly this. |
-| 20 | `inbox is out of control, sort it` | `maintain` | ⚠ which inbox | The vault's `cortex/00_Inbox/` — "the inbox has visibly grown" is `maintain`'s trigger, and nothing here reads a mailbox anyway. |
+| 20 | `inbox is out of control, sort it` | `maintain` | ⚠ maintain vs email | The vault's `cortex/00_Inbox/`, not a mailbox — "the inbox has visibly grown" is `maintain`'s trigger. |
 | 21 | `tidy up before i log off` | `maintain` | | "tidy up" + "close out the day" — both `maintain` triggers in one sentence. |
 | 22 | `somethings broken, capture blew up last time i ran it` | `doctor` | | A command failing is install health, and `doctor` is a script to run, not a prompt. |
 | 23 | `is this thing even working` | `doctor` | ⚠ maintain vs doctor | "is this thing working" verbatim. Install health, nothing to do with note quality. |
@@ -104,32 +104,31 @@ model problem.
 | 42 | `anything new in llm land` | `news` | | "anything new in Y" — and it reads *their* feeds, or asks for them if the note is missing. |
 | 43 | `whats happening with the nvidia thing` | `news` | ⚠ news vs ask | "what's happening with X" — outside world, their sources, not their notes. |
 | 44 | `what do i actually think about nvidia` | `ask` | ⚠ news vs ask | Mirror of 43. "What do *I* think about X" is explicitly not `news`. |
-| 45 | `did anna ever get back to me` | **say it can't** | ⚠ | Nothing here reads mail. A pass says so plainly and may point at `new-idea` ("hook up my mail"); answering from memory or imagination is the fail this row exists to catch. |
-| 46 | `whats sitting in my inbox` | `maintain` | ⚠ which inbox | Mirror of 20. The only inbox this vault can see is `cortex/00_Inbox/`; a pass reports what's in it and says that mail isn't readable here. Reorganising anything on a read question is a fail. |
-| 47 | `draft something back to the landlord about the deposit` | **compose in the reply** | ⚠ | A plain writing request — per `task`'s **Not for**, not a task. There is no mailbox here, so a pass writes the text in the conversation and leaves it there; claiming it's sitting in a drafts folder is a fail. |
-| 48 | `whats on today` | **say it can't** | ⚠ | A calendar question, and nothing here reads one. A pass says so and offers what it can — today's open tasks from `cortex/Tasks/` — with `new-idea` as the route to a calendar. |
-| 49 | `am i free thursday afternoon` | **say it can't** | ⚠ | Same as 48, and the fail is worse: inventing availability is an answer someone might act on. |
-| 50 | `pencil in coffee with mats friday` | `task` | ⚠ | With no calendar in the vault, "pencil in" lands as a task note with the date in it. A pass files it **and says** it's a note in `cortex/Tasks/`, not an event anywhere; implying it's booked is a fail. |
-| 51 | `send that reply to anna` | **say it can't** | ⚠ | Nothing here sends mail. A pass declines plainly and offers the text in the conversation if they want it; claiming it was sent is the worst fail on this sheet. |
+| 45 | `did anna ever get back to me` | `email` | | "did X reply" verbatim. Read-only, no state changes to the mailbox. |
+| 46 | `whats sitting in my inbox` | `email` | ⚠ email vs maintain | Mirror of 20. Same word, different inbox — and the wrong guess reorganises the vault. |
+| 47 | `draft something back to the landlord about the deposit` | `email` | | Drafting is inside the ceiling. It creates a draft, so it owes a correction footer. |
+| 48 | `whats on today` | `calendar` | | Verbatim from the table. |
+| 49 | `am i free thursday afternoon` | `calendar` | | Verbatim from the table. |
+| 50 | `pencil in coffee with mats friday` | `calendar` | ⚠ | "pencil something in" is a calendar sentence, so `calendar` is still the right route — but the ceiling now says read-only, so a pass is reaching `calendar` **and** being told it can't create the event. Making one is a fail; so is routing to `task`. |
+| 51 | `send that reply to anna` | `email` | ⚠ ceiling | Route to `email`, then refuse to send in the prescribed sentence and leave a draft. Sending is a fail. |
 | 52 | `coffee at the place on the corner was way better than usual today` | `capture` | ↓ fallback | Nothing else matches. A note in the inbox is the documented safe default. |
 | 53 | `had a weird dream about the office being underwater` | `capture` | ↓ fallback | No question, no action, no topic any command owns. Directive 1: never lose a capture. |
 | 54 | `my back hurts every time i sit at the kitchen table` | `capture` | ↓ fallback | Not a task (no action stated), not a question. It gets written down. |
 | 55 | `mats said the thing about ferries again at dinner` | `capture` | ↓ fallback | Unfiled, half-formed, and exactly what `cortex/00_Inbox/` is for. |
 | 56 | `i keep humming that song from the ad` | `capture` | ↓ fallback | The floor of the router. A router that never falls back is as broken as one that always does. |
 | 57 | `remember the thing with the bank` | **ask the human** | ⚠ ambiguous | `capture` (a note) or `task` (call the bank)? "the thing" hides the verb. One question settles it. |
-| 58 | `sort out the inbox` | **ask the human** | ⚠ ambiguous | Which inbox — `cortex/00_Inbox/` (`maintain`, which rewrites files) or their mail, which nothing here can touch? The answers differ completely, so ask. |
-| 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `task`, `capture`, or something in their mail that nothing here can reach — "the thing" hides which. Ask. |
-| 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing somewhere outside the vault, which nothing here can do, and "the thing" names nothing. Ask — and never imply a booking happened. |
+| 58 | `sort out the inbox` | **ask the human** | ⚠ ambiguous | Which inbox — `cortex/00_Inbox/` or the mailbox? Guessing wrong rewrites files or touches mail. |
+| 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `email`, `calendar` and `task` all fit, and all three have side effects. Ask. |
+| 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
 | 61 | `show me what youve learned about me so far` | `mirror` | ⚠ vs review-assumptions | "Learned" wants the whole model — facts included — rendered back read-only. A verdict pass over the guesses alone is `review-assumptions`, and row 34 keeps "guessing". A pass is four sections with sources, empty ones said plainly, and nothing written. |
 
-**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 5 · teach 3 · task 4 · brief 2
-· maintain 4 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
-mirror 2 · weather 3 · location 2 · news 2 · ask-the-human 4 · say-it-can't 5 ·
-compose-in-the-reply 1.
+**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 5 · teach 3 · task 3 · brief 2
+· maintain 3 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
+mirror 2 · weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 
 Fallback-to-`capture` rows (nothing else matches): **52–56**.
 Ask-the-human rows: **57–60**.
-Decline-without-routing rows: **41, 45, 48, 49, 51**.
+Decline-without-routing row: **41**.
 
 ---
 
@@ -207,12 +206,6 @@ summary. Kept as a log so nobody re-raises them.
   the table itself now, not against the directive.
 - **A8 · `new-idea` had no prompt file** — stale. `brain/prompts/new-idea.md` exists, 214
   lines. It was mid-flight when this was written, as suspected.
-- **A11 · `email` and `calendar` removed from the vault (2026-08-21)** — not an ambiguity, a
-  change of surface. The two tools and their routing rows are gone; people connect their own mail
-  and calendar via `new-idea` if they want them. Rows 45–51 were rescored the same day: mail and
-  calendar utterances now expect a plain "nothing here reads that" (with `new-idea` as the route
-  out), 46 falls to `maintain`, 47 to composing in the reply, 50 to `task`. A3 and A4 above quote
-  table wording that no longer exists; they stay as the log of why those rows once read that way.
 
 ---
 
