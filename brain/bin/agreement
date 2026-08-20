@@ -6,10 +6,10 @@
 #   brain/bin/agreement --check   what doctor asks: does it exist, is it in budget
 #
 # The full agreement lives in [[How we work together]] and is read at session
-# start like any other note. This script injects only the two sections that
-# must never drift: "Always / Never" (the human's hard rules) and "Magic words"
-# (the shared vocabulary). Everything else in the note is context; these two
-# are contract. Injecting the whole note here would defeat the point — every
+# start like any other note. This script injects only the three sections that
+# must never drift: "Always / Never" (the human's hard rules), "How to talk to
+# me" (style, which decays fastest of all) and "Magic words" (the shared
+# vocabulary). Everything else in the note is context; these three are contract. Injecting the whole note here would defeat the point — every
 # line printed below is paid for on every single prompt, including the one
 # where someone asked what the weather is. Keep the extraction narrow.
 #
@@ -28,11 +28,10 @@ set -u
 
 NOTE='cortex/03_Resources/How we work together.md'
 
-# The budget, same reasoning as brain/bin/style's. Two sections of three to
-# five bullets each is the intended size; the cap leaves headroom, not an
-# invitation.
-CAP=14
-BYTES=1200
+# The budget. Three sections of three to five bullets each is the intended
+# size; the cap leaves headroom, not an invitation.
+CAP=18
+BYTES=1600
 
 # Same anchor as style: never exit non-zero, never write to stderr. A hook that
 # fails puts a "hook error" notice in front of the human on every keypress. A
@@ -59,7 +58,7 @@ fi
 # or closes a section; frontmatter and blanks never survive.
 extract() {
   awk '
-    /^## /            { keep = ($0 ~ /Always/ || $0 ~ /Magic words/); next }
+    /^## /            { keep = ($0 ~ /Always/ || $0 ~ /How to talk to me/ || $0 ~ /Magic words/); next }
     !keep             { next }
     /^[[:space:]]*$/  { next }
     /^#/              { next }
@@ -83,7 +82,7 @@ fi
 # prompt reads like something they just said. It isn't — it is a standing
 # agreement they wrote once, and it binds without being answered.
 echo "<working-agreement source=\"$NOTE\">"
-echo "The standing agreement between you and this human. Hard rules and shared vocabulary, restated so they cannot drift:"
+echo "The standing agreement between you and this human. Hard rules, how they want to be written to, and shared vocabulary, restated so they cannot drift:"
 printf '%s\n' "$body" | head -c "$BYTES"
 echo ""
 echo "The full agreement is in the note. Only the human edits it; propose lines, never write them."

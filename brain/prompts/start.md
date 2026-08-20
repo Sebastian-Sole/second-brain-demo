@@ -21,8 +21,10 @@ whichever step they actually need.
 
 Before your first word, gather — and ask nothing later that this already answered:
 
-- **Who they probably are.** `id -F` (macOS full name), `git config user.name` / `user.email`.
-  Best guess at a first name, held as *unconfirmed* until they nod.
+- **Who they probably are.** In order: the Claude account (`~/.claude.json`,
+  `oauthAccount.displayName`, Claude Code only), `git config user.name`, `id -F` (macOS full
+  name). A login name like `mpatterson` is not a name; treat it as nothing. Best guess at a first
+  name, held as *unconfirmed* until they nod. No guess is fine: Q1 then asks instead of confirms.
 - **What's connected.** Does a calendar or mail connector already respond? (`brain/bin/doctor`
   knows.) Are there past agent sessions on this machine? (`brain/bin/sessions list` — count and
   recency, do not read any transcript.)
@@ -48,6 +50,15 @@ covers how to talk. Say what this is, how big it is, that skipping is fine, then
 > - yes
 > - a different name
 > - skip
+
+With no name from Step 0, no "Hi <name>", and the question is open:
+
+> Hi. I'm the assistant in this folder. Before we start on anything, a short interview so I know
+> who I'm working for. Four questions, skip any you like.
+>
+> ## 1 of 4 · your name
+>
+> What should I call you?
 
 If the guess is wrong or they prefer another name, take it and write it down. Either way their
 name is now confirmed fact; the file note records it.
@@ -93,57 +104,78 @@ The craft rules, all of them enforced on yourself:
 
 ### Q2 — About you
 
-The one story question. No menu of examples: a list of suggestions becomes the answer. They
-choose what's relevant; you take what's offered and ask for nothing that wasn't.
+The one open question, and a hard one to answer cold, so it comes with a fill-in. Every line maps
+to something the vault uses later; none is required.
 
 > ## 2 of 4 · about you
 >
-> Tell me a bit about yourself. What you do, what your days are mostly made of, whatever you'd
-> tell a new colleague.
+> Fill in what you like, skip the rest.
 >
-> > Why I ask: so I talk to you like someone who knows you, not a stranger.
+> - **Work**: what you do, and where
+> - **Home**: city, and who's in the household
+> - **Languages**: what you want me to write in
+> - **Tools**: the mail and calendar you use (Gmail, Outlook, iCloud…)
+> - **Right now**: the one thing taking most of your attention
+>
+> > Why I ask: this is what every future conversation starts from.
 >
 > - answer
 > - skip
 
-Pull out what they gave: work, rhythm, people, place. Each goes into `[[About me]]` as plain fact
-if stated, *(unconfirmed)* if inferred. No follow-up questions here; anything missing is learned
-the first time it matters.
+What each line feeds: city → weather, location, timezone; tools → which connector to offer, and
+when; languages → every reply; household → what "dinner" or "weekend" implies; right now → what
+`digest` and `interview` watch, so it carries a `stale_after` in `[[About me]]`. Take what's
+offered, ask for nothing that wasn't.
 
 ### Q3 — Talk to me
 
+The agreement already ships with defaults under *How to talk to me*. Show them and ask what to
+change; a veto is cheaper than a composition.
+
 > ## 3 of 4 · how to talk to you
 >
-> What annoys you in an AI answer? Long essays, too many questions, sugarcoating, something else?
+> Here's how I'll write to you by default:
 >
-> > Why I ask: it applies from my next reply on.
+> - Short answer first, details only if you ask.
+> - One question at a time, never a list of questions.
+> - I tell you when your idea has a problem. Over politeness.
+> - No AI tells, no em dashes.
 >
-> - answer
-> - skip
-
-And it does: the next reply arrives in their stated style, with at most a one-line note ("Shorter.
-Like that?"). This is the interview's aha moment; do not fumble it by reverting two turns later.
-→ `[[How I talk]]` (the per-turn hook re-states it from there) and the agreement's *How to talk
-to me* section.
-
-### Q4 — The line
-
-Offered as defaults to veto, not a blank to fill. A veto is cheaper to give than a composition.
-
-> ## 4 of 4 · what I do without asking
->
-> Reading, organizing, drafting: I just do. Anything that spends money, deletes something, or
-> leaves this vault (email, messages, calendar invites) you see before it goes. Want to move that
-> line either way?
->
-> > Why I ask: this is the one that keeps me trustworthy. If you say nothing, I take it as a yes.
+> Anything to change or add? What annoys you most in an AI answer?
 >
 > - that's fine
-> - move it
+> - change something
 > - skip
 
-"That's fine" is a real answer and gets written as one.
-→ the agreement's *Always / Never* and *What you can do on your own* sections.
+Read the lines from `cortex/03_Resources/How we work together.md` at the time, not from here;
+the human may have edited them. Whatever they change is *proposed* as edits to that section (the
+note is theirs), and applied from the very next reply with at most a one-line note ("Shorter.
+Like that?"). This is the interview's aha moment; do not fumble it by reverting two turns later.
+The per-turn hook re-states that section, so it holds.
+
+### Q4 — Autonomy
+
+Some people want full control; some don't want to think about it. This is the question that
+decides which assistant they get. Offered as three levels, no recommendation.
+
+> ## 4 of 4 · how much I do on my own
+>
+> - **Ask first**: I check before changing anything, even notes.
+> - **Do, then tell**: I organize, file, draft and fix on my own, and say what I did.
+> - **Just do it**: I act, and only report when something needs you.
+>
+> One thing doesn't move at any level: anything that sends, spends, deletes, or leaves this vault,
+> you see first.
+>
+> - ask first
+> - do, then tell
+> - just do it
+> - skip
+
+The floor is fixed on purpose. "Just do it" almost always means "don't bother me with trivia",
+not "email people as me"; keeping the floor lets the question be safe to offer. Skip means *do,
+then tell*, and say so.
+→ proposed for the agreement's *What you can do on your own* section.
 
 ### After Q4 — Magic words
 
@@ -173,9 +205,9 @@ A secret-ICS-feed route is not offered until `brain/bin` has a reader for it.
 
 > Here's what I've got:
 >
-> - you run a small design studio, two kids, mornings are your crunch time
+> - you run a small design studio in Oslo, two kids, Gmail and Google Calendar
 > - short answers, no sugarcoating
-> - I ask before anything leaves this vault
+> - I do things and tell you after; anything leaving the vault you see first
 >
 > Anything wrong in that list, say so. Silence means I got it right.
 
@@ -220,7 +252,6 @@ instructions for running it.
   moment, and a silence after a clearly-flagged proposal is a yes here because you told them so
   in the opening. Keep sections at three to five bullets; when one is full, propose which line
   the new one replaces.
-- `cortex/03_Resources/How I talk.md` — behaviour lines from Q3, re-stated every turn by the hook.
 - Not asked here, learned on first need: who matters by name (first mail or calendar task), what
   eats their time (`new-idea`), the shape of their week (when a calendar is connected).
 - Frontmatter per `AGENTS.md`, everything linked from `[[About me]]`, and it all lands on disk

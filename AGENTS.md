@@ -98,7 +98,7 @@ rules, how to talk to them, what may be done unasked, and a few magic words with
 It is the one note that ships with defaults, because the workshop copy of this vault should
 demonstrate a working agreement rather than an empty slot for one.
 
-Two of its sections — **Always / Never** and **Magic words** — are contract rather than context,
+Three of its sections — **Always / Never**, **How to talk to me** and **Magic words** — are contract rather than context,
 and get the same anti-decay treatment as `[[How I talk]]`: on Claude Code, `brain/bin/agreement`
 extracts just those sections and `UserPromptSubmit` re-states them before every prompt. Everywhere
 else, this paragraph is the guarantee.
