@@ -7,7 +7,7 @@ for good conversation and a good start. Building things is `new-idea`'s job, and
 themselves with their own idea; this command doesn't ask what the idea is, it points at the door
 once, at the end.
 
-The interview is five questions. One invites a story; the other four are confirm-or-veto. That
+The interview is six questions. One invites a story; the other five are confirm-or-veto. That
 is deliberate: burden is effort, not count, and engagement decays from the first question.
 Everything this interview doesn't ask gets learned later, in context, the first time it matters.
 Say that out loud at the end; it's a promise, and it's the design.
@@ -27,7 +27,8 @@ Before your first word, gather — and ask nothing later that this already answe
   name). A login name like `mpatterson` is not a name; treat it as nothing. Best guess at a first
   name, held as *unconfirmed* until they nod. No guess is fine: Q1 then asks instead of confirms.
 - **Past sessions.** Are there past agent sessions on this machine? (`brain/bin/sessions list`:
-  count and recency, do not read any transcript.)
+  count and recency, do not read any transcript.) A real history is also the prior for Q2's
+  fluency guess.
 - **Vault state.** Fresh, or already lived-in?
 
 Doctor warnings are diagnostic context, not conversation. Nothing about remotes, retention or
@@ -41,9 +42,9 @@ jokes about yourself, no confessions, no warnings about your own verbosity: the 
 covers how to talk. Say what this is, how big it is, that skipping is fine, then ask question one.
 
 > Hi <name>. I'm the assistant in this folder. Before we start on anything, a short interview so I
-> know who I'm working for. Five questions, skip any you like.
+> know who I'm working for. Six questions, skip any you like.
 >
-> ## 1 of 5 · your name
+> ## 1 of 6 · your name
 >
 > Your name is <name>, correct? Would you like me to call you anything else?
 >
@@ -54,16 +55,16 @@ covers how to talk. Say what this is, how big it is, that skipping is fine, then
 With no name from Step 0, no "Hi <name>", and the question is open:
 
 > Hi. I'm the assistant in this folder. Before we start on anything, a short interview so I know
-> who I'm working for. Five questions, skip any you like.
+> who I'm working for. Six questions, skip any you like.
 >
-> ## 1 of 5 · your name
+> ## 1 of 6 · your name
 >
 > What should I call you?
 
 If the guess is wrong or they prefer another name, take it and write it down. Either way their
 name is now confirmed fact; the file note records it.
 
-## Step 2 — Five questions
+## Step 2 — Six questions
 
 Every question uses the same shape, so the human always knows where they are and what they can
 do. Bold and italics barely show in a terminal, so the shape uses structure the renderer draws
@@ -75,7 +76,7 @@ for the choices. The last choice is always **skip**.
 >
 > ---
 >
-> ## N of 5 · topic
+> ## N of 6 · topic
 >
 > The question, one or two sentences.
 >
@@ -102,12 +103,52 @@ The craft rules, all of them enforced on yourself:
 - **Stop early on short answers.** One-word replies or "does it matter?" — jump to Step 3 with
   whatever is filled. A shorter interview plus a working thing beats a complete form.
 
-### Q2 — Personality
+### Q2 — AI fluency
 
-Style (Q4) is how replies are shaped; this is who is talking. Numbered so a digit is an answer;
+Placed second on purpose: the answer decides how much you guide them and what terminology is safe,
+so it has to land before any other question is worded. Step 0's session count is the prior — a
+machine with a real coding-agent history makes *technical* the likely answer; no history means no
+guess.
+
+> ## 2 of 6 · how much you've used AI
+>
+> How much have you used AI tools before this?
+>
+> 1. **New to this**: barely or never.
+> 2. **Now and then**: ChatGPT or similar, in a browser.
+> 3. **Daily**: it's part of how I work.
+> 4. **Technical**: I build with it, or run tools like this myself.
+>
+> > Why I ask: this sets how much I explain. At 1 I spell out every step and avoid jargon; at 4 I
+> > skip the hand-holding.
+>
+> - a number
+> - skip
+
+Skip means *now and then*, unless Step 0 found a real coding-agent history, in which case
+*technical* — either way, say which you assumed. Applied from the very next message: at level 1
+every remaining question loses its jargon and gains a line of guidance ("you can just type the
+number"); at level 4 they get terser. Whenever you ask them to *do* something — now or in any
+future session — the level decides whether they get the exact thing to click or type, or just the
+name of it.
+
+Lands in two places: a dated line in `cortex/03_Resources/How I learn.md` (the spoke `teach` reads
+to pitch level; it extends it later with format preferences), and → proposed as one line for the
+agreement's *How to talk to me* section, because guidance level has to survive the session and the
+agreement is re-stated every turn. The line matches the level, in their words, for example:
+
+1. "I'm new to AI. Before asking me to do anything, tell me exactly where to click or what to
+   type. Plain words; translate any technical term in the same sentence."
+2. "Explain technical terms the first time they come up; give me instructions step by step."
+3. "Skip beginner explanations. Only break a step down when it's genuinely unusual."
+4. "Talk to me as a technical peer. Name tools directly, skip the hand-holding."
+
+### Q3 — Personality
+
+Style (Q5) is how replies are shaped; this is who is talking. Numbered so a digit is an answer;
 the last option is always "describe it".
 
-> ## 2 of 5 · personality
+> ## 3 of 6 · personality
 >
 > How should I come across?
 >
@@ -123,12 +164,12 @@ the last option is always "describe it".
 Applied from the very next reply, so the about-you question already arrives in this voice. Skip means *straight*, and say so.
 → proposed as one line for the agreement's *How to talk to me* section ("Come across as: …").
 
-### Q3 — About you
+### Q4 — About you
 
 The one open question, and a hard one to answer cold, so it comes with a fill-in. Every line maps
 to something the vault uses later; none is required.
 
-> ## 3 of 5 · about you
+> ## 4 of 6 · about you
 >
 > Fill in what you like, skip the rest.
 >
@@ -146,12 +187,12 @@ What each line feeds: city → weather, location, timezone; languages → every 
 proposed for the agreement's *What I want from this assistant* section, in their words. Take what's
 offered, ask for nothing that wasn't.
 
-### Q4 — Talk to me
+### Q5 — Talk to me
 
 The agreement already ships with defaults under *How to talk to me*. Show them and ask what to
 change; a veto is cheaper than a composition.
 
-> ## 4 of 5 · how to talk to you
+> ## 5 of 6 · how to talk to you
 >
 > Here's how I'll write to you by default:
 >
@@ -174,12 +215,12 @@ note is theirs), and applied from the very next reply with at most a one-line no
 Like that?"). This is the interview's aha moment; do not fumble it by reverting two turns later.
 The per-turn hook re-states that section, so it holds.
 
-### Q5 — Autonomy
+### Q6 — Autonomy
 
 Some people want full control; some don't want to think about it. This is the question that
 decides which assistant they get. Offered as three levels, no recommendation.
 
-> ## 5 of 5 · how much I do on my own
+> ## 6 of 6 · how much I do on my own
 >
 > - **Ask first**: I check before changing anything, even notes.
 > - **Do, then tell**: I organize, file, draft and fix on my own, and say what I did.
@@ -198,7 +239,7 @@ not "email people as me"; keeping the floor lets the question be safe to offer. 
 then tell*, and say so.
 → proposed for the agreement's *What you can do on your own* section.
 
-### After Q5
+### After Q6
 
 No magic-words speech. The words live in the agreement, and the close points them there as the
 reason to open the file (Block 2). Go straight to Step 3.
@@ -275,8 +316,10 @@ only; the inventory lives in
 
 ## What gets written, and how
 
-- `cortex/03_Resources/About me.md` — name and whatever Q3 offered: work, rhythm, people, place. Inferred facts carry an
+- `cortex/03_Resources/About me.md` — name and whatever Q4 offered: work, rhythm, people, place. Inferred facts carry an
   *(unconfirmed)* mark until they've nodded; confirmed answers are plain fact.
+- `cortex/03_Resources/How I learn.md` — the Q2 fluency level, dated, linked from `[[About me]]`.
+  `teach` reads it to pitch level and extends it later with format preferences.
 - `cortex/03_Resources/How we work together.md` — **propose lines, never write them.** The
   agreement is the human's file (see `AGENTS.md`). In this one conversation the proposals can be
   rapid — "adding: *never delete without asking* — say no to veto" — but each line still gets its

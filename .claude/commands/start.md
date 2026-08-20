@@ -1,5 +1,5 @@
 ---
-description: The first conversation — five questions to get to know each other, then build something that works.
+description: The first conversation — six questions to get to know each other; building things is new-idea's job.
 ---
 
 @brain/prompts/start.md

@@ -826,7 +826,7 @@ nothing else, which is the ordinary case and needs no exception.
 
 | Command | Prompt file | What it does |
 | --- | --- | --- |
-| `start` | `brain/prompts/start.md` | The first conversation: five questions to get to know each other, write `[[About me]]` and propose the agreement's lines, then point at `new-idea` — it never builds |
+| `start` | `brain/prompts/start.md` | The first conversation: six questions to get to know each other, write `[[About me]]` and `[[How I learn]]`, propose the agreement's lines, then point at `new-idea` — it never builds |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |

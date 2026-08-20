@@ -2,7 +2,7 @@
 # here rather than copying it, so there is still one manual. Do not add instructions here — edit
 # brain/prompts/start.md instead.
 
-description = "The first conversation — six questions to get to know each other, then build something that works."
+description = "The first conversation — six questions to get to know each other; building things is new-idea's job."
 
 prompt = """
 @{brain/prompts/start.md}

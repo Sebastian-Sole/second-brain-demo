@@ -214,10 +214,10 @@ This project just happens to be a subject it has the documents for, so it reads 
 `GUIDE.md` and `DESIGN.md` and re-pitches them at you rather than reciting them.
 
 **For what to build next**, that's `interview`. It picks ideas out of *your* notes rather than
-reciting a list, offers to build one there and then, and writes down what you said yes to so it
-doesn't pitch you the same thing twice.
+reciting a list, hands the build itself to `new-idea` when you say yes, and writes down what you
+said yes to so it doesn't pitch you the same thing twice.
 
-**`start`** — you've already run this: the five-question first conversation. Run it again any
+**`start`** — you've already run this: the six-question first conversation. Run it again any
 time; it's how you correct your profile or change how it writes to you as a standing rule.
 
 Connecting services and building things live in `new-idea` — name the service or say what you
@@ -410,6 +410,12 @@ It will. Three levels of fix, cheapest first.
 be a task", "wrong project", "that's not what I meant" — and it fixes it in the same conversation.
 This handles almost everything.
 
+When the annoyance is a *recurring* one — too long, too many questions, wrong tone — say
+**"remember that"** instead. It proposes a line for `cortex/03_Resources/How we work together.md`,
+the rules file it re-reads on every turn; you approve the line, and it holds from then on. That
+file is yours to open and edit directly too, and it holds the **Magic words** — a few words with
+fixed meanings, like "shorter" and "park it", that you can rename or add to.
+
 **2. Undo it in git.** Every change to this vault is saved as a numbered point in time, whether
 anyone asked for it or not. You can go back to any of them. You do not need to understand git for
 this — two commands:
@@ -469,6 +475,8 @@ Short and honest:
 
 ## Where to read more
 
+- `cortex/03_Resources/How we work together.md` — your working agreement: how it talks to you, what
+  it may do on its own, magic words. Re-read on every turn, and yours to edit.
 - [`README.md`](README.md) — what this is, installing it, backing it up, which app to use.
 - [`AGENTS.md`](AGENTS.md) — the operating manual the agent follows. Long, but it's the actual
   contract, and everything above is a summary of some part of it.

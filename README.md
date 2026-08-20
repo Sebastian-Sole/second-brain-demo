@@ -78,8 +78,9 @@ ignores the settings that ship with this repo and will pester you for permission
 
 **4. Say `start`.**
 
-Five questions, one at a time — your name, how it should come across, a bit about you, how you
-want to be written to, how much it may do on its own. Skip any of them; the answers land in files
+Six questions, one at a time — your name, how much you've used AI before (so it knows how much to
+explain), how it should come across, a bit about you, how you want to be written to, how much it
+may do on its own. Skip any of them; the answers land in files
 you can open and edit, and by the end the vault knows who it's working for. Then it points at the
 door that matters: say `new-idea` and name one thing that eats your time, and it builds for it.
 **Don't skip `start`** — it's the difference between notes about you and notes about a generic
