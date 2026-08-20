@@ -89,6 +89,13 @@ guarantee. **The note is the source of truth and the hook is a convenience over 
 preference into `.claude/`, where three-quarters of the agents that read this manual will never
 see it.
 
+The stable half gets the once-per-session channel: on Claude Code, `brain/bin/context` re-states
+`[[About me]]`, the open rows of `[[Assumptions]]` and a headline of recent activity at
+`SessionStart` — on `startup`, `clear` and above all `compact`, the moment a summarised context
+most needs to be reminded who it is talking to. Same rule, same direction: the hook only quotes
+what the notes already hold, and everywhere without hooks, reading those notes at session start
+(above) is the guarantee.
+
 **The note belongs to the human.** Never edit it, even when invited by the shape of the moment.
 When they say "remember that" — or you notice a friction worth a rule — propose the line and let
 them put it in. When a section is at four or five bullets, propose which existing line the new one
