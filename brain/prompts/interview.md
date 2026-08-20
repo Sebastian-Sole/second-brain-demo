@@ -4,9 +4,16 @@ Every other command answers a question. This one works out what the vault **need
 asks for it. It's the difference between a filing cabinet and an assistant: nothing gets collected
 unless somebody asks.
 
-Optional argument — a source to focus on (`followups`, `assumptions`, `gaps`, `stalled`),
-`dry-run` to build the queue and show it without asking anything, or `big-five` to run the
-personality inventory instead of the queue (see **Topic path — the profile instrument**, below).
+It has a second job, and it's the one that keeps this worth running after the first month.
+Six of its seven sources look for gaps in what the vault *holds*. The seventh looks for gaps in
+what the vault *does* — a part of their life it has never touched, offered as something concrete it
+could build. **People don't ask for things they don't know are possible**, so if this command only
+ever asks about material that already exists, it can only ever get better at a job it was already
+doing.
+
+Optional argument — a source to focus on (`followups`, `assumptions`, `gaps`, `stalled`,
+`unmet`), `dry-run` to build the queue and show it without asking anything, or `big-five` to run
+the personality inventory instead of the queue (see **Topic path — the profile instrument**, below).
 
 **The whole skill is question selection.** Anyone can ask questions. The value is asking the two or
 three worth interrupting someone for, right now, and staying quiet otherwise.
@@ -45,7 +52,7 @@ between two candidates of equal rank. **If it doesn't exist, that's normal** in 
 spokes appear when there's something real to put in them. Build the queue without it, don't block
 on it, and don't ask them to fill it in.
 
-Six sources. Each yields candidates; each candidate carries its citation:
+Seven sources. Each yields candidates; each candidate carries its citation:
 
 | # | Source | What to look for | Shape of the question |
 | --- | --- | --- | --- |
@@ -55,11 +62,74 @@ Six sources. Each yields candidates; each candidate carries its citation:
 | 4 | **Stalled commitment** | A project untouched for >14 days, a task carried forward repeatedly, a question rotting in `cortex/00_Inbox/` | *"X hasn't moved in N days — dead, blocked, or want me to take it?"* |
 | 5 | **Coverage imbalance** | An area with almost nothing against one that's overflowing | *"Is X dormant, or just not getting captured?"* |
 | 6 | **Contradiction** | Two notes that disagree and `maintain` couldn't resolve | *"These two disagree — which is current?"* |
+| 7 | **Unmet need** | A part of their life they've told you about that this vault does nothing for — see below, it has its own rules | *"You train five mornings a week and none of it is here — want me to do something with that?"* |
 
 Source 4 escalates rather than repeats. After a couple of mentions the question stops being a
 reminder and becomes **"want me to pick this up?"** — offering to do the work and hand back
 something to approve. A reminder repeated a third time is nagging, and nagging gets the whole
 channel muted.
+
+### Source 7 — the unmet need, and why it is different from the other six
+
+The other six ask about **something in the vault**. This one asks about **something that isn't** —
+a whole area of their life the vault does nothing for, where they've never thought to ask whether
+it could.
+
+It exists because of a specific way this command goes stale. Someone uses the vault well for six
+months, everything perishable gets asked about, the register is tidy, no project is stalled — and
+`interview` correctly goes quiet, forever. Meanwhile they train five mornings a week, or run a
+side business, or manage three kids' schedules across four apps, and it has never once occurred to
+them that any of that is something an assistant could touch. **They aren't going to ask, because
+people don't ask for things they don't know are possible.** Nothing else here closes that gap:
+`guide expand` does, but only when they run it, which is exactly the thing they won't think to do.
+
+**It is still cited, and the citation rule is not relaxed.** What it cites is different in kind —
+not a note that exists, but something they *said* set against a gap:
+
+| Cite | Looks like |
+| --- | --- |
+| A life area named in `[[About me]]`, `[[What I'm into]]` or any note, with nothing in the vault against it | *"Your profile says you coach a junior team — there's nothing here about it"* |
+| A service in `[[My systems]]` at rung 1 or 2 that never got connected | *"You mentioned Todoist back in March and we never hooked it up"* |
+| A friction they described in passing, in a note or a past answer, and nothing was built for it | *"You said invoicing eats your Sundays"* |
+
+**Never from anywhere else.** Not from what people like them usually want, not from which apps are
+installed, not from the shape of their repo — see *Answer from the vault, not from the room you're
+standing in* in `AGENTS.md`. If you cannot quote the thing they said, there is no candidate here,
+and inventing one is worse than every other failure in this file: a question about a life they
+don't have proves the brain doesn't know them, on the one subject where it was claiming to.
+
+**Five rules, all of them load-bearing:**
+
+- **Name what you'd build, in the question.** This source offers a capability; it does not collect
+  data. *"Want to tell me about your training?"* is data collection wearing a helpful hat and it
+  earns nothing. *"Your watch exports to Strava, and Strava has a connector — I could pull your
+  week in and put it in the Sunday digest. Worth doing?"* is an offer they can say yes to.
+- **Check it's reachable before you offer it.** Run the ladder in `brain/prompts/setup.md` first.
+  Offering something that turns out to be a locked box is how every other claim you make becomes
+  suspect — and this is the one source where the temptation to overpromise is built in, because
+  you're pitching rather than asking.
+- **One per run, ranked last, and it never displaces a perishable question.** It is the least
+  urgent thing here by construction. But it is also the only source that can still fire on a mature
+  vault where nothing is perishable — which is precisely when this command otherwise goes silent
+  for good.
+- **Never re-pitch.** Read `[[What I want this brain to do]]` first and skip anything already on
+  it, built or declined. Being offered the same idea twice is how a channel gets muted, and it is
+  the same rule `guide expand` runs on.
+- **Not a therapist, and not a life coach.** They describe a mess; you go straight to the system
+  that holds it and what could reach it. No sympathy, no observations about their habits, no
+  suggestions about how they might live differently. Same rule as `setup`, for the same reason —
+  the service is that the thing gets less broken, not that it gets discussed.
+
+**If they say yes, hand off rather than building it here.** `setup connect` for a service with a
+tool already; `new-idea` for anything else, with its security review. Then write it to
+`[[What I want this brain to do]]` whether or not it got built that day, so the next run doesn't
+raise it again.
+
+**The young-vault floor in section 4 still applies to this source, and applies hardest.** A vault
+with nothing in it is *all* unmet need, so this source would fire on every gap it has and produce
+exactly the "you seem interested in note atomicity" failure that section exists to prevent. Below
+the floor, stay silent and route to `setup` — which is where a brand-new user gets this same
+service, done properly, with something built at the end.
 
 ## 2. Rank by what the answer is worth
 
@@ -70,6 +140,8 @@ channel muted.
    unsticks a stalled project.
 3. **Cost to answer.** One sentence beats a paragraph. Prefer a question they can answer in the time
    it takes to read it.
+4. **Source 7 sorts below all of the above**, and above nothing. It is what you ask when there is
+   genuinely nothing perishable, blocked or stalled worth an interruption — never instead of one.
 
 Drop anything that fails all three — most candidates should die here. A queue of twenty means the
 bar is too low, not that you have twenty questions.

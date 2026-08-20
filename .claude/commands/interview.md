@@ -1,5 +1,5 @@
 ---
-description: The brain interviews you — perishable follow-ups, open assumptions, blank dimensions, stalled work. Sourced, capped at three, silent when it has nothing worth asking.
+description: The brain interviews you — perishable follow-ups, open assumptions, stalled work, and one thing it could build you that you never thought to ask for. Sourced, capped at three, silent when it has nothing worth asking.
 ---
 
 @brain/prompts/interview.md
