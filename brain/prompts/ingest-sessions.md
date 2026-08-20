@@ -38,6 +38,14 @@ the paragraph above is the reason: this is a git repo that gets pushed, and `syn
 on the next turn before they had seen it. The cost is that a second machine asks once more. Say so
 if they wonder why — and don't "fix" it by committing the file.
 
+**Then name both halves and let them choose.** This command is two passes over the same history:
+the session notes below, and the [interaction pass](#the-interaction-pass--how-you-work-with-an-ai)
+— which reads it for how they work with an AI rather than what the work was, and is the more
+valuable half; say so when you offer it. Ask which they want — notes, the pass, or both — in the
+same scope conversation, because the consents differ: notes summarise the projects they picked,
+the pass pattern-reads everything they typed there. When they take both, the two run as one job on
+one staged corpus.
+
 **Then agree a window.** Default to the **last 30 days**. Never attempt an entire history in one
 run — it's thousands of sessions and it will cost more than it's worth. Report what remains at the
 end so they can run it again.
@@ -135,7 +143,8 @@ Where your agent can run subagents in parallel, split this phase by project — 
 own note, so nothing is shared and nothing can conflict. A convenience, not a requirement; on an
 agent without subagents the sequential run produces the same notes. The interaction pass below is
 the opposite case: it counts recurrence across the whole corpus, so it runs in one context, never
-split.
+split — but that one context can run alongside this phase, since both read the same staged corpus
+and the pass writes nothing.
 
 ## Phase 4 — Catalogue
 
@@ -163,8 +172,10 @@ Ingested: 14 session notes into cortex/06_Sessions/, plus its index and one line
 
 Point the correction at the thing most likely to be wrong, which is scope: the wrong project got
 ingested far more often than the wrong summary did. **A run that wrote no notes gets no footer.**
-After the footer you may offer the interaction pass below — once, in one line, dropped without
-comment if they don't take it up. Then stop.
+If the interaction pass wasn't part of this run, you may offer it after the footer — once, in one
+line, dropped without comment if they don't take it up. Then stop. When both halves ran, the
+pass's report comes first and this summary follows it: the proposals are the part they can act
+on, and the notes are the part they can search.
 
 ---
 
@@ -173,9 +184,10 @@ comment if they don't take it up. Then stop.
 The session notes capture what the work was. The same history holds something no note has ever
 held: how this person actually works with an AI — and whether the vault is tuned to them or to a
 shipped default. This pass reads the human's own typed turns, reports what recurs in them, and
-hands back proposals. **It runs only when they ask for it** — "what does my history say about how
-I work with AI", "tune this to how I actually use it" — or when they take up the one offer you
-may make at the end of a content run. Never run it as a side effect of the first pass.
+hands back proposals. **It runs only when they choose it by name** — in Phase 0's
+scope conversation, where it is offered alongside the notes, or on its own when they ask — "what
+does my history say about how I work with AI", "tune this to how I actually use it". Never as an
+unnamed side effect: a run they said "just the notes" to writes notes and nothing else.
 
 Its visibility limits are the command's, and they get said with the findings: the two directories
 named at the top of this file are everything it can see, browser chats never land on this disk,
