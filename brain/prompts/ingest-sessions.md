@@ -131,6 +131,12 @@ worthless the day that file disappears. Write the actual conclusion down.
 Write in the human's voice, past tense, their words where you have them. These are *their* sessions;
 don't turn them into changelog entries.
 
+Where your agent can run subagents in parallel, split this phase by project — each session gets its
+own note, so nothing is shared and nothing can conflict. A convenience, not a requirement; on an
+agent without subagents the sequential run produces the same notes. The interaction pass below is
+the opposite case: it counts recurrence across the whole corpus, so it runs in one context, never
+split.
+
 ## Phase 4 — Catalogue
 
 Write `cortex/06_Sessions/index.md`: one line per session, newest first —
