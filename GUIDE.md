@@ -52,8 +52,8 @@ so in a sentence and it moves it. That's the entire filing workflow.
 
 ## The commands, grouped by what you want
 
-**Just say the word.** `capture this`, `what's on today`, `digest`. Every command below also ships
-as a Claude Code slash command — `/capture`, `/ask`, `/digest`, and so on for all of them — if you
+**Just say the word.** `capture this`, `what's on today`, `brief`. Every command below also ships
+as a Claude Code slash command — `/capture`, `/ask`, `/brief`, and so on for all of them — if you
 like the autocomplete; saying the name in a sentence works exactly the same. And you can skip all of
 it — see [the next section](#you-dont-have-to-use-the-commands).
 
@@ -111,10 +111,10 @@ something is what makes it stick. Nothing is written to your notes unless you sa
 gets written is *your* answer, not its lecture. It also fields "how does this whole thing work" and
 "what did we just do".
 
-**`digest`** — rolls up recent activity. Defaults to the last 7 days; say `digest last month` or
-`digest since Tuesday` for something else. Four sections: what happened, **patterns**, what's
-stalled (with how long, and the smallest next action), and open loops. It saves the digest as
-`cortex/Daily/YYYY-MM-DD — Digest.md` and shows it to you.
+**`brief`** — rolls up recent activity. Defaults to the last 7 days; say `brief last month` or
+`brief since Tuesday` for something else. Four sections: what happened, **patterns**, what's
+stalled (with how long, and the smallest next action), and open loops. It saves the brief as
+`cortex/Daily/YYYY-MM-DD — Brief.md` and shows it to you.
 
 The patterns section is the one that surprises people — it reads across unrelated notes and names
 themes you never wrote down, including things you keep starting and not finishing. Anything it

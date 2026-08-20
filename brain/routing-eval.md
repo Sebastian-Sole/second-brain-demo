@@ -27,7 +27,7 @@ only that the table contains its own words.
    any write leaves behind. `git status` after the turn is the cheapest evidence for writes.
 4. Compare against **Expected**. Score it: pass, or fail with what it did instead.
 5. **Undo the writes** before the next utterance — `git checkout .` / `git clean -fd`, or run the
-   whole pass on a scratch branch. Test 7 opens a real task file; test 17 writes a real digest.
+   whole pass on a scratch branch. Test 7 opens a real task file; test 17 writes a real brief.
 6. One fresh session **per utterance** where you can afford it. Conversation history is context,
    and context routes. At minimum, start fresh whenever the previous utterance wrote something.
 
@@ -76,9 +76,9 @@ model problem.
 | 14 | `walk me through what a vector db is actually doing` | `teach` | | "walk me through Z" — teaching, and it must not write anything afterwards. One question, so no course offer either. |
 | 15 | `chase mats about the invoice` | `task` | | "chase X" is named in the table. A next action with a person attached. |
 | 16 | `the tax thing is done, close it off` | `task` | | Marking one done is `task`, not a new capture — and it needs a `completed:` date. |
-| 17 | `what have i been working on` | `digest` | ⚠ digest vs ask | Activity across many notes and a window, not one answer in one note. |
-| 18 | `what did i decide about the pricing page` | `ask` | ⚠ digest vs ask | Mirror of 17. One decision, one note — a digest here is an expensive wrong answer. |
-| 19 | `whats been sitting there not moving` | `digest` | | "what's stalled" in the human's words; `digest` has a Stalled section for exactly this. |
+| 17 | `what have i been working on` | `brief` | ⚠ brief vs ask | Activity across many notes and a window, not one answer in one note. |
+| 18 | `what did i decide about the pricing page` | `ask` | ⚠ brief vs ask | Mirror of 17. One decision, one note — a brief here is an expensive wrong answer. |
+| 19 | `whats been sitting there not moving` | `brief` | | "what's stalled" in the human's words; `brief` has a Stalled section for exactly this. |
 | 20 | `inbox is out of control, sort it` | `maintain` | ⚠ maintain vs email | The vault's `cortex/00_Inbox/`, not a mailbox — "the inbox has visibly grown" is `maintain`'s trigger. |
 | 21 | `tidy up before i log off` | `maintain` | | "tidy up" + "close out the day" — both `maintain` triggers in one sentence. |
 | 22 | `somethings broken, capture blew up last time i ran it` | `doctor` | | A command failing is install health, and `doctor` is a script to run, not a prompt. |
@@ -121,7 +121,7 @@ model problem.
 | 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `email`, `calendar` and `task` all fit, and all three have side effects. Ask. |
 | 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
 
-**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 6 · teach 3 · task 3 · digest 2
+**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 6 · teach 3 · task 3 · brief 2
 · maintain 3 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
 weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 

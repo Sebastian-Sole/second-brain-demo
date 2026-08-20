@@ -114,7 +114,7 @@ connecting first:
 | | |
 | --- | --- |
 | **Getting things in** | `capture` anything at all · `task` for things with a next action |
-| **Getting things out** | `ask` your own notes · `teach` you something new · `digest` recent activity |
+| **Getting things out** | `ask` your own notes · `teach` you something new · `brief` recent activity |
 | **Reasoning past your notes** | `infer` what you never wrote down · `review-assumptions` to confirm or kill its guesses |
 | **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
@@ -122,7 +122,7 @@ connecting first:
 | **Working out what to do with it** | `teach` for what this is and how to use it · `interview` for what to build next |
 | **Your history** | `ingest-sessions` |
 
-`digest` surprises people: it names themes across unrelated notes that you never wrote down,
+`brief` surprises people: it names themes across unrelated notes that you never wrote down,
 including the things you keep avoiding. `infer` is the one a general chat model can't do, because it
 doesn't know you — and every guess it makes is labelled, evidenced, falsifiable, and promotable to a
 fact only by you. **Mail and calendar read and draft. They send only when you ask and then

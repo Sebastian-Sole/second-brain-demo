@@ -94,7 +94,7 @@ cabinet.
 > `type:` in frontmatter, not the folder, is what actually routes a note. Swap the folder map in
 > `AGENTS.md` and every command still works.
 >
-> The genuinely evidence-backed part of this repo is `digest` and `maintain` — the review loop.
+> The genuinely evidence-backed part of this repo is `brief` and `maintain` — the review loop.
 > The robust finding in the note-taking literature is that *revisiting* notes helps; how you filed
 > them doesn't.
 

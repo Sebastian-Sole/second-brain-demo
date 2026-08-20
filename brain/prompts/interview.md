@@ -103,7 +103,7 @@ don't have proves the brain doesn't know them, on the one subject where it was c
 - **Name what you'd build, in the question.** This source offers a capability; it does not collect
   data. *"Want to tell me about your training?"* is data collection wearing a helpful hat and it
   earns nothing. *"Your watch exports to Strava, and Strava has a connector — I could pull your
-  week in and put it in the Sunday digest. Worth doing?"* is an offer they can say yes to.
+  week in and put it in the Sunday brief. Worth doing?"* is an offer they can say yes to.
 - **Check it's reachable before you offer it.** Run the ladder in `brain/prompts/new-idea.md` first.
   Offering something that turns out to be a locked box is how every other claim you make becomes
   suspect — and this is the one source where the temptation to overpromise is built in, because
