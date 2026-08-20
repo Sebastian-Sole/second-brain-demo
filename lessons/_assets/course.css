@@ -1,0 +1,220 @@
+/* course.css - shared stylesheet for every lesson in this repo.
+   Print-friendly, theme-aware, no external requests. */
+
+:root {
+  --ink:        #1c1b19;
+  --ink-soft:   #4a4741;
+  --ink-faint:  #7a756c;
+  --paper:      #fbfaf7;
+  --rule:       #e0dcd3;
+  --accent:     #b23a1a;
+  --accent-bg:  #fdf2ed;
+  --code-bg:    #f2efe9;
+  --good:       #2f6b3f;
+  --warn:       #8a5a00;
+  --measure:    34rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink:       #e8e4dc;
+    --ink-soft:  #b8b2a7;
+    --ink-faint: #857f74;
+    --paper:     #161513;
+    --rule:      #302d28;
+    --accent:    #e4703f;
+    --accent-bg: #241a15;
+    --code-bg:   #201e1a;
+    --good:      #7fb98c;
+    --warn:      #d3a44a;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #e8e4dc; --ink-soft: #b8b2a7; --ink-faint: #857f74;
+  --paper: #161513; --rule: #302d28; --accent: #e4703f;
+  --accent-bg: #241a15; --code-bg: #201e1a; --good: #7fb98c; --warn: #d3a44a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 4rem 1.5rem 6rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 18px/1.62 ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+main { max-width: var(--measure); margin: 0 auto; }
+
+.eyebrow {
+  font: 600 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.9rem;
+}
+
+h1 {
+  font-size: 2.05rem;
+  line-height: 1.16;
+  letter-spacing: -0.018em;
+  margin: 0 0 0.6rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.16rem;
+  line-height: 1.3;
+  margin: 3rem 0 0.9rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  font-weight: 600;
+  letter-spacing: -0.008em;
+}
+
+h3 { font-size: 1rem; margin: 1.8rem 0 0.5rem; font-weight: 600; }
+
+p { margin: 0 0 1.1rem; }
+
+.standfirst {
+  font-size: 1.12rem;
+  color: var(--ink-soft);
+  margin-bottom: 2.4rem;
+  line-height: 1.5;
+}
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+code, kbd, .mono {
+  font: 0.84em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  padding: 0.12em 0.36em;
+  border-radius: 3px;
+}
+
+pre {
+  background: var(--code-bg);
+  border-left: 2px solid var(--rule);
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+pre code { background: none; padding: 0; font-size: 1em; }
+
+.table-wrap { overflow-x: auto; margin: 0 0 1.4rem; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font: 400 0.86rem/1.45 ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+}
+th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-bottom: 1.5px solid var(--rule);
+  padding: 0 0.7rem 0.5rem 0;
+  vertical-align: bottom;
+}
+td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.62rem 0.7rem 0.62rem 0;
+  vertical-align: top;
+}
+td:last-child, th:last-child { padding-right: 0; }
+.yes { color: var(--good); font-weight: 600; }
+.no  { color: var(--accent); font-weight: 600; }
+
+blockquote {
+  margin: 0 0 1.3rem;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+  border-left: 3px solid var(--rule);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+blockquote cite { display: block; font-style: normal; font-size: 0.8rem; color: var(--ink-faint); margin-top: 0.45rem; }
+
+.callout {
+  background: var(--accent-bg);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.15rem;
+  margin: 0 0 1.4rem;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.94rem;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout .label {
+  display: block;
+  font: 600 0.68rem/1 ui-monospace, Menlo, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.55rem;
+}
+
+ul, ol { margin: 0 0 1.2rem; padding-left: 1.3rem; }
+li { margin-bottom: 0.5rem; }
+
+.ladder { list-style: none; padding: 0; counter-reset: rung; }
+.ladder li {
+  padding: 0.75rem 0 0.75rem 2.6rem;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  margin: 0;
+  font-size: 0.95rem;
+}
+.ladder li::before {
+  counter-increment: rung;
+  content: counter(rung);
+  position: absolute; left: 0; top: 0.78rem;
+  width: 1.7rem; height: 1.7rem;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font: 600 0.72rem/1 ui-monospace, Menlo, monospace;
+  color: var(--ink-faint);
+}
+
+.recall {
+  margin: 3rem 0 0;
+  padding: 1.4rem 1.5rem;
+  border: 1.5px dashed var(--rule);
+  border-radius: 5px;
+}
+.recall h2 { border: none; margin: 0 0 0.7rem; padding: 0; font-size: 1rem; }
+.recall summary { cursor: pointer; color: var(--accent); font-size: 0.9rem; font-family: ui-sans-serif, sans-serif; }
+.recall details { margin-top: 0.9rem; }
+.recall details p { margin: 0.8rem 0 0; font-size: 0.94rem; }
+
+footer {
+  margin-top: 3.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  font: 400 0.82rem/1.6 ui-sans-serif, -apple-system, sans-serif;
+  color: var(--ink-faint);
+}
+footer a { color: var(--ink-soft); }
+
+.src { font-size: 0.82rem; color: var(--ink-faint); font-family: ui-sans-serif, sans-serif; }
+
+@media print {
+  body { background: #fff; color: #000; padding: 0; font-size: 11pt; }
+  .recall details { display: block; }
+  .recall summary { display: none; }
+  a { color: #000; }
+  h2 { page-break-after: avoid; }
+  pre, table, .callout { page-break-inside: avoid; }
+}
+
+@media (max-width: 40rem) {
+  body { padding: 2.5rem 1.1rem 4rem; font-size: 17px; }
+  h1 { font-size: 1.7rem; }
+}
