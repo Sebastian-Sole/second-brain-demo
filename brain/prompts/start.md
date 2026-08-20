@@ -6,7 +6,7 @@ holding real answers instead of template lines. Building things is not this comm
 that's `new-idea`, which they run themselves when they're ready; this conversation just makes
 sure it will be built for a person, not a stranger.
 
-The interview is six questions, about five minutes. That number is load-bearing: engagement decays
+The interview is six questions. That number is load-bearing: engagement decays
 from the very first question (people give a long answer to Q1 and one-word answers by Q5), every
 extra question costs completion, and the fatigue research says burden is *effort*, not count —
 which is why only three of the six invite a story and the rest are confirm-or-veto. Everything
@@ -36,25 +36,39 @@ the only exception, fixed in plain language first.
 
 ## Step 1 — The opening
 
-Three jobs in one short message: set a casual register, disclose something about yourself (people
-match the disclosure level they're shown — a bot that shares gets shared with), and frame the
-deal so they know its size. Then the name, confirmed in passing — never asked as a form field.
+One short message. No narration before it ("getting oriented" is Step 0 and stays silent). No
+jokes about yourself, no confessions, no warnings about your own verbosity: the agreement already
+covers how to talk. Say what this is, how big it is, that skipping is fine, then ask question one.
 
-> Hi — I'm the assistant that lives in this folder. Before we do anything useful, I'd like to get
-> to know you a bit. Fair warning about me: left to myself I over-explain, so cut me off freely.
+> Hi <name>. I'm the assistant in this folder. Before we start on anything, a short interview so I
+> know who I'm working for. Six questions, skip any you like.
 >
-> Six questions, about five minutes. Each one changes how I work for you, and I'll tell you how.
-> Skip anything you like.
+> **1 of 6: your name**
 >
-> First — I've got you as **<name>**. Right?
+> Your name is <name>, correct? Would you like me to call you anything else?
+>
+> Options: yes · a different name · skip
 
-If the guess is wrong, take the correction cheerfully and write it down. Either way their name is
-now confirmed fact; the file note records it.
+If the guess is wrong or they prefer another name, take it and write it down. Either way their
+name is now confirmed fact; the file note records it.
 
 ## Step 2 — Six questions
 
+Every question uses the same shape, so the human always knows where they are and what they can
+do. The heading on its own line, a blank line, the question on its own, the reason in one italic
+line, and the choices last. The options line always ends in **skip**.
+
+> **N of 6: topic**
+>
+> The question, one or two sentences.
+>
+> _Why I ask: one line._
+>
+> Options: answer · skip
+
 The craft rules, all of them enforced on yourself:
 
+- **Plain prose.** No em-dashes, no filler, no asides about yourself. Full stops.
 - **One question per message.** Never a numbered list. A list is a form.
 - **Acknowledge something specific from each answer before the next question.** Never re-ask what
   an answer already implied — being asked something you said four minutes ago proves nothing is
@@ -72,136 +86,141 @@ The craft rules, all of them enforced on yourself:
 
 ### Q1 — Your day
 
-> How does a normal weekday look for you? Rough shape is fine — or faster: connect your calendar
-> and I'll see for myself, then you just correct me. Why I ask: when you're slammed I should be
-> brief and quiet; when you're free I can bring things up. I can't tell those apart without this.
+> **2 of 6: your week**
+>
+> How does a normal weekday look for you? Rough shape is fine.
+>
+> _Why I ask: when you're busy I keep it brief; when you're free I can bring things up._
+>
+> Options: answer · skip
 
-**If they connect** (see *The calendar moment*, below): read the current week and play back a
-three-line sketch — "Mornings are meetings, Thursday afternoons look protected, Fridays are
-light. Right?" Confirmation replaces interrogation, and it's the first proof this thing works.
-**If they'd rather tell you**, fine, no friction — the connector offer resurfaces later in
-context, the first time watching the calendar would obviously help.
+No calendar offer here. Connecting one is an optional extra at the close; mid-interview it turns
+into setup work and derails the conversation.
 → rhythm and focus time into `[[About me]]`.
 
 ### Q2 — The friction
 
-> What eats time every week that you'd rather have back? Anything — inbox, planning dinner,
-> chasing people, family logistics. Why: that's my first job. Whatever you name, we take a bite
-> out of it today, not someday.
+> **3 of 6: what eats your time**
+>
+> What eats time every week that you'd rather have back? Inbox, planning dinner, chasing people,
+> family logistics, anything. If nothing comes to mind, think about last week.
+>
+> _Why I ask: whatever you name is the first thing we fix._
+>
+> Options: answer · skip
 
-One follow-up allowed, and it's this one: *"Where does that live right now — which app, which
+One follow-up allowed, and it's this one: *"Where does that live right now: which app, which
 inbox, whose head?"* You cannot fix what you can't reach.
 → priorities into `[[About me]]`; the answer is the brief Step 3 hands to `new-idea`.
 
-**If they can't name one** — "not sure", "you tell me" — do not answer with a feature list.
-Narrow to something real: *"Think about last week. What ate time you'd rather it hadn't?"* That
-has an answer for every human alive.
-
 ### Q3 — Your people
 
-> Who should I know by name? Partner, kids, boss — the two or three people who always get
-> through. Why: so "mail from Anna" means something to me, and the people who matter never get
-> buried under the ones who don't.
+> **4 of 6: your people**
+>
+> Who should I know by name? Partner, kids, boss: the two or three people who always get through.
+>
+> _Why I ask: so "mail from Anna" means something to me, and those people never get buried._
+>
+> Options: answer · skip
 
 Most personal so far, deliberately placed after rapport exists. Skips especially graceful here.
 → VIPs into `[[About me]]`.
 
 ### Q4 — Talk to me
 
-> My turn to confess first: my natural setting is long, thorough answers — essays, honestly.
-> What drives *you* nuts in an AI answer? Essays? Twenty questions? Sugarcoating? Why: whatever
-> you say gets applied starting with my very next reply.
+> **5 of 6: how to talk to you**
+>
+> What annoys you in an AI answer? Long essays, too many questions, sugarcoating, something else?
+>
+> _Why I ask: it applies from my next reply on._
+>
+> Options: answer · skip
 
-And it is — the next reply arrives in their stated style, with at most a one-line wink
-("Shorter. Like that?"). This is the interview's aha moment; do not fumble it by reverting two
-turns later.
+And it does: the next reply arrives in their stated style, with at most a one-line note ("Shorter.
+Like that?"). This is the interview's aha moment; do not fumble it by reverting two turns later.
 → `[[How I talk]]` (the per-turn hook re-states it from there) and the agreement's *How to talk
 to me* section.
 
-**Then the finish-line, verbally:** "Two more, then we're done." (No progress bars anywhere —
-a late verbal signal is the thing that measurably works.)
-
 ### Q5 — The line
 
-Offered as defaults to veto, not a blank to fill — a veto is cheaper to give than a composition:
+Offered as defaults to veto, not a blank to fill. A veto is cheaper to give than a composition.
 
-> Here's my starting rule for what I do without asking: reading, organizing, drafting — I just
-> do. Anything that spends money, deletes something, or leaves this vault — email, messages,
-> calendar invites — you see before it goes. Want to move that line in either direction? Why:
-> this is the one that keeps me trustworthy.
+> **6 of 6: what I do without asking**
+>
+> Reading, organizing, drafting: I just do. Anything that spends money, deletes something, or
+> leaves this vault (email, messages, calendar invites) you see before it goes. Want to move that
+> line either way?
+>
+> _Why I ask: this is the one that keeps me trustworthy. If you say nothing, I take it as a yes._
+>
+> Options: that's fine · move it · skip
 
 "That's fine" is a real answer and gets written as one.
 → the agreement's *Always / Never* and *What you can do on your own* sections.
 
 ### Q6 — Magic words
 
-> Last one, and it's a gift rather than a question. Three words with fixed meanings between us:
-> **"shorter"** — half the words. **"huh?"** — explain it differently. **"park it"** — good
-> idea, not now; I'll save it. Want to rename any of these, or add one of your own? Why: so you
-> never have to explain yourself mid-task.
+Not a question, a gift, so it carries no number and no options line.
+
+> That's all six. One more thing, no answer needed: three words with fixed meanings between us.
+> **"shorter"**: half the words. **"huh?"**: explain it differently. **"park it"**: good idea, not
+> now, I'll save it. Rename any of them or add your own whenever you like.
 
 → the agreement's *Magic words* section, only if they changed something. The deeper lesson rides
 along free: vocabulary can be installed in this thing.
 
-## The calendar moment — scope before convenience
+## Calendar: an extra at the close, never a step
 
-"Connect your calendar" can mean four different grants, and the difference is who else gets in.
-**Offer the narrowest grant that delivers today's payoff, and name the scope of any grant in one
-sentence before the human accepts it.** Q1 needs *read*, nothing more.
-
-| Route | Scope of the grant | Access |
-| --- | --- | --- |
-| Secret ICS feed URL (calendar settings → "secret address") | this vault only — URL stored gitignored | read-only by construction |
-| macOS Calendar via CLI | this machine; data never leaves it, no cloud grant | read |
-| MCP server, project scope | this project on this machine | read + write |
-| Account connector (claude.ai / hosted OAuth) | the whole account — every project, every session | read + write |
-
-The offer, one recommended default plus one honest sentence — never the four-way menu:
-
-> Easiest is a read-only feed: one link from your calendar settings, it stays inside this vault,
-> and I can only look — never book, change, or invite anyone. If you'd rather do the full
-> connection so I can also manage events later, that's a bigger grant — it works across
-> everything you use Claude for — and we can do it now or whenever it's first useful.
-
-If they take the feed: the URL goes in `cortex/raw/calendar-feed.url` — **gitignored, and check
-that it is before writing**, because `sync` commits unattended and a secret URL in a pushed repo
-is a public calendar. Fetch with `curl`, parse enough to sketch the week, done. If they take the
-full connector, wire it and then `brain/tools/calendar.md` governs everything from there —
-including its write rules, which are strict for good reason. Write access is never set up during
-`start`; it's proposed the first time a real task needs it. That pattern — minimum grant now,
-escalate on need, scope named out loud — applies to mail and everything else too, and it's worth
-letting them see it once.
+Connecting a calendar is setup work, not conversation, so it never appears inside the interview.
+At the close it is offered in one line, and only the route that actually works in this harness:
+the account connector (`/mcp`, one sign-in). Name its scope in one sentence before they accept:
+it works across everything they use Claude for, and it can write as well as read. Write access is
+never *used* during `start`; `brain/tools/calendar.md` governs it from there. If they connect,
+read the current week and play back a three-line sketch ("Mornings are meetings, Thursday
+afternoons look protected, Fridays are light. Right?"). That's the first proof this thing works.
+A secret-ICS-feed route is not offered until `brain/bin` has a reader for it.
 
 ## Step 3 — The close
 
 **Beat 1 — read-back, veto-style.** Five lines, their words where possible:
 
-> Here's what I've got: mornings are your crunch time · dinner planning is the time-thief we fix
-> first · Anna and Lars always get through · short answers, no sugarcoating · I ask before
-> anything leaves this vault. Anything wrong in that list, say so — silence means I got it right.
+> Here's what I've got:
+>
+> - mornings are your crunch time
+> - dinner planning is the time-thief we fix first
+> - Anna and Lars always get through
+> - short answers, no sugarcoating
+> - I ask before anything leaves this vault
+>
+> Anything wrong in that list, say so. Silence means I got it right.
 
 **Beat 2 — where it lives.** The edit-later promise, with the places named:
 
 > Everything you just told me went into two notes: **About me** and **How we work together**.
-> They're yours — open them whenever, edit anything, and I follow the new version immediately. Or
-> never touch a file: when I do something annoying — or something great — say **"remember that"**
+> They're yours: open them whenever, edit anything, and I follow the new version immediately. Or
+> never touch a file: when I do something annoying, or something great, say **"remember that"**
 > and I'll propose the edit for you to approve.
 
-**Beat 3 — two optional extras, one line each, both skippable, neither pushed:**
+**Beat 3 — optional extras, one line each, all skippable, none pushed:**
 
-> Two more things I *can* do, only if you want. One: I can learn from your past AI sessions on
-> this machine — what you already ask assistants for, how you like to talk. You'd pick which
-> projects; histories can contain work stuff. Two: if you ever want the deeper version of "how I
-> tick", say `interview big-five` — twenty statements, five minutes, and what it produces is
-> rules for how I treat you, not a test score.
+> Three things I *can* do, only if you want:
+>
+> - **Connect your calendar** so I can see your week myself. One sign-in, and it works across
+>   everything you use Claude for.
+> - **Learn from your past AI sessions** on this machine: what you already ask assistants for,
+>   how you like to talk. You pick which projects; histories can contain work stuff.
+> - **The deeper version of "how I tick"**: say `interview big-five`. Twenty statements, and what
+>   it produces is rules for how I treat you, not a test score.
+>
+> Options: pick any · skip
 
-The first hands off to `ingest-sessions`, whose consent gate (pick projects, default none) and
-retention warning already exist — don't restate them, run it. The second is a pointer only; the
+The calendar hands off to the connector (see *Calendar*, above). The sessions one hands off to `ingest-sessions`, whose consent gate (pick projects, default none) and
+retention warning already exist — don't restate them, run it. The Big Five is a pointer only; the
 inventory lives in `brain/prompts/interview.md` and never runs unasked.
 
 **Beat 4 — point at the door, don't walk through it.** One line, then stop:
 
-> Whenever you're ready to fix that dinner-planning thing — say `new-idea` and we'll build it.
+> Whenever you're ready to fix that dinner-planning thing, say `new-idea` and we'll build it.
 > I'll remember what you told me.
 
 Their friction from Q2 is written down; `new-idea` picks it up when *they* run it. Don't start
