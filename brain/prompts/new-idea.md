@@ -10,6 +10,10 @@ Six phases, in order. **Don't skip any, even when the feature looks trivial.** T
 features are the ones that ship an unreviewed network call; the big ones get scrutiny for free.
 One feature per run.
 
+People often arrive here from `start` with this as their second-ever conversation. Assume nothing
+about how technical they are: you run every command and write every file; they answer in plain
+English. No jargon they didn't use first.
+
 ---
 
 ## Phase 1 — Discuss
@@ -18,6 +22,9 @@ Get the problem in the human's words before you have an opinion about the soluti
 
 - **What are they actually trying to do?** The situation that keeps going wrong, not the feature
   name they arrived with.
+- **Which system holds the problem?** Their mail, a calendar, an app, a folder on disk. You can't
+  fix anything you can't reach, and this is the question that turns a complaint into a job. When
+  the answer is a named service, classify it on the ladder below before designing anything.
 - **What would they type?** The literal sentence, out of their mouth. If they can't produce one,
   you don't yet have a command — you have an idea about one.
 - **What comes back?** A sentence in the conversation, a note in the vault, a draft somewhere
@@ -35,6 +42,59 @@ Push back here, not three phases later:
   sensible sentence to say when its requirement is missing. Say which one, say why in a sentence,
   and offer the nearest thing that *can* be built. Building it anyway and hoping is the failure
   this phase exists to catch, and it is much cheaper to refuse now than to unpick a shipped tool.
+
+### When they name a service — the ladder
+
+The moment a service comes up — Gmail, Notion, Todoist, Strava, their company's Jira — the answer
+to *"can it do that?"* has to be honest, immediate, and the same answer every time. Four rungs:
+
+| | Verdict | What you say | What happens |
+| --- | --- | --- | --- |
+| **1** | **Already here** | "That one's built in." | `brain/tools/` covers it — mail, calendar, weather, news, location. Route there and stop; nothing to build. |
+| **2** | **One connector away** | "Yours has a proper connector — couple of minutes." | The connect path below. Still nothing to build. |
+| **3** | **Reachable, roughly** | "No official connector, but it publishes a feed / has an export. I can work with that." | This command's actual job — carry on to Align. |
+| **4** | **Closed** | "That one's a locked box — nothing but the app itself can get in." | Say so plainly, then name what *is* open. |
+
+**Check before you claim.** `brain/tools/` is the listing of what's built in, and what's actually
+connected is whatever connectors this session can see — look, don't assume. "It can read your
+Slack" when nothing reads Slack is the fastest way to make every other sentence you've said
+suspect, and this person may have no way to tell your true claims from your confident ones.
+
+**A rung 4 answer without a rung 1–3 alternative is an incomplete answer.** The full shape is a
+straight no, a route out of it, and the judgment it hands them — *can my assistant get in?* is the
+question that separates the tools that can have an assistant from the ones that can't, and it
+sticks permanently when it arrives as the answer to something they asked. And **never soften a no
+into a maybe**: "I might be able to work something out" buys thirty seconds and costs the
+relationship the moment it turns out to be false. The honest no is what makes the yeses worth
+anything.
+
+### The connect path — rungs 1 and 2 end here
+
+Connecting a service a tool already covers is a run that finishes in Discuss. No spec, no build,
+no review — nothing new ships:
+
+1. **They connect it, in their agent's own settings** — on Claude that's the app's connector
+   settings; other agents have their own mechanism. The vault holds no credentials and no OAuth
+   flow. Walk them through it in plain words, and wait.
+2. **Verify with a live read.** A real message, today's actual events — never the settings
+   screen's word for it, and never `doctor`'s, which doesn't check connectors. The live read is
+   the verification.
+3. **Record it in `[[My systems]]`**, then the correction footer names that line. Done.
+
+### `[[My systems]]` — every service named gets a line
+
+Whatever rung it landed on, every service this conversation touched gets a dated line in
+`cortex/03_Resources/My systems.md`:
+
+```markdown
+- **Gmail** — connected 2026-08-20. Drives [[triage]].
+- **Apple Notes** — closed, nothing can read it. They keep recipes and to-dos there.
+- **Todoist** — has a connector, not set up yet. _(offered 2026-08-20, said "later")_
+```
+
+Three months on, that file is why a session can say *"you mentioned Todoist back in August — want
+me to hook it up?"* instead of asking from scratch. Cheap to write, and this command is the one
+that writes it.
 
 ## Phase 2 — Align
 
@@ -71,6 +131,12 @@ Decide these, in this order, and write the answers down — they become the file
 When it's genuinely ambiguous it's a skill. A skill that later needs the network is promoted; a
 tool that never leaves the vault is a skill carrying failure modes it doesn't need.
 
+There is a third shape, and it's where most first builds land: **a routine composed of commands
+that already exist** — a named morning run of `calendar`, `email` and `news` in an order that
+suits them, say. New reach: none, so it's a skill, and its Phase 4 review is short because every
+capability it touches was reviewed when it shipped — say that in the review rather than skipping
+it.
+
 **2. What it reaches for.** Name the actual endpoint or the class of connector. "The web" is not an
 answer, and neither is a product name you assumed — connectors are per-human, so a tool resolves
 what's available at runtime rather than hardcoding one vendor's mail client.
@@ -81,7 +147,8 @@ the conversation and nothing competes with real notes in keyword search forever.
 it kept, that's an ordinary `capture`.
 
 **4. What it does when its requirement isn't met.** Write the actual sentence now and put it in
-`fallback:` — "No mail connector is configured — run `setup`." A plain sentence, never an error,
+`fallback:` — "No mail connector is configured — add one in your agent's connector settings, or
+say `new-idea` and I'll walk you through it." A plain sentence, never an error,
 never a stack trace, never a lecture about API keys. Then it answers whatever it still can without
 the missing piece.
 

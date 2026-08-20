@@ -60,8 +60,8 @@ model problem.
 
 | # | Utterance | Expected | Hard | Why |
 | --- | --- | --- | --- | --- |
-| 1 | `just cloned this thing, where do i start` | `setup` | | First run with `[[About me]]` blank is `setup`'s first trigger. |
-| 2 | `make this actually mine` | `setup` | | "make this mine" is verbatim the intent `setup` claims. |
+| 1 | `just cloned this thing, where do i start` | `start` | | First run with `[[About me]]` blank is `start`'s first trigger. |
+| 2 | `make this actually mine` | `start` | | "make this mine" is verbatim the intent `start` claims. |
 | 3 | `ask me something, ive got five minutes` | `interview` | | They're offering to fill gaps — the one command that asks *them*. |
 | 4 | `what dont you know about me yet` | `interview` | ⚠ interview vs ask | A question *about* the vault's gaps is a request to be interviewed, not a lookup. |
 | 5 | `what do you know about me` | `ask` | ⚠ interview vs ask | Mirror of 4. Same shape, opposite direction: retrieve the profile, don't start asking. |
@@ -85,7 +85,7 @@ model problem.
 | 23 | `is this thing even working` | `doctor` | ⚠ maintain vs doctor | "is this thing working" verbatim. Install health, nothing to do with note quality. |
 | 24 | `the vaults a mess` | `maintain` | ⚠ maintain vs doctor | Mirror of 23. Messy *contents* is `maintain`; `doctor` would report a clean bill and miss the point. |
 | 25 | `i want it to also do a weekly review thing` | `new-idea` | | "I want it to also do X" — adding capability, with the security review that entails. |
-| 26 | `can you hook this up to my strava` | `new-idea` | ⚠ setup vs new-idea | `new-idea` owns "connect it to my <service>" **when `brain/tools/` has nothing for it**, and nothing there covers Strava. See A9 — this answer flips to `setup` the day a Strava tool lands. |
+| 26 | `can you hook this up to my strava` | `new-idea` | | `new-idea` owns "connect it to my <service>" at every rung; whether a tool exists only decides where inside the run it ends (the connect path in Discuss), not which command fires. |
 | 27 | `can you read my old codex chats and make them searchable` | `ingest-sessions` | | "make my history searchable" — and it must ask which projects before reading any. |
 | 28 | `pull in what i was doing in those claude sessions last month` | `ingest-sessions` | | Past sessions on disk, distilled. Not this session. |
 | 29 | `write down what we just did here` | `capture` | ⚠ capture vs ingest-sessions | *This* session is `capture`'s job; `ingest-sessions` is only for transcripts already on disk. |
@@ -121,7 +121,7 @@ model problem.
 | 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `email`, `calendar` and `task` all fit, and all three have side effects. Ask. |
 | 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
 
-**Per-command coverage:** setup 2 · interview 2 · capture 9 · ask 6 · teach 3 · task 3 · digest 2
+**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 6 · teach 3 · task 3 · digest 2
 · maintain 3 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
 weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 
@@ -158,15 +158,12 @@ contents*, not about the utterance: "tell me about retries" is `ask` when a retr
 though the words alone decide it. Row 11's expected answer assumes a vault that has something on
 the topic.
 
-**A9 · row 26 is decided by a directory listing, not by the table** (row 26). **New.**
-The old `setup`/`new-idea` collision is gone, but the fix moved the decision outside the text:
-`new-idea` now owns "connect it to my <service>" only "**when `brain/tools/` has nothing for
-that service** — check the listing before you answer", and `setup` owns it when a tool exists. That
-is a clean partition and the right one. It also means row 26's expected answer is a fact about the
-filesystem on the day it was written: nothing in `brain/tools/` covers Strava (weather, location,
-news, email, calendar), so `new-idea` is correct **today**. Ship a Strava tool and row 26 flips
-to `setup` without a word of the table changing. Same class of problem as A1, and the reason a tool
-being added is listed as a re-run trigger below.
+**A9 · row 26 is decided by a directory listing, not by the table** (row 26). **Resolved
+2026-08-20.** When `setup` was deleted, `new-idea` took "connect it to my <service>" at every
+rung: a tool already existing means the run ends at the connect path in Discuss instead of
+building, but the *routing* no longer depends on the filesystem. Row 26 stays `new-idea` whether
+or not a Strava tool ever ships, so the hard marker is gone and the re-run trigger below no
+longer applies to this row.
 
 **A10 · the table has three exits but counts two** (row 41). **New.**
 "Two ways out of this table, and they aren't the same" names *nothing matches → `capture`* and

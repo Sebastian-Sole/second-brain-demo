@@ -76,14 +76,14 @@ Prefer not to use a terminal? See [Which app to use](#which-app-to-use) below.
 Claude Code will ask whether you trust this folder the first time. **Say yes** — until you do, it
 ignores the settings that ship with this repo and will pester you for permission on routine things.
 
-**4. Say `setup`.**
+**4. Say `start`.**
 
-It asks one question at a time — what you use AI for now, what annoys you about it, where that
-problem actually lives — and each question follows from your last answer instead of marching through
-a list. Then it connects what can be connected and **builds you one thing that works before you're
-finished**, aimed at whatever you said was annoying, and runs it in front of you. **Don't skip
-this** — it's the difference between notes about you and notes about a generic person, and it's the
-part where you find out what this is actually for.
+Five questions, one at a time — your name, how it should come across, a bit about you, how you
+want to be written to, how much it may do on its own. Skip any of them; the answers land in files
+you can open and edit, and by the end the vault knows who it's working for. Then it points at the
+door that matters: say `new-idea` and name one thing that eats your time, and it builds for it.
+**Don't skip `start`** — it's the difference between notes about you and notes about a generic
+person.
 
 **5. If you're not sure what you've just installed, say `teach me how this works`.**
 
@@ -117,7 +117,7 @@ connecting first:
 | **Reasoning past your notes** | `infer` what you never wrote down · `review-assumptions` to confirm or kill its guesses |
 | **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
-| **Making it yours** | `setup` · `interview` · `new-idea` |
+| **Making it yours** | `start` · `interview` · `new-idea` |
 | **Working out what to do with it** | `teach` for what this is and how to use it · `interview` for what to build next |
 | **Your history** | `ingest-sessions` |
 

@@ -1,6 +1,6 @@
 # Using your second brain
 
-You've run `setup` and the vault knows who you are. This is what to do with it from here.
+You've run `start` and the vault knows who you are. This is what to do with it from here.
 
 Two other files, so you know when to leave this one: [`README.md`](README.md) is what this is and
 how to install it, and [`DESIGN.md`](DESIGN.md) is why it's built the way it is. Neither is
@@ -217,20 +217,17 @@ This project just happens to be a subject it has the documents for, so it reads 
 reciting a list, offers to build one there and then, and writes down what you said yes to so it
 doesn't pitch you the same thing twice.
 
-**`setup`** — you've already run this. Run it again any time; it's how you correct your profile.
+**`start`** — you've already run this: the five-question first conversation. Run it again any
+time; it's how you correct your profile or change how I write to you as a standing rule.
 
-It asks one question at a time, and each one follows from your last answer rather than working
-through a list — what you use AI for now, what annoys you about it, which of your systems that
-problem actually lives in. Then it connects what can be connected, tells you straight when something
-can't be, and **builds you one thing that works before you're done** — a command aimed at whatever
-you said was annoying, run in front of you on your own data. The profile falls out of the
-conversation on the way.
+Connecting services and building things live in `new-idea` — name the service or say what you
+wish this could do, and it takes it from there. When something can't be reached, it tells you
+straight and names what can be.
 
-`setup quick` means fewer questions, never a skipped build. `setup style` re-does just the
-how-you-want-things-written part. `setup deep` adds a longer profile at the end: what you're into,
-and — if you want it — a short Big Five inventory, the personality model with actual research behind
-it rather than the ones you've met in magazines. You get behaviour lines you can read and delete,
-never a score or a four-letter type, and only `infer` ever reads them.
+The deeper profile is `interview big-five` — if you want it — a short Big Five inventory, the
+personality model with actual research behind it rather than the ones you've met in magazines. You
+get behaviour lines you can read and delete, never a score or a four-letter type, and only `infer`
+ever reads them.
 
 **`interview`** — the only command that talks to you first. It works out what the vault is missing
 and asks: how did the thing on Tuesday go, is this project dead or just quiet, this assumption —
@@ -352,7 +349,8 @@ indistinguishable from one that got lost.
 ## Connecting mail and calendar
 
 Both are **opt-in**, and what you're opting into is the connection itself. Nothing is connected
-until you connect it, which you do once, in `setup`; until then, asking about your inbox gets you one
+until you connect it, which you do once, in your agent's own connector settings — say `new-idea`
+and it walks you through it; until then, asking about your inbox gets you one
 plain sentence — "No mail connector is configured" — rather than an error. Once connected, they work
 like every other command: you won't be asked permission again each time you ask what's on today.
 

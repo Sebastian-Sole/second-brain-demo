@@ -57,7 +57,7 @@ otherwise.
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
 | `[[What I'm into]]` | `digest`, `interview` |
-| `[[My systems]]` | `setup` on a re-run, `interview`, `new-idea` — the services they actually live in, each with a verdict on whether anything can reach it |
+| `[[My systems]]` | `new-idea`, which writes it as services come up, and `interview` — the services they actually live in, each with a verdict on whether anything can reach it |
 | `[[What I want this brain to do]]` | `interview`, `new-idea` — what they've said they want built, and what's already done |
 | `[[How we work together]]` | **everything, on every turn** — the working agreement: hard rules, how to talk to them, magic words. See below |
 
@@ -124,10 +124,9 @@ When the profile gets built by interviewing them, **the human picks the instrume
 purpose-built preferences interview, or a Big Five inventory. Either is fine. Writing the results
 as scores is not.
 
-**They are offered that choice in exactly two places, and never anywhere else.** `setup deep` runs
-an instrument if they ask for it by name — an ordinary `setup` never does — and `interview big-five`
-runs one on request. The inventory itself is specified once, in
-`brain/prompts/interview.md` — `setup` calls into that section rather than restating it. Nothing
+**They are offered that choice in exactly one place, and never anywhere else.** `interview
+big-five` runs one on request — `start` points at it in its close and never runs it. The inventory
+itself is specified once, in `brain/prompts/interview.md`. Nothing
 here ever administers a personality test someone didn't ask for, and **no pop instrument is
 substituted for the researched one** — MBTI, the enneagram and their relatives are better known and
 don't replicate, and a profile is permanent context that every later session reasons from.
@@ -170,9 +169,9 @@ attached. If you're repeating their words back, it's a proposal. If you worked i
 assumption — and it must never be written into the profile or a spoke as though they'd said it.
 `brain/bin/check` fails on exactly that.
 
-`setup` writes the hub. Nothing else edits the hub or a spoke without being asked — including
+`start` writes the hub. Nothing else edits the hub or a spoke without being asked — including
 `maintain`, which may fix links and frontmatter but never content. Four commands are asked by
-construction, and only in that moment: `setup`, whose whole conversation is the human choosing to
+construction, and only in that moment: `start`, whose whole conversation is the human choosing to
 have the hub and its spokes filled; `interview`, when the human runs an inventory; `review-assumptions`, when a
 `y` verdict promotes a claim into its spoke and links that spoke from the hub; and `new-idea`,
 which writes `[[What I want this brain to do]]` and only ever records what they said yes to.
@@ -736,7 +735,7 @@ human asked for something — start with that thing.
 
 The tell is a first sentence that would still be true if they had asked something else entirely.
 *"Everything checks out — the vault works, though your branch doesn't push to a remote yet"* is
-that sentence, and shipping it in front of `setup`'s first question means someone's introduction to
+that sentence, and shipping it in front of `start`'s first question means someone's introduction to
 their own second brain is a git status report. Findings that genuinely matter still get said —
 **later, once, in one line, with the fix attached, at the point where the human can act on them.**
 Being early is what makes them noise.
@@ -827,7 +826,7 @@ nothing else, which is the ordinary case and needs no exception.
 
 | Command | Prompt file | What it does |
 | --- | --- | --- |
-| `setup` | `brain/prompts/setup.md` | First run: learn who the human is one question at a time, write `[[About me]]` and its spokes, connect what's reachable, and build them one working thing before it ends |
+| `start` | `brain/prompts/start.md` | The first conversation: five questions to get to know each other, write `[[About me]]` and propose the agreement's lines, then point at `new-idea` — it never builds |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |
@@ -873,15 +872,17 @@ consent: implicit       # implicit | opt-in
 - **`fallback:`** — the plain sentence to say when that thing isn't there.
 - **`writes:`** — `none`, or exactly what it may create. A tool declaring `none` never writes a file.
 - **`consent:`** — `implicit` means invoking it is the consent: nothing to connect, nothing to opt
-  into. `opt-in` means **the connection** is what's opted into — the human connects the service once
-  during `setup`, and from then on the tool is used without asking again. Routing here is silent, so
+  into. `opt-in` means **the connection** is what's opted into — the human connects the service once,
+  in their agent's own settings (`new-idea`'s connect path walks them through it), and from then on
+  the tool is used without asking again. Routing here is silent, so
   a confirmation on every "did Anna reply" would contradict that, and the consent was already given
   at connect time. The protections that remain are the ones that matter: the tool is still ephemeral
   (writes nothing unless asked), still never infers anything about the human from what it read, and
   still never sends, changes or deletes anything the human did not ask for in that turn.
 
-**A tool that can't meet its requirement degrades with a plain sentence** — "Weather isn't
-connected — run `setup`." — never an error, never a stack trace, never a lecture about API keys.
+**A tool that can't meet its requirement degrades with a plain sentence** — "No mail connector is
+configured — add one in your agent's connector settings, or say `new-idea` and I'll walk you
+through it." — never an error, never a stack trace, never a lecture about API keys.
 Someone asked what the weather is; "I can't do that yet, here's how" is a complete answer.
 
 ### Before a tool ships — three questions
@@ -969,16 +970,16 @@ X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
-| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule (a proposed line under *How to talk to me* in the agreement) | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `teach`. |
-| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `teach`; never manufacture one from the notes that shipped with the vault. |
+| `start` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; re-running to correct the profile or change how it talks to them as a standing rule | Connecting or building anything — `new-idea`, which start points at in its close and never runs. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `teach`. |
+| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `start` and `teach`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `digest`. |
-| `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. Working out what to *build* next rather than understand — `interview`. Configuring the thing rather than explaining it — `setup`. |
+| `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. Working out what to *build* next rather than understand — `interview`. Configuring the thing rather than explaining it — `start` for the first conversation, `new-idea` for connecting and building. |
 | `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
 | `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
 | `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
 | `doctor` | "something's broken", "is this thing working", a command failing, just after a harness update | Messy vault *contents* rather than a broken install — `maintain`. |
-| `new-idea` | "add a command", "I want it to also do X", "connect it to my <service>" **when `brain/tools/` has nothing for that service** — check the listing before you answer | Connecting a service a tool already exists for — `setup`, which is what every tool's `fallback:` sends them to. Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. |
+| `new-idea` | "add a command", "I want it to also do X", "connect it to my <service>", "hook up my mail" — at every rung: when a tool already covers the service, the run ends at the connect path in Discuss instead of building | Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. The first getting-to-know-you conversation — `start`. |
 | `ingest-sessions` | "read my old Claude/Codex sessions", "make my history searchable" | Capturing *this* session — `capture`. |
 | `infer` | "would I actually finish this", "what am I avoiding", a question about them the vault never states outright | Anything a note answers — try `ask` first, always. |
 | `review-assumptions` | "what have you guessed about me", "let me go through those assumptions" — a tap-fast verdict pass over the register, five at most, verdicts only | Anything the register doesn't hold — perishable follow-ups, blank dimensions, stalled work — `interview`. Raising a new one — `infer`. |

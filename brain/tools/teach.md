@@ -90,7 +90,7 @@ the quiz, so is the page.
    That's still forbidden. Teaching someone their own tool from its manual is not.
 
    **Re-pitch it; don't recite it.** Those documents assume a reader who is already oriented —
-   `GUIDE.md` opens "You've run `setup` and the vault knows who you are." At rung 0–1 that register
+   `GUIDE.md` opens "You've run `start` and the vault knows who you are." At rung 0–1 that register
    is wrong, and copying it across is how someone decides this thing isn't for them. Your job is the
    translation, which is the same job you do for a dense primary source on any other subject.
 

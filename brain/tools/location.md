@@ -46,7 +46,7 @@ Answer "where am I". Other tools call this one for coordinates rather than rolli
 
 6. **Don't infer.** Where they are right now is not where they live, work, or are from. It doesn't
    go into `cortex/03_Resources/About me.md`, it doesn't go into a note, and it isn't evidence for a claim
-   about them. If they want their home city in their profile, they'll say so — that's `setup`,
+   about them. If they want their home city in their profile, they'll say so — that's `start`,
    not this.
 
 **Privacy, once:** an IP-geolocation lookup tells a third-party service what the human's IP address

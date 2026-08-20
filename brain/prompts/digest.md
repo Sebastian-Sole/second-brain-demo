@@ -44,7 +44,7 @@ don't understand.
 connected" — and the digest carries on. Never an error, never a stack trace, never a lecture about
 API keys, and never a section silently missing with no explanation. Each tool's `fallback:` in
 `brain/tools/` is the sentence to use. `email` and `calendar` are `consent: opt-in`, and per
-`AGENTS.md` that opt-in is **the connection** — the human connected the account during `setup`, so
+`AGENTS.md` that opt-in is **the connection** — the human connected the account in their agent's settings, so
 read both here without asking again. Routing is silent; stopping to ask permission before each
 glance at a calendar would contradict that. If one isn't connected, its `fallback:` line is the
 whole answer.

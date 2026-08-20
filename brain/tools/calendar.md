@@ -1,7 +1,7 @@
 ---
 name: calendar
 requires: mcp
-fallback: "No calendar connector is configured — run `setup` to connect one."
+fallback: "No calendar connector is configured — add one in your agent's connector settings, or say `new-idea` and I'll walk you through it."
 writes: events, and only when asked
 consent: opt-in
 ---
@@ -62,7 +62,7 @@ prompts off.
 ## What they opted in to
 
 `consent: opt-in` in the frontmatter is about the connection, not the call: the human opted in
-once, by connecting a calendar during `setup`. After that this tool is used like any other prompt —
+once, by connecting a calendar in their agent's settings. After that this tool is used like any other prompt —
 silently, with no permission question before each read — because routing here is invisible and
 stopping to ask every time would contradict it. What the opt-in doesn't buy is anything past
 reading: nothing from the calendar reaches the vault unless they ask for it, nothing about them is
@@ -78,7 +78,8 @@ is phrased.
 
    If there is no calendar connector at all, say plainly:
 
-   > No calendar connector is configured — run `setup` to connect one.
+   > No calendar connector is configured — add one in your agent's connector settings, or say
+   > `new-idea` and I'll walk you through it.
 
    A sentence, not an error and not a silent no-op. Then answer whatever you can without it.
 

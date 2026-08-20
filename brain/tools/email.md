@@ -1,7 +1,7 @@
 ---
 name: email
 requires: mcp
-fallback: "No mail connector is configured — run `setup` to connect one."
+fallback: "No mail connector is configured — add one in your agent's connector settings, or say `new-idea` and I'll walk you through it."
 writes: drafts; sends and mailbox changes only when asked
 consent: opt-in
 ---
@@ -49,7 +49,7 @@ prompts off.
 ## What they opted in to
 
 `consent: opt-in` in the frontmatter is about the connection, not the call: the human opted in
-once, by connecting a mail account during `setup`. After that this tool is used like any other
+once, by connecting a mail account in their agent's settings. After that this tool is used like any other
 prompt — silently, with no permission question before each read — because routing here is invisible
 and stopping to ask every time would contradict it. What the opt-in doesn't buy is anything past
 reading: nothing from the mailbox reaches the vault unless they ask for it, nothing about them is
@@ -64,7 +64,8 @@ inferred from what's in it, and the send ceiling above holds no matter how the r
 
    If there is no mail connector at all, say plainly:
 
-   > No mail connector is configured — run `setup` to connect one.
+   > No mail connector is configured — add one in your agent's connector settings, or say
+   > `new-idea` and I'll walk you through it.
 
    That's a sentence, not an error and not a silent no-op. Then answer whatever you can without it.
 

@@ -104,7 +104,7 @@ don't have proves the brain doesn't know them, on the one subject where it was c
   data. *"Want to tell me about your training?"* is data collection wearing a helpful hat and it
   earns nothing. *"Your watch exports to Strava, and Strava has a connector — I could pull your
   week in and put it in the Sunday digest. Worth doing?"* is an offer they can say yes to.
-- **Check it's reachable before you offer it.** Run the ladder in `brain/prompts/setup.md` first.
+- **Check it's reachable before you offer it.** Run the ladder in `brain/prompts/new-idea.md` first.
   Offering something that turns out to be a locked box is how every other claim you make becomes
   suspect — and this is the one source where the temptation to overpromise is built in, because
   you're pitching rather than asking.
@@ -117,19 +117,19 @@ don't have proves the brain doesn't know them, on the one subject where it was c
   the same rule source 7 runs on.
 - **Not a therapist, and not a life coach.** They describe a mess; you go straight to the system
   that holds it and what could reach it. No sympathy, no observations about their habits, no
-  suggestions about how they might live differently. Same rule as `setup`, for the same reason —
-  the service is that the thing gets less broken, not that it gets discussed.
+  suggestions about how they might live differently. Same rule as `new-idea`'s Discuss, for the
+  same reason — the service is that the thing gets less broken, not that it gets discussed.
 
-**If they say yes, hand off rather than building it here.** `setup connect` for a service with a
-tool already; `new-idea` for anything else, with its security review. Then write it to
+**If they say yes, hand off rather than building it here.** `new-idea` owns all of it: a service a
+tool already covers ends at its connect path, anything else gets its security review. Then write it to
 `[[What I want this brain to do]]` whether or not it got built that day, so the next run doesn't
 raise it again.
 
 **The young-vault floor in section 4 still applies to this source, and applies hardest.** A vault
 with nothing in it is *all* unmet need, so this source would fire on every gap it has and produce
 exactly the "you seem interested in note atomicity" failure that section exists to prevent. Below
-the floor, stay silent and route to `setup` — which is where a brand-new user gets this same
-service, done properly, with something built at the end.
+the floor, stay silent and route to `start` — which is where a brand-new user gets known — and to
+`new-idea`, which is where they get something built.
 
 ## 2. Rank by what the answer is worth
 
@@ -179,11 +179,11 @@ the vault holds **fewer than about ten notes the human actually made** — or `[
 missing or blank — then this command has nothing to work with and should say so in one line rather
 than scraping the bottom of the barrel:
 
-> Nothing worth asking yet — I need a bit of your material first. `setup` writes the profile, and
+> Nothing worth asking yet — I need a bit of your material first. `start` writes the profile, and
 > `teach me what this is` is worth ten minutes if you want to see what this is actually for.
 
 That's the whole output. **Don't manufacture an icebreaker, and don't fall back on the profile
-questions** — `setup` owns those, and asking them here produces an interview that duplicates the
+questions** — `start` owns those, and asking them here produces an interview that duplicates the
 first-run one while pretending to be sourced. A gap this command genuinely cannot fill is a gap it
 should name and route away from, not paper over.
 
@@ -241,11 +241,10 @@ Don't commit — whatever invoked you handles that.
 
 `AGENTS.md` says that when the profile gets built by interviewing them, **the human picks the
 instrument**: the ordinary preferences interview, or a Big Five inventory. **This section is the
-single specification of that inventory**, and two callers read it:
+single specification of that inventory**, and one caller reads it:
 
-- **`interview big-five`** — this command, when they ask for it directly.
-- **`setup deep`** — part 2 of its longer-profile path calls straight into this section rather than
-  restating it. An ordinary `setup` runs no instrument at all.
+- **`interview big-five`** — this command, when they ask for it directly. `start` points at it in
+  its close and never runs it.
 
 Keep it that way. If the inventory ever needs changing, it should need changing here and nowhere
 else.
