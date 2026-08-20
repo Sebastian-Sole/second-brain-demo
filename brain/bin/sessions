@@ -229,6 +229,13 @@ case "$cmd" in
     IFS=$ifs
     total=$#
 
+    # Per-transcript stats go through a temp file so the summary can be added
+    # up after the pipeline. mktemp, not a name anyone can predict: the tags
+    # in it are project directory names, which is exactly the kind of thing
+    # (client names, employer names) that shouldn't sit in shared /tmp where
+    # any process can watch for it.
+    tsv=$(mktemp "${TMPDIR:-/tmp}/sessions-turns.XXXXXX") || exit 1
+
     printf '%s\n' "$@" | while read -r f; do
       [ -n "$since" ] && [ "$(mtime "$f")" \< "$since" ] && continue
       case "$f" in
@@ -300,13 +307,13 @@ case "$cmd" in
         }
         END { printf "%s\t%d\t%d\t%d\n", ENVIRON["TAG"], kept + 0, dropped + 0, toolres + 0 > "/dev/stderr" }
       ' "$f"
-    done 2>/tmp/sessions-turns-$$.tsv
+    done 2>"$tsv"
 
-    k=$(awk -F'\t' '{k+=$2} END{print k+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
-    d=$(awk -F'\t' '{d+=$3} END{print d+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
-    t=$(awk -F'\t' '{t+=$4} END{print t+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
-    s=$(awk -F'\t' '$2>0' /tmp/sessions-turns-$$.tsv 2>/dev/null | wc -l | tr -d ' ')
-    rm -f /tmp/sessions-turns-$$.tsv
+    k=$(awk -F'\t' '{k+=$2} END{print k+0}' "$tsv" 2>/dev/null)
+    d=$(awk -F'\t' '{d+=$3} END{print d+0}' "$tsv" 2>/dev/null)
+    t=$(awk -F'\t' '{t+=$4} END{print t+0}' "$tsv" 2>/dev/null)
+    s=$(awk -F'\t' '$2>0' "$tsv" 2>/dev/null | wc -l | tr -d ' ')
+    rm -f "$tsv"
     # Say what was filtered. A pass that silently drops half its input reads as
     # full coverage, and the drop rate is itself a finding worth seeing — on an
     # unfamiliar corpus a strange ratio here is the first sign the filter and
