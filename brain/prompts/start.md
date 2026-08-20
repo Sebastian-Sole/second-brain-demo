@@ -198,16 +198,10 @@ not "email people as me"; keeping the floor lets the question be safe to offer. 
 then tell*, and say so.
 → proposed for the agreement's *What you can do on your own* section.
 
-### After Q5 — Magic words
+### After Q5
 
-Not a question, a gift, so it carries no number and no options.
-
-> That's all five. One more thing, no answer needed: four words with fixed meanings between us.
-> **"shorter"**: half the words. **"huh?"**: explain it differently. **"park it"**: good idea, not
-> now, I'll save it. **"decide:"**: you've decided, no more options from me. Rename any of them or add your own whenever you like.
-
-→ the agreement's *Magic words* section, only if they changed something. The deeper lesson rides
-along free: vocabulary can be installed in this thing.
+No magic-words speech. The words live in the agreement, and the close points them there as the
+reason to open the file (Block 2). Go straight to Step 3.
 
 ## Step 3 — The close
 
@@ -241,11 +235,14 @@ each its own message or clearly separated with a rule; do not fold them into one
 > Two files, both yours to open and edit. I follow whatever is in them:
 >
 > - `cortex/03_Resources/About me.md`: who you are. What you told me in question 3.
-> - `cortex/03_Resources/How we work together.md`: the rules. Style, autonomy, hard limits, the
->   magic words. I re-read it on every turn.
+> - `cortex/03_Resources/How we work together.md`: the rules. Style, autonomy, hard limits. I
+>   re-read it on every turn.
 >
-> You never have to open them. When I do something annoying, or something great, say
-> **"remember that"** and I'll propose the line for you to approve.
+> Worth five minutes: open *How we work together* and find **Magic words**, our shorthand.
+> A few words with fixed meanings, like **"shorter"** and **"park it"**. Rename them, add your own.
+>
+> You never have to open either file to change it. When I do something annoying, or something
+> great, say **"remember that"** and I'll propose the line for you to approve.
 
 **Block 3 — next steps.** The one thing to do next, then the optional extras, then where to read
 more. Numbered so a digit is an answer.
