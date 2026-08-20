@@ -265,11 +265,16 @@ case "$cmd" in
                  t ~ /^[[:space:]]*@brain\/(prompts|tools)\//
         }
         $0 !~ /"type"[[:space:]]*:[[:space:]]*"user"/ && $0 !~ /"role"[[:space:]]*:[[:space:]]*"user"/ { next }
+        # Tool results also arrive as "type":"user", and their payload matches
+        # the extraction below like anything else -- fed through, tool output
+        # swamps the typed turns. Every such record carries its own
+        # "type":"tool_result" marker and a typed message never does, so the
+        # record is skipped whole on sight of it, and counted so the drop shows.
+        /"type"[[:space:]]*:[[:space:]]*"tool_result"/ { toolres++; next }
         {
           line = $0
-          # Content is either a bare string or an array of blocks. Tool results
-          # also arrive as role "user"; they carry no "text" key, so pulling
-          # every "text" value drops them without a special case.
+          # Content is either a bare string or an array of blocks; pull every
+          # "text" value, falling back to "content" for the bare-string shape.
           n = 0
           rest = line
           while (match(rest, /"text"[[:space:]]*:[[:space:]]*"/)) {
@@ -293,17 +298,20 @@ case "$cmd" in
           }
           delete parts
         }
-        END { printf "%s\t%d\t%d\n", ENVIRON["TAG"], kept + 0, dropped + 0 > "/dev/stderr" }
+        END { printf "%s\t%d\t%d\t%d\n", ENVIRON["TAG"], kept + 0, dropped + 0, toolres + 0 > "/dev/stderr" }
       ' "$f"
     done 2>/tmp/sessions-turns-$$.tsv
 
-    k=$(awk -F'\t' '{k+=$2; d+=$3} END{print k+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
-    d=$(awk -F'\t' '{k+=$2; d+=$3} END{print d+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
+    k=$(awk -F'\t' '{k+=$2} END{print k+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
+    d=$(awk -F'\t' '{d+=$3} END{print d+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
+    t=$(awk -F'\t' '{t+=$4} END{print t+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
     s=$(awk -F'\t' '$2>0' /tmp/sessions-turns-$$.tsv 2>/dev/null | wc -l | tr -d ' ')
     rm -f /tmp/sessions-turns-$$.tsv
     # Say what was filtered. A pass that silently drops half its input reads as
-    # full coverage, and the drop rate is itself a finding worth seeing.
-    echo "sessions turns: $total transcript(s) scanned, $s with human turns; kept $k, dropped $d machine-authored." >&2
+    # full coverage, and the drop rate is itself a finding worth seeing — on an
+    # unfamiliar corpus a strange ratio here is the first sign the filter and
+    # the transcripts disagree about what a human turn looks like.
+    echo "sessions turns: $total transcript(s) scanned, $s with human turns; kept $k, dropped $d machine-authored + $t tool results." >&2
     ;;
 
   clean)
