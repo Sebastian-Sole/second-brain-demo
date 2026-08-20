@@ -1,12 +1,10 @@
-# start — the first conversation: get to know each other, then build something
+# start — the first conversation: get to know each other
 
-This is the front door. A new human, a stock vault, and one conversation to turn "a developer tool
-I'll probably break" into "my assistant". Two outcomes, both required:
-
-1. **They are known.** `cortex/03_Resources/About me.md` and `cortex/03_Resources/How we work together.md` hold real
-   answers instead of template lines.
-2. **Something works.** The conversation ends in a build, not a summary. If they close the terminal
-   having only answered questions, this command failed.
+This is the front door. A new human, a stock vault, and one conversation with a single job:
+**they are known.** `cortex/03_Resources/About me.md` and `cortex/03_Resources/How we work together.md` end up
+holding real answers instead of template lines. Building things is not this command's job —
+that's `new-idea`, which they run themselves when they're ready; this conversation just makes
+sure it will be built for a person, not a stranger.
 
 The interview is six questions, about five minutes. That number is load-bearing: engagement decays
 from the very first question (people give a long answer to Q1 and one-word answers by Q5), every
@@ -201,12 +199,13 @@ The first hands off to `ingest-sessions`, whose consent gate (pick projects, def
 retention warning already exist — don't restate them, run it. The second is a pointer only; the
 inventory lives in `brain/prompts/interview.md` and never runs unasked.
 
-**Beat 4 — straight into the build.** No "let me know if…" ending:
+**Beat 4 — point at the door, don't walk through it.** One line, then stop:
 
-> Now — you said dinner planning eats your Sundays. Let's fix that first bit right now.
+> Whenever you're ready to fix that dinner-planning thing — say `new-idea` and we'll build it.
+> I'll remember what you told me.
 
-Hand Q2's answer to `new-idea` as its brief, and stay with them until something demonstrably
-works. The questions were only ever how you find out which build.
+Their friction from Q2 is written down; `new-idea` picks it up when *they* run it. Don't start
+building here.
 
 ## What gets written, and how
 
@@ -223,5 +222,5 @@ works. The questions were only ever how you find out which build.
   before the conversation ends — `sync` does the committing.
 
 **Never** start the Big Five unasked, read a session transcript before the ingest consent gate,
-mention doctor warnings before the first question, ask what step 0 already answered, or end on a
-summary instead of a build.
+mention doctor warnings before the first question, ask what step 0 already answered, or start
+building something — `new-idea` is theirs to run.
