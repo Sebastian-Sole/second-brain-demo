@@ -26,10 +26,15 @@ Lead with it in the conversation, a line or two each, in this order:
 - **News** — their own sources only — `brain/bin/feeds`
 - **Open tasks** — today's, from `cortex/Tasks/` per `brain/prompts/task.md`
 
-**Fire the whole live half in one turn.** These three don't depend on each other — the forecast
+That list is the shipped floor, not the ceiling. If the human has built more live tools in
+`brain/tools/` — a mail or calendar tool via `new-idea` is the usual first pair — include each one
+here the same way: a line or two, reading only, degrading to its `fallback:` sentence. Their
+frontmatter still governs; a brief never uses a tool for more than its file allows.
+
+**Fire the whole live half in one turn.** These pieces don't depend on each other — the forecast
 doesn't inform the news — so issue them together and let them come back together rather than
-waiting for each in turn. All three are single shell commands (`brain/bin/weather`,
-`brain/bin/feeds`, and a listing of `cortex/Tasks/`), so all three can go out at once. Done
+waiting for each in turn. The shipped three are single shell commands (`brain/bin/weather`,
+`brain/bin/feeds`, and a listing of `cortex/Tasks/`), so they can all go out at once. Done
 serially this section is somebody watching a spinner, and it is the part of the brief with the
 shortest shelf life.
 
@@ -42,6 +47,14 @@ named yet" — and the brief carries on. Never an error, never a stack trace, ne
 API keys, and never a section silently missing with no explanation. Each tool's `fallback:` in
 `brain/tools/` is the sentence to use. If one isn't set up, its `fallback:` line is the whole
 answer.
+
+**One quiet nudge, not a campaign.** A morning brief is better with a calendar and a mailbox in
+it, and this vault deliberately ships neither. When no such tool exists in `brain/tools/` and
+`[[My systems]]` doesn't show the offer already made or declined, close the live half with one
+line: mail and calendar can join this brief if they want them, and `new-idea` is how one gets
+built. One line, no lecture — and if it has been offered before, or they said no, the line doesn't
+appear at all. When you do offer it, record it the way `new-idea` does: a dated line in
+`[[My systems]]` (`— offered 2026-08-21`), so the next brief knows not to ask again.
 
 ## The retrospective half — always
 
