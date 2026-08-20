@@ -323,9 +323,11 @@ this and stops.
 
 ## What this command is not
 
-- **Not `explain`.** That teaches a concept from general knowledge — bloom filters, Bayes,
+- **Not `teach`.** That teaches a concept from general knowledge — bloom filters, Bayes,
   whatever they asked. This teaches *this vault and the machinery under it*, and nothing else. If
-  they ask what a monad is mid-tour, hand off.
+  they ask what a monad is mid-tour, hand off. Note the traffic runs the other way too: `teach` is
+  the front door for "how does this project work", and it reads this file and follows its shape
+  rather than reinventing the tour. Keep that shape worth borrowing.
 - **Not `setup`.** That learns who they are, connects what it can, and builds them something. This
   one asks at most one calibration question, never writes the profile, and never builds anything —
   if a chapter surfaces a real want, hand back to `setup`, which is where connecting and building

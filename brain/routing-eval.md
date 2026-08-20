@@ -37,8 +37,8 @@ you're testing. That's still a pass: the command was reached, and its declared `
 chosen*, never *the answer was good*.
 
 **Scoring an empty vault.** This vault is close to empty. `ask` rows still expect `ask` — routing
-to `ask` and honestly reporting "nothing here about that" is a pass. Routing to `explain` and
-teaching the topic instead is a **fail**, and it's the exact failure the `ask`/`explain` rows exist
+to `ask` and honestly reporting "nothing here about that" is a pass. Routing to `teach` and
+teaching the topic instead is a **fail**, and it's the exact failure the `ask`/`teach` rows exist
 to catch. Likewise `infer`: its own gate makes it decline under ten human-written notes. Reaching
 `infer` and watching it decline is a pass.
 
@@ -70,10 +70,10 @@ model problem.
 | 8 | `here, read this https://example.com/post — want to keep it` | `capture` | | A pasted link is `capture`'s bread and butter; the original goes to `cortex/raw/` first. |
 | 9 | `what did i land on for auth in the end` | `ask` | | "why did we choose Z" phrased like a human. One decision, one note. |
 | 10 | `did i ever write anything down about connection pooling` | `ask` | | "did I write anything on Y" — a retrieval question with the word "write" in it. |
-| 11 | `tell me about retries` | `ask` | ⚠ ask vs explain | Their own past thinking played back. See ambiguity A1 — this one is contents-dependent. |
-| 12 | `explain retries to me` | `explain` | ⚠ ask vs explain | They want to understand, not to retrieve. Same topic as 11, opposite command. |
-| 13 | `i still dont get how oauth refresh tokens work` | `explain` | | "I don't get Y" is an `explain` trigger with no retrieval intent in it. |
-| 14 | `walk me through what a vector db is actually doing` | `explain` | | "walk me through Z" — teaching, and it must not write anything afterwards. |
+| 11 | `tell me about retries` | `ask` | ⚠ ask vs teach | Their own past thinking played back. See ambiguity A1 — this one is contents-dependent. |
+| 12 | `explain retries to me` | `teach` | ⚠ ask vs teach | They want to understand, not to retrieve. Same topic as 11, opposite command. |
+| 13 | `i still dont get how oauth refresh tokens work` | `teach` | | "I don't get Y" is a `teach` trigger with no retrieval intent in it. |
+| 14 | `walk me through what a vector db is actually doing` | `teach` | | "walk me through Z" — teaching, and it must not write anything afterwards. One question, so no course offer either. |
 | 15 | `chase mats about the invoice` | `task` | | "chase X" is named in the table. A next action with a person attached. |
 | 16 | `the tax thing is done, close it off` | `task` | | Marking one done is `task`, not a new capture — and it needs a `completed:` date. |
 | 17 | `what have i been working on` | `digest` | ⚠ digest vs ask | Activity across many notes and a window, not one answer in one note. |
@@ -121,7 +121,7 @@ model problem.
 | 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `email`, `calendar` and `task` all fit, and all three have side effects. Ask. |
 | 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
 
-**Per-command coverage:** setup 2 · interview 2 · capture 9 · ask 6 · explain 3 · task 3 · digest 2
+**Per-command coverage:** setup 2 · interview 2 · capture 9 · ask 6 · teach 3 · task 3 · digest 2
 · maintain 3 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
 weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 
@@ -148,13 +148,13 @@ so read this before filing a bug against an agent.
 > Retired numbers are not reused, so `A1` still means what row 11 says it means, and old entries in
 > the Results table stay readable.
 
-**A1 · `ask` vs `explain` can't be decided from the sentence** (rows 11, 12). **Still stands.**
+**A1 · `ask` vs `teach` can't be decided from the sentence** (rows 11, 12). **Still stands.**
 Both rows now cede to each other — `ask` is **Not for** "a concept the vault never covered —
-`explain`", and `explain` is **Not for** "handing back what they already wrote — `ask`" — so the
+`teach`", and `teach` is **Not for** "handing back what they already wrote — `ask`" — so the
 table is no longer silent about the collision. But both of those tests are statements about *vault
 contents*, not about the utterance: "tell me about retries" is `ask` when a retries note exists and
-`explain` when it doesn't. The router must search before it can route, and the table never says so.
-`explain`'s prompt does handle it correctly ("stop and hand off to `ask`"); the table reads as
+`teach` when it doesn't. The router must search before it can route, and the table never says so.
+`teach`'s prompt does handle it correctly ("stop and hand off to `ask`"); the table reads as
 though the words alone decide it. Row 11's expected answer assumes a vault that has something on
 the topic.
 

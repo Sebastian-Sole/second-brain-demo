@@ -360,7 +360,7 @@ aliases: []          # their name, once you know it — so [[Sebastian]] resolve
 | File | Holds | Read by |
 | --- | --- | --- |
 | `How I talk.md` | Behaviour lines about writing to them. Capped at 15. | everything, every turn |
-| `How I learn.md` | How technical they are, what AI they've used, where | `explain`, `guide` |
+| `How I learn.md` | How technical they are, what AI they've used, where — **and the format they learn in**: video, prose, or something to click | `teach`, `guide` |
 | `My systems.md` | Every service they named, its rung, and what came of it | `setup` on a re-run, `new-idea`, `guide expand` |
 | `What I want this brain to do.md` | The wishes, and what's been built | `guide expand` |
 | `My news sources.md` | Feeds, only if feeds came up. Resolve names to URLs yourself. | `news` |

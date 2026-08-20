@@ -95,11 +95,19 @@ It searches your notes, projects, areas and daily notes. It only digs into `cort
 question is clearly about past work ("why did we go with Z", "when did I last touch Y") — otherwise
 a thousand session notes would drown out the real ones.
 
-**`explain`** — teaches you something new, pitched at you. This is the opposite of `ask`: `ask`
-hands back what you already wrote, `explain` covers ground your notes don't. It checks what you've
+**`teach`** — teaches you something new, pitched at you. This is the opposite of `ask`: `ask`
+hands back what you already wrote, `teach` covers ground your notes don't. It checks what you've
 already written on the topic first, so it doesn't explain something you took notes on last month,
 and it anchors the new idea to one you already understand. If you've written a note called
-`How I learn`, it reads that to work out how to pitch it. Nothing gets written down unless you ask.
+`How I learn`, it reads that to work out both how to pitch it *and* what format you want it in —
+links to real videos if that's how you learn, prose if you'd rather read.
+
+Ask a small question and you get a small answer. Ask for a subject and it teaches the first piece,
+then offers to start a proper lesson you can come back to — a page in your browser, readable on a
+phone. Every lesson ends by asking you one question with the answer hidden, because recalling
+something is what makes it stick. Nothing is written to your notes unless you say yes, and what
+gets written is *your* answer, not its lecture. It also fields "how does this whole thing work" and
+"what did we just do".
 
 **`digest`** — rolls up recent activity. Defaults to the last 7 days; say `digest last month` or
 `digest since Tuesday` for something else. Four sections: what happened, **patterns**, what's

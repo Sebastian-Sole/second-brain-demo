@@ -53,7 +53,7 @@ otherwise.
 
 | Spoke | Read by |
 | --- | --- |
-| `[[How I learn]]` | `explain`, `guide` — it's how both work out what level to pitch at |
+| `[[How I learn]]` | `teach`, `guide` — it's how both work out what level to pitch at, and how `teach` picks the format |
 | `[[How I talk]]` | **everything, on every turn** — see below. It's the one spoke that isn't read on demand |
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
@@ -240,6 +240,7 @@ Numbered prefixes keep a stable sort order.
 | `cortex/Tasks/` | One note per **open** task. Completed ones move to `cortex/04_Archive/`. See [Tasks](#tasks) |
 | `cortex/raw/` | **Immutable** original source material — never edit |
 | `brain/` | The harness itself: prompts, tools, scripts, run log. Not knowledge — don't file notes here. |
+| `lessons/` | Lesson pages built by `teach`, at the repo root and deliberately outside `cortex/`. Scaffolding for knowledge, not knowledge — `check` doesn't lint it and `ask` doesn't search it. The one note a course puts *in* the vault is its `type: moc` index. |
 
 The `00_`–`05_` prefixes belong to PARA. `cortex/Daily/`, `cortex/Tasks/` and `cortex/raw/` are unnumbered because they
 aren't PARA buckets — they're mechanisms that feed it.
@@ -823,7 +824,6 @@ nothing else, which is the ordinary case and needs no exception.
 | `guide` | `brain/prompts/guide.md` | Teach them what this *is* — the agent, the harness, this vault — pitched at their level. `guide expand` proposes what to build next |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
-| `explain` | `brain/prompts/explain.md` | Teach a concept the way this human learns it — reads `[[How I learn]]` |
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
 | `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
@@ -843,6 +843,7 @@ nothing else, which is the ordinary case and needs no exception.
 | `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]` — via `brain/bin/feeds` — plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
 | `email` | `brain/tools/email.md` | The connected mailbox — read, draft, and send when asked | Drafts always; sends and mailbox changes only on an explicit request |
 | `calendar` | `brain/tools/calendar.md` | The connected calendar — read, and write when asked | Nothing, unless the human asks for an event |
+| `teach` | `brain/tools/teach.md` | A web search for teaching sources — real videos, articles, primary sources — and the pages it finds | Lesson pages under `lessons/`, outside the vault. One course note in `cortex/03_Resources/` when they accept a course; nothing else in the vault without an explicit yes |
 
 Adding either kind is still **one markdown file plus a row in the right table above.** Where the
 table and a tool's own frontmatter disagree, **the frontmatter wins** — it's what the tool actually
@@ -957,17 +958,17 @@ conversation.
 outcome is a note in the inbox, and prime directive 1 says never lose a capture.
 
 The **Not for** column is the load-bearing one. Overlapping trigger phrases are the single biggest
-cause of misrouting — `ask`, `explain`, `capture` and `digest` all plausibly match "tell me about
+cause of misrouting — `ask`, `teach`, `capture` and `digest` all plausibly match "tell me about
 X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
 | `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `guide`. |
-| `guide` | "what is this", "what can it do", "I don't get what this is for", "what should I do with it", "how do I make more of this" — and any first session where they seem lost rather than merely unconfigured. `guide expand` for "what else could I build" | Writing the profile — `setup`, which this hands off to. Teaching a concept that isn't this vault — `explain`. Actually building a new capability — `new-idea`, which `guide expand` proposes and never performs. |
+| `guide` | "what is this", "what can it do", "I don't get what this is for", "what should I do with it", "how do I make more of this" — and any first session where they seem lost rather than merely unconfigured. `guide expand` for "what else could I build" | Writing the profile — `setup`, which this hands off to. Teaching a concept that isn't this vault — `teach`, which is also the front door when someone asks how *this* works and follows this file's shape when it gets there. Actually building a new capability — `new-idea`, which `guide expand` proposes and never performs. |
 | `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `guide`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
-| `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `explain`. Activity across many notes — `digest`. |
-| `explain` | "explain X", "I don't get Y", "walk me through Z" — they want to *understand*, not to retrieve | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`. |
+| `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `digest`. |
+| `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. The first-session "what even is this" tour — `guide`, whose shape this borrows rather than duplicates. |
 | `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
 | `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
 | `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |

@@ -86,8 +86,8 @@ This is **read-mostly** — don't create or edit knowledge notes in order to ans
    character analysis off five notes is not.
 
    **If what they want is teaching rather than retrieval** — "explain X", "walk me through Y", "I
-   don't get Z" — hand off to `explain` (`brain/prompts/explain.md`), which reads `[[How I learn]]`
-   and pitches it at them. `ask` answers a question; `explain` teaches a subject.
+   don't get Z" — hand off to `teach` (`brain/tools/teach.md`), which reads `[[How I learn]]`
+   and pitches it at them. `ask` answers a question; `teach` teaches a subject.
 
 6. **Offer to capture — don't just do it.** If answering surfaced something worth keeping (a
    synthesis across notes, a missing link you noticed), offer it. Only write if they say yes. You

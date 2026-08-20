@@ -113,7 +113,7 @@ connecting first:
 | | |
 | --- | --- |
 | **Getting things in** | `capture` anything at all · `task` for things with a next action |
-| **Getting things out** | `ask` your own notes · `explain` something new · `digest` recent activity |
+| **Getting things out** | `ask` your own notes · `teach` you something new · `digest` recent activity |
 | **Reasoning past your notes** | `infer` what you never wrote down · `review-assumptions` to confirm or kill its guesses |
 | **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
