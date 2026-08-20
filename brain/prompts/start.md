@@ -255,7 +255,9 @@ reason to open the file (Block 2). Go straight to Step 3.
 
 Same rules as the questions: every question is visibly a question with options, nothing is asked
 mid-sentence, and every file is named by its real path so they can go and open it. Four blocks,
-each its own message or clearly separated with a rule; do not fold them into one paragraph.
+and they are four separate turns: send one block, stop, and let the reply bring the next. Never
+stack two blocks in one message — a close that lands as one wall of text undoes the whole
+conversational shape the six questions just built (decided 2026-08-21, after it happened).
 
 **Block 1 — read-back.** Their words where possible. This is a question, so it gets the shape:
 
@@ -274,7 +276,9 @@ each its own message or clearly separated with a rule; do not fold them into one
 > - fix something
 > - skip
 
-**Block 2 — the files.** Full paths, and what each one is for. No question here.
+**Block 2 — the files.** Sent only after they've answered Block 1 (and any fixes are settled).
+Full paths, and what each one is for. No question about the content — it ends with the smallest
+possible handle instead, so it can stand as its own turn:
 
 > ---
 >
@@ -291,9 +295,18 @@ each its own message or clearly separated with a rule; do not fold them into one
 >
 > You never have to open either file to change it. When I do something annoying, or something
 > great, say **"remember that"** and I'll propose the line for you to approve.
+>
+> - go on
 
-**Block 3 — next steps.** The one thing to do next, then the optional extras, then where to read
+**Block 3 — next steps.** Sent only after Block 2 gets its reply. The one thing to do next, then the optional extras, then where to read
 more. Numbered so a digit is an answer.
+
+Before sending it, run `brain/bin/sessions list` (read-only, instant). It scans
+`~/.claude/projects` and `~/.codex/sessions` — every CLI this vault knows how to read. If it
+finds nothing, item 2 below is a dead end: leave it out, renumber, and don't mention the
+absence. Browser-only chats (claude.ai, ChatGPT on the web) never land on this disk, so for
+those people the item is always out. This is the longest block; it stays digestible only
+because it arrives alone.
 
 > ---
 >
@@ -312,8 +325,9 @@ more. Numbered so a digit is an answer.
 > - none for now
 
 Item 1 hands off to `new-idea`, which asks what the friction is and builds for it; do not ask
-for the friction here. Item 2 hands off to `ingest-sessions`, whose consent gate (pick projects,
-default none) and retention warning already exist: don't restate them, run it. Item 3 is a pointer
+for the friction here. Item 2 — only offered when the check above found sessions — hands off to
+`ingest-sessions`, whose consent gate (pick projects, default none) and retention warning
+already exist: don't restate them, run it. Item 3 is a pointer
 only; the inventory lives in
 `brain/prompts/interview.md` and never runs unasked.
 
