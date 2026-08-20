@@ -54,7 +54,7 @@ the table's wording is "say that **rather than routing here**".
 
 ## The set
 
-60 utterances. `Hard` marks a known collision — two table rows that both plausibly match. Those are
+61 utterances. `Hard` marks a known collision — two table rows that both plausibly match. Those are
 the rows worth reading the reason column on, because a failure there is a table problem, not a
 model problem.
 
@@ -64,7 +64,7 @@ model problem.
 | 2 | `make this actually mine` | `start` | | "make this mine" is verbatim the intent `start` claims. |
 | 3 | `ask me something, ive got five minutes` | `interview` | | They're offering to fill gaps — the one command that asks *them*. |
 | 4 | `what dont you know about me yet` | `interview` | ⚠ interview vs ask | A question *about* the vault's gaps is a request to be interviewed, not a lookup. |
-| 5 | `what do you know about me` | `ask` | ⚠ interview vs ask | Mirror of 4. Same shape, opposite direction: retrieve the profile, don't start asking. |
+| 5 | `what do you know about me` | `mirror` | ⚠ interview vs mirror | Mirror of 4. Same shape, opposite direction: render the model back, don't start asking. Rescored from `ask` when `mirror` shipped — its row names this utterance verbatim. |
 | 6 | `remember that retry budgets beat retry counts` | `capture` | ⚠ capture vs task | "remember that" + a claim = a note. There is no next action in this sentence. |
 | 7 | `remember to cancel the insurance before the 30th` | `task` | ⚠ capture vs task | "remember to" + a deadline = a task. One word apart from 6 and a different file. |
 | 8 | `here, read this https://example.com/post — want to keep it` | `capture` | | A pasted link is `capture`'s bread and butter; the original goes to `cortex/raw/` first. |
@@ -120,10 +120,11 @@ model problem.
 | 58 | `sort out the inbox` | **ask the human** | ⚠ ambiguous | Which inbox — `cortex/00_Inbox/` or the mailbox? Guessing wrong rewrites files or touches mail. |
 | 59 | `can you deal with the anna thing` | **ask the human** | ⚠ ambiguous | `email`, `calendar` and `task` all fit, and all three have side effects. Ask. |
 | 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
+| 61 | `show me what youve learned about me so far` | `mirror` | ⚠ vs review-assumptions | "Learned" wants the whole model — facts included — rendered back read-only. A verdict pass over the guesses alone is `review-assumptions`, and row 34 keeps "guessing". A pass is four sections with sources, empty ones said plainly, and nothing written. |
 
-**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 6 · teach 3 · task 3 · digest 2
+**Per-command coverage:** start 2 · interview 2 · capture 9 · ask 5 · teach 3 · task 3 · digest 2
 · maintain 3 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
-weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
+mirror 2 · weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 
 Fallback-to-`capture` rows (nothing else matches): **52–56**.
 Ask-the-human rows: **57–60**.
@@ -215,10 +216,10 @@ routing issues".
 
 | Date | Run by / agent | Passed | Failed rows (→ what it ran instead) | Notes |
 | --- | --- | --- | --- | --- |
-|  |  |  /60 |  |  |
-|  |  |  /60 |  |  |
-|  |  |  /60 |  |  |
-|  |  |  /60 |  |  |
+|  |  |  /61 |  |  |
+|  |  |  /61 |  |  |
+|  |  |  /61 |  |  |
+|  |  |  /61 |  |  |
 
 ---
 
