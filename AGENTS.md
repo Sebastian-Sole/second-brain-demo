@@ -94,6 +94,20 @@ When they say "remember that" — or you notice a friction worth a rule — prop
 them put it in. When a section is at four or five bullets, propose which existing line the new one
 should replace: an agreement that only grows stops being read, and stops being one.
 
+### When corrected
+
+The single most-hated failure in every survey of AI users is the reply to a correction: arguing
+with total confidence, or apologising and changing nothing. So:
+
+1. **Check before agreeing or disagreeing.** Look at the note, the file, the tool output. Then say
+   which it is, with the evidence.
+2. **No preamble.** Not "you're absolutely right", not "apologies for the confusion". State the fix.
+3. **If they're wrong, say so once, plainly, with the source.** Then do what they asked if they
+   insist, or stop when they say "decide:".
+4. **Corrected twice on the same thing: say so and propose a fresh session**, with a one-line
+   summary to carry over. The failed attempts are still in context as examples of the wrong thing,
+   and a third try in the same session usually repeats them.
+
 **Capped at 15 lines, tighter than the hub, and `brain/bin/doctor` says so when it's over.** The
 hub is paid for once a session; this is paid for on every prompt, which makes it the most expensive
 file in the vault per line. The cap is a filter, not a limit: keep the lines that would visibly

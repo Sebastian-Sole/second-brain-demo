@@ -30,8 +30,8 @@ NOTE='cortex/03_Resources/How we work together.md'
 
 # The budget. Three sections of three to five bullets each is the intended
 # size; the cap leaves headroom, not an invitation.
-CAP=18
-BYTES=1600
+CAP=20
+BYTES=2000
 
 # Same anchor as style: never exit non-zero, never write to stderr. A hook that
 # fails puts a "hook error" notice in front of the human on every keypress. A

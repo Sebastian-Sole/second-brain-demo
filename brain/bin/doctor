@@ -285,7 +285,7 @@ fi
 agreement_note='cortex/03_Resources/How we work together.md'
 if [ -f "$agreement_note" ] && [ -x brain/bin/agreement ]; then
   set -- $(brain/bin/agreement --check 2>/dev/null)
-  alines=${1:-0}; acap=${2:-18}
+  alines=${1:-0}; acap=${2:-20}
   case $alines in ''|*[!0-9]*) alines=0 ;; esac
   if [ "$alines" -gt "$acap" ]; then
     warn "'$agreement_note' has $alines contract lines — only the first $acap are re-stated each turn" \

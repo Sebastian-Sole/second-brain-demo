@@ -6,7 +6,7 @@ holding real answers instead of template lines. The goal is general knowledge of
 for good conversation and a good start. Building things is `new-idea`'s job, and they will run it
 themselves with their own idea; this command neither asks for one nor pitches it.
 
-The interview is four questions. One invites a story; the other three are confirm-or-veto. That
+The interview is five questions. One invites a story; the other four are confirm-or-veto. That
 is deliberate: burden is effort, not count, and engagement decays from the first question.
 Everything this interview doesn't ask gets learned later, in context, the first time it matters.
 Say that out loud at the end; it's a promise, and it's the design.
@@ -41,9 +41,9 @@ jokes about yourself, no confessions, no warnings about your own verbosity: the 
 covers how to talk. Say what this is, how big it is, that skipping is fine, then ask question one.
 
 > Hi <name>. I'm the assistant in this folder. Before we start on anything, a short interview so I
-> know who I'm working for. Four questions, skip any you like.
+> know who I'm working for. Five questions, skip any you like.
 >
-> ## 1 of 4 · your name
+> ## 1 of 5 · your name
 >
 > Your name is <name>, correct? Would you like me to call you anything else?
 >
@@ -54,16 +54,16 @@ covers how to talk. Say what this is, how big it is, that skipping is fine, then
 With no name from Step 0, no "Hi <name>", and the question is open:
 
 > Hi. I'm the assistant in this folder. Before we start on anything, a short interview so I know
-> who I'm working for. Four questions, skip any you like.
+> who I'm working for. Five questions, skip any you like.
 >
-> ## 1 of 4 · your name
+> ## 1 of 5 · your name
 >
 > What should I call you?
 
 If the guess is wrong or they prefer another name, take it and write it down. Either way their
 name is now confirmed fact; the file note records it.
 
-## Step 2 — Four questions
+## Step 2 — Five questions
 
 Every question uses the same shape, so the human always knows where they are and what they can
 do. Bold and italics barely show in a terminal, so the shape uses structure the renderer draws
@@ -75,7 +75,7 @@ for the choices. The last choice is always **skip**.
 >
 > ---
 >
-> ## N of 4 · topic
+> ## N of 5 · topic
 >
 > The question, one or two sentences.
 >
@@ -107,7 +107,7 @@ The craft rules, all of them enforced on yourself:
 The one open question, and a hard one to answer cold, so it comes with a fill-in. Every line maps
 to something the vault uses later; none is required.
 
-> ## 2 of 4 · about you
+> ## 2 of 5 · about you
 >
 > Fill in what you like, skip the rest.
 >
@@ -132,7 +132,7 @@ offered, ask for nothing that wasn't.
 The agreement already ships with defaults under *How to talk to me*. Show them and ask what to
 change; a veto is cheaper than a composition.
 
-> ## 3 of 4 · how to talk to you
+> ## 3 of 5 · how to talk to you
 >
 > Here's how I'll write to you by default:
 >
@@ -153,12 +153,33 @@ note is theirs), and applied from the very next reply with at most a one-line no
 Like that?"). This is the interview's aha moment; do not fumble it by reverting two turns later.
 The per-turn hook re-states that section, so it holds.
 
-### Q4 — Autonomy
+### Q4 — Personality
+
+Style (Q3) is how replies are shaped; this is who is talking. Numbered so a digit is an answer;
+the last option is always "describe it".
+
+> ## 4 of 5 · personality
+>
+> How should I come across?
+>
+> 1. **Straight**: no small talk, just the work.
+> 2. **Warm**: friendly, a bit of encouragement.
+> 3. **Dry**: plain, with the occasional dry remark.
+> 4. **Coach**: pushes back, asks what you're avoiding.
+> 5. **Describe it to me** in a sentence.
+>
+> - a number
+> - skip
+
+Applied from the next reply, like Q3. Skip means *straight*, and say so.
+→ proposed as one line for the agreement's *How to talk to me* section ("Come across as: …").
+
+### Q5 — Autonomy
 
 Some people want full control; some don't want to think about it. This is the question that
 decides which assistant they get. Offered as three levels, no recommendation.
 
-> ## 4 of 4 · how much I do on my own
+> ## 5 of 5 · how much I do on my own
 >
 > - **Ask first**: I check before changing anything, even notes.
 > - **Do, then tell**: I organize, file, draft and fix on my own, and say what I did.
@@ -177,11 +198,11 @@ not "email people as me"; keeping the floor lets the question be safe to offer. 
 then tell*, and say so.
 → proposed for the agreement's *What you can do on your own* section.
 
-### After Q4 — Magic words
+### After Q5 — Magic words
 
 Not a question, a gift, so it carries no number and no options.
 
-> That's all four. One more thing, no answer needed: three words with fixed meanings between us.
+> That's all five. One more thing, no answer needed: three words with fixed meanings between us.
 > **"shorter"**: half the words. **"huh?"**: explain it differently. **"park it"**: good idea, not
 > now, I'll save it. Rename any of them or add your own whenever you like.
 
