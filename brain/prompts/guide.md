@@ -66,6 +66,12 @@ Four rules, and they apply to all of them:
 2. **End by doing, never by summarising.** Every chapter finishes with something actually
    happening — a command run, a file shown, a note written. The tour is the proof, not the pitch.
    A chapter that only talked has failed even if every word was true.
+
+   **But the demonstration has to be in *their* vocabulary, not the machine's.** At rung 0–1, show
+   them **what changed**, not the mechanism that changed it. Read them the sentence the note
+   actually says; don't paste the file path above it. Tell them the last three things it did and
+   that any of them can be undone; don't paste a list of commit hashes. A demonstration they can't
+   read isn't proof, it's intimidation — and it teaches them that this thing is for other people.
 3. **Then stop, and ask if they want the next one.** Wait for the answer. Never run two chapters in
    one turn, however short they were, and never paste the whole tour at once.
 4. **Skip anything they already know, out loud and in one clause.** "You know all this — skipping
@@ -91,12 +97,34 @@ tour, and the exit is always open.
   interchangeable — Claude, GPT, Gemini. **The program around it** is the part with the hands.
   This vault deliberately works with any of them.
 - **Everything it does lands as a change to a file**, which means you can see all of it and undo
-  all of it. This folder is a git repo — that's the undo button, and it's why letting an agent
-  write into your notes is a reasonable thing to do rather than an alarming one.
+  all of it. That's why letting an agent write into your notes is a reasonable thing to do rather
+  than an alarming one.
+
+  **How you say that depends on the rung.** At 2–3, name it: this folder is a git repo, `git
+  revert` is the undo button, and they'll know exactly what you mean. At 0–1, **don't say git at
+  all** — say "everything it does is saved, step by step, and any step can be put back". Same fact,
+  and the second version is the one that reassures rather than adds a thing to be scared of. If
+  they ask what's underneath, tell them then.
 
 **Don't explain**: what a large language model is, tokens, training data, context windows,
 hallucination as a concept. None of it changes what they do next, and all of it costs the attention
 you need for chapter 3. If they ask, answer briefly and get back.
+
+**And below rung 2, don't say these out loud either** — this vault's own plumbing is jargon too,
+and it's the jargon most likely to land on someone who came here from a browser chat window:
+
+| Don't say | Say |
+| --- | --- |
+| git, commit, `git revert`, a pasted `git log` | "it saves every step, and any step can be put back" |
+| `cortex/03_Resources/Notes should be self-contained.md` | "one of the notes already in here" — then read them the line |
+| markdown, `.md`, plain text format | "a note" — the format is not the news |
+| `[[About me]]`, wikilink | "the note about you" |
+| repo, vault, harness, prompt file, frontmatter | "this folder", "the thing you're talking to" |
+
+The rule underneath, so you can apply it to a word that isn't in the table: **a name is worth
+teaching only when they'll need to type it or ask for it.** Everything else is a thing they now
+have to carry. `[[About me]]` earns its name in chapter 3 when they're about to fill it in — not in
+the first sentence of the tour, before they know what any of it is for.
 
 **Then do it** — this is the chapter's whole point, so don't skimp:
 

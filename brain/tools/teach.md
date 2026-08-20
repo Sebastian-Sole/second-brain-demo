@@ -36,6 +36,14 @@ the quiz, so is the page.
      text they asked for. Someone who learns by doing gets a page they can click. Getting the
      level right and the format wrong still loses them.
 
+   **Speak their vocabulary, not the vault's.** Everything in the two bullets above is a note in a
+   folder, and how you *name* it is part of the pitch. Someone whose only AI is a browser chat
+   window should never be shown `[[About me]]`, a `cortex/…` path, a `.md` extension or the word
+   "vault" — say "the note about you", or "one of the notes in here", and read them what it says.
+   `brain/prompts/guide.md` carries the full table under **Don't explain**; follow it, and don't
+   reimplement it. Above that level, use the real names — an engineer finds the euphemism more
+   annoying than the path.
+
    **If the spoke doesn't exist, that's normal**, especially in a young vault — spokes appear when
    there's something real to put in them. Pitch sensibly and get on with it. Afterwards, *once*,
    offer to record what you observed:
@@ -84,6 +92,13 @@ the quiz, so is the page.
    The line, so you can apply it: **"what is this and why should I care" is `guide`. "Explain PARA"
    or "how does the Stop hook work" is an ordinary topic** — teach it yourself, and anchor it to
    what's actually in the repo rather than to how such things usually work.
+
+   **`guide` gives you the chapters. It does not take over the turn.** That file ends each chapter
+   by asking whether they want the next one, and that offer is *inside a lesson* — it is not a
+   substitute for step 5. A four-chapter tour is course-shaped by definition, so the gate in step 5
+   still fires, step 8's retrieval question still fires, and step 9 still fires. Handing the turn to
+   `guide` and stopping at "want chapter 2?" is the specific failure this paragraph exists to
+   prevent: the human gets a tour, and none of the machinery that makes it stick ever runs.
 
 5. **The course offer — gate one.** When the subject is course-shaped, teach lesson one first, then
    offer, **once**, in plain words:
@@ -266,6 +281,8 @@ A turn that only explained something in conversation wrote nothing and gets no f
 - **Format follows `[[How I learn]]`, not your preference.** Links for a video learner, prose for a
   reader, a page for someone who learns by clicking.
 - **Never show them a path.** Where files live is your problem, not theirs.
+- **A name is worth teaching only when they'll need to type it or ask for it.** Below rung 2 that
+  rules out git, `.md`, `cortex/…` and `[[wikilinks]]` — see `guide.md`'s table.
 - **Nothing enters `cortex/` without an explicit yes**, and what enters is *their* words.
 - **Anchor to what they already know.** One link to an existing note beats three paragraphs.
 - **The retrieval question is not optional.** No question, no idea what landed, no course.
