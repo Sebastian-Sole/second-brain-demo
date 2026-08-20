@@ -26,9 +26,8 @@ Before your first word, gather — and ask nothing later that this already answe
   `oauthAccount.displayName`, Claude Code only), `git config user.name`, `id -F` (macOS full
   name). A login name like `mpatterson` is not a name; treat it as nothing. Best guess at a first
   name, held as *unconfirmed* until they nod. No guess is fine: Q1 then asks instead of confirms.
-- **What's connected.** Does a calendar or mail connector already respond? (`brain/bin/doctor`
-  knows.) Are there past agent sessions on this machine? (`brain/bin/sessions list` — count and
-  recency, do not read any transcript.)
+- **Past sessions.** Are there past agent sessions on this machine? (`brain/bin/sessions list`:
+  count and recency, do not read any transcript.)
 - **Vault state.** Fresh, or already lived-in?
 
 Doctor warnings are diagnostic context, not conversation. Nothing about remotes, retention or
@@ -96,8 +95,8 @@ The craft rules, all of them enforced on yourself:
   behave. Not "to personalize your experience"; the actual mechanism.
 - **Write as you go.** The moment a slot has a real answer it goes on disk, before the next
   question. An abandoned conversation must leave them better off than never starting.
-- **Pay answers off visibly.** When they tell you how to talk, the very next reply is in that
-  style. When they connect the calendar, they get their week sketched back inside a minute.
+- **Pay answers off visibly.** When they pick a personality or tell you how to talk, the very
+  next reply is in that style.
 - **Skips are graceful.** "Happy to learn that as we go" — then actually move on. Non-judgment is
   precisely why people open up to an assistant; pressing spends it.
 - **Stop early on short answers.** One-word replies or "does it matter?" — jump to Step 3 with
@@ -136,7 +135,6 @@ to something the vault uses later; none is required.
 > - **Work**: what you do, and where
 > - **Home**: city, and who's in the household
 > - **Languages**: what you want me to write in
-> - **Tools**: the mail and calendar you use (Gmail, Outlook, iCloud…)
 > - **Why an assistant**: what you hope this does for you
 >
 > > Why I ask: this is what every future conversation starts from.
@@ -144,8 +142,7 @@ to something the vault uses later; none is required.
 > - answer
 > - skip
 
-What each line feeds: city → weather, location, timezone; tools → which connector to offer, and
-when; languages → every reply; household → what "dinner" or "weekend" implies; why an assistant →
+What each line feeds: city → weather, location, timezone; languages → every reply; household → what "dinner" or "weekend" implies; why an assistant →
 proposed for the agreement's *What I want from this assistant* section, in their words. Take what's
 offered, ask for nothing that wasn't.
 
@@ -212,17 +209,6 @@ Not a question, a gift, so it carries no number and no options.
 → the agreement's *Magic words* section, only if they changed something. The deeper lesson rides
 along free: vocabulary can be installed in this thing.
 
-## Calendar: an extra at the close, never a step
-
-Connecting a calendar is setup work, not conversation, so it never appears inside the interview.
-At the close it is offered in one line, and only the route that actually works in this harness:
-the account connector (`/mcp`, one sign-in). Name its scope in one sentence before they accept:
-it works across everything they use Claude for, and it can write as well as read. Write access is
-never *used* during `start`; `brain/tools/calendar.md` governs it from there. If they connect,
-read the current week and play back a three-line sketch ("Mornings are meetings, Thursday
-afternoons look protected, Fridays are light. Right?"). That's the first proof this thing works.
-A secret-ICS-feed route is not offered until `brain/bin` has a reader for it.
-
 ## Step 3 — The close
 
 Same rules as the questions: every question is visibly a question with options, nothing is asked
@@ -235,7 +221,7 @@ each its own message or clearly separated with a rule; do not fold them into one
 >
 > ## What I've got
 >
-> - you run a small design studio in Oslo, two kids, Gmail and Google Calendar
+> - you run a small design studio in Oslo, two kids
 > - straight, no small talk
 > - short answers, no sugarcoating
 > - I do things and tell you after; anything leaving the vault you see first
@@ -270,11 +256,9 @@ more. Numbered so a digit is an answer.
 >
 > 1. **Fix one thing that eats your time.** Say `new-idea` and tell me what it is. We take a bite
 >    out of it in that conversation.
-> 2. **Connect your calendar**, so I can see your week myself. One sign-in; it works across
->    everything you use Claude for.
-> 3. **Let me learn from your past AI sessions** on this machine: what you already ask assistants
+> 2. **Let me learn from your past AI sessions** on this machine: what you already ask assistants
 >    for, how you like to talk. You pick which projects; histories can contain work stuff.
-> 4. **The deeper version of "how I tick"**: say `interview big-five`. Twenty statements. What it
+> 3. **The deeper version of "how I tick"**: say `interview big-five`. Twenty statements. What it
 >    produces is rules for how I treat you, not a test score.
 >
 > More to read and learn, when you want it: [Bygg din egen personlige assistent](https://app.notion.com/p/Bygg-din-egen-personlige-assistent-3c24dc662c2281f3a178d53504972873)
@@ -283,9 +267,9 @@ more. Numbered so a digit is an answer.
 > - none for now
 
 Item 1 hands off to `new-idea`, which asks what the friction is and builds for it; do not ask
-for the friction here. Item 2 hands off to the connector (see *Calendar*, above). Item 3 hands off
-to `ingest-sessions`, whose consent gate (pick projects, default none) and retention warning
-already exist: don't restate them, run it. Item 4 is a pointer only; the inventory lives in
+for the friction here. Item 2 hands off to `ingest-sessions`, whose consent gate (pick projects,
+default none) and retention warning already exist: don't restate them, run it. Item 3 is a pointer
+only; the inventory lives in
 `brain/prompts/interview.md` and never runs unasked.
 
 **Block 4 — stop.** Only if they chose "none for now". One line, then the conversation is over:
@@ -303,7 +287,8 @@ already exist: don't restate them, run it. Item 4 is a pointer only; the invento
   in the opening. Keep sections at three to five bullets; when one is full, propose which line
   the new one replaces.
 - Not asked here, learned on first need: who matters by name (first mail or calendar task), what
-  eats their time (`new-idea`), the shape of their week (when a calendar is connected).
+  eats their time (`new-idea`), which mail and calendar they use and whether to connect them (the
+  first task that needs one), the shape of their week (after that).
 - Frontmatter per `AGENTS.md`, everything linked from `[[About me]]`, and it all lands on disk
   before the conversation ends — `sync` does the committing.
 
