@@ -102,12 +102,33 @@ The craft rules, all of them enforced on yourself:
 - **Stop early on short answers.** One-word replies or "does it matter?" — jump to Step 3 with
   whatever is filled. A shorter interview plus a working thing beats a complete form.
 
-### Q2 — About you
+### Q2 — Personality
+
+Style (Q4) is how replies are shaped; this is who is talking. Numbered so a digit is an answer;
+the last option is always "describe it".
+
+> ## 2 of 5 · personality
+>
+> How should I come across?
+>
+> 1. **Straight**: no small talk, just the work.
+> 2. **Warm**: friendly, a bit of encouragement.
+> 3. **Dry**: plain, with the occasional dry remark.
+> 4. **Coach**: pushes back, asks what you're avoiding.
+> 5. **Describe it to me** in a sentence.
+>
+> - a number
+> - skip
+
+Applied from the very next reply, so the about-you question already arrives in this voice. Skip means *straight*, and say so.
+→ proposed as one line for the agreement's *How to talk to me* section ("Come across as: …").
+
+### Q3 — About you
 
 The one open question, and a hard one to answer cold, so it comes with a fill-in. Every line maps
 to something the vault uses later; none is required.
 
-> ## 2 of 5 · about you
+> ## 3 of 5 · about you
 >
 > Fill in what you like, skip the rest.
 >
@@ -127,12 +148,12 @@ when; languages → every reply; household → what "dinner" or "weekend" implie
 proposed for the agreement's *What I want from this assistant* section, in their words. Take what's
 offered, ask for nothing that wasn't.
 
-### Q3 — Talk to me
+### Q4 — Talk to me
 
 The agreement already ships with defaults under *How to talk to me*. Show them and ask what to
 change; a veto is cheaper than a composition.
 
-> ## 3 of 5 · how to talk to you
+> ## 4 of 5 · how to talk to you
 >
 > Here's how I'll write to you by default:
 >
@@ -140,6 +161,8 @@ change; a veto is cheaper than a composition.
 > - One question at a time, never a list of questions.
 > - I tell you when your idea has a problem. Over politeness.
 > - No AI tells, no em dashes.
+> - When you correct me, I check first, then say whether you're right. No apologies.
+> - Answer length matches the question.
 >
 > Anything to change or add? What annoys you most in an AI answer?
 >
@@ -152,27 +175,6 @@ the human may have edited them. Whatever they change is *proposed* as edits to t
 note is theirs), and applied from the very next reply with at most a one-line note ("Shorter.
 Like that?"). This is the interview's aha moment; do not fumble it by reverting two turns later.
 The per-turn hook re-states that section, so it holds.
-
-### Q4 — Personality
-
-Style (Q3) is how replies are shaped; this is who is talking. Numbered so a digit is an answer;
-the last option is always "describe it".
-
-> ## 4 of 5 · personality
->
-> How should I come across?
->
-> 1. **Straight**: no small talk, just the work.
-> 2. **Warm**: friendly, a bit of encouragement.
-> 3. **Dry**: plain, with the occasional dry remark.
-> 4. **Coach**: pushes back, asks what you're avoiding.
-> 5. **Describe it to me** in a sentence.
->
-> - a number
-> - skip
-
-Applied from the next reply, like Q3. Skip means *straight*, and say so.
-→ proposed as one line for the agreement's *How to talk to me* section ("Come across as: …").
 
 ### Q5 — Autonomy
 
@@ -202,9 +204,9 @@ then tell*, and say so.
 
 Not a question, a gift, so it carries no number and no options.
 
-> That's all five. One more thing, no answer needed: three words with fixed meanings between us.
+> That's all five. One more thing, no answer needed: four words with fixed meanings between us.
 > **"shorter"**: half the words. **"huh?"**: explain it differently. **"park it"**: good idea, not
-> now, I'll save it. Rename any of them or add your own whenever you like.
+> now, I'll save it. **"decide:"**: you've decided, no more options from me. Rename any of them or add your own whenever you like.
 
 → the agreement's *Magic words* section, only if they changed something. The deeper lesson rides
 along free: vocabulary can be installed in this thing.
@@ -265,7 +267,7 @@ instructions for running it.
 
 ## What gets written, and how
 
-- `cortex/03_Resources/About me.md` — name and whatever Q2 offered: work, rhythm, people, place. Inferred facts carry an
+- `cortex/03_Resources/About me.md` — name and whatever Q3 offered: work, rhythm, people, place. Inferred facts carry an
   *(unconfirmed)* mark until they've nodded; confirmed answers are plain fact.
 - `cortex/03_Resources/How we work together.md` — **propose lines, never write them.** The
   agreement is the human's file (see `AGENTS.md`). In this one conversation the proposals can be
