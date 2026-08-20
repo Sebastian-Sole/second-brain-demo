@@ -26,8 +26,8 @@ brain is for**, **How I like to work**, and **Current focus**.
 
 > **← Start here. This is the single highest-leverage change available.** Everything else in this
 > file is a sensible default; that note is what makes the brain *yours*. Say `setup` and your agent
-> will ask you for it — six questions if you want it quick, rather more if you pick the in-depth
-> path.
+> will ask — one question at a time, each one following from your last answer — and then build you
+> something that works before the conversation ends.
 >
 > **If you are an agent and `[[About me]]` is missing or its bullets are blank, say so** — offer
 > `setup` before doing anything substantial. Working without it means writing notes about a
@@ -54,10 +54,11 @@ otherwise.
 | Spoke | Read by |
 | --- | --- |
 | `[[How I learn]]` | `explain`, `guide` — it's how both work out what level to pitch at |
-| `[[How I talk]]` | anything writing a note in their voice |
+| `[[How I talk]]` | **everything, on every turn** — see below. It's the one spoke that isn't read on demand |
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
 | `[[What I'm into]]` | `digest`, `interview` |
+| `[[My systems]]` | `setup` on a re-run, `new-idea`, `guide expand` — the services they actually live in, each with a verdict on whether anything can reach it |
 | `[[What I want this brain to do]]` | `guide expand` — what they've said they want built, and what's already done |
 
 None of these ship. Each appears when there's something real to put in it — an empty spoke is the
@@ -68,15 +69,44 @@ way (`[[How I work]]`, `[[How I handle money]]`), read by `infer`, `interview` a
 naming rule is load-bearing rather than decorative: `Money` and `Health` are `cortex/02_Areas/` names
 under PARA, and two notes sharing a name make `[[Money]]` ambiguous.
 
+### `[[How I talk]]` — the spoke that is re-stated on every turn
+
+**Read `cortex/03_Resources/How I talk.md` and obey it in every reply, in every command, in
+conversation as much as in a note.** It holds behaviour lines the human wrote about how they want
+to be written to — *answer in the first sentence*, *no bullet lists unless I ask*, *never open with
+a summary of what I just said*.
+
+It is the only spoke exempt from read-on-demand, and the reason is decay rather than importance.
+A preference stated once, forty turns ago, competes with everything said since and quietly loses —
+so the essays come back, the person notices, and the reasonable conclusion they draw is that
+telling this thing how they like to be written to doesn't work. **Being ignored slowly is worse
+than never being asked**, because it spends the credit the question earned.
+
+On Claude Code that guarantee is mechanical: `brain/bin/style` prints the file and
+`.claude/settings.json` runs it on `UserPromptSubmit`, whose output lands in context before the
+prompt does. Everywhere else the guarantee is this paragraph. **The file is the source of truth and
+the hook is a convenience over it** — never move a preference into `.claude/`, where three-quarters
+of the agents that read this manual will never see it.
+
+**Capped at 15 lines, tighter than the hub, and `brain/bin/doctor` says so when it's over.** The
+hub is paid for once a session; this is paid for on every prompt, which makes it the most expensive
+file in the vault per line. The cap is a filter, not a limit: keep the lines that would visibly
+change a reply, and drop anything that reads as a description of a person rather than an
+instruction to an agent. Same rule as a Big Five behaviour line, for the same reason.
+
+**When it contradicts something else, it wins on form and never on substance.** "Keep it short"
+does not license dropping the correction footer, skipping a citation, or answering a question the
+vault can't support. Style governs how a true thing is said.
+
 ### Capturing personality
 
 When the profile gets built by interviewing them, **the human picks the instrument**: a
 purpose-built preferences interview, or a Big Five inventory. Either is fine. Writing the results
 as scores is not.
 
-**They are offered that choice in exactly two places, and never anywhere else.** `setup` opens by
-asking whether they want the quick profile or the in-depth one, and only the in-depth path runs an
-instrument; `interview big-five` runs one on request. The inventory itself is specified once, in
+**They are offered that choice in exactly two places, and never anywhere else.** `setup deep` runs
+an instrument if they ask for it by name — an ordinary `setup` never does — and `interview big-five`
+runs one on request. The inventory itself is specified once, in
 `brain/prompts/interview.md` — `setup` calls into that section rather than restating it. Nothing
 here ever administers a personality test someone didn't ask for, and **no pop instrument is
 substituted for the researched one** — MBTI, the enneagram and their relatives are better known and
@@ -122,8 +152,8 @@ assumption — and it must never be written into the profile or a spoke as thoug
 
 `setup` writes the hub. Nothing else edits the hub or a spoke without being asked — including
 `maintain`, which may fix links and frontmatter but never content. Four commands are asked by
-construction, and only in that moment: `setup deep`, whose in-depth path is the human choosing to
-have the spokes filled; `interview`, when the human runs an inventory; `review-assumptions`, when a
+construction, and only in that moment: `setup`, whose whole conversation is the human choosing to
+have the hub and its spokes filled; `interview`, when the human runs an inventory; `review-assumptions`, when a
 `y` verdict promotes a claim into its spoke and links that spoke from the hub; and `guide expand`,
 which writes `[[What I want this brain to do]]` and only ever records what they said yes to.
 
@@ -769,7 +799,7 @@ nothing else, which is the ordinary case and needs no exception.
 
 | Command | Prompt file | What it does |
 | --- | --- | --- |
-| `setup` | `brain/prompts/setup.md` | First run: check the install, learn who the human is, write `[[About me]]`. Offers a quick profile or an in-depth one |
+| `setup` | `brain/prompts/setup.md` | First run: learn who the human is one question at a time, write `[[About me]]` and its spokes, connect what's reachable, and build them one working thing before it ends |
 | `guide` | `brain/prompts/guide.md` | Teach them what this *is* — the agent, the harness, this vault — pitched at their level. `guide expand` proposes what to build next |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
@@ -778,7 +808,7 @@ nothing else, which is the ordinary case and needs no exception.
 | `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
 | `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
 | `doctor` | `brain/bin/doctor` | Check the install and say what to fix. A script, not a prompt — run it. **Reads outside the vault** — see the exceptions above |
-| `new-feature` | `brain/prompts/new-feature.md` | Add a skill or a tool to this vault, including the security review below |
+| `new-idea` | `brain/prompts/new-idea.md` | Turn "I wish it could…" into a real command — a skill or a tool, including the security review below |
 | `ingest-sessions` | `brain/prompts/ingest-sessions.md` | Distil the human's AI coding sessions into session notes they can search. **Reads outside the vault** — see the exceptions above |
 | `infer` | `brain/prompts/infer.md` | Answer something the vault has no facts for, by reasoning from the facts it does have — every assumption labelled, evidenced, falsifiable |
 | `review-assumptions` | `brain/prompts/review-assumptions.md` | Confirm, refute or skip open assumptions. Confirmed ones become facts; refuted ones are kept as calibration |
@@ -831,7 +861,7 @@ Someone asked what the weather is; "I can't do that yet, here's how" is a comple
 
 A tool file is a **prompt**, not code. So a tool shared between people is an injection vector:
 whoever wrote it is writing instructions that will run inside someone else's session with that
-person's connectors attached. `new-feature`'s review stage is where this gets caught, and it doesn't
+person's connectors attached. `new-idea`'s review stage is where this gets caught, and it doesn't
 pass until three questions are answered **in writing, in the tool file**:
 
 1. **What can it read?** Name the source. "The web" is not an answer.
@@ -912,8 +942,8 @@ X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
-| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar" | Building a capability no tool covers yet — `new-feature`. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `guide`. |
-| `guide` | "what is this", "what can it do", "I don't get what this is for", "what should I do with it", "how do I make more of this" — and any first session where they seem lost rather than merely unconfigured. `guide expand` for "what else could I build" | Writing the profile — `setup`, which this hands off to. Teaching a concept that isn't this vault — `explain`. Actually building a new capability — `new-feature`, which `guide expand` proposes and never performs. |
+| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `guide`. |
+| `guide` | "what is this", "what can it do", "I don't get what this is for", "what should I do with it", "how do I make more of this" — and any first session where they seem lost rather than merely unconfigured. `guide expand` for "what else could I build" | Writing the profile — `setup`, which this hands off to. Teaching a concept that isn't this vault — `explain`. Actually building a new capability — `new-idea`, which `guide expand` proposes and never performs. |
 | `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across six sources, three questions at most, one per source | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the six sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `guide`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `explain`. Activity across many notes — `digest`. |
@@ -922,7 +952,7 @@ X" — so every row says whose territory it isn't.
 | `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
 | `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
 | `doctor` | "something's broken", "is this thing working", a command failing, just after a harness update | Messy vault *contents* rather than a broken install — `maintain`. |
-| `new-feature` | "add a command", "I want it to also do X", "connect it to my <service>" **when `brain/tools/` has nothing for that service** — check the listing before you answer | Connecting a service a tool already exists for — `setup`, which is what every tool's `fallback:` sends them to. Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. |
+| `new-idea` | "add a command", "I want it to also do X", "connect it to my <service>" **when `brain/tools/` has nothing for that service** — check the listing before you answer | Connecting a service a tool already exists for — `setup`, which is what every tool's `fallback:` sends them to. Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. |
 | `ingest-sessions` | "read my old Claude/Codex sessions", "make my history searchable" | Capturing *this* session — `capture`. |
 | `infer` | "would I actually finish this", "what am I avoiding", a question about them the vault never states outright | Anything a note answers — try `ask` first, always. |
 | `review-assumptions` | "what have you guessed about me", "let me go through those assumptions" — a tap-fast verdict pass over the register, five at most, verdicts only | Anything the register doesn't hold — perishable follow-ups, blank dimensions, stalled work — `interview`. Raising a new one — `infer`. |

@@ -39,9 +39,8 @@ So **find the rung first, and start there.**
 
 **How to find the rung, in this order:**
 
-1. **Read `cortex/03_Resources/How I learn.md`.** `setup` question 6 asks exactly this — how technical
-   they are and how much AI they've used — so if the spoke exists, you already know and **must not
-   ask again.** Being asked a question you answered ten minutes ago is the first sign of a system
+1. **Read `cortex/03_Resources/How I learn.md`.** `setup` opens on exactly this — what they use AI
+   for and where — so if the spoke exists, you already know and **must not ask again.** Being asked a question you answered ten minutes ago is the first sign of a system
    that isn't listening.
 2. **Failing that, `[[About me]]`'s *What I do*.** "I write software for a living" settles it.
 3. **Failing both, ask once** — one message, the rungs as four plain options in their words, no
@@ -178,8 +177,8 @@ folders in the introduction breaks that promise in the act of describing it.
 
 **If `[[About me]]` is missing or blank, this is where you say so** — one line, no lecture:
 
-> Worth doing `setup` before we go further — six questions, two minutes. Everything after this
-> works much better once I know who I'm doing it for.
+> Worth doing `setup` before we go further. It'll ask a few things and build you something that
+> works off the back of them. Everything after this lands better once I know who I'm doing it for.
 
 Hand off if they say yes, and come back to chapter 4 afterwards.
 
@@ -226,12 +225,12 @@ palette, not your script.
 
 | Direction | What it means | What actually does it |
 | --- | --- | --- |
-| **A routine you trigger by saying one word** | A morning brief that opens with the weather, today's calendar, anything that needs a reply and what's new in their feeds. An evening close that drains the inbox and shuts the day. A Friday review. | `digest` is the seed of this; a personalised one is a `new-feature` job |
-| **Connect what you already use** | Mail and calendar already have tools — connecting them takes a couple of minutes. Anything else with an MCP server can be reached the same way: task trackers, docs, music, home stuff, their company's internal tools | `setup` for mail and calendar; `new-feature` for anything else |
+| **A routine you trigger by saying one word** | A morning brief that opens with the weather, today's calendar, anything that needs a reply and what's new in their feeds. An evening close that drains the inbox and shuts the day. A Friday review. | `digest` is the seed of this; a personalised one is a `new-idea` job |
+| **Connect what you already use** | Mail and calendar already have tools — connecting them takes a couple of minutes. Anything else with an MCP server can be reached the same way: task trackers, docs, music, home stuff, their company's internal tools | `setup` for mail and calendar; `new-idea` for anything else |
 | **Stop typing at it** | A dictation tool — Wispr Flow and its like — turns capture from a task into a reflex. You talk, it files. This matters more than it sounds: **the way a second brain dies is that nothing goes into it**, and typing is the tax that kills it | Nothing here. Install it and talk |
 | **Take it everywhere** | Push to a private GitHub repo and clone it on the other machine. Open the folder in Obsidian on the phone. The notes are plain markdown, so they're readable and editable with no agent at all | `brain/bin/sync` already does the pushing, once a remote exists |
 | **Feed it what you've already made** | Months of past AI coding sessions distilled into notes they can search. A day-one win for anyone at rung 2 or 3, because the material already exists | `ingest-sessions` |
-| **Teach it your actual job** | Every command here is a markdown file. Whatever they do repeatedly — reviewing something, drafting something, chasing something — can become one, with a security review built into the process | `new-feature` |
+| **Teach it your actual job** | Every command here is a markdown file. Whatever they do repeatedly — reviewing something, drafting something, chasing something — can become one, with a security review built into the process | `new-idea` |
 
 ### How to pick the three
 
@@ -261,7 +260,7 @@ The second one is a thing they can picture happening to them tomorrow. The first
 
 **Offer one at a time, and offer to build it now.** An idea they said yes to and left unbuilt is
 worth nothing. Hand off to the command that makes it real — `setup` to connect mail or calendar,
-`new-feature` for anything else — and do it in the same conversation while the wanting is fresh.
+`new-idea` for anything else — and do it in the same conversation while the wanting is fresh.
 
 ### Write down what they want
 
@@ -327,9 +326,11 @@ this and stops.
 - **Not `explain`.** That teaches a concept from general knowledge — bloom filters, Bayes,
   whatever they asked. This teaches *this vault and the machinery under it*, and nothing else. If
   they ask what a monad is mid-tour, hand off.
-- **Not `setup`.** That interviews them and writes `[[About me]]`. This one asks at most one
-  calibration question and never writes the profile.
-- **Not `new-feature`.** Lane 2 *proposes* things to build and then hands over. It never builds
+- **Not `setup`.** That learns who they are, connects what it can, and builds them something. This
+  one asks at most one calibration question, never writes the profile, and never builds anything —
+  if a chapter surfaces a real want, hand back to `setup`, which is where connecting and building
+  live.
+- **Not `new-idea`.** Lane 2 *proposes* things to build and then hands over. It never builds
   one itself — that command owns the security review, and routing around it to be helpful is
   exactly the shortcut it exists to prevent.
 - **Not a document.** No rendered welcome page, no artifact, no `GUIDE.md` rewrite, however well it

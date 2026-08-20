@@ -171,8 +171,8 @@ instrument**: the ordinary preferences interview, or a Big Five inventory. **Thi
 single specification of that inventory**, and two callers read it:
 
 - **`interview big-five`** — this command, when they ask for it directly.
-- **`setup deep`** — part 3 of its in-depth path calls straight into this section rather than
-  restating it. `setup quick` runs no instrument at all and mentions the option once on its way out.
+- **`setup deep`** — part 2 of its longer-profile path calls straight into this section rather than
+  restating it. An ordinary `setup` runs no instrument at all.
 
 Keep it that way. If the inventory ever needs changing, it should need changing here and nowhere
 else.

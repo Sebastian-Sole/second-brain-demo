@@ -84,8 +84,8 @@ model problem.
 | 22 | `somethings broken, capture blew up last time i ran it` | `doctor` | | A command failing is install health, and `doctor` is a script to run, not a prompt. |
 | 23 | `is this thing even working` | `doctor` | ⚠ maintain vs doctor | "is this thing working" verbatim. Install health, nothing to do with note quality. |
 | 24 | `the vaults a mess` | `maintain` | ⚠ maintain vs doctor | Mirror of 23. Messy *contents* is `maintain`; `doctor` would report a clean bill and miss the point. |
-| 25 | `i want it to also do a weekly review thing` | `new-feature` | | "I want it to also do X" — adding capability, with the security review that entails. |
-| 26 | `can you hook this up to my strava` | `new-feature` | ⚠ setup vs new-feature | `new-feature` owns "connect it to my <service>" **when `brain/tools/` has nothing for it**, and nothing there covers Strava. See A9 — this answer flips to `setup` the day a Strava tool lands. |
+| 25 | `i want it to also do a weekly review thing` | `new-idea` | | "I want it to also do X" — adding capability, with the security review that entails. |
+| 26 | `can you hook this up to my strava` | `new-idea` | ⚠ setup vs new-idea | `new-idea` owns "connect it to my <service>" **when `brain/tools/` has nothing for it**, and nothing there covers Strava. See A9 — this answer flips to `setup` the day a Strava tool lands. |
 | 27 | `can you read my old codex chats and make them searchable` | `ingest-sessions` | | "make my history searchable" — and it must ask which projects before reading any. |
 | 28 | `pull in what i was doing in those claude sessions last month` | `ingest-sessions` | | Past sessions on disk, distilled. Not this session. |
 | 29 | `write down what we just did here` | `capture` | ⚠ capture vs ingest-sessions | *This* session is `capture`'s job; `ingest-sessions` is only for transcripts already on disk. |
@@ -122,7 +122,7 @@ model problem.
 | 60 | `book the thing for tuesday` | **ask the human** | ⚠ ambiguous | "book" implies committing, which the ceiling forbids, and "the thing" names nothing. Ask before drafting. |
 
 **Per-command coverage:** setup 2 · interview 2 · capture 9 · ask 6 · explain 3 · task 3 · digest 2
-· maintain 3 · doctor 2 · new-feature 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
+· maintain 3 · doctor 2 · new-idea 2 · ingest-sessions 2 · infer 3 · review-assumptions 2 ·
 weather 3 · location 2 · news 2 · email 4 · calendar 3 · ask-the-human 4 · say-it-can't 1.
 
 Fallback-to-`capture` rows (nothing else matches): **52–56**.
@@ -159,12 +159,12 @@ though the words alone decide it. Row 11's expected answer assumes a vault that 
 the topic.
 
 **A9 · row 26 is decided by a directory listing, not by the table** (row 26). **New.**
-The old `setup`/`new-feature` collision is gone, but the fix moved the decision outside the text:
-`new-feature` now owns "connect it to my <service>" only "**when `brain/tools/` has nothing for
+The old `setup`/`new-idea` collision is gone, but the fix moved the decision outside the text:
+`new-idea` now owns "connect it to my <service>" only "**when `brain/tools/` has nothing for
 that service** — check the listing before you answer", and `setup` owns it when a tool exists. That
 is a clean partition and the right one. It also means row 26's expected answer is a fact about the
 filesystem on the day it was written: nothing in `brain/tools/` covers Strava (weather, location,
-news, email, calendar), so `new-feature` is correct **today**. Ship a Strava tool and row 26 flips
+news, email, calendar), so `new-idea` is correct **today**. Ship a Strava tool and row 26 flips
 to `setup` without a word of the table changing. Same class of problem as A1, and the reason a tool
 being added is listed as a re-run trigger below.
 
@@ -183,8 +183,8 @@ third exit, so a router that has only read the summary doesn't fall through to `
 Verified line by line against the current table on 2026-08-18, each against the file rather than a
 summary. Kept as a log so nobody re-raises them.
 
-- **A2 · `setup` vs `new-feature` on connecting a service** — fixed. The rows now partition on
-  whether a tool exists: `new-feature` takes it "when `brain/tools/` has nothing for that service",
+- **A2 · `setup` vs `new-idea` on connecting a service** — fixed. The rows now partition on
+  whether a tool exists: `new-idea` takes it "when `brain/tools/` has nothing for that service",
   and its **Not for** reads "connecting a service a tool already exists for — `setup`, which is
   what every tool's `fallback:` sends them to", which is exactly the contradiction that used to
   make this ambiguous. Survives as A9 in a narrower form.
@@ -206,7 +206,7 @@ summary. Kept as a log so nobody re-raises them.
   the same" now spells out *several match and they'd do materially different things → ask which, in
   one line, before doing either*, and ties it to prime directive 6. Rows 57–60 are scored against
   the table itself now, not against the directive.
-- **A8 · `new-feature` had no prompt file** — stale. `brain/prompts/new-feature.md` exists, 214
+- **A8 · `new-idea` had no prompt file** — stale. `brain/prompts/new-idea.md` exists, 214
   lines. It was mid-flight when this was written, as suspected.
 
 ---
@@ -229,7 +229,7 @@ routing issues".
 
 **Any time the routing table in `AGENTS.md` changes, and any time a command or tool is added.**
 A new row changes the answer to utterances that already existed — that's what a collision *is* —
-so adding a command without re-running this leaves every previous result unverified. `new-feature`
+so adding a command without re-running this leaves every previous result unverified. `new-idea`
 is the natural place to run it: a command that ships without a routing pass is a command nobody can
 reach by accident, or one that steals somebody else's traffic silently.
 

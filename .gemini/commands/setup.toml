@@ -4,7 +4,7 @@
 # can do neither, and their wrappers still say "read the file", which costs them one round
 # trip and nothing else. Do not add instructions here — edit brain/prompts/setup.md instead.
 
-description = "First-run setup — check everything works, then make this vault yours."
+description = "Set this up as yours — one question at a time, then it builds you something that works before you're done."
 
 prompt = """
 @{brain/prompts/setup.md}

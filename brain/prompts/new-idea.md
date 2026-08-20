@@ -1,6 +1,8 @@
-# new-feature — add a skill or a tool to this vault
+# new-idea — turn "I wish it could…" into something it can
 
-This is the only way the vault grows a capability. There is no separate `add-tool`: a tool and a
+This is the only way the vault grows a capability. It is named for the sentence that starts it:
+nobody arrives wanting to *add a skill*, they arrive having noticed something they wish this thing
+could do. Take the wish, and hand back a command. There is no separate `add-tool`: a tool and a
 skill are the same artifact — a markdown prompt — built by the same six phases, and splitting the
 path is exactly how one of them ships without a security review.
 

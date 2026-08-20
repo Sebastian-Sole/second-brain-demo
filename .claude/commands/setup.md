@@ -1,5 +1,5 @@
 ---
-description: First-run setup — check everything works, then make this vault yours.
+description: Set this up as yours — one question at a time, then it builds you something that works before you're done.
 allowed-tools: Bash(brain/bin/doctor *)
 ---
 

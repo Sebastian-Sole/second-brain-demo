@@ -1,0 +1,104 @@
+#!/usr/bin/env sh
+# Print the human's standing style preferences, so they can be re-stated on
+# every turn instead of decaying halfway down a long session.
+#
+#   brain/bin/style           the lines, ready to inject
+#   brain/bin/style --check   what doctor asks: does it exist, is it in budget
+#
+# The problem this solves is real and unglamorous. Someone says "stop writing
+# me essays" in their first session; it gets written to [[How I talk]]; the
+# session runs for ninety minutes and by the end the essays are back. Not
+# because anything forgot on purpose -- an instruction given once, forty turns
+# ago, competes with everything said since, and loses. Re-stating it costs a
+# few dozen tokens a turn and it never loses.
+#
+# On Claude Code this is wired to UserPromptSubmit in .claude/settings.json,
+# whose stdout is added to the model's context before the prompt is processed.
+# Other agents read the same file the ordinary way, because AGENTS.md tells
+# them to -- so they lose the guarantee, not the preference. The file is the
+# source of truth and this script is a convenience over it. Keep it that way.
+#
+# Portable on purpose: POSIX shell and awk.
+
+set -u
+
+SPOKE='cortex/03_Resources/How I talk.md'
+
+# The budget. Every one of these lines is paid for on every single turn,
+# including the turn where someone asked what the weather is -- the same
+# reasoning that caps [[About me]] at 40 lines, only more so, because the hub
+# is read once per session and this is read once per prompt. 15 lines is about
+# a screen of standing instruction, which is as much as is worth re-stating.
+CAP=15
+BYTES=1200
+
+# ------------------------------------------------------------------- anchoring
+#
+# Same vault anchor as every other script here, with one deliberate difference:
+# this one never exits non-zero and never writes to stderr. It runs as a hook on
+# every prompt, and a hook that fails puts a "hook error" notice in front of the
+# human every time they press return. A missing style file is not an error, it
+# is the ordinary state of a vault whose owner hasn't said how they like things
+# written. Silence is the correct output for all of it.
+root=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd -P) || exit 0
+[ -f "$root/AGENTS.md" ] && [ -d "$root/brain/bin" ] || exit 0
+cd "$root" || exit 0
+
+mode='inject'
+case "${1:-}" in
+  --check) mode='check' ;;
+  -h|--help) sed -n '2,7p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  '') ;;
+  *) exit 0 ;;
+esac
+
+if [ ! -f "$SPOKE" ]; then
+  [ "$mode" = check ] && echo "absent"
+  exit 0
+fi
+
+# Frontmatter off, headings off, blanks collapsed. What survives is the
+# behaviour lines -- and behaviour lines are the whole point, per AGENTS.md:
+# "answer first, reasoning underneath" changes the next turn, "prefers concise
+# communication" changes nothing.
+body=$(awk '
+  BEGIN { n = 0 }
+  NR == 1 && $0 != "---" { n = 2 }
+  /^---$/ && n < 2 { n++; next }
+  n < 2 { next }
+  /^#/ { next }
+  /^[[:space:]]*$/ { next }
+  { print }
+' "$SPOKE" 2>/dev/null | head -n "$CAP" | cut -c1-200)
+
+lines=$(printf '%s' "$body" | grep -c . 2>/dev/null || echo 0)
+lines=$(printf '%s' "$lines" | tr -d ' ')
+
+if [ "$mode" = check ]; then
+  total=$(awk '
+    BEGIN { n = 0 }
+    NR == 1 && $0 != "---" { n = 2 }
+    /^---$/ && n < 2 { n++; next }
+    n < 2 { next }
+    /^#/ { next }
+    /^[[:space:]]*$/ { next }
+    { c++ }
+    END { print c + 0 }
+  ' "$SPOKE" 2>/dev/null)
+  echo "${total:-0} $CAP"
+  exit 0
+fi
+
+[ "${lines:-0}" -gt 0 ] || exit 0
+
+# Labelled, because unlabelled text arriving before the human's prompt reads
+# like something the human just said. It isn't -- it is a standing instruction
+# they wrote once, and it should be obeyed as one and never answered as one.
+echo "<style-preferences source=\"$SPOKE\">"
+echo "How this human wants to be written to. Standing instruction, not a message:"
+printf '%s\n' "$body" | head -c "$BYTES"
+echo ""
+echo "Follow these now, in this reply. Say \`setup style\` to change them."
+echo "</style-preferences>"
+
+exit 0

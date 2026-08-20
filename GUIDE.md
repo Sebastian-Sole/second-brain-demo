@@ -208,12 +208,18 @@ writes down what you said yes to so it doesn't pitch you the same thing twice.
 
 **`setup`** — you've already run this. Run it again any time; it's how you correct your profile.
 
-It opens by asking how deep you want to go. **Quick** is six questions and about two minutes.
-**In depth** is fifteen to twenty and fills in the detail: how you want things written, what you're
-into, and — if you want it — a short Big Five inventory, which is the personality model with actual
-research behind it rather than the ones you've met in magazines. You get behaviour lines you can
-read and delete, never a score or a four-letter type, and only `infer` ever reads them. Start quick
-and say `setup deep` later if you'd rather; nothing is locked in.
+It asks one question at a time, and each one follows from your last answer rather than working
+through a list — what you use AI for now, what annoys you about it, which of your systems that
+problem actually lives in. Then it connects what can be connected, tells you straight when something
+can't be, and **builds you one thing that works before you're done** — a command aimed at whatever
+you said was annoying, run in front of you on your own data. The profile falls out of the
+conversation on the way.
+
+`setup quick` means fewer questions, never a skipped build. `setup style` re-does just the
+how-you-want-things-written part. `setup deep` adds a longer profile at the end: what you're into,
+and — if you want it — a short Big Five inventory, the personality model with actual research behind
+it rather than the ones you've met in magazines. You get behaviour lines you can read and delete,
+never a score or a four-letter type, and only `infer` ever reads them.
 
 **`interview`** — the only command that talks to you first. It works out what the vault is missing
 and asks: how did the thing on Tuesday go, is this project dead or just quiet, this assumption —
@@ -222,7 +228,7 @@ asked one at a time, and it stops the moment you sound uninterested. **Its defau
 a young vault most runs have nothing worth asking, and it says so in one line rather than inventing
 an icebreaker. Nothing runs it on a timer.
 
-**`new-feature`** — adding a command of your own, and the only way this vault grows one. It walks
+**`new-idea`** — adding a command of your own, and the only way this vault grows one. It walks
 you through six steps: it gets the problem in your words, restates it back as a five-line spec and
 waits for a yes, decides whether the new thing stays inside the vault or reaches outside it, writes a
 security review into the file itself, then writes the file and wires it up — and finally hands you
@@ -231,7 +237,7 @@ the exact sentence to type, because you test it, not it.
 The security step is never skipped, not even for something that looks like a one-liner: it has to say
 in writing what the new command can read, what it can send outward and to whom, and what happens if
 something it fetches turns out to be hostile. That's the step you'd be skipping if you added a file
-by hand, so don't — run `new-feature` and let it refuse the idea if the idea deserves refusing. It
+by hand, so don't — run `new-idea` and let it refuse the idea if the idea deserves refusing. It
 will happily tell you that what you asked for already exists under another name, or that it's really
 two commands. Both of those are good outcomes.
 

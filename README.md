@@ -78,10 +78,12 @@ ignores the settings that ship with this repo and will pester you for permission
 
 **4. Say `setup`.**
 
-It asks how deep you want to go — **quick** is six questions and about two minutes, **in depth**
-takes fifteen to twenty and gets a much sharper profile. Either way it writes the answers into a
-note called `About me` and walks you through your first capture. **Don't skip this** — it's the
-difference between notes about you and notes about a generic person, and you can deepen it later.
+It asks one question at a time — what you use AI for now, what annoys you about it, where that
+problem actually lives — and each question follows from your last answer instead of marching through
+a list. Then it connects what can be connected and **builds you one thing that works before you're
+finished**, aimed at whatever you said was annoying, and runs it in front of you. **Don't skip
+this** — it's the difference between notes about you and notes about a generic person, and it's the
+part where you find out what this is actually for.
 
 **5. If you're not sure what you've just installed, say `guide`.**
 
@@ -115,7 +117,7 @@ connecting first:
 | **Reasoning past your notes** | `infer` what you never wrote down · `review-assumptions` to confirm or kill its guesses |
 | **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
-| **Making it yours** | `setup` · `interview` · `new-feature` |
+| **Making it yours** | `setup` · `interview` · `new-idea` |
 | **Working out what to do with it** | `guide` for what this is · `guide expand` for what to build next |
 | **Your history** | `ingest-sessions` |
 
@@ -276,7 +278,7 @@ from git.
 
 ## Where to take it next
 
-1. **Write your own command** — run `new-feature`, which is the only way this vault grows one. It takes the problem in your words, decides whether the new thing stays inside the vault (`brain/prompts/`) or reaches outside it (`brain/tools/`), and writes a security review into the file before it writes the file. That review is the step you'd skip by copying a prompt by hand, and it matters most for the things that reach outside, because those run with your connectors attached. Fastest way to make the system yours.
+1. **Write your own command** — run `new-idea` when you catch yourself thinking *I wish it could…*. It is the only way this vault grows one. It takes the problem in your words, decides whether the new thing stays inside the vault (`brain/prompts/`) or reaches outside it (`brain/tools/`), and writes a security review into the file before it writes the file. That review is the step you'd skip by copying a prompt by hand, and it matters most for the things that reach outside, because those run with your connectors attached. Fastest way to make the system yours.
 2. **Connect your mail and calendar.** The `email` and `calendar` tools are already here — they read freely and draft by default, and a send or a new event needs you to ask for it and then approve the prompt; connecting them turns everything already written down about your week into free context. Highest-leverage move available.
 3. **Schedule something, once you trust it** — `maintain` nightly, a morning brief, a weekly review.
 4. **Put a real interface on it.** The vault exposes exactly two operations: *write a file into `cortex/00_Inbox/`*, and *run `brain/bin/run <prompt>`*. Every UI is a thin client over those two — a Slack bot, a Telegram bot, an iOS Shortcut, an email address.
