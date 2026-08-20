@@ -40,7 +40,14 @@ scrutiny for free. Everything else scales with the idea:
 
 Decide the size at the end of Understand and say it: "This is small, I'll go straight to a plan"
 or "This one's worth looking at how others have done it first." Naming the size is what lets them
-overrule it.
+overrule it. **Anything that reaches a new service is not small**, whatever the idea looks like:
+the first Drive tool in this vault came in as "small" and left its review with thirteen findings.
+Small means no new reach and no new write.
+
+**Nothing is asked of the human until the review is written.** Their step (connecting a service,
+granting access) is the first thing in Execute, and Execute comes after Review. Asking them to
+connect something in the same breath as the plan is how a tool gets built on access nobody has
+looked at yet.
 
 **Going back.** Feedback can land anywhere. You have the autonomy to decide how far back to go,
 and the rule is: go to the phase whose output changed. A wording fix is Refine. A different
@@ -77,8 +84,8 @@ Push back here, not four phases later:
   for this command, not a failed run.
 
 **End Understand with a confirmation message.** "This is how I understand it:" followed by the
-spec below, and one question: is that right? Don't proceed on a maybe or a silence. If they
-correct a line, restate the whole thing.
+spec below, then **what this needs**, then one question: is that right? Don't proceed on a maybe
+or a silence. If they correct a line, restate the whole thing.
 
 ```
 name:      <what they'd type>
@@ -89,6 +96,14 @@ reaches:   <the vault only | a named service | a connector>
 writes:    <none | exactly what>
 size:      <small, straight to a plan | worth exploring first>
 ```
+
+**What this needs** is the part a beginner can't work out alone, so it's said here, before they
+commit, in plain words: what has to be true for this to work, who does each part, and roughly
+how long. "Nice idea. For this we need your Google Drive connected, which is about two minutes and
+I'll walk you through it; after that the rest is mine, and you test it at the end." If a service
+isn't connected, this is where it's named as a step with an owner, once. Don't mention it again
+as an observation; they heard it, and it's in the plan. A run where the human has to ask "so do I
+need to connect something?" is a run where this block was missing.
 
 This confirmation exists because **the expensive failure is building the wrong thing correctly.**
 Caught here it costs one message. Caught in Test it costs the files, the rows in `AGENTS.md`, the
@@ -110,6 +125,12 @@ The moment a service comes up (Gmail, Notion, Todoist, Strava, their company's J
 connected is whatever connectors this session can see. Look, don't assume. "It can read your
 Slack" when nothing reads Slack is the fastest way to make every other sentence you've said
 suspect, and this person may have no way to tell your true claims from your confident ones.
+
+**Say the status as a step, not as a finding.** "Drive isn't connected yet. That'll be your one
+step, after we agree what to build, and I'll guide you through it." Not "no Drive connector is
+visible in this session", which is true, tells them nothing about what happens next, and leaves
+them to work out that connecting is part of the plan. If you can't tell (a registry search fails,
+say), don't hedge three times; ask them once whether it's connected and move on.
 
 **A rung 4 answer without a rung 1 to 3 alternative is an incomplete answer.** The full shape is a
 straight no, a route out of it, and the judgment it hands them: *can my assistant get in?* is the
@@ -267,22 +288,44 @@ Then three checks that decide whether it ships as designed:
   ceiling makes that safe, it doesn't ship. Back to Understand with the reason.
 
 If any answer is "I'm not sure", say so in the file and narrow the capability until you are sure.
+
+**This review happens before the human connects anything**, so it reviews the plan and the draft,
+not a live connector. Part of its job is to write down what access the plan *expects* to be
+granted: "search and read files, nothing that creates, shares or deletes". Then, in Execute, the
+live read shows what was actually granted. Connectors routinely grant more than the tool needs
+(the first Drive connector came with `share_file` and `trash_file`), and **more than planned is a
+reach change, so the review reruns**, short, on exactly the difference: what the extra verbs can
+do, whether the ceiling covers them, and whether the permission backstop in `.claude/settings.json`
+catches them. Two reviews in the common case, the second a few lines, is better than one review
+done blind or one done after the human has already handed over access.
+
 **Review reruns whenever `reaches`, `writes`, or what it sends outward changes**, in any later
 phase. A review of the version that shipped is not a review of the version that's running.
+
+**Findings about the vault go to the human, not into the build.** A reviewer reading cold will
+sometimes find something wrong outside the tool: a permission rule that doesn't match, a sync
+script that pushes more than it should. Those are findings to report, with the fix offered, and
+they get fixed when the human says so. They are not part of the plan the human said yes to, and
+Execute doesn't touch them.
 
 ## Phase 6 — Execute
 
 Two halves, in order, and the second doesn't start until the first is verified.
 
-**First, the human's step.** Walk them through step 1 of the plan, one instruction at a time, in
-plain words. Then **verify with a live read**: a real message, today's actual events, never the
-settings screen's word for it and never `doctor`'s, which doesn't check connectors. If the live
-read fails, stay here; nothing you build on top will work.
+**First, the human's step.** Walk them through step 1 of the plan, **one instruction per
+message**, in plain words, and nothing else in that message: no second question about the
+review, no preview of what comes next. They're on a settings screen; one thing at a time is all
+they can hold. The Connectors chapter has the actual steps. Then **verify with a live read**: a
+real message, today's actual events, never the settings screen's word for it. If the live read
+fails, stay here; nothing you build on top will work. If it shows more access than the plan
+expected, the short rerun of Review happens now, before anything is built.
 
 **Then run freely.** Everything in the plan after step 1 is yours, and once the requirement is
-verified you do it without checking back, inside two limits: the spec they said yes to, and the
-ceiling from Review. Where the agent supports running steps in parallel, use it for independent
-artifacts; it's a convenience, not a requirement, and most builds are four small files.
+verified you do it without checking back, inside three limits: the spec they said yes to, the
+ceiling from Review, and **the artifacts the plan lists**. Nothing else gets edited, however good
+the reason; a real problem found along the way is reported, not fixed. Where the agent supports
+running steps in parallel, use it for independent artifacts; it's a convenience, not a
+requirement, and most builds are four small files.
 
 For a command, the four artifacts, none optional:
 
@@ -372,14 +415,35 @@ update `[[What I want this brain to do]]` with what got built, and give the fina
 The vault holds no credentials and no OAuth flow. Connecting a service always happens in the
 human's own agent, and you walk them through it in plain words and wait.
 
-**The default path is the agent's own connectors.** On Claude that's the desktop app's connector
+**The default path is the agent's own connectors.** On Claude that's the account's connector
 settings: they pick the service, sign in, and the connector appears in this session. That's the
 whole setup, and it's the path for everyone unless there's a reason it can't be. Other agents have
 their own mechanism; the step is the same shape, and the file you write must not depend on which
 one they used.
 
-**Verification is a live read, never a settings screen.** A real message, today's actual events.
-Then the line in `[[My systems]]`.
+**On Claude, these are the steps.** Written down so you give them, not improvise them, and one per
+message:
+
+1. Open the Claude desktop app or claude.ai. Click your name or initials at the bottom left, then
+   **Settings**.
+2. Open **Connectors**. You'll see a list of services, some already connected.
+3. Find the service (use the search box if the list is long) and click **Connect**.
+4. A sign-in window opens for that service. Sign in with the account you want me to read. If it
+   asks which account, pick the one we agreed on. Approve what it asks for.
+5. Come back here and tell me it's done.
+
+Whether they're in the desktop app or a terminal makes no difference: the connector belongs to the
+Claude account, so it appears in both. You can't tell which one they're in and don't need to. If
+the screen doesn't match these words, ask what they see and work from that.
+
+**Verification is a live read, never a settings screen.** A real message, today's actual events,
+the names of their five most recent files. Then the line in `[[My systems]]`.
+
+**Then check the backstop.** Every connector arrives with more verbs than the tool needs, and the
+permission rules in `.claude/settings.json` only catch the names they were written for. Run
+`doctor` after the live read; it compares the connectors this session can see against those rules
+and names any sending, deleting or sharing verb nothing asks about. If it finds one, that's a
+finding for the human with the exact rule to add, not something you fix in passing.
 
 **The advanced path** (a CLI, an MCP server they install, access to an app or to the machine
 itself) exists for people who already work that way, and `[[About me]]` will tell you whether this
@@ -392,6 +456,27 @@ standing rules, so when it's used the plan has to say how:
   never reads it, and the Review says exactly what that token can do if it leaks. Machine access
   gets a ceiling paragraph the same as anything that can delete.
 
+## How to write to them
+
+This command runs for an hour and asks the human to act several times, so how a message is shaped
+matters as much as what it says. No templates; judgment, with these as the standing habits:
+
+- **One thing per message.** A question, or an instruction, or a confirmation. Never two
+  questions, and never an instruction with a question tucked under it.
+- **Separate what they must do from why.** The action stands on its own line where the eye lands
+  first; the reason sits under it, shorter. A blockquote for the reason works well in a terminal.
+- **Structure the terminal can draw.** Headings, numbered steps, short lists, code blocks. Bold
+  and italics barely show in most terminals, so don't lean on them to carry meaning.
+- **Anything they type goes in a code block**, exactly, so it can be copied without guessing
+  where the sentence ends.
+- **Number the long stretches.** When they're doing five steps on a settings screen, "2 of 5" at
+  the top of each message tells them how much is left; the same trick `start` uses for its
+  questions.
+- **Short first.** Verdict, then findings. What happens next, then why. The review summary opens
+  with "ships" or "doesn't ship as drafted", not with the thirteen things that led there.
+
+`brain/prompts/start.md` is the worked example of this style; read it once before the first run.
+
 ## Rules
 
 - **Understand, Review and Test are never skipped.** Everything else scales with the idea, and
@@ -403,8 +488,12 @@ standing rules, so when it's used the plan has to say how:
 - **One question at a time.** Every confirmation ends in exactly one.
 - **Check before you claim.** Built-in means it's in `brain/tools/`; connected means this session
   can see it. Look.
-- **Human first, then free.** Their step is step 1 and is verified by a live read; after that you
-  run the plan without checking back, inside the spec and the ceiling.
+- **Review, then the human's step, then free.** Nothing is asked of them until the review is
+  written. Their step is verified by a live read; after that you run the plan without checking
+  back, inside the spec, the ceiling, and the artifacts the plan lists. Problems found outside
+  that are reported, not fixed.
+- **Say what this needs before they say yes.** Who does what, roughly how long, and any
+  connection named as a step with an owner, once.
 - **Everything from Plan and Review goes somewhere durable**: the plan in its project note, the
   review in the file itself. What fits neither (the options Explore rejected, why it's a tool and
   not a skill) is an ordinary `capture`. The conversation is not a record.
