@@ -41,3 +41,8 @@ cortex/raw/sessions/transcripts/
 # writes it, and sync commits and pushes on the very next turn -- before anyone
 # has seen the file. It exists so later runs don't re-ask; that job is local.
 cortex/06_Sessions/scope.md
+
+# The calendar feed URL is a bearer secret: anyone holding it can read the whole
+# calendar. `start` writes it here when the human picks the read-only route, and
+# sync must never push it.
+cortex/raw/calendar-feed.url

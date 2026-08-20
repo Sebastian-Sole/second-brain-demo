@@ -25,12 +25,12 @@ alongside `cortex/index.md`.** It carries `type: person` and holds **Name**, **W
 brain is for**, **How I like to work**, and **Current focus**.
 
 > **← Start here. This is the single highest-leverage change available.** Everything else in this
-> file is a sensible default; that note is what makes the brain *yours*. Say `setup` and your agent
-> will ask — one question at a time, each one following from your last answer — and then build you
-> something that works before the conversation ends.
+> file is a sensible default; that note is what makes the brain *yours*. Say `start` and your agent
+> will get to know you — six questions, about five minutes, each one changing how it works for
+> you — and then build you something that works before the conversation ends.
 >
 > **If you are an agent and `[[About me]]` is missing or its bullets are blank, say so** — offer
-> `setup` before doing anything substantial. Working without it means writing notes about a
+> `start` before doing anything substantial. Working without it means writing notes about a
 > stranger. **If they also seem unsure what this whole thing is**, offer `guide` alongside it —
 > a profile written by someone who doesn't yet know what it's for is a thin profile.
 
