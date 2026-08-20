@@ -3,6 +3,7 @@
 #
 #   brain/bin/sessions list [pattern]        what's on this machine
 #   brain/bin/sessions stage <pattern> [n]   copy the n newest matches in (default 5)
+#   brain/bin/sessions turns [pattern] [since]  the human's own turns, nothing else
 #   brain/bin/sessions clean                 delete everything staged
 #
 # Why this exists: agent CLIs sandbox themselves to the working directory, so
@@ -186,13 +187,132 @@ case "$cmd" in
     ls -la "$stage_dir" | tail -n +4
     ;;
 
+  turns)
+    # Emit only the human's own typed turns, from the source directories, and
+    # write nothing anywhere. This is the input to the "how you work with AI"
+    # pass in ingest-sessions.
+    #
+    # Two reasons it reads the source dirs instead of the staged copies:
+    # breadth beats depth for pattern-finding (you want two hundred sessions,
+    # not five), and staging two hundred transcripts means copying gigabytes
+    # into the working tree to throw them away again. This script is not
+    # sandboxed the way the agent is, so it crosses that boundary once and
+    # hands back only the filtered text.
+    #
+    # And the filter is the whole point. Roughly half of every record carrying
+    # role "user" was never typed by a human: task notifications, messages from
+    # other agent sessions, image metadata, skill payloads, hook output. Fed
+    # that raw, an agent concludes its owner communicates in XML status
+    # updates -- a profile of the harness wearing the human's name. AGENTS.md
+    # gate 2 already names the failure; this is where it gets prevented.
+    pattern=${1:-}
+    since=${2:-}
+
+    find_args="$claude_dir"
+    [ -d "$codex_dir" ] && find_args="$find_args $codex_dir"
+    # shellcheck disable=SC2086
+    files=$(find $find_args -name '*.jsonl' -type f 2>/dev/null \
+            | grep -v '/subagents/' \
+            | { [ -n "$pattern" ] && grep -i -- "$pattern" || cat; })
+
+    [ -n "$files" ] || {
+      echo "sessions: no transcripts${pattern:+ matching '$pattern'}. Nothing to read." >&2
+      exit 66
+    }
+
+    # Newest first, and only what the human asked for. Splitting on newline is
+    # safe here for the same reason it is in `stage`.
+    ifs=$IFS; IFS='
+'
+    # shellcheck disable=SC2086
+    set -- $files
+    IFS=$ifs
+    total=$#
+
+    printf '%s\n' "$@" | while read -r f; do
+      [ -n "$since" ] && [ "$(mtime "$f")" \< "$since" ] && continue
+      case "$f" in
+        "$codex_dir"/*) tag="codex:$(basename "$f" .jsonl | cut -c1-8)" ;;
+        *) tag="$(basename "$(dirname "$f")" | cut -c1-28):$(basename "$f" .jsonl | cut -c1-8)" ;;
+      esac
+      TAG="$tag" DATE="$(mtime "$f")" awk '
+        # --- JSON string reader. Walks escapes rather than trusting a greedy
+        # --- regex, because a quote inside a turn is not a terminator.
+        function jstr(s, i,   out, c, n) {
+          out = ""
+          n = length(s)
+          while (i <= n) {
+            c = substr(s, i, 1)
+            if (c == "\\") { out = out substr(s, i, 2); i += 2; continue }
+            if (c == "\"") return out
+            out = out c; i++
+          }
+          return out
+        }
+        function unesc(t) {
+          gsub(/\\n/, "\n", t); gsub(/\\t/, "  ", t)
+          gsub(/\\"/, "\"", t); gsub(/\\r/, "", t)
+          gsub(/\\u[0-9a-fA-F]{4}/, "?", t)
+          gsub(/\\\\/, "\\", t)
+          return t
+        }
+        # Everything below arrives wearing the human role and was not typed by
+        # one. Order matters only for readability; each is a whole-prefix test.
+        function machine(t) {
+          return t ~ /^[[:space:]]*<(system-reminder|command-name|command-message|command-args|local-command-(stdout|stderr|caveat)|user-prompt-submit-hook|working-agreement|task-notification|teammate-message|persisted-output|bash-(input|stdout|stderr)|system_instruction|available-skills|budget-|fleet-)/ ||
+                 t ~ /^[[:space:]]*(Caveat: The messages below|\[Request interrupted|Another Claude session sent a message|Base directory for this skill:|The following deferred tools|Tool loaded\.|Stop hook feedback:|\(Re-invocation of \/)/ ||
+                 t ~ /^[[:space:]]*Read `brain\/(prompts|tools)\// ||
+                 t ~ /^[[:space:]]*@brain\/(prompts|tools)\//
+        }
+        $0 !~ /"type"[[:space:]]*:[[:space:]]*"user"/ && $0 !~ /"role"[[:space:]]*:[[:space:]]*"user"/ { next }
+        {
+          line = $0
+          # Content is either a bare string or an array of blocks. Tool results
+          # also arrive as role "user"; they carry no "text" key, so pulling
+          # every "text" value drops them without a special case.
+          n = 0
+          rest = line
+          while (match(rest, /"text"[[:space:]]*:[[:space:]]*"/)) {
+            piece = jstr(rest, RSTART + RLENGTH - 1 + 1)
+            parts[++n] = piece
+            rest = substr(rest, RSTART + RLENGTH)
+          }
+          if (n == 0 && match(line, /"content"[[:space:]]*:[[:space:]]*"/)) {
+            parts[++n] = jstr(line, RSTART + RLENGTH - 1 + 1)
+          }
+          for (k = 1; k <= n; k++) {
+            t = unesc(parts[k])
+            # An image paste followed by a typed question is a real turn; the
+            # bare metadata line is not.
+            while (t ~ /^[[:space:]]*\[Image[^]]*\]/) sub(/^[[:space:]]*\[Image[^]]*\][[:space:]]*/, "", t)
+            gsub(/^[[:space:]]+|[[:space:]]+$/, "", t)
+            if (t == "") { continue }
+            if (machine(t)) { dropped++; continue }
+            kept++
+            printf "\n── %s · %s · #%d\n%s\n", ENVIRON["TAG"], ENVIRON["DATE"], kept, t
+          }
+          delete parts
+        }
+        END { printf "%s\t%d\t%d\n", ENVIRON["TAG"], kept + 0, dropped + 0 > "/dev/stderr" }
+      ' "$f"
+    done 2>/tmp/sessions-turns-$$.tsv
+
+    k=$(awk -F'\t' '{k+=$2; d+=$3} END{print k+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
+    d=$(awk -F'\t' '{k+=$2; d+=$3} END{print d+0}' /tmp/sessions-turns-$$.tsv 2>/dev/null)
+    s=$(awk -F'\t' '$2>0' /tmp/sessions-turns-$$.tsv 2>/dev/null | wc -l | tr -d ' ')
+    rm -f /tmp/sessions-turns-$$.tsv
+    # Say what was filtered. A pass that silently drops half its input reads as
+    # full coverage, and the drop rate is itself a finding worth seeing.
+    echo "sessions turns: $total transcript(s) scanned, $s with human turns; kept $k, dropped $d machine-authored." >&2
+    ;;
+
   clean)
     rm -rf "$stage_dir"
     echo "cleaned $stage_dir" >&2
     ;;
 
   *)
-    echo "usage: sessions {list|stage|clean}" >&2
+    echo "usage: sessions {list|stage|turns|clean}" >&2
     exit 64
     ;;
 esac
