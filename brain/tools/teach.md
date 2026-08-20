@@ -44,9 +44,33 @@ the quiz, so is the page.
    reimplement it. Above that level, use the real names — an engineer finds the euphemism more
    annoying than the path.
 
+   **The same line governs how you demonstrate.** Below rung 2, don't run a terminal command in
+   front of them and don't paste the contents of a file — show them the *effect* and read them the
+   sentence that matters. "The whole of `ask` is a page of English you could edit" is a good point
+   at any level; reaching it via `sed -n '1,15p'` and fifteen lines of raw prompt is a good point
+   at one level only. Pick the demonstration that survives their vocabulary, not the one that was
+   cheapest for you to produce.
+
    **If the spoke doesn't exist, that's normal**, especially in a young vault — spokes appear when
-   there's something real to put in them. Pitch sensibly and get on with it. Afterwards, *once*,
-   offer to record what you observed:
+   there's something real to put in them. What you do next depends on the size of what you're about
+   to teach:
+
+   - **A single question** — "what's a bloom filter" — just answer it. Aim low on jargon and high on
+     intelligence; that combination is never insulting and the reverse always is. Don't hold up a
+     two-paragraph answer to run an intake form.
+   - **Anything multi-part** — a course, or the tour of this project — **ask one calibration
+     question first, and wait for the answer.** One question is the ceiling; `guide`'s rung table
+     gives you the four options to offer. You are about to pick a vocabulary and hold it for an
+     hour, and getting that wrong is expensive in both directions.
+
+   **Never infer their level from the environment.** They are in a terminal, in a git repo, with a
+   `sed` command in the scrollback — none of that is evidence about them. It's evidence that someone
+   set this up. `guide` states the rule and it binds here too: **believe them over the evidence.**
+   Someone who says "I've barely used this stuff" is rung 0 even if four agent CLIs are installed.
+   Writing "you're clearly not a beginner" about a person who told you nothing is the failure this
+   paragraph exists to prevent — it is a guess wearing the clothes of an observation.
+
+   Afterwards, *once*, offer to record what you observed:
 
    ```
    Want me to start [[How I learn]] with "prefers a worked example first, theory after"?
@@ -78,7 +102,7 @@ the quiz, so is the page.
    | --- | --- |
    | "what did we just do" | A few sentences about this conversation. Nothing else. |
    | "what's a bloom filter" | A short answer and one worked example. Not a syllabus. |
-   | "how does this project work" | Step 4 — hand to `guide`. |
+   | "how does this project work" | **Course-shaped.** Chapters from step 4, gated by step 5. |
    | "teach me distributed systems" | Lesson one, then the offer in step 5. Never an essay. |
 
    Nobody learns a subject from one wall of text. If the honest answer is a course, teach the first
@@ -101,7 +125,13 @@ the quiz, so is the page.
    prevent: the human gets a tour, and none of the machinery that makes it stick ever runs.
 
 5. **The course offer — gate one.** When the subject is course-shaped, teach lesson one first, then
-   offer, **once**, in plain words:
+   offer, **once**, in plain words.
+
+   **The tell that you are at this gate is that you are about to write "want the second half?",
+   "want chapter 2?" or "shall I keep going?".** That sentence *is* the gate — you have just
+   finished lesson one and are asking for permission to continue, which is exactly what step 5
+   governs. Don't write the bare version and move on. Make the offer below instead, which asks the
+   same thing and also asks whether it should persist.
 
    ```
    That's the first piece. Want me to start a lesson on distributed systems,
@@ -283,6 +313,9 @@ A turn that only explained something in conversation wrote nothing and gets no f
 - **Never show them a path.** Where files live is your problem, not theirs.
 - **A name is worth teaching only when they'll need to type it or ask for it.** Below rung 2 that
   rules out git, `.md`, `cortex/…` and `[[wikilinks]]` — see `guide.md`'s table.
+- **Never guess their level from the room.** A terminal, a repo and a `sed` in the scrollback are
+  facts about whoever set this up, not about them. Ask once, or aim low on jargon and high on
+  intelligence.
 - **Nothing enters `cortex/` without an explicit yes**, and what enters is *their* words.
 - **Anchor to what they already know.** One link to an existing note beats three paragraphs.
 - **The retrieval question is not optional.** No question, no idea what landed, no course.
