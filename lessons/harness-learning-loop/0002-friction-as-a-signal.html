@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2: Friction as a signal</title>
+<link rel="stylesheet" href="../_assets/course.css">
+</head>
+<body>
+<main>
+
+<p class="eyebrow">Lesson 2 &middot; The learning loop</p>
+<h1>Friction is raw material, not knowledge</h1>
+
+<p class="standfirst">You asked whether corrections should end up in the cortex. They should. The
+part that shouldn't is a different artifact with the same name, and your vault already sorts these
+two correctly for a different kind of input.</p>
+
+<h2>The thing I said badly</h2>
+
+<p>"Log the corrections" is one phrase covering two objects with nothing in common except their
+origin.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th></th><th>The raw line</th><th>The conclusion</th></tr></thead>
+<tbody>
+<tr><td>Looks like</td><td><code>2026-08-20T14:03 shorter sess:a91f</code></td>
+    <td>"Asks for shorter answers on architecture, not on code"</td></tr>
+<tr><td>Volume</td><td>Hundreds a month</td><td>Perhaps four a year</td></tr>
+<tr><td>Worth</td><td>Nothing on its own</td><td>The entire pitch</td></tr>
+<tr><td>Belongs in search</td><td class="no">No</td><td class="yes">Yes</td></tr>
+<tr><td>Belongs in git</td><td class="no">No</td><td class="yes">Yes</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>Both live in the cortex.</strong> I said "outside the repo" last turn and that was
+wrong. <code>cortex/raw/</code> is inside the cortex. What it is outside is the <em>retrieval
+path</em>, and that distinction is the one I failed to draw.</p>
+
+<h2>You already run this exact pipeline</h2>
+
+<p><code>ingest-sessions</code> takes gigabytes of coding transcripts full of client code and
+credentials, keeps them in <code>cortex/raw/sessions/transcripts/</code> where git cannot reach
+them, and writes short distilled notes into the vault proper. Friction is the same pipeline with a
+smaller input.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Stage</th><th>Home</th><th>Why there</th></tr></thead>
+<tbody>
+<tr><td>Raw friction line</td><td><code>cortex/raw/</code>, gitignored</td>
+    <td>"<strong>Immutable</strong> original source material, never edit" (AGENTS.md:248), and read
+    "only to verify a citation" (AGENTS.md:282)</td></tr>
+<tr><td>Distilled conclusion</td><td>A spoke in <code>cortex/03_Resources/</code></td>
+    <td>This is decision 6, which you already accepted. Friction is its missing input.</td></tr>
+<tr><td>Enforced rule</td><td><code>[[How we work together]]</code></td>
+    <td>Only if the human accepts a proposed line. AGENTS.md:158.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>So 2 is not a new idea sitting beside 6. <strong>2 is the raw end of the pipeline whose far end is
+6.</strong> Without it, the spoke you agreed to build has nothing to be built from except whatever
+the model happens to remember noticing.</p>
+
+<h2>Two reasons the raw end stays out of search and git</h2>
+
+<p><strong>Search.</strong> Your own argument, made about weather in <code>digest</code>: a note
+saying "12&deg;C, rain from 14:00" is true for four hours and then competes with real notes in
+keyword search forever. A line saying <code>shorter</code> at 14:03 has exactly that shape.</p>
+
+<p><strong>Git.</strong> <code>sync</code> runs <code>git add -A</code> on the Stop hook after every
+turn. Your <code>.gitignore</code> already carries five entries written because of that, including
+one whose comment reads "a key pasted into <code>00_Inbox/</code> is a key on GitHub". A log of
+verbatim prompt text is the sixth entry or it is a public record of everything you typed.</p>
+
+<h2>The rule this brushes against, and you should settle it</h2>
+
+<blockquote>
+A proposal may only come from something they <em>said</em>. Never from connector data, shell
+history, neighbouring repos, or which tools happen to be installed.
+<cite>AGENTS.md:159</cite>
+</blockquote>
+
+<p>A friction log holds the human's own typed words, so by the letter it passes: it is the purest
+possible case of "something they said". But <strong>the word <em>said</em> is doing unexamined work
+in that sentence.</strong> Today it quietly means "said in this session, still in context". A log
+extends it to "said, ever, and provably, with a timestamp".</p>
+
+<div class="callout">
+<span class="label">The decision, and it is yours</span>
+<p>The ban at AGENTS.md:302 exists because environment-derived profiling "reads as surveillance". A
+friction log is not environment data, but it is the first evidence class that lets the vault cite
+what you said weeks ago. Whether that is <em>faithful memory</em> or <em>a record you did not know
+was being kept</em> depends on one thing: whether the manual says out loud that it exists. Write the
+scope extension into AGENTS.md, or do not build it.</p>
+</div>
+
+<h2>What a log line may hold</h2>
+
+<p>Three fields, and deliberately not a fourth.</p>
+
+<ul class="ladder">
+<li><strong>The token.</strong> <code>shorter</code>, <code>huh?</code>, <code>park it</code>,
+<code>decide:</code>. Exact string equality on the four magic words your agreement already defines.
+No fuzzy matching, no model judgment, no false positives.</li>
+<li><strong>When.</strong> A timestamp, because the threshold in lesson 3 counts occurrences in a
+window.</li>
+<li><strong>A pointer.</strong> <code>session_id</code>, so a later pass can go and look at what was
+being shortened. The correction alone is uninterpretable a week later.</li>
+<li><strong>Not the answer text.</strong> Storing what the brain said is how a log becomes a
+transcript, and you already have a policy for transcripts.</li>
+</ul>
+
+<div class="recall">
+<h2>Before you close this</h2>
+<p>Your friction log has 40 lines. None of them has ever been read by any command. Name the two
+things that are now true, one good and one bad.</p>
+<details>
+<summary>Check yourself</summary>
+<p><strong>Good:</strong> nothing has gone wrong. The log is inert by design. It is not in search, so
+it has not polluted a single answer, and it is not in git, so it has not leaked. An unread raw
+store costs nothing, which is exactly why <code>cortex/raw/</code> is safe to write to.</p>
+<p><strong>Bad:</strong> you have built the observe step and none of the value. The log is evidence
+for a conclusion nobody drew. Until <code>maintain</code> or <code>interview</code> reads it and
+proposes something, the loop still ends where it ended before, and the demo shows a file instead of
+a change in behaviour.</p>
+</details>
+</div>
+
+<footer>
+<p><a href="index.html">Course index</a> &middot; <a href="glossary.html">Glossary</a> &middot;
+<a href="0001-where-a-rule-lives.html">Lesson 1</a> &middot;
+<a href="0003-a-decline-is-evidence.html">Lesson 3</a></p>
+<p>Cited from your own repo rather than an external source, because on this question the manual
+outranks anything I could fetch. Say so if a line number here does not match what you see.</p>
+</footer>
+
+</main>
+</body>
+</html>

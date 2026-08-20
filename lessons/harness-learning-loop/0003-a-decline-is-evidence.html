@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 3: A decline is evidence</title>
+<link rel="stylesheet" href="../_assets/course.css">
+</head>
+<body>
+<main>
+
+<p class="eyebrow">Lesson 3 &middot; The learning loop</p>
+<h1>A decline tells you the wording was wrong, not that the rule is</h1>
+
+<p class="standfirst">Decision 7 is one sentence: when you ignore an offer, something should be
+different next time. Today nothing is, and the reason that was the right call is also the reason it
+now costs you.</p>
+
+<h2>The scene</h2>
+
+<p>Three turns, spread over a week. This is the whole problem.</p>
+
+<pre><code>Mon  you: shorter
+     it:  Want me to add "keep architecture answers under
+          200 words" under How to talk to me?
+     you: (says nothing, moves on)
+     ---> forgotten completely
+
+Thu  you: shorter
+     it:  Want me to add "keep architecture answers under
+          200 words" under How to talk to me?
+     ---> the identical sentence, with no idea it is the
+          second time of asking</code></pre>
+
+<p>Thursday is the failure. Not because asking twice is rude, but because the second ask contains
+<strong>less</strong> information than the situation does. The brain knows something on Thursday it
+is not using: that this exact sentence already failed once.</p>
+
+<h2>Today's rule is right, and that is the trap</h2>
+
+<blockquote>
+If they don't take it up, drop it.
+<cite>AGENTS.md:156</cite>
+</blockquote>
+
+<p>Dropping exists to prevent nagging, and nagging is the worse failure. An assistant that
+re-litigates every suggestion you passed on is exhausting within a day. So the manual chose
+<strong>amnesia over nagging</strong>, which was correct given only those two options.</p>
+
+<p>Decision 7 is the claim that there is a third option, and that you get it by asking a different
+question about the decline.</p>
+
+<h2>The reframe</h2>
+
+<p>When someone ignores "want me to add <em>keep architecture answers under 200 words</em>", the
+obvious reading is <em>they do not want a rule</em>. It is usually the wrong reading. Far more often
+it is one of these:</p>
+
+<ul class="ladder">
+<li>The rule is right but the <strong>number is wrong</strong>. 200 words is arbitrary and they know
+it.</li>
+<li>The rule is right but the <strong>scope is wrong</strong>. It is not about architecture, it is
+about anything where they wanted a recommendation and got options.</li>
+<li>The <strong>diagnosis</strong> is wrong. The answer was not too long, it was badly ordered, and
+length was the symptom they had a word for.</li>
+<li>They genuinely do not want a rule. This happens, and it is the least common case.</li>
+</ul>
+
+<p>So: <strong>a decline is data about the proposal, not about the preference.</strong> It narrows
+the search rather than ending it. Discarding it throws away the one thing that would have made the
+next attempt better.</p>
+
+<h2>You already built this exact mechanism, for claims</h2>
+
+<blockquote>
+A <strong>refuted</strong> assumption is never deleted. It's the most valuable row in the register:
+it records a specific way the model of them was wrong, and it stops the same guess being made next
+month.
+<cite>AGENTS.md:601</cite>
+</blockquote>
+
+<p>Read that sentence with "proposal" in place of "assumption" and it describes decision 7 exactly.
+The register keeps refutations because a wrong guess, once identified, is worth more than a blank.
+A declined proposal is the same artifact, one level down: not a wrong claim about who you are, a
+wrong sentence for a rule you probably do want.</p>
+
+<p><strong>This is why 7 needs no new machinery.</strong> It is the register pattern applied to
+proposals. If you find yourself designing a new file format for it, you have overshot.</p>
+
+<h2>The threshold that keeps it from becoming nagging</h2>
+
+<p>Memory without a bound is just nagging with better records. Two bounds do the work:</p>
+
+<ul class="ladder">
+<li><strong>Nothing is recorded on the first decline.</strong> Below two occurrences of the same
+friction, drop it exactly as today. One ignored offer is not a signal, and a brain that files
+your every non-answer is the surveillance feel you are trying to avoid.</li>
+<li><strong>The same sentence is never offered twice.</strong> If the second attempt is the first
+attempt repeated, the memory bought you nothing and you have built the nagging you were afraid
+of.</li>
+</ul>
+
+<h2>What Thursday looks like instead</h2>
+
+<pre><code>Thu  you: shorter
+     it:  That's twice this week. Monday I offered "keep
+          architecture answers under 200 words" and you
+          passed on it. Is it the length, or is it that I
+          lead with options instead of a recommendation?</code></pre>
+
+<p>Louder is not what changed. <strong>Better informed</strong> is what changed, and the human can
+hear the difference immediately. That single exchange is also the most demonstrable thing in this
+whole design: it is a moment no stateless assistant can produce, because it depends on remembering
+a non-event from three days ago.</p>
+
+<div class="recall">
+<h2>Before you close this</h2>
+<p>Someone argues that recording declines violates "you propose, they accept" (AGENTS.md:158),
+because the brain is now keeping records of things the human never agreed to. Answer them.</p>
+<details>
+<summary>Check yourself</summary>
+<p>The rule governs <strong>what may be written into the profile</strong>, and nothing here writes
+into the profile. The agreement still changes only when the human accepts a line, and a recorded
+decline makes that <em>less</em> likely to be jumped, not more, because the second offer is more
+accurate.</p>
+<p>The honest half of their objection is about the raw log underneath, not about the decline record,
+and it is answered the same way lesson 2 answers it: by saying out loud in AGENTS.md that the
+record exists. A record the human knows about is memory. The identical record kept quietly is the
+thing they are right to object to.</p>
+</details>
+</div>
+
+<footer>
+<p><a href="index.html">Course index</a> &middot; <a href="glossary.html">Glossary</a> &middot;
+<a href="0002-friction-as-a-signal.html">Lesson 2</a></p>
+<p>If any of this still does not land, say "huh?" and I will come at it from a different angle
+rather than restating it.</p>
+</footer>
+
+</main>
+</body>
+</html>
