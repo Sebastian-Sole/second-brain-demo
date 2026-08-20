@@ -60,9 +60,11 @@ otherwise.
 | `[[What I'm into]]` | `digest`, `interview` |
 | `[[My systems]]` | `setup` on a re-run, `interview`, `new-idea`, `guide expand` — the services they actually live in, each with a verdict on whether anything can reach it |
 | `[[What I want this brain to do]]` | `guide expand` — what they've said they want built, and what's already done |
+| `[[How we work together]]` | **everything, on every turn** — the working agreement; its hard rules are re-stated like `[[How I talk]]`. See below |
 
-None of these ship. Each appears when there's something real to put in it — an empty spoke is the
-same organisational debt as an empty MOC.
+None of these ship except `[[How we work together]]`, which arrives with starter defaults because
+an agreement with no lines protects nobody. The rest appear when there's something real to put in
+them — an empty spoke is the same organisational debt as an empty MOC.
 
 `review-assumptions` adds more of them as claims get confirmed — one per subject, named the same
 way (`[[How I work]]`, `[[How I handle money]]`), read by `infer`, `interview` and `ask`. The
@@ -87,6 +89,24 @@ On Claude Code that guarantee is mechanical: `brain/bin/style` prints the file a
 prompt does. Everywhere else the guarantee is this paragraph. **The file is the source of truth and
 the hook is a convenience over it** — never move a preference into `.claude/`, where three-quarters
 of the agents that read this manual will never see it.
+
+### `[[How we work together]]` — the working agreement
+
+**Read `cortex/03_Resources/How we work together.md` at the start of every session and honour all
+of it.** It is the agreement between the human and this brain: what they want from it, their hard
+rules, how to talk to them, what may be done unasked, and a few magic words with fixed meanings.
+It is the one note that ships with defaults, because the workshop copy of this vault should
+demonstrate a working agreement rather than an empty slot for one.
+
+Two of its sections — **Always / Never** and **Magic words** — are contract rather than context,
+and get the same anti-decay treatment as `[[How I talk]]`: on Claude Code, `brain/bin/agreement`
+extracts just those sections and `UserPromptSubmit` re-states them before every prompt. Everywhere
+else, this paragraph is the guarantee.
+
+**The note belongs to the human.** Never edit it, even when invited by the shape of the moment.
+When they say "remember that" — or you notice a friction worth a rule — propose the line and let
+them put it in. When a section is at four or five bullets, propose which existing line the new one
+should replace: an agreement that only grows stops being read, and stops being one.
 
 **Capped at 15 lines, tighter than the hub, and `brain/bin/doctor` says so when it's over.** The
 hub is paid for once a session; this is paid for on every prompt, which makes it the most expensive
