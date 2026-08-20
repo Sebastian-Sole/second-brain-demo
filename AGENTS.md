@@ -45,8 +45,8 @@ or into this one.
 
 `[[About me]]` is a **hub, and it is capped at 40 lines** — `brain/bin/doctor` complains when it
 grows past that. The cap isn't tidiness. This note is read at the start of every session, so every
-line in it is paid for on every turn, including the turn where someone asked what the weather is. A
-profile that grows without limit is a tax on the cheapest possible question.
+line in it is paid for once per session — including the one someone opened just to ask what the
+weather is. A profile that grows without limit is a tax on the cheapest possible question.
 
 Detail lives in **spokes**: linked notes, read on demand by the command that needs them and not
 otherwise.
@@ -155,8 +155,16 @@ Want me to add "no bullet lists unless asked" under *How to talk to me* in [[How
 If they don't take it up, drop it. Three rules bound this:
 
 - **You propose, they accept.** Never write a profile line on your own initiative.
-- **A proposal may only come from something they *said*.** Never from connector data, shell
-  history, neighbouring repos, or which tools happen to be installed — see
+- **A proposal may only come from something they *said*.** "Said" is wider than this session:
+  what they typed in past AI sessions counts, neighbouring repos included — a record the human
+  knows about is memory; the same record kept quietly is surveillance. The ban is on a kind of
+  claim, not a place evidence comes from: never propose anything **about the human** — who they
+  are, what they care about, what they will do — from connector data, shell history, a repo's
+  contents, or which tools happen to be installed. Reading their own words out of a neighbouring
+  repo is allowed; profiling that repo's contents to make claims about them is not. A claim
+  **about the setup** — what is connected, configured, missing, duplicated — runs the other way:
+  "your agreement hook is wired in one project out of 34" can only come from the environment,
+  because the environment is the only evidence there is. See
   [Answer from the vault](#answer-from-the-vault-not-from-the-room-youre-standing-in).
 - **`verified:` stays empty until they confirm it.** Their acceptance is what fills it. You may
   never add yourself.
@@ -308,9 +316,14 @@ The ban is narrow and absolute. "Your toolchain says you do agency work" is a pr
 machine dressed up as a note about them: it reads as surveillance, and it's unreproducible — the
 same question on a different laptop returns a different person. Marking it as an inference doesn't
 help, because the problem is the evidence, not the label. So if a claim **about the human** can't be
-traced to a note, to `[[About me]]`, to a spoke, or to something they just said, it doesn't belong
-in the answer. Live data about the *world* is a different thing — answer with it freely, just never
-promote it into evidence about them.
+traced to a note, to `[[About me]]`, to a spoke, or to something they *said* — here, or typed by
+them in a past AI session, whichever repo that session ran in — it doesn't belong in the answer.
+"Other repos on disk" bans profiling their contents, never reading the human's own words inside
+them: what they typed there is something they said; who they must be, judged from what is checked
+in, is not. Live data about the *world* is a different thing — answer with it freely, just never
+promote it into evidence about them. So is a claim about the *setup*: what is connected,
+configured, missing or duplicated can only be answered from the room, because the room is the only
+evidence there is.
 
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `cortex/03_Resources/`, linked to a relevant Area
