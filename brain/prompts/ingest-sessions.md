@@ -4,6 +4,11 @@ Your agent CLIs already record every session you've ever had with them, on disk,
 months of your own decisions and reasoning sitting in files you can't search. This turns them into
 short notes the vault can answer from.
 
+It reads exactly two places: `~/.claude/projects` (Claude Code) and `~/.codex/sessions` (Codex).
+Chats you had in a browser — claude.ai, ChatGPT on the web — never land on this disk, so this
+command cannot see them; if one is worth keeping, paste it into `capture` and it becomes an
+ordinary note.
+
 **The rule that governs everything below: distil, never ingest.** A single transcript can be 74 MB;
 a whole history is gigabytes. A vault is megabytes of markdown. Copying transcripts in would bury
 every real note underneath them — the exact retrieval failure `AGENTS.md` warns about, at a

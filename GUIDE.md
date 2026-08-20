@@ -16,6 +16,15 @@ The short version, if you read nothing else:
 
 ---
 
+## One manual, every agent
+
+The whole thing runs on a single file: [`AGENTS.md`](AGENTS.md). That's the operating manual, and
+every agent you point at this folder — Claude Code, Codex, Cursor, Gemini — reads exactly the same
+copy, so the vault behaves the same wherever you open it. The folders and commands below are what
+that manual organizes; this guide is just the readable tour.
+
+---
+
 ## Where things go, and why you don't have to care
 
 The folders sort by **how actionable something is right now**, not by what it's about. That's the
