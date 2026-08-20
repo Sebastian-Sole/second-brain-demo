@@ -218,7 +218,7 @@ reciting a list, offers to build one there and then, and writes down what you sa
 doesn't pitch you the same thing twice.
 
 **`start`** — you've already run this: the five-question first conversation. Run it again any
-time; it's how you correct your profile or change how I write to you as a standing rule.
+time; it's how you correct your profile or change how it writes to you as a standing rule.
 
 Connecting services and building things live in `new-idea` — name the service or say what you
 wish this could do, and it takes it from there. When something can't be reached, it tells you
