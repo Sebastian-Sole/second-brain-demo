@@ -184,6 +184,41 @@ have the hub and its spokes filled; `interview`, when the human runs an inventor
 `y` verdict promotes a claim into its spoke and links that spoke from the hub; and `new-idea`,
 which writes `[[What I want this brain to do]]` and only ever records what they said yes to.
 
+### A decline is evidence about the wording, not the rule
+
+Someone who passes on "no bullet lists unless asked" usually still wants *something* — a
+different scope, a different threshold, a different diagnosis of the friction — and "they don't
+want a rule" is the least likely reading. So a decline narrows the next attempt instead of ending
+it, and it gets the same treatment this vault already gives refuted assumptions — kept, because a
+wrong guess identified is worth more than a blank — rather than a format of its own:
+
+```markdown
+- **DEC-0001 · declined 2026-09-14** — offered: "no bullet lists unless asked" ·
+  friction: asks for prose answers · vary next: scope? threshold? diagnosis?
+```
+
+Rows live in **`cortex/03_Resources/Declined proposals.md`**. Like `[[Assumptions]]`, the file is
+created the first time there is a row to write — don't ship or pre-build an empty one — and it
+sits in `cortex/03_Resources/` because the record of what they turned down belongs to the human,
+and a harness update must never overwrite it. Rows are never deleted, and the offered sentence is
+recorded **verbatim**, because exact words are what the second bound below is checked against.
+
+Two bounds keep memory from becoming nagging with better records:
+
+- **Nothing is recorded on a first decline.** One ignored offer is not a signal. Drop it exactly
+  as the rule above says, leaving no trace; a row is written only once the same friction has
+  surfaced at least twice.
+- **The same sentence is never offered twice.** Read the file before proposing, if it exists. If
+  the sentence you were about to offer is recorded there, change something material — the scope,
+  the threshold, the diagnosis — or ask which of those was wrong. Re-offering a recorded sentence
+  verbatim is exactly the nagging these bounds exist to prevent.
+
+A recorded decline still writes nothing into the profile — *you propose, they accept* stands, and
+the only thing the record changes is how accurate the next offer is. The rule lives in this
+manual and not merely in a note because saying it here is what makes the record legitimate: a
+record the human knows is being kept is memory, and the identical record kept quietly is
+surveillance.
+
 ---
 
 ## Prime directives
