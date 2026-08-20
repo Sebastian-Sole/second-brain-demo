@@ -170,8 +170,8 @@ If they don't take it up, drop it. Three rules bound this:
   contents, or which tools happen to be installed. Reading their own words out of a neighbouring
   repo is allowed; profiling that repo's contents to make claims about them is not. A claim
   **about the setup** — what is connected, configured, missing, duplicated — runs the other way:
-  "your agreement hook is wired in one project out of 34" can only come from the environment,
-  because the environment is the only evidence there is. See
+  "your agreement hook is wired in one project of the many on this disk" can only come from
+  the environment, because the environment is the only evidence there is. See
   [Answer from the vault](#answer-from-the-vault-not-from-the-room-youre-standing-in).
 - **`verified:` stays empty until they confirm it.** Their acceptance is what fills it. You may
   never add yourself.
