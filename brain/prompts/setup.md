@@ -128,7 +128,7 @@ of them empty rather than forcing it.
 | **What annoys them about it** | This is what you're going to fix today. **The highest-value answer in the conversation.** | drives the build; systems go in `[[My systems]]` |
 | **Which systems hold that problem** | You cannot fix anything you can't reach. This is the question that turns a complaint into a job. | `[[My systems]]` |
 | **What they wish it could do** | The stretch, and the thing that makes them come back | `[[What I want this brain to do]]` |
-| **How they want to be written to** | Changes every turn from the moment you hear it | `[[How I talk]]` |
+| **How they want to be written to** | Changes every turn from the moment you hear it | *How to talk to me* in `[[How we work together]]`, proposed, never written |
 | **What they do all week** | Where captures get filed | `[[About me]]` |
 | **What's on this month** | Same, and it's the bullet that makes filing land right | `[[About me]]` |
 | **Their name** | Ask it when you write the file, not before | `[[About me]]` |
@@ -277,7 +277,7 @@ The shape, worked through end to end:
 - **A command composed of commands that already exist** — a named routine that runs `calendar`,
   `email` and `news` in an order that suits their morning. New reach: none. This is where most
   first builds land, and it's why most of them are safe.
-- **`[[How I talk]]` and the hook**, per step 6.
+- **Lines proposed for *How to talk to me***, per step 6.
 - **`ingest-sessions`**, if `doctor` found Claude Code or Codex — months of their own past work
   turned into searchable notes is the single biggest day-one payoff available, and it needs nothing
   connected. Only worth offering to someone who's used one of those CLIs for real.
@@ -311,17 +311,18 @@ or because they said "that was way too long". When they do:
    "shorter" and your next paragraph explains the architecture of the spoke system, you have
    demonstrated in real time that their answer went into a file instead of into your behaviour, and
    that is worse than never asking.
-2. **Write `cortex/03_Resources/How I talk.md`** — behaviour lines, capped at 15, per `AGENTS.md`.
+2. **Propose the lines for *How to talk to me* in `cortex/03_Resources/How we work together.md`**,
+   three to five bullets; the note is theirs, so propose and let them put the line in.
    "Answer in the first sentence, reasoning underneath" changes the next turn. "Prefers concise
    communication" changes nothing and is a description of a person rather than an instruction to an
    agent.
 3. **Make sure it survives the session.** On Claude Code, `.claude/settings.json` runs
-   `brain/bin/style` on every prompt so those lines are re-stated before each turn. It ships wired
-   up; if `doctor` says it isn't, wire it. On other agents `AGENTS.md` carries the instruction and
+   `brain/bin/agreement` on every prompt so that section is re-stated before each turn. It ships
+   wired up; if `doctor` says it isn't, wire it. On other agents `AGENTS.md` carries the instruction and
    there's nothing to configure.
 
 **Say what you did in one clause and no more** — *"noted, and it'll stick — that one applies from
-here on"*. Don't explain `UserPromptSubmit`, context decay, or why the cap is 15. `setup style`
+here on"*. Don't explain `UserPromptSubmit` or context decay. `setup style`
 re-runs exactly this step for anyone who wants to change it later.
 
 ---
@@ -359,7 +360,7 @@ aliases: []          # their name, once you know it — so [[Sebastian]] resolve
 
 | File | Holds | Read by |
 | --- | --- | --- |
-| `How I talk.md` | Behaviour lines about writing to them. Capped at 15. | everything, every turn |
+| `How we work together.md` → *How to talk to me* | Behaviour lines about writing to them. Three to five bullets, theirs to edit. | everything, every turn |
 | `How I learn.md` | How technical they are, what AI they've used, where — **and the format they learn in**: video, prose, or something to click | `teach` |
 | `My systems.md` | Every service they named, its rung, and what came of it | `setup` on a re-run, `new-idea`, `interview` |
 | `What I want this brain to do.md` | The wishes, and what's been built | `interview`, `new-idea` |
@@ -447,7 +448,7 @@ first session wasn't saved when it was is a bad last impression.
 now exists and how to change it:
 
 ```
-Set up: [[About me]], [[How I talk]], [[My systems]] — and `triage`, which is yours to edit
+Set up: [[About me]], [[How we work together]], [[My systems]] — and `triage`, which is yours to edit
 (say what's wrong with any of it and I'll fix it — nothing here is permanent)
 ```
 

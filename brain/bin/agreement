@@ -14,7 +14,7 @@
 # where someone asked what the weather is. Keep the extraction narrow.
 #
 # On Claude Code this is wired to UserPromptSubmit in .claude/settings.json,
-# next to brain/bin/style and for the same reason: an instruction given once,
+# because an instruction given once,
 # forty turns ago, competes with everything said since, and loses. The note is
 # the source of truth and this script is a convenience over it; agents without
 # hooks read the note the ordinary way, because AGENTS.md tells them to.

@@ -115,7 +115,7 @@ to something the vault uses later; none is required.
 > - **Home**: city, and who's in the household
 > - **Languages**: what you want me to write in
 > - **Tools**: the mail and calendar you use (Gmail, Outlook, iCloud…)
-> - **Right now**: the one thing taking most of your attention
+> - **Why an assistant**: what you hope this does for you
 >
 > > Why I ask: this is what every future conversation starts from.
 >
@@ -123,8 +123,8 @@ to something the vault uses later; none is required.
 > - skip
 
 What each line feeds: city → weather, location, timezone; tools → which connector to offer, and
-when; languages → every reply; household → what "dinner" or "weekend" implies; right now → what
-`digest` and `interview` watch, so it carries a `stale_after` in `[[About me]]`. Take what's
+when; languages → every reply; household → what "dinner" or "weekend" implies; why an assistant →
+proposed for the agreement's *What I want from this assistant* section, in their words. Take what's
 offered, ask for nothing that wasn't.
 
 ### Q3 — Talk to me

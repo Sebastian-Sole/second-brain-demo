@@ -54,13 +54,12 @@ otherwise.
 | Spoke | Read by |
 | --- | --- |
 | `[[How I learn]]` | `teach` — it's how it works out what level to pitch at, and which format to teach in |
-| `[[How I talk]]` | **everything, on every turn** — see below. It's the one spoke that isn't read on demand |
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
 | `[[What I'm into]]` | `digest`, `interview` |
 | `[[My systems]]` | `setup` on a re-run, `interview`, `new-idea` — the services they actually live in, each with a verdict on whether anything can reach it |
 | `[[What I want this brain to do]]` | `interview`, `new-idea` — what they've said they want built, and what's already done |
-| `[[How we work together]]` | **everything, on every turn** — the working agreement; its hard rules are re-stated like `[[How I talk]]`. See below |
+| `[[How we work together]]` | **everything, on every turn** — the working agreement: hard rules, how to talk to them, magic words. See below |
 
 None of these ship except `[[How we work together]]`, which arrives with starter defaults because
 an agreement with no lines protects nobody. The rest appear when there's something real to put in
@@ -71,25 +70,6 @@ way (`[[How I work]]`, `[[How I handle money]]`), read by `infer`, `interview` a
 naming rule is load-bearing rather than decorative: `Money` and `Health` are `cortex/02_Areas/` names
 under PARA, and two notes sharing a name make `[[Money]]` ambiguous.
 
-### `[[How I talk]]` — the spoke that is re-stated on every turn
-
-**Read `cortex/03_Resources/How I talk.md` and obey it in every reply, in every command, in
-conversation as much as in a note.** It holds behaviour lines the human wrote about how they want
-to be written to — *answer in the first sentence*, *no bullet lists unless I ask*, *never open with
-a summary of what I just said*.
-
-It is the only spoke exempt from read-on-demand, and the reason is decay rather than importance.
-A preference stated once, forty turns ago, competes with everything said since and quietly loses —
-so the essays come back, the person notices, and the reasonable conclusion they draw is that
-telling this thing how they like to be written to doesn't work. **Being ignored slowly is worse
-than never being asked**, because it spends the credit the question earned.
-
-On Claude Code that guarantee is mechanical: `brain/bin/style` prints the file and
-`.claude/settings.json` runs it on `UserPromptSubmit`, whose output lands in context before the
-prompt does. Everywhere else the guarantee is this paragraph. **The file is the source of truth and
-the hook is a convenience over it** — never move a preference into `.claude/`, where three-quarters
-of the agents that read this manual will never see it.
-
 ### `[[How we work together]]` — the working agreement
 
 **Read `cortex/03_Resources/How we work together.md` at the start of every session and honour all
@@ -98,10 +78,16 @@ rules, how to talk to them, what may be done unasked, and a few magic words with
 It is the one note that ships with defaults, because the workshop copy of this vault should
 demonstrate a working agreement rather than an empty slot for one.
 
-Three of its sections — **Always / Never**, **How to talk to me** and **Magic words** — are contract rather than context,
-and get the same anti-decay treatment as `[[How I talk]]`: on Claude Code, `brain/bin/agreement`
-extracts just those sections and `UserPromptSubmit` re-states them before every prompt. Everywhere
-else, this paragraph is the guarantee.
+Three of its sections — **Always / Never**, **How to talk to me** and **Magic words** — are contract
+rather than context, and are re-stated on every turn rather than read once. The reason is decay:
+a preference stated once, forty turns ago, competes with everything said since and quietly loses,
+so the essays come back, the person notices, and concludes that telling this thing how they like
+to be written to doesn't work. **Being ignored slowly is worse than never being asked.** On Claude
+Code the guarantee is mechanical: `brain/bin/agreement` extracts just those three sections and
+`UserPromptSubmit` re-states them before every prompt. Everywhere else, this paragraph is the
+guarantee. **The note is the source of truth and the hook is a convenience over it**; never move a
+preference into `.claude/`, where three-quarters of the agents that read this manual will never
+see it.
 
 **The note belongs to the human.** Never edit it, even when invited by the shape of the moment.
 When they say "remember that" — or you notice a friction worth a rule — propose the line and let
@@ -150,7 +136,7 @@ giving me bullet lists", "I never read anything longer than a screen". When one 
 write it**, in one line, easy to ignore:
 
 ```
-Want me to add "no bullet lists unless asked" to [[How I talk]]?
+Want me to add "no bullet lists unless asked" under *How to talk to me* in [[How we work together]]?
 ```
 
 If they don't take it up, drop it. Three rules bound this:
@@ -969,7 +955,7 @@ X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
-| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `teach`. |
+| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule (a proposed line under *How to talk to me* in the agreement) | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `teach`. |
 | `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `teach`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `digest`. |

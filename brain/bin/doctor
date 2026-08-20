@@ -279,18 +279,17 @@ if [ -f "$profile" ]; then
   fi
 fi
 
-# [[How I talk]] has a tighter cap than the hub for a harder reason: the hub is
-# read once per session, this is re-stated before every single prompt. Ask
-# brain/bin/style rather than counting here, so the budget is defined in one
-# place and the two can't drift.
-profile_style='cortex/03_Resources/How I talk.md'
-if [ -f "$profile_style" ] && [ -x brain/bin/style ]; then
-  set -- $(brain/bin/style --check 2>/dev/null)
-  slines=${1:-0}; scap=${2:-15}
-  case $slines in ''|*[!0-9]*) slines=0 ;; esac
-  if [ "$slines" -gt "$scap" ]; then
-    warn "'$profile_style' has $slines lines — only the first $scap are used" \
-         "This one is re-stated on every prompt, not once per session, so it is the most expensive file in the vault per line. Keep the $scap that would actually change a reply and cut the rest."
+# The agreement's contract sections are re-stated before every single prompt,
+# so they have a tighter cap than the hub. Ask brain/bin/agreement rather than
+# counting here, so the budget is defined in one place and the two can't drift.
+agreement_note='cortex/03_Resources/How we work together.md'
+if [ -f "$agreement_note" ] && [ -x brain/bin/agreement ]; then
+  set -- $(brain/bin/agreement --check 2>/dev/null)
+  alines=${1:-0}; acap=${2:-18}
+  case $alines in ''|*[!0-9]*) alines=0 ;; esac
+  if [ "$alines" -gt "$acap" ]; then
+    warn "'$agreement_note' has $alines contract lines — only the first $acap are re-stated each turn" \
+         "Always / Never, How to talk to me and Magic words are re-stated on every prompt, so they are the most expensive lines in the vault. Three to five bullets per section; when one is full, a new line replaces an old one."
   fi
 fi
 
@@ -516,16 +515,14 @@ if [ -d "$HOME/.claude" ]; then
          "You'll need to run  brain/bin/sync  yourself to save your work"
   fi
 
-  # The style hook. Only worth a line once there is a style to re-state -- on a
-  # vault where nobody has said how they like things written, a warning about
-  # the machinery that would deliver it is noise about a preference that
-  # doesn't exist yet.
-  if [ -f "$profile_style" ]; then
-    if [ -f .claude/settings.json ] && grep -q '"UserPromptSubmit"' .claude/settings.json 2>/dev/null; then
-      ok "your writing style is re-stated on every prompt (so it doesn't drift in a long session)"
+  # The agreement hook: hard rules, how to talk to them, magic words, before
+  # every prompt.
+  if [ -f "$agreement_note" ]; then
+    if [ -f .claude/settings.json ] && grep -q 'brain/bin/agreement' .claude/settings.json 2>/dev/null; then
+      ok "your working agreement is re-stated on every prompt (so it doesn't drift in a long session)"
     else
-      warn "you've set how you like things written, but nothing re-states it" \
-           "Add the UserPromptSubmit hook to .claude/settings.json — without it, '$profile_style' fades as a session gets long. Say  setup style  and your agent will wire it up."
+      warn "you have a working agreement, but nothing re-states it" \
+           "Add brain/bin/agreement to the UserPromptSubmit hooks in .claude/settings.json — without it, '$agreement_note' fades as a session gets long."
     fi
   fi
 
