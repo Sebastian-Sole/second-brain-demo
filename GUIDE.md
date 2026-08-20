@@ -200,19 +200,20 @@ flags, or asks.
 
 ### Making it yours
 
-**`guide`** — the one to run if any of this still feels like homework. It explains what you're
-actually holding — the agent, the harness around it, and this vault — pitched at wherever you are,
-whether you've never used AI or you already run your own setup. It's four short chapters and each
-one ends by *doing* something rather than describing it, so you finish with real notes rather than
-a summary. Stop after any chapter; it remembers where you got to.
+**`teach me how this works`** — the one to run if any of this still feels like homework. It
+explains what you're actually holding — the agent, the harness around it, and this vault — pitched
+at wherever you are, whether you've never used AI or you already run your own setup. It teaches a
+piece at a time and each piece ends by *doing* something rather than describing it, so you finish
+with real notes rather than a summary. Stop whenever; it remembers where you got to, and it can
+turn the whole thing into a lesson you keep.
 
-**`guide expand`** is the other half, and it's the one worth coming back to every few weeks: what
-people build on top of this once it's theirs. A morning brief you trigger with one word. Your mail,
-calendar or anything else with an MCP server wired in. Dictation, so capturing is talking rather
-than typing — which matters more than it sounds, because the way a second brain dies is that
-nothing goes into it. A private GitHub remote so it's on every machine you use. It picks three
-ideas out of *your* notes rather than reciting a list, offers to build one there and then, and
-writes down what you said yes to so it doesn't pitch you the same thing twice.
+It's the same `teach` you'd use for anything else — bloom filters, Norwegian grammar, whatever.
+This project just happens to be a subject it has the documents for, so it reads `README.md`,
+`GUIDE.md` and `DESIGN.md` and re-pitches them at you rather than reciting them.
+
+**For what to build next**, that's `interview`. It picks ideas out of *your* notes rather than
+reciting a list, offers to build one there and then, and writes down what you said yes to so it
+doesn't pitch you the same thing twice.
 
 **`setup`** — you've already run this. Run it again any time; it's how you correct your profile.
 

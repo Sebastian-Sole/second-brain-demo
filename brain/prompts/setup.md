@@ -15,12 +15,12 @@ So this command has two jobs and the second one is the real one:
    and its spokes, read at the start of every future session.
 2. **Leave them with one thing that works, that they watched work, before this conversation ends.**
 
-**Job 2 does not get deferred.** Not to tomorrow, not to "try it in the morning", not to `guide`,
+**Job 2 does not get deferred.** Not to tomorrow, not to "try it in the morning", not to `teach`,
 not to a suggestion they'll act on later. If they close the terminal having only answered questions,
 this command failed no matter how good the profile is.
 
 Treat them as someone who has never used a tool like this and may not be a programmer. No jargon,
-no lecture on PARA or provenance or frontmatter. `README.md` and `guide` exist for anyone who wants
+no lecture on PARA or provenance or frontmatter. `README.md` and `teach` exist for anyone who wants
 the theory; nobody wants it in minute three.
 
 **Arguments:** `setup` runs the whole thing · `setup quick` means *don't dig, I'm in a hurry* ·
@@ -173,7 +173,7 @@ brochure handed to the person least equipped to read one. Answer it by narrowing
 > time that you'd rather it hadn't?
 
 That question has an answer for every human alive, and the answer is a build. If it still comes back
-empty, offer `guide` once — four short chapters, each ending with something actually happening —
+empty, offer `teach` once — it walks them through what this is, a piece at a time —
 and be ready to run it. Then come back here.
 
 ### Not a therapist
@@ -360,9 +360,9 @@ aliases: []          # their name, once you know it — so [[Sebastian]] resolve
 | File | Holds | Read by |
 | --- | --- | --- |
 | `How I talk.md` | Behaviour lines about writing to them. Capped at 15. | everything, every turn |
-| `How I learn.md` | How technical they are, what AI they've used, where — **and the format they learn in**: video, prose, or something to click | `teach`, `guide` |
-| `My systems.md` | Every service they named, its rung, and what came of it | `setup` on a re-run, `new-idea`, `guide expand` |
-| `What I want this brain to do.md` | The wishes, and what's been built | `guide expand` |
+| `How I learn.md` | How technical they are, what AI they've used, where — **and the format they learn in**: video, prose, or something to click | `teach` |
+| `My systems.md` | Every service they named, its rung, and what came of it | `setup` on a re-run, `new-idea`, `interview` |
+| `What I want this brain to do.md` | The wishes, and what's been built | `interview`, `new-idea` |
 | `My news sources.md` | Feeds, only if feeds came up. Resolve names to URLs yourself. | `news` |
 
 `[[My systems]]` is the one that pays off later, and it's cheap to write:
@@ -412,7 +412,7 @@ to hook it up?"* instead of asking from scratch. Without it, every re-run starts
 Then one more, aimed at the people least likely to ask for it:
 
 > If you want to know what this actually is — what it can be wired into, what people build on top of
-> it — say `guide`. `guide expand` is the part with the ideas in it.
+> it — say `teach me what this is`. `interview` is the part with the ideas in it.
 
 **Say it once and don't run it.** Someone who has just watched their own inbox come back sorted is
 at the exact moment where "what else can this do" is a live question — but a first run that turns
@@ -519,8 +519,8 @@ What this step owns is the offer and the honesty around it:
 
 - **Not a form.** If your message contains a numbered list of questions, you have written the thing
   this was rewritten to replace.
-- **Not `guide`.** That teaches what this *is*, in four chapters. This one configures it and builds
-  something. Offer `guide`, hand off to it, don't perform it.
+- **Not `teach`.** That teaches what this *is*, from the repo's own documents. This one configures
+  it and builds something. Offer `teach`, hand off to it, don't perform it.
 - **Not `new-idea`.** Anything reaching a service no tool covers goes there, with its security
   review. Routing around that to be helpful is exactly the shortcut it exists to prevent.
 - **Not a vault reorganisation.** Don't pre-build projects or areas, and don't write notes they

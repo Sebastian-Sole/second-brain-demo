@@ -15,4 +15,4 @@ Claude-specific conveniences, all of which are thin wrappers over the portable l
   allowlist for the vault's own scripts and read-only inspection commands
 
 If the human seems new here, or `cortex/03_Resources/About me.md` is missing or blank, offer `/start`
-before anything else — and `/guide` alongside it if they seem unsure what this whole thing is for.
+before anything else — and `/teach` alongside it if they seem unsure what this whole thing is for.

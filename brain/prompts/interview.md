@@ -81,7 +81,7 @@ months, everything perishable gets asked about, the register is tidy, no project
 side business, or manage three kids' schedules across four apps, and it has never once occurred to
 them that any of that is something an assistant could touch. **They aren't going to ask, because
 people don't ask for things they don't know are possible.** Nothing else here closes that gap:
-`guide expand` does, but only when they run it, which is exactly the thing they won't think to do.
+Nothing else does — which is why source 7 below exists, and why it is the one that has to be good.
 
 **It is still cited, and the citation rule is not relaxed.** What it cites is different in kind —
 not a note that exists, but something they *said* set against a gap:
@@ -114,7 +114,7 @@ don't have proves the brain doesn't know them, on the one subject where it was c
   for good.
 - **Never re-pitch.** Read `[[What I want this brain to do]]` first and skip anything already on
   it, built or declined. Being offered the same idea twice is how a channel gets muted, and it is
-  the same rule `guide expand` runs on.
+  the same rule source 7 runs on.
 - **Not a therapist, and not a life coach.** They describe a mess; you go straight to the system
   that holds it and what could reach it. No sympathy, no observations about their habits, no
   suggestions about how they might live differently. Same rule as `setup`, for the same reason —
@@ -180,16 +180,17 @@ missing or blank — then this command has nothing to work with and should say s
 than scraping the bottom of the barrel:
 
 > Nothing worth asking yet — I need a bit of your material first. `setup` writes the profile, and
-> `guide` is worth ten minutes if you want to see what this is actually for.
+> `teach me what this is` is worth ten minutes if you want to see what this is actually for.
 
 That's the whole output. **Don't manufacture an icebreaker, and don't fall back on the profile
 questions** — `setup` owns those, and asking them here produces an interview that duplicates the
 first-run one while pretending to be sourced. A gap this command genuinely cannot fill is a gap it
 should name and route away from, not paper over.
 
-`guide` earns its place in that line because the young-vault problem is almost never that the human
+`teach` earns its place in that line because the young-vault problem is almost never that the human
 won't answer questions. It's that nobody has shown them what the thing is for, so there is nothing
-in it to ask about — and answering that is exactly what `guide` does.
+in it to ask about — and answering that is exactly what `teach` does, from this repo's own
+documents.
 
 ## 5. Ask like an assistant, not a form
 

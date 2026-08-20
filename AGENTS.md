@@ -31,7 +31,7 @@ brain is for**, **How I like to work**, and **Current focus**.
 >
 > **If you are an agent and `[[About me]]` is missing or its bullets are blank, say so** — offer
 > `start` before doing anything substantial. Working without it means writing notes about a
-> stranger. **If they also seem unsure what this whole thing is**, offer `guide` alongside it —
+> stranger. **If they also seem unsure what this whole thing is**, offer `teach` alongside it —
 > a profile written by someone who doesn't yet know what it's for is a thin profile.
 
 **Why it isn't in this file.** `AGENTS.md` is harness: it ships with the vault and gets replaced
@@ -53,13 +53,13 @@ otherwise.
 
 | Spoke | Read by |
 | --- | --- |
-| `[[How I learn]]` | `teach`, `guide` — it's how both work out what level to pitch at, and how `teach` picks the format |
+| `[[How I learn]]` | `teach` — it's how it works out what level to pitch at, and which format to teach in |
 | `[[How I talk]]` | **everything, on every turn** — see below. It's the one spoke that isn't read on demand |
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
 | `[[What I'm into]]` | `digest`, `interview` |
-| `[[My systems]]` | `setup` on a re-run, `interview`, `new-idea`, `guide expand` — the services they actually live in, each with a verdict on whether anything can reach it |
-| `[[What I want this brain to do]]` | `guide expand` — what they've said they want built, and what's already done |
+| `[[My systems]]` | `setup` on a re-run, `interview`, `new-idea` — the services they actually live in, each with a verdict on whether anything can reach it |
+| `[[What I want this brain to do]]` | `interview`, `new-idea` — what they've said they want built, and what's already done |
 | `[[How we work together]]` | **everything, on every turn** — the working agreement; its hard rules are re-stated like `[[How I talk]]`. See below |
 
 None of these ship except `[[How we work together]]`, which arrives with starter defaults because
@@ -174,7 +174,7 @@ assumption — and it must never be written into the profile or a spoke as thoug
 `maintain`, which may fix links and frontmatter but never content. Four commands are asked by
 construction, and only in that moment: `setup`, whose whole conversation is the human choosing to
 have the hub and its spokes filled; `interview`, when the human runs an inventory; `review-assumptions`, when a
-`y` verdict promotes a claim into its spoke and links that spoke from the hub; and `guide expand`,
+`y` verdict promotes a claim into its spoke and links that spoke from the hub; and `new-idea`,
 which writes `[[What I want this brain to do]]` and only ever records what they said yes to.
 
 ---
@@ -217,6 +217,13 @@ So "what does this vault know about X" is a question about `cortex/`, and a fact
 `README.md` is not something the human told you — it is something *this project* told you, about
 itself. Answering from it is how a brain ends up quoting its own instruction manual back at its
 owner as though it were a memory.
+
+**One exception, and it is narrow: `teach`.** When the human asks to be taught what this project
+*is*, those documents are the subject matter, and reading them is the only honest way to answer —
+`README.md` for what it is, `GUIDE.md` for how to use it, `DESIGN.md` for why it's built this way.
+That is teaching someone their own tool from its manual, which is fine. What stays forbidden is the
+thing the rule was written against: treating those documents as the human's *own* knowledge, or
+answering "what do I think about X" out of `DESIGN.md`. Subject matter, never memory.
 
 `brain/bin/check` enforces this structurally rather than by a list: if a file isn't under
 `cortex/`, it isn't linted as knowledge. That used to be a hand-written list of every harness file,
@@ -821,7 +828,6 @@ nothing else, which is the ordinary case and needs no exception.
 | Command | Prompt file | What it does |
 | --- | --- | --- |
 | `setup` | `brain/prompts/setup.md` | First run: learn who the human is one question at a time, write `[[About me]]` and its spokes, connect what's reachable, and build them one working thing before it ends |
-| `guide` | `brain/prompts/guide.md` | Teach them what this *is* — the agent, the harness, this vault — pitched at their level. `guide expand` proposes what to build next |
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |
@@ -963,12 +969,11 @@ X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
 | --- | --- | --- |
-| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `guide`. |
-| `guide` | "what is this", "what can it do", "I don't get what this is for", "what should I do with it", "how do I make more of this" — and any first session where they seem lost rather than merely unconfigured. `guide expand` for "what else could I build" | Writing the profile — `setup`, which this hands off to. Teaching a concept that isn't this vault — `teach`, which is also the front door when someone asks how *this* works and follows this file's shape when it gets there. Actually building a new capability — `new-idea`, which `guide expand` proposes and never performs. |
-| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `guide`; never manufacture one from the notes that shipped with the vault. |
+| `setup` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; connecting a service a tool here already covers — "hook up my mail", "connect my calendar"; `setup style` for "stop writing me essays" as a standing rule | Building a capability that needs **new reach** — a service no tool covers, a credential, a network call — `new-idea`, and setup hands off to it rather than routing around the security review. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `teach`. |
+| `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. **A vault too young to have sourced a question** — say so and point at `setup` and `teach`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `digest`. |
-| `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. The first-session "what even is this" tour — `guide`, whose shape this borrows rather than duplicates. |
+| `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. Working out what to *build* next rather than understand — `interview`. Configuring the thing rather than explaining it — `setup`. |
 | `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
 | `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
 | `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |

@@ -85,13 +85,13 @@ finished**, aimed at whatever you said was annoying, and runs it in front of you
 this** — it's the difference between notes about you and notes about a generic person, and it's the
 part where you find out what this is actually for.
 
-**5. If you're not sure what you've just installed, say `guide`.**
+**5. If you're not sure what you've just installed, say `teach me how this works`.**
 
 It explains what this actually is — the agent, the harness around it, and the vault — pitched at
-wherever you are, from never-having-used-AI upward. Four short chapters, each ending with something
-real happening rather than a summary. And `guide expand` is the half that shows you how far this
-goes: routines, connectors, dictation, using it from your phone. Optional, but it's the difference
-between a folder of markdown and something you actually use in six weeks.
+wherever you are, from never-having-used-AI upward. It teaches it a piece at a time, each ending
+with something real happening rather than a summary, and it can turn the whole thing into a lesson
+you keep. It's the same command you'd use to learn anything else; this repo just happens to be a
+subject it has the documents for.
 
 That's it. From here you just talk to it.
 
@@ -118,7 +118,7 @@ connecting first:
 | **The outside world** | `weather` · `location` · `news` · `email` · `calendar` |
 | **Keeping it healthy** | `doctor` for the install · `maintain` for the notes |
 | **Making it yours** | `setup` · `interview` · `new-idea` |
-| **Working out what to do with it** | `guide` for what this is · `guide expand` for what to build next |
+| **Working out what to do with it** | `teach` for what this is and how to use it · `interview` for what to build next |
 | **Your history** | `ingest-sessions` |
 
 `digest` surprises people: it names themes across unrelated notes that you never wrote down,
