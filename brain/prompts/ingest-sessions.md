@@ -41,10 +41,10 @@ if they wonder why — and don't "fix" it by committing the file.
 **Then name both halves and let them choose.** This command is two passes over the same history:
 the session notes below, and the [interaction pass](#the-interaction-pass--how-you-work-with-an-ai)
 — which reads it for how they work with an AI rather than what the work was, and is the more
-valuable half; say so when you offer it. Ask which they want — notes, the pass, or both — in the
-same scope conversation, because the consents differ: notes summarise the projects they picked,
-the pass pattern-reads everything they typed there. When they take both, the two run as one job on
-one staged corpus.
+valuable half: it is the reason this command is worth running. **Both is the default.** Say in the
+scope conversation what each half does — notes summarise the projects they picked, the pass
+pattern-reads everything they typed there — and run both unless they say "just the notes"; the
+opt-out is theirs, not a hurdle to clear. The two run as one job on one staged corpus.
 
 **Then agree a window.** Default to the **last 30 days**. Never attempt an entire history in one
 run — it's thousands of sessions and it will cost more than it's worth. Report what remains at the
@@ -184,10 +184,12 @@ on, and the notes are the part they can search.
 The session notes capture what the work was. The same history holds something no note has ever
 held: how this person actually works with an AI — and whether the vault is tuned to them or to a
 shipped default. This pass reads the human's own typed turns, reports what recurs in them, and
-hands back proposals. **It runs only when they choose it by name** — in Phase 0's
-scope conversation, where it is offered alongside the notes, or on its own when they ask — "what
-does my history say about how I work with AI", "tune this to how I actually use it". Never as an
-unnamed side effect: a run they said "just the notes" to writes notes and nothing else.
+hands back proposals. **It is the default half of every run** — named in Phase 0's
+scope conversation, where what it reads is said out loud and "just the notes" is the opt-out —
+and it also runs on its own when they ask: "what does my history say about how I work with AI",
+"tune this to how I actually use it". What never happens is the unnamed version: a run they said
+"just the notes" to writes notes and nothing else, and no run pattern-reads without having said
+so first.
 
 Its visibility limits are the command's, and they get said with the findings: the two directories
 named at the top of this file are everything it can see, browser chats never land on this disk,
