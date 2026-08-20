@@ -6,6 +6,8 @@ Two other files, so you know when to leave this one: [`README.md`](README.md) is
 how to install it, and [`DESIGN.md`](DESIGN.md) is why it's built the way it is. Neither is
 required reading. This one is.
 
+For the longer read, with the thinking behind the workshop: [Bygg din egen personlige assistent](https://app.notion.com/p/Bygg-din-egen-personlige-assistent-3c24dc662c2281f3a178d53504972873) (Notion).
+
 The short version, if you read nothing else:
 
 - **Talk to it in plain sentences.** You don't have to learn any commands.

@@ -4,7 +4,8 @@ This is the front door. A new human, a stock vault, and one conversation with a 
 **they are known.** `cortex/03_Resources/About me.md` and `cortex/03_Resources/How we work together.md` end up
 holding real answers instead of template lines. The goal is general knowledge of the person, enough
 for good conversation and a good start. Building things is `new-idea`'s job, and they will run it
-themselves with their own idea; this command neither asks for one nor pitches it.
+themselves with their own idea; this command doesn't ask what the idea is, it points at the door
+once, at the end.
 
 The interview is five questions. One invites a story; the other four are confirm-or-veto. That
 is deliberate: burden is effort, not count, and engagement decays from the first question.
@@ -224,46 +225,72 @@ A secret-ICS-feed route is not offered until `brain/bin` has a reader for it.
 
 ## Step 3 — The close
 
-**Beat 1 — read-back, veto-style.** A few lines, their words where possible:
+Same rules as the questions: every question is visibly a question with options, nothing is asked
+mid-sentence, and every file is named by its real path so they can go and open it. Four blocks,
+each its own message or clearly separated with a rule; do not fold them into one paragraph.
 
-> Here's what I've got:
+**Block 1 — read-back.** Their words where possible. This is a question, so it gets the shape:
+
+> ---
+>
+> ## What I've got
 >
 > - you run a small design studio in Oslo, two kids, Gmail and Google Calendar
+> - straight, no small talk
 > - short answers, no sugarcoating
 > - I do things and tell you after; anything leaving the vault you see first
 >
-> Anything wrong in that list, say so. Silence means I got it right.
-
-**Beat 2 — where it lives.** The edit-later promise, with the places named:
-
-> Everything you just told me went into two notes: **About me** and **How we work together**.
-> They're yours: open them whenever, edit anything, and I follow the new version immediately. Or
-> never touch a file: when I do something annoying, or something great, say **"remember that"**
-> and I'll propose the edit for you to approve.
-
-**Beat 3 — optional extras, one line each, all skippable, none pushed:**
-
-> Three things I *can* do, only if you want:
+> Is that right?
 >
-> - **Connect your calendar** so I can see your week myself. One sign-in, and it works across
->   everything you use Claude for.
-> - **Learn from your past AI sessions** on this machine: what you already ask assistants for,
->   how you like to talk. You pick which projects; histories can contain work stuff.
-> - **The deeper version of "how I tick"**: say `interview big-five`. Twenty statements, and what
->   it produces is rules for how I treat you, not a test score.
+> - yes
+> - fix something
+> - skip
+
+**Block 2 — the files.** Full paths, and what each one is for. No question here.
+
+> ---
 >
-> Options: pick any · skip
+> ## Where this lives
+>
+> Two files, both yours to open and edit. I follow whatever is in them:
+>
+> - `cortex/03_Resources/About me.md`: who you are. What you told me in question 3.
+> - `cortex/03_Resources/How we work together.md`: the rules. Style, autonomy, hard limits, the
+>   magic words. I re-read it on every turn.
+>
+> You never have to open them. When I do something annoying, or something great, say
+> **"remember that"** and I'll propose the line for you to approve.
 
-The calendar hands off to the connector (see *Calendar*, above). The sessions one hands off to `ingest-sessions`, whose consent gate (pick projects, default none) and
-retention warning already exist — don't restate them, run it. The Big Five is a pointer only; the
-inventory lives in `brain/prompts/interview.md` and never runs unasked.
+**Block 3 — next steps.** The one thing to do next, then the optional extras, then where to read
+more. Numbered so a digit is an answer.
 
-**Beat 4 — stop.** One line, then the conversation is over:
+> ---
+>
+> ## What's next
+>
+> 1. **Fix one thing that eats your time.** Say `new-idea` and tell me what it is. We take a bite
+>    out of it in that conversation.
+> 2. **Connect your calendar**, so I can see your week myself. One sign-in; it works across
+>    everything you use Claude for.
+> 3. **Let me learn from your past AI sessions** on this machine: what you already ask assistants
+>    for, how you like to talk. You pick which projects; histories can contain work stuff.
+> 4. **The deeper version of "how I tick"**: say `interview big-five`. Twenty statements. What it
+>    produces is rules for how I treat you, not a test score.
+>
+> More to read and learn, when you want it: [Bygg din egen personlige assistent](https://app.notion.com/p/Bygg-din-egen-personlige-assistent-3c24dc662c2281f3a178d53504972873)
+>
+> - a number
+> - none for now
+
+Item 1 hands off to `new-idea`, which asks what the friction is and builds for it; do not ask
+for the friction here. Item 2 hands off to the connector (see *Calendar*, above). Item 3 hands off
+to `ingest-sessions`, whose consent gate (pick projects, default none) and retention warning
+already exist: don't restate them, run it. Item 4 is a pointer only; the inventory lives in
+`brain/prompts/interview.md` and never runs unasked.
+
+**Block 4 — stop.** Only if they chose "none for now". One line, then the conversation is over:
 
 > That's us started. Everything else I'll learn as we go, the first time it matters.
-
-No pitch for `new-idea` or any other command; they have their own idea and their own
-instructions for running it.
 
 ## What gets written, and how
 
