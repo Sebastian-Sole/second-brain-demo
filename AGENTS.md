@@ -344,7 +344,7 @@ by path and by link; they just don't compete with live notes for a keyword match
 
 Your session can see things the vault can't: which MCP connectors are configured, which skills are
 installed, what other repos sit on the disk, the shell history, this repo's own git log. Some of
-this vault's commands now reach outside it as well — weather, location, news, mail, calendar. The
+this vault's commands now reach outside it as well — weather, location, news. The
 line isn't *whether* live data may be used. It's what live data may be used to conclude.
 
 | Situation | Ruling |
@@ -526,8 +526,8 @@ project: "[[Some project]]"   # the project it belongs to, as a quoted wikilink 
   blank. Quoted so YAML doesn't choke on the brackets, and a link rather than a bare string so the
   project is reachable from the task rather than merely named by it. It's what completion follows
   when it writes its pointer line into the project note.
-- **No priority field, deliberately.** An agent that can read the calendar and the project notes
-  ranks better than a letter grade does, and a priority written once rots: everything filed urgent
+- **No priority field, deliberately.** An agent that can read the project notes and the day's
+  context ranks better than a letter grade does, and a priority written once rots: everything filed urgent
   in March is still urgent in September, at which point nothing is. If ordering matters, work it
   out at the moment you're asked.
 
@@ -865,9 +865,9 @@ order to say which capabilities are actually connected.
   vault, since those transcripts contain other people's confidential code and files holding
   credentials.
 - **`doctor`** (`brain/bin/`) reads `$HOME/.claude.json` and `$HOME/.claude/settings.json`.
-- **`brief`** (`brain/prompts/`) calls `weather`, `calendar`, `email` and `news`. It reaches
-  nothing itself — it inherits the reach of the four tools it invokes, and each of those is still
-  governed by its own frontmatter.
+- **`brief`** (`brain/prompts/`) calls `weather` and `news`. It reaches nothing itself — it
+  inherits the reach of the tools it invokes, and each of those is still governed by its own
+  frontmatter.
 - **`sync`** (`brain/bin/`) runs `git pull` and `git push`: the entire vault to a network remote,
   unattended, after every turn on Claude Code's `Stop` hook.
 - **`run`** (`brain/bin/`) starts a fresh agent process with a command file's contents as its
@@ -914,8 +914,6 @@ nothing else, which is the ordinary case and needs no exception.
 | `weather` | `brain/tools/weather.md` | A forecast service | Nothing |
 | `location` | `brain/tools/location.md` | The host's idea of where they are | Nothing |
 | `news` | `brain/tools/news.md` | The feeds and sites named in `[[My news sources]]` — via `brain/bin/feeds` — plus a web search for any source with no usable feed | `[[My news sources]]`, and only when asked — never the roundup |
-| `email` | `brain/tools/email.md` | The connected mailbox — read, draft, and send when asked | Drafts always; sends and mailbox changes only on an explicit request |
-| `calendar` | `brain/tools/calendar.md` | The connected calendar — read, and write when asked | Nothing, unless the human asks for an event |
 | `teach` | `brain/tools/teach.md` | A web search for teaching sources — real videos, articles, primary sources — and the pages it finds | Lesson pages under `lessons/`, outside the vault. One course note in `cortex/03_Resources/` when they accept a course; nothing else in the vault without an explicit yes |
 
 Adding either kind is still **one markdown file plus a row in the right table above.** Where the
@@ -971,42 +969,6 @@ And one standing rule with no review attached: **a tool never sends vault conten
 without saying so in the same reply.** If a line from a note went into a search query, that goes in
 the answer.
 
-### Mail and calendar act only when asked
-
-Reading is free. Search the mailbox, read a thread, list the day's events, answer from any of it.
-None of that changes anything outside the vault, so none of it needs permission.
-
-Everything that **leaves** — send, reply, forward, trash, label, move, create an event, accept or
-decline one — needs **two** things, every time:
-
-1. **The human asked for it, in this turn, in words.** Not inferred. Not "obviously what they
-   meant". Not because the draft already exists and sending is one click. Not because they asked
-   for something like it yesterday.
-2. **They approved the prompt.** On Claude Code, `.claude/settings.json` lists these tools under
-   `ask`, so the harness stops and asks before each one.
-
-Neither is enough alone. A prompt approved out of habit is not a decision, so gate 1 is the one you
-hold: it is what stops you *offering*.
-
-**Never propose a destructive action.** Trash, delete, mark spam, archive a thread, remove a label —
-carry one out if the human names it, and never be the one to raise it. The harness will now let
-those through on a yes, which is exactly why the restraint has to live here.
-
-**Default to a draft.** It is always available, always safe, and it is the right answer whenever you
-are not certain the human asked you to send:
-
-> Here's the reply, ready to send when you are: …
-
-The reason is the one behind everything else here: `git revert` undoes a note you didn't want. It
-does nothing at all about a mail sitting in someone else's inbox. The asymmetry is the whole
-argument: a draft too many costs a keystroke, a send too many cannot be taken back.
-
-**Calendar carries one extra trap.** Creating an event and inviting people to it are the same
-connector call, and a permission layer cannot allow one argument while refusing another. "Book an
-hour Thursday" and "book an hour Thursday with those four people" arrive as the same approval, and
-the connector mails the guests by default. Say which of the two you are about to create, in the
-sentence before you create it.
-
 ### Routing — what to run when nobody names a command
 
 The human doesn't have to name a command, and mostly won't. **Route what they said to the right
@@ -1043,9 +1005,9 @@ X" — so every row says whose territory it isn't.
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
 | `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `brief`. The model of *them* played back — facts, guesses, dead ones — `mirror`. |
 | `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. Working out what to *build* next rather than understand — `interview`. Configuring the thing rather than explaining it — `start` for the first conversation, `new-idea` for connecting and building. |
-| `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
+| `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now, with no intention to store it for later — that's a request to write, not a task. A thought with no action in it — `capture`. |
 | `brief` | "what have I been up to", "what's stalled", "catch me up on this week" — and "digest", this command's name until 2026-08-20; people who learned that word will keep saying it, and it still routes here | One question with its answer in one note — `ask`. Fixing what the brief surfaces — `maintain`. |
-| `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `brief`. |
+| `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | This row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `brief`. |
 | `doctor` | "something's broken", "is this thing working", a command failing, just after a harness update | Messy vault *contents* rather than a broken install — `maintain`. |
 | `new-idea` | "add a command", "I want it to also do X", "connect it to my <service>", "hook up my mail" — at every rung: when a tool already covers the service, the run ends at the connect path in Discuss instead of building | Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. The first getting-to-know-you conversation — `start`. |
 | `ingest-sessions` | "read my old Claude/Codex sessions", "make my history searchable"; the interaction pass: "what does my history say about how I work with AI", "tune this to how I actually use it" | Capturing *this* session — `capture`. Ruling on what the interaction pass proposes — that's the propose/accept flow, and the pass itself writes nothing. |
@@ -1055,8 +1017,6 @@ X" — so every row says whose territory it isn't.
 | `weather` | "what's it like out", "do I need a coat", a forecast for a place or a day | Writing any of it down — the answer is ephemeral by default. |
 | `location` | "where am I", "what time is it here" — city, coordinates and timezone off an IP lookup, which is all it returns | Finding somewhere nearby: nothing in this vault searches for places, so say that rather than routing here. Recording where they live — that's profile detail, and only the human writes it. |
 | `news` | "what's happening with X", "anything new in Y" | "What do *I* think about X" — `ask`. Filing an article they handed you — `capture`. |
-| `email` | "what's in my inbox" meaning the mail account, "did X reply", "draft a reply to Y", "email X about Z" — they want the text composed now | `cortex/00_Inbox/`, the vault folder — that's `maintain`. An intention to deal with someone later, with no text wanted yet — `task`. Sending, replying, forwarding, deleting and labelling belong here too, but only on an explicit request plus an approved prompt, and you never raise a destructive one yourself — see the ceiling. |
-| `calendar` | "what's on today", "am I free Thursday", "pencil something in" | Accepting, declining, moving and cancelling belong here too, but only on an explicit request plus an approved prompt, and you never raise one yourself — see the ceiling. |
 
 **Two ways out of this table, and they aren't the same.** *Nothing matches, or several match and
 you cannot tell which* → `capture`. **Never ask which command to run.** Routing is silent, and
@@ -1116,11 +1076,13 @@ gate at all for the length of the run. Set it in the scheduler line and nowhere 
 shell you're also working in, and not in your profile. Nothing in this vault sets it for them, and
 nothing here should start.
 
-**Never schedule a run that can reach mail or the calendar.** The ceiling above rests on an approval
-prompt, and every mode that removes prompts removes that one too — `cursor-agent --force`,
-`gemini --yolo`, and Claude Code's own `bypassPermissions`. An `ask` rule in `.claude/settings.json`
-does not survive any of them. A scheduled `maintain` has no use for a mailbox, so keep the two
-apart: disconnect the mail and calendar connectors on whatever account the scheduler runs as.
+**Never schedule a run on an account with mail or calendar connectors attached.** This vault ships
+no mail or calendar tool, but connectors live on the account, not in the vault — and anything a
+connector can send outward is gated only by an approval prompt, which every unattended mode
+removes: `cursor-agent --force`, `gemini --yolo`, and Claude Code's own `bypassPermissions`. An
+`ask` rule in `.claude/settings.json` does not survive any of them. A scheduled `maintain` has no
+use for a mailbox, so keep the two apart: disconnect those connectors on whatever account the
+scheduler runs as.
 
 **`interview` is the one to be careful with.** It's the only command that talks *to* the human
 rather than answering them, so it's the only one that can become nagging. It runs when they invoke

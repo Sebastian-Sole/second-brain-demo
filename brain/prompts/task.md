@@ -43,8 +43,8 @@ Four of those look arbitrary without their reasons, so here they are:
   also the start of the clock.
 - **`completed:` is required whenever `task:` isn't `open`.** That invariant is what makes "how
   long was this open" computable from `id` and `completed`. `brain/bin/doctor` checks it.
-- **There is no priority field, deliberately.** An agent that can read the calendar and the project
-  notes ranks better than a letter grade, and a priority written once rots — everything filed
+- **There is no priority field, deliberately.** An agent that can read the project notes and the
+  day's context ranks better than a letter grade, and a priority written once rots — everything filed
   urgent in March is still urgent in September, at which point nothing is. Work out ordering at the
   moment you're asked.
 
