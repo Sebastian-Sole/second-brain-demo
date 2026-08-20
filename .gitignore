@@ -46,3 +46,9 @@ cortex/06_Sessions/scope.md
 # calendar. `start` writes it here when the human picks the read-only route, and
 # sync must never push it.
 cortex/raw/calendar-feed.url
+
+# The friction log — brain/bin/friction appends a line each time the human uses
+# one of their declared magic words. Raw material, not knowledge: it stays out
+# of git (sync would push a record of what they typed) and out of the retrieval
+# path, until a later pass distils it into a proposal they can accept or refuse.
+cortex/raw/friction.log

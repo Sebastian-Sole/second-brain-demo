@@ -367,6 +367,18 @@ promote it into evidence about them. So is a claim about the *setup*: what is co
 configured, missing or duplicated can only be answered from the room, because the room is the only
 evidence there is.
 
+### The friction log — a declared record, kept out of retrieval
+
+One record extends "something they *said*" beyond the current session, and this paragraph is where
+it is said out loud. On Claude Code, `brain/bin/friction` (a deterministic `UserPromptSubmit`
+hook) watches each prompt for the magic words the human declared in `[[How we work together]]` —
+read from the note at runtime, never hardcoded — and appends `timestamp · word · session pointer`
+to `cortex/raw/friction.log`. Never the prompt text, never the reply. The log is gitignored and,
+like all of `cortex/raw/`, outside the retrieval path: raw material for a later distillation pass
+(`ingest-sessions`, `maintain`), whose conclusions reach the vault only as proposals under
+[You may propose. Only they may accept.](#you-may-propose-only-they-may-accept) Deleting the log
+is the human's right and breaks nothing.
+
 ### Where a fresh dump goes
 - **A thought or idea** → an atomic note in `cortex/03_Resources/`, linked to a relevant Area
 - **A link / article / PDF / transcript** → original into `cortex/raw/`, then a *source note* in `cortex/03_Resources/` summarising it **in the human's words**, plus atomic notes for the ideas worth keeping

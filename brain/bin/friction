@@ -1,0 +1,119 @@
+#!/usr/bin/env sh
+# Notice when the human uses one of their declared magic words, and log that it
+# happened — the prospective half of the friction log.
+#
+#   brain/bin/friction         reads UserPromptSubmit hook JSON on stdin,
+#                              appends matches to cortex/raw/friction.log
+#   brain/bin/friction --help  this text
+#
+# A correction typed mid-session ("shorter", "huh?") is evidence that something
+# about how this brain works needs to change — and today it evaporates when the
+# session ends. This hook is the observe step: exact string match against the
+# magic words the human declared in [[How we work together]], one log line per
+# hit. No fuzzy matching, no model judgment. The distilled conclusions those
+# lines eventually support are drawn later, by ingest-sessions / maintain, and
+# only ever land in the vault as proposals the human accepts.
+#
+# The words are read from the note AT RUNTIME, never hardcoded here. brain/ is
+# harness and ships to strangers; the vocabulary is one person's. Hardcoding it
+# would encode the operator into the template — the same sin as moving a
+# preference into .claude/. Edit the note and the hook follows on the next
+# prompt, same contract as brain/bin/agreement.
+#
+# A log line is three fields, tab-separated, and deliberately not four:
+#   2026-08-20T14:03	shorter	sess:a91f...
+# The token, when, and a session pointer so a later pass can go look at what
+# was being corrected. Never the prompt text and never the reply — storing
+# what was said is how a log becomes a transcript, and transcripts have their
+# own policy. The log lives in cortex/raw/ (the human's side, outside the
+# retrieval path) and is gitignored (sync runs `git add -A` unattended).
+#
+# Same anchor as sync, same silence contract as agreement: never exit non-zero,
+# never write to stdout or stderr. Stdout of a UserPromptSubmit hook is
+# injected as context, and a hook that fails puts an error in front of the
+# human on every keypress. Observation must be invisible and must never block
+# the prompt. Portable on purpose: POSIX shell and awk, no jq, no runtime.
+
+set -u
+
+NOTE='cortex/03_Resources/How we work together.md'
+LOG='cortex/raw/friction.log'
+
+root=$(cd "$(dirname "$0")/../.." 2>/dev/null && pwd -P) || exit 0
+[ -f "$root/AGENTS.md" ] && [ -d "$root/brain/bin" ] || exit 0
+cd "$root" || exit 0
+
+case "${1:-}" in
+  -h|--help) sed -n '2,7p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  '') ;;
+  *) exit 0 ;;
+esac
+
+[ -f "$NOTE" ] || exit 0
+
+# The hook payload, one JSON object on stdin. Empty stdin is a no-op, not an
+# error — someone ran this by hand to see what it does.
+input=$(cat 2>/dev/null) || exit 0
+[ -n "$input" ] || exit 0
+
+# Pull one string value out of the JSON without jq: find the key, skip to the
+# opening quote after its colon, then walk characters honouring backslash
+# escapes until the closing quote. Crude next to a real parser, but the payload
+# is one small flat object — and when this guess misses, the cost is a missed
+# log line, never a blocked prompt.
+json_str() {
+  printf '%s' "$input" | awk -v key="$1" '
+    BEGIN { RS = "\001" }
+    {
+      s = $0
+      i = index(s, "\"" key "\"")
+      if (!i) exit
+      s = substr(s, i + length(key) + 2)
+      c = index(s, ":")
+      if (!c) exit
+      s = substr(s, c + 1)
+      sub(/^[ \t\r\n]*/, "", s)
+      if (substr(s, 1, 1) != "\"") exit
+      s = substr(s, 2)
+      out = ""; esc = 0; n = length(s)
+      for (k = 1; k <= n; k++) {
+        ch = substr(s, k, 1)
+        if (esc) { out = out ((ch == "n") ? "\n" : (ch == "t") ? "\t" : ch); esc = 0; continue }
+        if (ch == "\\") { esc = 1; continue }
+        if (ch == "\"") break
+        out = out ch
+      }
+      printf "%s", out
+    }' 2>/dev/null
+}
+
+prompt=$(json_str prompt)
+[ -n "$prompt" ] || exit 0
+
+# The declared vocabulary: bullets under "## Magic words" that open with a
+# quoted token, token = the text inside the first pair of quotes. Bullets that
+# don't open with a quote ("The assistant's words back: ...") are the brain's
+# own vocabulary, not the human's, and are skipped by construction.
+words=$(awk '
+  /^## /        { keep = ($0 ~ /Magic words/); next }
+  !keep         { next }
+  /^- *"/       { if (split($0, q, "\"") >= 3 && q[2] != "") print q[2] }
+' "$NOTE" 2>/dev/null)
+[ -n "$words" ] || exit 0
+
+sid=$(json_str session_id)
+ts=$(date +%Y-%m-%dT%H:%M 2>/dev/null) || ts='unknown'
+
+# Exact, case-sensitive containment — the words were declared as exact strings
+# and matched the same way. One line per matched word.
+mkdir -p "$(dirname "$LOG")" 2>/dev/null
+while IFS= read -r w; do
+  [ -n "$w" ] || continue
+  case $prompt in
+    *"$w"*) printf '%s\t%s\tsess:%s\n' "$ts" "$w" "${sid:--}" >> "$LOG" 2>/dev/null ;;
+  esac
+done <<EOF
+$words
+EOF
+
+exit 0
