@@ -114,7 +114,7 @@ around that: one call to fetch, one table to read, one answer to write. Resist t
 7. **The roundup is never written to the vault.** This output is ephemeral, conversation only. Say
    the reason once if they ask: a stale news roundup filed as a note competes with real notes in
    search forever. If they explicitly want an item kept, that's `capture` — one item, as a note in
-   their words, not the whole digest.
+   their words, not the whole roundup.
 
    The one thing this tool may write is `cortex/03_Resources/My news sources.md` from step 1 — their
    sources, not the news — and only when they said yes to the offer. If you created or changed it,

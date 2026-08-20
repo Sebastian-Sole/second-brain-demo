@@ -6,7 +6,7 @@
 #   brain/bin/recent --bodies       the same notes, with their text
 #   brain/bin/recent --since 1      today
 #
-# digest and maintain both begin by working out what happened recently, and
+# brief and maintain both begin by working out what happened recently, and
 # both used to do it by hand: list the tree, stat the directories, read the
 # index, then cat the notes in whatever batches occurred to them. Eight round
 # trips of listing before a word of synthesis, and a different eight each time.

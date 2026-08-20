@@ -56,7 +56,7 @@ otherwise.
 | `[[How I learn]]` | `teach` — it's how it works out what level to pitch at, and which format to teach in |
 | `[[My news sources]]` | `news` |
 | `[[Big Five profile]]` | `infer`, when a claim about their character is at stake |
-| `[[What I'm into]]` | `digest`, `interview` |
+| `[[What I'm into]]` | `brief`, `interview` |
 | `[[My systems]]` | `new-idea`, which writes it as services come up, and `interview` — the services they actually live in, each with a verdict on whether anything can reach it |
 | `[[What I want this brain to do]]` | `interview`, `new-idea` — what they've said they want built, and what's already done |
 | `[[How we work together]]` | **everything, on every turn** — the working agreement: hard rules, how to talk to them, magic words. See below |
@@ -320,7 +320,7 @@ a Resource.
 | `task` | `cortex/Tasks/` (and `cortex/04_Archive/` once done — see [Tasks](#tasks)) |
 | `session` | `cortex/06_Sessions/` (the transcript stays outside the vault) |
 | `daily` | `cortex/Daily/` |
-| `digest` | `cortex/Daily/` |
+| `brief` | `cortex/Daily/` |
 
 Read this table to decide where something goes. Someone can swap PARA for a different scheme by
 editing these rows, and every command keeps working — which is the point.
@@ -395,7 +395,7 @@ is the human's right and breaks nothing.
 ```yaml
 ---
 title: Human-readable title
-type: note            # note | source | daily | digest | project | area | moc | person | concept | task | register | session
+type: note            # note | source | daily | brief | project | area | moc | person | concept | task | register | session
 stage: inbox          # inbox | active | evergreen | archived   — how processed is it
 status: draft         # draft | stable | deprecated             — how much should you trust it
 created: 2026-01-01
@@ -479,7 +479,7 @@ starting a new note", the number is in the wrong place.
   the title, spaces, capitals and all, because `[[wikilinks]]` resolve by filename and have to read
   well inside a sentence.
 - **Path-addressed files** — `cortex/raw/YYYY-MM-DD-<slug>.md`, `cortex/Daily/YYYY-MM-DD.md`,
-  `cortex/Daily/YYYY-MM-DD — Digest.md`, `cortex/06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
+  `cortex/Daily/YYYY-MM-DD — Brief.md`, `cortex/06_Sessions/YYYY-MM-DD <project> — <what happened>.md`. Nobody
   links these by title; they sort chronologically instead. That split is deliberate — don't "fix"
   it in either direction.
 
@@ -865,7 +865,7 @@ order to say which capabilities are actually connected.
   vault, since those transcripts contain other people's confidential code and files holding
   credentials.
 - **`doctor`** (`brain/bin/`) reads `$HOME/.claude.json` and `$HOME/.claude/settings.json`.
-- **`digest`** (`brain/prompts/`) calls `weather`, `calendar`, `email` and `news`. It reaches
+- **`brief`** (`brain/prompts/`) calls `weather`, `calendar`, `email` and `news`. It reaches
   nothing itself — it inherits the reach of the four tools it invokes, and each of those is still
   governed by its own frontmatter.
 - **`sync`** (`brain/bin/`) runs `git pull` and `git push`: the entire vault to a network remote,
@@ -881,7 +881,7 @@ order to say which capabilities are actually connected.
 
 The first three aren't in `brain/tools/` because none of them needs a connector or any
 configuration of its own, and the tool contract exists for the things a human must set up and
-consent to — what `digest` reaches, it reaches through tools that carry one. `sync`, `run`,
+consent to — what `brief` reaches, it reaches through tools that carry one. `sync`, `run`,
 `feeds` and `weather` aren't commands at all; they're plumbing that commands run on. **So the
 directory listing is not a complete answer to "what reaches outside": it's complete except for
 these seven.** An exception you can see beats a rule that quietly isn't true.
@@ -897,7 +897,7 @@ nothing else, which is the ordinary case and needs no exception.
 | `capture` | `brain/prompts/capture.md` | File a raw dump into the vault |
 | `ask` | `brain/prompts/ask.md` | Answer from the vault, with links |
 | `task` | `brain/prompts/task.md` | Open, update, complete or drop a task note — see [Tasks](#tasks) |
-| `digest` | `brain/prompts/digest.md` | Roll up recent activity, patterns, what's stalled |
+| `brief` | `brain/prompts/brief.md` | Roll up recent activity, patterns, what's stalled |
 | `maintain` | `brain/prompts/maintain.md` | Health pass: close the day, drain inbox, reconcile, rebuild the index, report |
 | `doctor` | `brain/bin/doctor` | Check the install and say what to fix. A script, not a prompt — run it. **Reads outside the vault** — see the exceptions above |
 | `new-idea` | `brain/prompts/new-idea.md` | Turn "I wish it could…" into a real command — a skill or a tool, including the security review below |
@@ -1033,7 +1033,7 @@ conversation.
 outcome is a note in the inbox, and prime directive 1 says never lose a capture.
 
 The **Not for** column is the load-bearing one. Overlapping trigger phrases are the single biggest
-cause of misrouting — `ask`, `teach`, `capture` and `digest` all plausibly match "tell me about
+cause of misrouting — `ask`, `teach`, `capture` and `brief` all plausibly match "tell me about
 X" — so every row says whose territory it isn't.
 
 | Command | Use when | Not for |
@@ -1041,11 +1041,11 @@ X" — so every row says whose territory it isn't.
 | `start` | First run; `[[About me]]` missing or blank; "let's set this up", "make this mine"; re-running to correct the profile or change how it talks to them as a standing rule | Connecting or building anything — `new-idea`, which start points at in its close and never runs. Something broken — `doctor`. Explaining what any of this *is* rather than configuring it — `teach`. |
 | `interview` | "ask me something", "what don't you know about me", they offer to fill gaps — a mixed queue across seven sources, three questions at most, one per source. Source 7 is the proactive one: a part of their life the vault does nothing for, offered as something to build | Working the open-assumption register for verdicts — `review-assumptions`. Assumptions are one of the seven sources here, and when one comes up this borrows that command's format and verdict rules rather than owning them. Answering *their* question — `ask`. Volunteering one profile line mid-conversation, which needs no command at all. Showing what the vault already holds about them — `mirror`. **A vault too young to have sourced a question** — say so and point at `start` and `teach`; never manufacture one from the notes that shipped with the vault. |
 | `capture` | "remember this", "here's a link", a pasted article, transcript or decision, a thought said out loud — **and anything matching nothing else** | Something with a next action or a deadline — `task`. A question — `ask`. |
-| `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `digest`. The model of *them* played back — facts, guesses, dead ones — `mirror`. |
+| `ask` | "what do I know about X", "did I write anything on Y", "why did we choose Z" | Questions the vault holds no facts for — `infer`. A concept the vault never covered — `teach`. Activity across many notes — `brief`. The model of *them* played back — facts, guesses, dead ones — `mirror`. |
 | `teach` | "explain X", "I don't get Y", "walk me through Z", "teach me X", "what did we just do", "how does this project work" — they want to *understand*, not to retrieve. A course-shaped subject gets lesson one and an offer, never an essay | Handing back what they already wrote — `ask`. Storing the explanation afterwards — `capture`, which this offers and never performs. Working out what to *build* next rather than understand — `interview`. Configuring the thing rather than explaining it — `start` for the first conversation, `new-idea` for connecting and building. |
 | `task` | "remind me to", "I need to", "chase X", anything with a deadline or a next action; also marking one done or dropped — an intention to do something later | Composing something now: "draft the mail to the landlord" is `email`, not a task. A task records the intention; it doesn't write the text. A thought with no action in it — `capture`. Actually sending or booking the thing — see the ceiling above. |
-| `digest` | "what have I been up to", "what's stalled", "catch me up on this week" | One question with its answer in one note — `ask`. Fixing what the digest surfaces — `maintain`. |
-| `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `digest`. |
+| `brief` | "what have I been up to", "what's stalled", "catch me up on this week" — and "digest", this command's name until 2026-08-20; people who learned that word will keep saying it, and it still routes here | One question with its answer in one note — `ask`. Fixing what the brief surfaces — `maintain`. |
+| `maintain` | "tidy up", "drain the inbox" meaning `cortex/00_Inbox/`, "close out the day", `cortex/00_Inbox/` has visibly grown | The mail inbox — that's `email`; this row owns the vault folder and nothing else. A broken install — `doctor`. Reporting on activity without changing anything — `brief`. |
 | `doctor` | "something's broken", "is this thing working", a command failing, just after a harness update | Messy vault *contents* rather than a broken install — `maintain`. |
 | `new-idea` | "add a command", "I want it to also do X", "connect it to my <service>", "hook up my mail" — at every rung: when a tool already covers the service, the run ends at the connect path in Discuss instead of building | Running an existing command — route to that command instead. Editing the profile — that's a proposal, not a feature. The first getting-to-know-you conversation — `start`. |
 | `ingest-sessions` | "read my old Claude/Codex sessions", "make my history searchable" | Capturing *this* session — `capture`. |

@@ -1,13 +1,13 @@
-# Thin adapter. The real prompt is brain/prompts/digest.md, shared by every agent — @{} inlines it here
+# Thin adapter. The real prompt is brain/prompts/brief.md, shared by every agent — @{} inlines it here
 # rather than copying it, so there is still one manual. Gemini CLI and Claude Code can expand
 # a file and a command's output into the prompt before the agent sees it; Codex and Copilot
 # can do neither, and their wrappers still say "read the file", which costs them one round
-# trip and nothing else. Do not add instructions here — edit brain/prompts/digest.md instead.
+# trip and nothing else. Do not add instructions here — edit brain/prompts/brief.md instead.
 
 description = "Roll up recent activity — what happened, patterns across it, what's stalled."
 
 prompt = """
-@{brain/prompts/digest.md}
+@{brain/prompts/brief.md}
 
 The human's input, if any: {{args}}
 

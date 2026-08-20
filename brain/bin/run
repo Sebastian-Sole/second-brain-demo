@@ -3,7 +3,7 @@
 #
 #   brain/bin/run maintain                 a skill, from brain/prompts/
 #   brain/bin/run weather "tomorrow"       a tool,  from brain/tools/
-#   brain/bin/run digest "last two weeks"
+#   brain/bin/run brief "last two weeks"
 #   BRAIN_AGENT=codex brain/bin/run maintain
 #
 # This is the seam that keeps the vault model-agnostic: commands are plain
