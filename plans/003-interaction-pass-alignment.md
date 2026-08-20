@@ -70,16 +70,25 @@ knows about is memory; the same record kept quietly is the thing people are righ
 
 ## Build state as of 2026-08-20
 
-`brain/bin/sessions` has an uncommitted `turns` subcommand. It reads transcripts from the source
-directories, emits only human-typed turns, and writes nothing anywhere. It runs and its filter
-catches every machine category it names. **Two known defects, so it is not finished:**
+`brain/bin/sessions` has a `turns` subcommand, committed and pushed in `10a8667`. It reads
+transcripts from the source directories, emits only human-typed turns, and writes nothing anywhere.
+It runs and its filter catches every machine category it names. **One defect remains:**
 
-- **Too slow.** The full corpus ran past two minutes. Fixable: one `awk` pass over all files
-  rather than one invocation per file, and drop the per-file `date -r`.
-- **It leaks tool results.** Pasted terminal output appears as if the human typed it. `awk` regex
-  cannot reliably tell a `tool_result` block from a text block. **Open decision:** require `jq`
-  and degrade with a plain sentence when it is missing, or stay pure POSIX and accept a lossy
-  corpus.
+- **It leaks tool results.** Both a typed message and a tool result arrive as records marked
+  `"type":"user"`; across 60 transcripts there were 63 typed messages and 3222 tool results. The
+  `awk` falls back to reading `"content"` when it finds no `"text"` key, and a tool result has a
+  `"content"` key too. **The fix is one guard:** a tool result record always contains
+  `"type":"tool_result"` and a typed message never does (zero records carried both across those 60
+  transcripts), so skip any record containing it. Plain `awk`, no new dependency.
+
+**Two items closed since this plan was written.** The `jq` decision does not exist: the guard above
+removes the need for it, and the no-runtime house style stays. And `turns` being slow is
+**accepted, not a defect** — the operator ruled that correct-and-slow beats fast-and-wrong for a
+command that runs rarely. Do not optimise it.
+
+**Superseding this plan's own framing:** `AGENTS.md:156` is not merely too narrow, it is wrong. It
+bans an evidence source when its justification only supports banning a claim type. See work items B
+and C in `/tmp/HANDOFF-second-brain-demo-2026-08-20-interaction-pass.md`.
 
 The filter list is empirical, drawn from one machine, and therefore incomplete. The strings
 themselves are Claude Code and Codex harness output, so they generalise, but a user with no
