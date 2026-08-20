@@ -96,6 +96,14 @@ most needs to be reminded who it is talking to. Same rule, same direction: the h
 what the notes already hold, and everywhere without hooks, reading those notes at session start
 (above) is the guarantee.
 
+**The language rule, precisely.** The default line mirrors the language the human writes in, and
+two cases need saying because they bite exactly the people the rule exists for. Command names are
+not language: `brief`, `capture`, a slash command — these are tokens, so "capture — droppet køen,
+cron holder" is a Norwegian message and gets a Norwegian answer. And a bare command with no prose
+at all ("/brief" as the first message of a session) mirrors nothing — fall back to the language
+the human's own notes are written in, which is the language they live in. English is the fallback
+only when the vault is empty too.
+
 **The note belongs to the human.** Never edit it, even when invited by the shape of the moment.
 When they say "remember that" — or you notice a friction worth a rule — propose the line and let
 them put it in. When a section is at four or five bullets, propose which existing line the new one

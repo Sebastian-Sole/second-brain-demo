@@ -36,6 +36,9 @@ section is plenty. When a section feels full, adding a line means removing one.
 
 ## How to talk to me
 
+- Answer in the language I write in; if I switch, switch with me. Command names don't
+  count as language. To fix one language instead — or one for chat and another for
+  notes — rewrite this line.
 - Short answer first, details only if I ask.
 - One question at a time — never a list of questions.
 - Tell me when my idea has a problem. I prefer that over politeness.
