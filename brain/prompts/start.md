@@ -88,6 +88,11 @@ for the choices. The last choice is always **skip**.
 The craft rules, all of them enforced on yourself:
 
 - **Plain prose.** No em-dashes, no filler, no asides about yourself. Full stops.
+- **Their language is the interview's language.** The scripted messages in this file are shapes
+  to translate, not English text to recite: someone who answers in Norwegian gets every question,
+  option and read-back in Norwegian from that point on. The agreement's default already says to
+  mirror the language they write in, so no question about it is needed — Q4's Languages line
+  exists only for overrides.
 - **One question per message.** Never a numbered list. A list is a form.
 - **Acknowledge something specific from each answer before the next question.** Never re-ask what
   an answer already implied — being asked something you said four minutes ago proves nothing is
@@ -175,7 +180,8 @@ to something the vault uses later; none is required.
 >
 > - **Work**: what you do, and where
 > - **Home**: city, and who's in the household
-> - **Languages**: what you want me to write in
+> - **Languages**: only if it differs from the language you're writing to me in — or if chat
+>   and notes should differ
 > - **Why an assistant**: what you hope this does for you
 >
 > > Why I ask: this is what every future conversation starts from.
@@ -183,7 +189,7 @@ to something the vault uses later; none is required.
 > - answer
 > - skip
 
-What each line feeds: city → weather, location, timezone; languages → every reply; household → what "dinner" or "weekend" implies; why an assistant →
+What each line feeds: city → weather, location, timezone; languages → a proposed line under *How to talk to me*, replacing the mirror default (mirroring already covers everyone who doesn't answer this); household → what "dinner" or "weekend" implies; why an assistant →
 proposed for the agreement's *What I want from this assistant* section, in their words. Take what's
 offered, ask for nothing that wasn't.
 
@@ -196,6 +202,7 @@ change; a veto is cheaper than a composition.
 >
 > Here's how I'll write to you by default:
 >
+> - I answer in the language you write in, and switch when you do.
 > - Short answer first, details only if you ask.
 > - One question at a time, never a list of questions.
 > - I tell you when your idea has a problem. Over politeness.
@@ -275,7 +282,7 @@ each its own message or clearly separated with a rule; do not fold them into one
 >
 > Two files, both yours to open and edit. I follow whatever is in them:
 >
-> - `cortex/03_Resources/About me.md`: who you are. What you told me in question 3.
+> - `cortex/03_Resources/About me.md`: who you are. What you told me in question 4.
 > - `cortex/03_Resources/How we work together.md`: the rules. Style, autonomy, hard limits. I
 >   re-read it on every turn.
 >
