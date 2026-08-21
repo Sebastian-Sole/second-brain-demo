@@ -95,7 +95,7 @@ Repoet er ikke ferdig. Det oppdateres. Be agenten kjøre `doctor` etter at du ha
 > [!callout icon=brain] **En bedre forståelse** av hvordan du jobber med AI
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg fagdagen "Bygg din egen personlige assistent": oppgaven, Ask → Build → Repeat, og hvor jeg bør starte. Siden jeg leser: https://www.notion.so/3c24dc662c2281f3a178d53504972873
+> /teach Forklar meg fagdagen "Bygg din egen personlige assistent": oppgaven, Ask → Build → Repeat, og hvor jeg bør starte. Siden jeg leser: cortex/03_Resources/Fagdag/Bygg din egen personlige assistent.md
 
 {child-page Kom i gang | 3c24dc66-2c22-8144-9111-d491617e2dc8}
 

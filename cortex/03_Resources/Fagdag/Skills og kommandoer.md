@@ -65,7 +65,7 @@ Maks 200 ord. Ikke finn på noe som ikke står i notatene.
 </details>
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hva en skill er, hvordan kommandoene i brain/prompts/ virker, og forskjellen på new-idea og en SKILL.md. Siden jeg leser: https://www.notion.so/3c24dc662c2281d38258e41074b0e9b6
+> /teach Forklar meg hva en skill er, hvordan kommandoene i brain/prompts/ virker, og forskjellen på new-idea og en SKILL.md. Siden jeg leser: cortex/03_Resources/Fagdag/Skills og kommandoer.md
 
 ---
 

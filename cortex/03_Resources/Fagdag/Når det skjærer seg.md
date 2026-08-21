@@ -84,4 +84,4 @@ Den sier nøyaktig hva som er feil og hvordan du fikser det. Les linjen under `[
 Hele listen står under «What it will never do» i `GUIDE.md`.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hva jeg gjør når AI-agenten min gjetter, krangler, glemmer, sier «ferdig» for tidlig eller skriver feil i notatene, og hva den aldri gjør. Siden jeg leser: https://www.notion.so/3c24dc662c2281d38f8dff0e3b39b7e1
+> /teach Forklar meg hva jeg gjør når AI-agenten min gjetter, krangler, glemmer, sier «ferdig» for tidlig eller skriver feil i notatene, og hva den aldri gjør. Siden jeg leser: cortex/03_Resources/Fagdag/Når det skjærer seg.md

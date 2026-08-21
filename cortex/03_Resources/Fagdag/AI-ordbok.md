@@ -24,4 +24,4 @@ notion: { page_id: 3c24dc66-2c22-8110-8b1b-df026bae5329, url: https://www.notion
 Ordene som dukker opp i dette repoet, og som er verdt å slå opp først: **context window** · **system prompt** · **skill** · **tool** · **MCP** · **subagent** · **hallucination** · **token**.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg ordene context window, system prompt, skill, tool, MCP, subagent, hallusinasjon og token, med ett eksempel hver. Siden jeg leser: https://www.notion.so/3c24dc662c2281108b1bdf026bae5329
+> /teach Forklar meg ordene context window, system prompt, skill, tool, MCP, subagent, hallusinasjon og token, med ett eksempel hver. Siden jeg leser: cortex/03_Resources/Fagdag/AI-ordbok.md

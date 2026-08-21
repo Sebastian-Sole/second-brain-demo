@@ -90,7 +90,7 @@ Fra Anthropics AI Fluency-kurs, leksjon 7 ([12 minutter på YouTube](https://www
 Når modellen sier noe som høres riktig ut, men ikke er det. Det beste forsvaret ligger i repoet: skriv `ask` og still spørsmålet, så merker den alltid hva som kom fra notatene dine og hva som er allmenn kunnskap.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hvordan jeg skriver en god prompt: si hva som er bra nok, de seks teknikkene fra AI Fluency, de vanlige feilene, og hva hallusinering er. Siden jeg leser: https://www.notion.so/3c24dc662c228147b691d8df3bfc23f6
+> /teach Forklar meg hvordan jeg skriver en god prompt: si hva som er bra nok, de seks teknikkene fra AI Fluency, de vanlige feilene, og hva hallusinering er. Siden jeg leser: cortex/03_Resources/Fagdag/Prompting.md
 
 ---
 

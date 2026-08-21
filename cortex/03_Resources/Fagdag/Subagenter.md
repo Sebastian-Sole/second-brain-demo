@@ -48,7 +48,7 @@ Beslektet, men ikke det samme. En **rutine** er noe som kjøres på klokka, uten
 </details>
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hva en subagent er, hvorfor den får sitt eget kontekstvindu, og forskjellen på en subagent og en rutine. Siden jeg leser: https://www.notion.so/3c24dc662c228134b9b3fab68f784fc5
+> /teach Forklar meg hva en subagent er, hvorfor den får sitt eget kontekstvindu, og forskjellen på en subagent og en rutine. Siden jeg leser: cortex/03_Resources/Fagdag/Subagenter.md
 
 ---
 

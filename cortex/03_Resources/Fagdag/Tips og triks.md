@@ -46,4 +46,4 @@ notion: { page_id: 3c24dc66-2c22-8159-8faa-dc46fe9a7590, url: https://www.notion
 > [!callout icon=hammer] **Bygg gradvis.** Et lite system du eier og forstår slår en haug du ikke skjønner og slutter å bruke.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg vanene som gjør arbeid med en AI-agent bedre: korte samtaler, én ting om gangen, spørre åpent, git som angreknapp, og å ikke stole på «ferdig». Siden jeg leser: https://www.notion.so/3c24dc662c2281598faadc46fe9a7590
+> /teach Forklar meg vanene som gjør arbeid med en AI-agent bedre: korte samtaler, én ting om gangen, spørre åpent, git som angreknapp, og å ikke stole på «ferdig». Siden jeg leser: cortex/03_Resources/Fagdag/Tips og triks.md

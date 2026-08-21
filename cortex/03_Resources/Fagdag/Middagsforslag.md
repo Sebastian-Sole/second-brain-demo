@@ -41,4 +41,4 @@ Etterpå forteller jeg hvilke vi lagde og hva vi syntes. Husk det, så forslagen
 - **Tilbakemeldingen.** «Vi lagde nummer to, ungene spiste alt» er hele jobben din. Det er det som gjør forslag nummer 50 bedre enn nummer 1.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hvordan jeg bruker new-idea til å få middagsforslag som lærer av hva familien liker. Siden jeg leser: https://www.notion.so/3c24dc662c2281db8953ddbb47e86568
+> /teach Forklar meg hvordan jeg bruker new-idea til å få middagsforslag som lærer av hva familien liker. Siden jeg leser: cortex/03_Resources/Fagdag/Middagsforslag.md

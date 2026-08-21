@@ -32,6 +32,6 @@ Nivåene sier hvor mye du må koble til. En kobling er en tjeneste utenfor notat
 Samme idé kan være Enkel eller Ekstra krevende. Det kommer an på hvor langt du tar den.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hva idésidene er, og hva nivåene Enkel, Middels, Krevende og Ekstra krevende betyr. Siden jeg leser: https://www.notion.so/3c24dc662c22816b97dac6a2953a5f94
+> /teach Forklar meg hva idésidene er, og hva nivåene Enkel, Middels, Krevende og Ekstra krevende betyr. Siden jeg leser: cortex/03_Resources/Fagdag/Ideer.md
 
 {child-page Middagsforslag | 3c24dc66-2c22-81db-8953-ddbb47e86568}

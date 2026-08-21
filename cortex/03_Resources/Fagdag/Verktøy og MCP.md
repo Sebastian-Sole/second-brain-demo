@@ -54,7 +54,7 @@ Ting den aldri skal få gjøre kan du legge i `deny`. Det er en regel, ikke et �
 </details>
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hva et verktøy er for en agent, de fire toolene i repoet, tillatelseslisten i .claude/settings.json, og hva MCP er. Siden jeg leser: https://www.notion.so/3c24dc662c22817c965ad1134437b1c4
+> /teach Forklar meg hva et verktøy er for en agent, de fire toolene i repoet, tillatelseslisten i .claude/settings.json, og hva MCP er. Siden jeg leser: cortex/03_Resources/Fagdag/Verktøy og MCP.md
 
 ---
 

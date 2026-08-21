@@ -40,4 +40,4 @@ Start i ditt eget repo. Åpne agenten i mappen og skriv `teach me how this works
 {bookmark https://github.com/Sebastian-Sole/second-brain-demo} second-brain-demo på GitHub. Repoet du fikk.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hvor jeg bør begynne for å lære å jobbe med AI-agenter, og i hvilken rekkefølge jeg bør ta videoene og artiklene. Siden jeg leser: https://www.notion.so/3c24dc662c228109b923f9464688657f
+> /teach Forklar meg hvor jeg bør begynne for å lære å jobbe med AI-agenter, og i hvilken rekkefølge jeg bør ta videoene og artiklene. Siden jeg leser: cortex/03_Resources/Fagdag/Ressurser.md

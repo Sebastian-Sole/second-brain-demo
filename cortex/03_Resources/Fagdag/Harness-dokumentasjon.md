@@ -160,4 +160,4 @@ Hele resonnementet står i `DESIGN.md`.
 </details>
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg hva repoet består av: skills, tools, PARA-mappene og kommandoene. Siden jeg leser: https://www.notion.so/3c24dc662c2281c28a87d0ca35fcb5c0
+> /teach Forklar meg hva repoet består av: skills, tools, PARA-mappene og kommandoene. Siden jeg leser: cortex/03_Resources/Fagdag/Harness-dokumentasjon.md

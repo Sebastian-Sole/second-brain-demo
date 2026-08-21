@@ -67,7 +67,7 @@ Ikke i `AGENTS.md`. Den filen er manualen som følger med repoet og byttes ut n�
 > [!callout icon=target] **Hold den kort.** For hver linje: ville det blitt feil hvis jeg fjernet denne? Hvis nei, fjern den. En prosedyre på mange steg hører hjemme i en skill, ikke i avtalen. Agenten behandler avtalen som kontekst, ikke som lov. Jo kortere og mer spesifikk, jo oftere blir den fulgt.
 
 > [!callout icon=graduate] **Forvirret?** Lim dette inn i samtalen med agenten din:
-> /teach Forklar meg kontekstvinduet, hvorfor hver samtale starter tom, og hvordan AGENTS.md og notatene gir agenten minne. Siden jeg leser: https://www.notion.so/3c24dc662c2281d984dcc2370fcdccfa
+> /teach Forklar meg kontekstvinduet, hvorfor hver samtale starter tom, og hvordan AGENTS.md og notatene gir agenten minne. Siden jeg leser: cortex/03_Resources/Fagdag/Kontekst og minne.md
 
 ---
 
