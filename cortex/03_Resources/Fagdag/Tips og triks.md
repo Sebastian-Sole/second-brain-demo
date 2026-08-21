@@ -39,7 +39,7 @@ notion: { page_id: 3c24dc66-2c22-8159-8faa-dc46fe9a7590, url: https://www.notion
 
 ## Kontrollen
 
-> [!callout icon=padlock] **Git er angreknappen.** Alt agenten skriver blir et lagringspunkt. `git log` viser hva som skjedde. `git revert` tar én endring tilbake. Du trenger ikke kunne mer enn det. Eller be agenten vise de siste endringene og angre den du mener.
+> [!callout icon=lock] **Git er angreknappen.** Alt agenten skriver blir et lagringspunkt. `git log` viser hva som skjedde. `git revert` tar én endring tilbake. Du trenger ikke kunne mer enn det. Eller be agenten vise de siste endringene og angre den du mener.
 
 > [!callout icon=checkmark] **Ikke tro på «ferdig».** La noe annet enn agenten sjekke: et skript, en test, eller deg. Spør «hvordan ser ferdig ut?» før den begynner.
 

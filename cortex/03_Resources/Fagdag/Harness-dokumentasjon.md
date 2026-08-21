@@ -36,7 +36,7 @@ En **skill** er en oppskrift som bare leser og skriver notatene dine. Et **tool*
 
 Mappene sorterer etter om du skal gjøre noe med det nå, ikke etter tema. Da kan én hjerne holde jobb, sideprosjekt og livsadmin uten å bli et arkivskap med førti emnemapper.
 
-> [!callout icon=padlock] **Du skal aldri flytte filer selv.** Agenten bestemmer hvor ting havner, og `maintain` rydder etterpå. Havner noe feil, si det i én setning.
+> [!callout icon=lock] **Du skal aldri flytte filer selv.** Agenten bestemmer hvor ting havner, og `maintain` rydder etterpå. Havner noe feil, si det i én setning.
 
 <details><summary>Mappene, én for én</summary>
 
