@@ -1,86 +1,552 @@
 [
- {"area":"everyday","text":"an empty inbox","star":false},
- {"area":"everyday","text":"never wondering what's for dinner","star":false},
- {"area":"everyday","text":"noticing you've had pasta twice this week already","star":false},
- {"area":"everyday","text":"not spending an hour choosing a movie","star":false},
- {"area":"everyday","text":"the morning sorted before you're awake","star":false},
- {"area":"everyday","text":"\"leave now, it's raining\"","star":false},
- {"area":"everyday","text":"never forgetting a commitment","star":false},
- {"area":"everyday","text":"\"you're near the store — milk\"","star":false},
- {"area":"everyday","text":"birthdays remembered a week early","star":false},
- {"area":"everyday","text":"birthdays remembered with a gift idea","star":false},
- {"area":"everyday","text":"the passport checked before the airport","star":false},
- {"area":"everyday","text":"the subscriptions you forgot you pay for","star":false},
- {"area":"everyday","text":"cancelling a subscription without the phone call","star":false},
- {"area":"everyday","text":"the insurance that quietly got pricier, caught","star":false},
- {"area":"everyday","text":"the bills paid before the reminder","star":false},
- {"area":"everyday","text":"the newsletters read for you","star":false},
- {"area":"everyday","text":"the news, without the doomscroll","star":false},
- {"area":"everyday","text":"what's on this weekend — without opening five apps","star":false},
- {"area":"everyday","text":"every \"oh, I should…\" caught before it evaporates","star":false},
- {"area":"everyday","text":"\"let's grab coffee\" actually becoming coffee","star":false},
- {"area":"everyday","text":"the form due in March done in February","star":false},
- {"area":"everyday","text":"the car booked before the warning light does it","star":false},
- {"area":"everyday","text":"the kids' schedule out of your head","star":false},
- {"area":"everyday","text":"not being the family's IT department","star":false},
- {"area":"everyday","text":"every warranty and receipt findable","star":false},
- {"area":"everyday","text":"\"you sound stressed — here's the short version\"","star":false},
- {"area":"everyday","text":"the doctor's appointment actually booked","star":false},
- {"area":"everyday","text":"the fridge emptied before things go off","star":false},
- {"area":"everyday","text":"packing list ready the night before the trip","star":false},
- {"area":"everyday","text":"the gift bought before the party, not on the way","star":false},
- {"area":"everyday","text":"the workout that fits today's calendar, not the ideal one","star":false},
- {"area":"everyday","text":"knowing which of your friends you've gone quiet on","star":false},
- {"area":"everyday","text":"the tax stuff gathered in one place, in January","star":false},
- {"area":"everyday","text":"the recipe scaled for four, and the shopping list to match","star":false},
- {"area":"everyday","text":"the parking ticket paid before it doubles","star":false},
- {"area":"office","text":"the three emails that actually need you","star":false},
- {"area":"office","text":"meeting notes sent before you're back at your desk","star":false},
- {"area":"office","text":"\"you promised Kari a document. It's Thursday.\"","star":false},
- {"area":"office","text":"timesheets filled from your calendar","star":false},
- {"area":"office","text":"Friday afternoon back","star":false},
- {"area":"office","text":"14 Slack channels caught up in two minutes","star":false},
- {"area":"office","text":"\"you've been asked this three times — here's a doc\"","star":false},
- {"area":"office","text":"who that person is, before they say hello","star":false},
- {"area":"office","text":"the client brief in your pocket before the room","star":false},
- {"area":"office","text":"what you decided in March — and why","star":false},
- {"area":"office","text":"the follow-up you keep not sending, sent","star":false},
- {"area":"office","text":"the 60-page report, briefed against your questions","star":false},
- {"area":"office","text":"the status update written from what you actually did","star":false},
- {"area":"office","text":"data entry that enters itself","star":false},
- {"area":"office","text":"the documents filed where you'll actually find them","star":false},
- {"area":"office","text":"a meeting that could've been an email — flagged before you accept","star":false},
- {"area":"office","text":"the expense report done from the receipts in your inbox","star":false},
- {"area":"office","text":"the travel booked, the way you like to travel","star":false},
- {"area":"office","text":"your week's priorities, in one line, Monday 8am","star":false},
- {"area":"office","text":"the person you keep meaning to thank, thanked","star":false},
- {"area":"designer","text":"a second pair of eyes at midnight","star":false},
- {"area":"designer","text":"the spacing slips caught before the review","star":false},
- {"area":"designer","text":"handoff notes drafted from the file","star":false},
- {"area":"designer","text":"the build drifting from the design — noticed before the developer does","star":false},
- {"area":"designer","text":"stakeholder feedback from six threads, one honest list","star":false},
- {"area":"designer","text":"\"make the logo bigger,\" translated","star":false},
- {"area":"designer","text":"\"the design system already has that\"","star":false},
- {"area":"designer","text":"your rationale saved, so you don't re-argue it","star":false},
- {"area":"designer","text":"every reference you've ever saved, findable by vibe","star":false},
- {"area":"designer","text":"the case study drafted while the work is still fresh","star":false},
- {"area":"designer","text":"contrast checked on every screen, every time","star":false},
- {"area":"designer","text":"the copy made consistent across 40 screens","star":false},
- {"area":"designer","text":"user interview notes turned into themes overnight","star":false},
- {"area":"developer","text":"the PR reviewing itself first","star":false},
- {"area":"developer","text":"\"almost right\" AI code caught before it costs the afternoon","star":false},
- {"area":"developer","text":"the 30 minutes a day of hunting for answers, back","star":false},
- {"area":"developer","text":"what changed since this last worked","star":false},
- {"area":"developer","text":"\"you've been rubber-ducking this for 40 minutes\"","star":false},
- {"area":"developer","text":"dependency updates triaged: three matter, twelve don't","star":false},
- {"area":"developer","text":"which of the 200 CI failures is yours","star":false},
- {"area":"developer","text":"someone who knows why the codebase looks like that","star":false},
- {"area":"developer","text":"the changelog written from the commits — properly","star":false},
- {"area":"developer","text":"the on-call handover written before you're off","star":false},
- {"area":"developer","text":"the ticket updated without opening Jira","star":false},
- {"area":"developer","text":"\"who owns this service?\" answered before you ask in Slack","star":false},
- {"area":"developer","text":"the tech-debt list everyone knows about, actually written down","star":false},
- {"area":"developer","text":"the flaky test named and shamed","star":false},
- {"area":"developer","text":"the release notes your PM can actually read","star":false},
- {"area":"developer","text":"the environment that just works on Monday","star":false}
+ {
+  "area": "everyday",
+  "text": "an empty inbox",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "to spend less time planning dinners",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "noticing you've had pasta twice this week already",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "not spending an hour choosing a movie",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "tomorrow fully planned before you wake up",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "to never forget an umbrella again",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "never forgetting a commitment",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "a nudge about that errand — right when you're passing the place",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "birthdays remembered a week early",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "birthdays remembered with a gift idea",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the passport checked before the airport",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the subscriptions you forgot you pay for",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "cancelling a subscription without the phone call",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the insurance that quietly got pricier, caught",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the bills paid before the reminder",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the newsletters read for you",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the news, without the doomscroll",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "what's on this weekend — without opening five apps",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "every \"oh, I should…\" caught before it evaporates",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "\"let's grab coffee\" actually becoming coffee",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the form due in March done in February",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the car booked before the warning light does it",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the kids' schedule out of your head",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "not being the family's IT department",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "every warranty and receipt findable",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "\"you sound stressed — here's the short version\"",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the doctor's appointment actually booked",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the fridge emptied before things go off",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the packing list ready a week before the trip",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the gift bought before the party, not on the way",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "a workout that fits today's calendar",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "knowing which of your friends you've gone quiet on",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the tax stuff gathered in one place, in January",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the recipe scaled for four, and the shopping list to match",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the parking ticket paid before it doubles",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "a clean, prioritised inbox",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "meeting notes sent before you're back at your desk",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "\"you promised Kari a document. It's Thursday.\"",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "timesheets filled from your calendar",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "Friday afternoon back",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "14 Slack channels caught up in two minutes",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "\"you've been asked this three times — here's a doc\"",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "who that person is, before they say hello",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the client brief in your pocket before the room",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "what you decided in March — and why",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the follow-up you keep not sending, sent",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the 60-page report, briefed against your questions",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the status update written from what you actually did",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "data entry that enters itself",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the documents filed where you'll actually find them",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "a meeting that could've been an email — flagged before you accept",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the expense report done from the receipts in your inbox",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the travel booked, the way you like to travel",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "your week's priorities, in one line, Monday 8am",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the person you keep meaning to thank, thanked",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "a second pair of eyes at midnight",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "the spacing slips caught before the review",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "handoff notes drafted from the file",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "the build drifting from the design — noticed before the developer does",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "stakeholder feedback from six threads, one honest list",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "\"make the logo bigger,\" translated",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "\"the design system already has that\"",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "your rationale saved, so you don't re-argue it",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "every reference you've ever saved, findable by vibe",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "the case study drafted while the work is still fresh",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "contrast checked on every screen, every time",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "the copy made consistent across 40 screens",
+  "star": false
+ },
+ {
+  "area": "designer",
+  "text": "user interview notes turned into themes overnight",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the PR reviewing itself first",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "\"almost right\" AI code caught before it costs the afternoon",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the 30 minutes a day of hunting for answers, back",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "to know what's new in the project since you last touched it",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "\"you've been rubber-ducking this for 40 minutes\"",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "dependency updates triaged: three matter, twelve don't",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "which of the 200 CI failures is yours",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "someone who knows why the codebase looks like that",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the changelog written from the commits — properly",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the on-call handover written before you're off",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the ticket updated without opening Jira",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "\"who owns this service?\" answered before you ask in Slack",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the tech-debt list everyone knows about, actually written down",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the flaky test named and shamed",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the release notes your PM can actually read",
+  "star": false
+ },
+ {
+  "area": "developer",
+  "text": "the environment that just works on Monday",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "to walk into every meeting fully briefed",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the school messages, Spond and the family calendar turned into one plan",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the plan updated when the fourth message of the day changes it",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the birthday party flagged a week early — not the morning of",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "standing appointments accepted for you — unless something clashes",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "travel times already in the plan",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "the kids to have their own copy of the plan",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "to spend less time planning something so small",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "to be told to get up and go for a run",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "to be reminded you own a ukulele",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "more board games with the kids",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "time to draw again",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "your two strength sessions actually happening",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "time to do nothing — scheduled",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "your team’s CVs kept up to date without asking",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "incoming sales matched with who’s actually free",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "what’s bubbling in your field summarised, the good stuff saved",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "a ping when the industry you’re chasing gets a new marketing chief",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "to search everything said in the leadership meetings",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "to know who’s on which project right now",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "to stop keeping track of who merged with whom",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "the Slack channel where people only post links — explained",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "your handbook to answer the questions people keep asking",
+  "star": false
+ },
+ {
+  "area": "office",
+  "text": "your deep-work time actually protected",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "to never miss your favourite band in town again",
+  "star": false
+ },
+ {
+  "area": "everyday",
+  "text": "dinner ideas from what's actually in the fridge",
+  "star": false
+ }
 ]
