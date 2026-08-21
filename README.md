@@ -19,64 +19,76 @@ Three things, and the first two are the real cost:
 
 | You need | Why | Roughly |
 | --- | --- | --- |
-| **An AI coding agent, installed** | It's the thing that does the work. [Claude Code](https://claude.com/claude-code) is the best-supported here; Codex, Cursor and Gemini CLI also work. | 5 min |
+| **An AI coding agent, installed** | It's the thing that does the work. [Claude Code](https://claude.com/claude-code) is the best-supported here — the **desktop app** if you don't want a terminal, the CLI if you do. Codex, Cursor and Gemini CLI also work. | 5 min |
 | **A paid plan for it** | These agents need a subscription or API billing. This vault doesn't add any cost of its own, but it can't run for free. | from ~$20/mo |
-| **Git, and a terminal** | Git is your undo button — it's what makes an agent writing into your notes safe rather than alarming. On a Mac, `git` may already be there; if not, run `xcode-select --install`. | 5 min |
+| **Git** | Your undo button — it's what makes an agent writing into your notes safe rather than alarming. On the no-terminal path you don't set it up yourself: the agent checks for it and walks you through the one dialog if it's missing. | 0–5 min |
 
 A GitHub account is optional but recommended — it's what backs the vault up and lets you read your
 notes from your phone.
 
-**You don't need to know git, or how to program.** You need to be willing to type a few commands
-once. If something goes wrong later, `brain/bin/doctor` tells you what's broken in plain language.
+**You don't need to know git, how to program, or how to use a terminal.** The first setup path
+below never opens one. If something goes wrong later, say `doctor` and the agent tells you what's
+broken in plain language.
 
 ---
 
 ## Setup
 
-**1. Get your own copy.**
+Two paths to the same place. Take the first unless you live in a terminal anyway. Using another
+agent (Codex, Cursor, Gemini)? See [Which app to use](#which-app-to-use) below.
 
-Copy this repo, then cut it loose from its history so the notes you write are yours:
+### No terminal: the desktop-app path
+
+**1. Get the folder.** Open this repo on github.com in your browser, click the green **Code**
+button, then **Download ZIP**. Unzip it, rename the folder to whatever you like — `my-brain` — and
+put it somewhere you'll find it again, like Documents.
+
+**2. Open it in Claude Code.** Install the
+[Claude Code desktop app](https://claude.com/claude-code) if you haven't, then open the folder as
+a project. The first time, it asks whether you trust this folder. **Say yes** — until you do, it
+ignores the settings that ship with this repo and will pester you for permission on routine things.
+
+**3. Let the agent finish the job.** Paste this as your first message:
+
+> This folder is my new second brain, fresh from a ZIP download. Turn it into a git repository
+> with a first commit, then run `./brain/bin/doctor` and take me through anything it flags, one
+> thing at a time, in plain language.
+
+Git is the undo button: once it's on, everything the agent ever does to your notes can be rolled
+back. If git isn't on your machine yet, the agent will say so and walk you through the one-click
+install. When `doctor` comes back clean, you're set up.
+
+**4. Back it up (recommended, 2 minutes).** Create an empty **private** repo on
+[github.com/new](https://github.com/new) — no README, no `.gitignore` — then tell the agent:
+*"connect this folder to my GitHub repo"* and paste the link. Now every change is backed up, and
+github.com renders your notes on any device. `doctor` keeps reminding you until this is done,
+because a vault that exists on one laptop is one spilled coffee from gone.
+
+### Terminal: the developer path
+
+Clone, cut the copy loose from this repo's history so the notes you write are yours, check, run:
 
 ```bash
 git clone https://github.com/Sebastian-Sole/second-brain-demo.git my-brain
 cd my-brain
 rm -rf .git && git init && git add -A && git commit -m "my second brain"
+./brain/bin/doctor   # fix anything marked [XX]
+claude               # or codex, or whatever you installed
 ```
 
 The `rm -rf .git` deletes *this repo's* history so you start with your own. It doesn't touch a
-single note.
-
-<details>
-<summary>Want it backed up and readable from your phone? (recommended, 2 minutes)</summary>
-
-Create an empty **private** repo on [github.com/new](https://github.com/new) — no README, no
-`.gitignore` — then:
+single note. Say yes when Claude Code asks whether you trust the folder, or it ignores the
+settings shipped in `.claude/` and pesters you about routine things. Backup is step 4 above —
+by hand, it's:
 
 ```bash
 git remote add origin https://github.com/<you>/<your-repo>.git
 git push -u origin main
 ```
 
-Now every change is backed up, and github.com renders your notes on any device. `brain/bin/doctor`
-warns you until this is set up, because a vault that exists on one laptop is one spilled coffee from
-gone.
-</details>
+### Either way, then:
 
-**2. Check it works.**
-
-```bash
-./brain/bin/doctor
-```
-
-It'll tell you what's missing and exactly how to fix it. Fix anything marked `[XX]`.
-
-**3. Start your agent** in that folder — type `claude`, or `codex`, or whatever you installed.
-Prefer not to use a terminal? See [Which app to use](#which-app-to-use) below.
-
-Claude Code will ask whether you trust this folder the first time. **Say yes** — until you do, it
-ignores the settings that ship with this repo and will pester you for permission on routine things.
-
-**4. Say `start`.**
+**Say `start`.**
 
 Six questions, one at a time — your name, how much you've used AI before (so it knows how much to
 explain), how it should come across, a bit about you, how you want to be written to, how much it
@@ -86,7 +98,7 @@ door that matters: say `new-idea` and name one thing that eats your time, and it
 **Don't skip `start`** — it's the difference between notes about you and notes about a generic
 person.
 
-**5. If you're not sure what you've just installed, say `teach me how this works`.**
+**If you're not sure what you've just installed, say `teach me how this works`.**
 
 It explains what this actually is — the agent, the harness around it, and the vault — pitched at
 wherever you are, from never-having-used-AI upward. It teaches it a piece at a time, each ending
@@ -240,8 +252,8 @@ Three things it deliberately does:
 
 ## Keeping it running
 
-`brain/bin/doctor` is the first thing to run whenever something feels broken — it checks the install
-and prints the command that fixes each problem. `maintain` is the equivalent for your notes rather
+`doctor` is the first thing to reach for whenever something feels broken — say it to your agent, or
+run `./brain/bin/doctor` yourself. It checks the install and prints the fix for each problem. `maintain` is the equivalent for your notes rather
 than the install; both are in [`GUIDE.md`](GUIDE.md).
 
 **You run them.** This repo ships no cron job and no background agent on purpose — an agent with
@@ -252,7 +264,9 @@ week two. Scheduling `maintain` later is one line in whatever scheduler you alre
 ### Updating the harness
 
 Setup cut you loose from this repo's history, so `git pull` won't reach it. When you want a newer
-version of the manual and the commands, take the harness and leave your notes alone:
+version of the manual and the commands, take the harness and leave your notes alone. No terminal:
+tell the agent *"update the harness from the upstream repo"* — it runs exactly the lines below and
+shows you what changed before committing. By hand:
 
 ```bash
 git remote add upstream https://github.com/Sebastian-Sole/second-brain-demo.git
