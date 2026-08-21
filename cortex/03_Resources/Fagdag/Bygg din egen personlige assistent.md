@@ -33,7 +33,7 @@ Fagdag 2026 · Spor 1: Hjernen. Én dag. Du løser én friksjon og går hjem med
 >
 > Start smått. Bygg videre i dag eller senere. Det er bedre å eie noe lite du forstår enn å få noe stort du ikke bruker.
 >
-> 1. `/start` Bli kjent-fasen.
+> 1. `/start` Bli kjent + din teamavtale med agenten.
 >
 > 1. `/new-idea` Foreslå en friksjon og løs den sammen med Claude.
 >
