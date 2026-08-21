@@ -64,9 +64,12 @@ case $SINCE in ''|*[!0-9]*) echo "feeds: --since takes whole hours, not '$SINCE'
 case $MAXPER in ''|*[!0-9]*) echo "feeds: --max-per-feed takes a whole number, not '$MAXPER'" >&2; exit 1 ;; esac
 case $MAXROWS in ''|*[!0-9]*) echo "feeds: --max-rows takes a whole number, not '$MAXROWS'" >&2; exit 1 ;; esac
 
+# A report line, not a failure: the /news wrappers pre-run this script and inline
+# its output, and a non-zero exit aborts the whole command before the agent can
+# act on it — so first-run state has to arrive on stdout like everything else.
 if [ ! -f "$NOTE" ]; then
-  echo "feeds: no source list at $NOTE — this is the normal first-run state. Ask the human what they read, then write the note. Nothing was fetched." >&2
-  exit 2
+  printf '# NOSOURCES\t%s\t%s\n' "$NOTE" 'no source list yet — the normal first-run state. Ask them what they read, watch and follow, and what they emphatically do not want to hear about, then offer to write the note. Nothing was fetched.'
+  exit 0
 fi
 
 command -v curl >/dev/null 2>&1 || { echo "feeds: curl is not installed — nothing here can reach the network without it." >&2; exit 1; }
@@ -136,9 +139,17 @@ awk '
 grep '^FEED' "$work/feeds.tsv" > "$work/fetch.tsv" 2>/dev/null
 total=$(wc -l < "$work/fetch.tsv" | tr -d ' ')
 
+# Report lines, not failures, for the same reason as the missing-note case above:
+# the wrappers can only hand the agent stdout, so "nothing to fetch" must be said
+# there. Two distinct situations, two distinct answers.
 if [ "$total" -eq 0 ]; then
-  echo "feeds: found no feed URLs in $NOTE — every table row needs its URL in backticks. Nothing was fetched." >&2
-  exit 2
+  if grep -q '^SKIPPED' "$work/feeds.tsv" 2>/dev/null; then
+    grep '^SKIPPED' "$work/feeds.tsv" | sed 's/^SKIPPED/# SKIPPED/' | cut -f1,3,4
+    printf '# NOSOURCES\t%s\t%s\n' "$NOTE" 'every source is held back pending a yes — once they give one, rerun with --include-optional. Nothing was fetched.'
+  else
+    printf '# NOSOURCES\t%s\t%s\n' "$NOTE" 'the note is there but no row has a URL in backticks, which is where feeds reads them from. Nothing was fetched.'
+  fi
+  exit 0
 fi
 
 if [ "$LIST" -eq 1 ]; then

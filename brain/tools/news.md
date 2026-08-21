@@ -58,6 +58,10 @@ around that: one call to fetch, one table to read, one answer to write. Resist t
    and only when the headline alone would make you guess.
 
    Lines starting with `#` are the report, and you owe the human the contents:
+   - `# NOSOURCES` — there's no usable source list, so nothing was fetched. This is step 1's
+     first-run state arriving as a report line rather than a failure, because a wrapper that
+     pre-runs the script can only hand you output, not an exit code. Stop and ask what they
+     read — don't summarise anything.
    - `# FAILED` — a source that didn't come back, with the reason. **Name these in your answer.**
      Silently dropping a source is the failure mode this whole tool is written against: the human
      then trusts a summary that quietly has a hole in it. A source that fails the same way twice
