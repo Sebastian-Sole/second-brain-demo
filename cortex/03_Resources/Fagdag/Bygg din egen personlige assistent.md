@@ -21,15 +21,9 @@ Fagdag 2026 · Spor 1: Hjernen. Én dag. Du løser én friksjon og går hjem med
 
 ## Agenda
 
-1. **Formål og forventninger.** Hva dette er, og ikke er.
+1. **Presentasjon.** Cirka en time.
 
-1. **Intro.** Den mentale modellen.
-
-1. **Demo.** Et eksempel.
-
-1. **AI 101.** Kortversjonen.
-
-1. **Ask → Build → Repeat.** Du bygger.
+1. **Jobbe selvstendig.** Resten av dagen.
 
 ---
 
@@ -39,11 +33,9 @@ Fagdag 2026 · Spor 1: Hjernen. Én dag. Du løser én friksjon og går hjem med
 >
 > Start smått. Bygg videre i dag eller senere. Det er bedre å eie noe lite du forstår enn å få noe stort du ikke bruker.
 >
-> > [!callout icon=chat] **Ask.** Si hva du vil ha, og hvorfor. Spør agenten hva den trenger å vite.
+> 1. `/start` Bli kjent-fasen.
 >
-> > [!callout icon=hammer] **Build.** Skriv `new-idea` til agenten og beskriv friksjonen. Den snakker med deg først, bygger etterpå. Du tester selv, én ting om gangen.
->
-> > [!callout icon=repeat] **Repeat.** Fungerte det? Neste friksjon. Fungerte det ikke? Ny samtale, prøv igjen.
+> 1. `/new-idea` Foreslå en friksjon og løs den sammen med Claude.
 >
 > **Vet du ikke? Spør.** Gjelder deg, og gjelder agenten.
 
