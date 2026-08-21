@@ -52,4 +52,3 @@ cortex/raw/calendar-feed.url
 # of git (sync would push a record of what they typed) and out of the retrieval
 # path, until a later pass distils it into a proposal they can accept or refuse.
 cortex/raw/friction.log
-tools/frictions/frictions.json

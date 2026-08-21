@@ -17,7 +17,7 @@ notion: { page_id: 3c24dc66-2c22-8144-9111-d491617e2dc8, url: https://www.notion
 
 # Kom i gang
 
-> [!callout icon=rocket] **Målet:** en assistent som svarer deg før presentasjonen er ferdig. Regn med et kvarter. Du trenger ikke kunne kode: alt du skal skrive kan kopieres og limes inn. Står du fast, spør en av oss.
+> [!callout icon=rocket] **Målet:** en assistent som svarer deg før presentasjonen er ferdig. Regn med et kvarter. Du trenger ikke kunne kode, og på vei 1 åpner du aldri en terminal. Står du fast, spør en av oss.
 
 ## Tre ting du trenger
 
@@ -45,13 +45,9 @@ En GitHub-konto er valgfri, men anbefalt. Den tar backup av hjernen din og lar d
 
 **1. Hent mappen.** Åpne [repoet](https://github.com/Sebastian-Sole/second-brain-demo) i nettleseren, klikk den grønne **Code**-knappen, så **Download ZIP**. Pakk ut, gi mappen et navn du liker — `min-hjerne` — og legg den et sted du finner den igjen, for eksempel i Dokumenter.
 
-**2. Åpne den i Claude Code.** Installer [desktop-appen](https://claude.com/claude-code) om du ikke har den, og åpne mappen som prosjekt. Første gang spør den om du stoler på mappen. **Svar ja.** Ellers bruker den ikke tillatelseslisten som følger med, og spør om alt.
+**2. Pek Claude Code på mappen.** Installer [desktop-appen](https://claude.com/claude-code) om du ikke har den, og åpne mappen som prosjekt. Første gang spør den om du stoler på mappen. **Svar ja.** Ellers bruker den ikke tillatelseslisten som følger med, og spør om alt.
 
-**3. La agenten gjøre resten.** Lim inn dette som første melding:
-
-> Denne mappen er min nye andre hjerne, rett fra en ZIP-nedlasting. Gjør den til et git-repo med en første commit, kjør så `./brain/bin/doctor`, og ta meg gjennom det den klager på, én ting om gangen, på vanlig språk.
-
-Git er angreknappen: når den er på, kan alt agenten noensinne gjør i notatene dine rulles tilbake. Mangler git på maskinen, sier agenten fra og loser deg gjennom installasjonen. Når `doctor` er fornøyd, er du klar.
+**3. Skriv `doctor`.** Assistenten sjekker at alt er på plass og tar deg gjennom det som mangler, én ting om gangen, på vanlig språk. Be den fikse det den finner — blant annet skrur den på angreknappen (git), slik at alt den noensinne gjør i notatene dine kan rulles tilbake. Når `doctor` er fornøyd, er du klar.
 
 **4. Backup på GitHub (valgfritt, anbefalt).** Lag et tomt, privat repo på [github.com/new](https://github.com/new) — ingen README, ingen .gitignore. Si så til agenten: «koble denne mappen til GitHub-repoet mitt», og lim inn lenken. Da er hjernen din sikkerhetskopiert og lesbar fra mobilen. `doctor` maser til dette er på plass.
 

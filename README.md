@@ -43,20 +43,15 @@ agent (Codex, Cursor, Gemini)? See [Which app to use](#which-app-to-use) below.
 button, then **Download ZIP**. Unzip it, rename the folder to whatever you like — `my-brain` — and
 put it somewhere you'll find it again, like Documents.
 
-**2. Open it in Claude Code.** Install the
+**2. Point Claude Code at the folder.** Install the
 [Claude Code desktop app](https://claude.com/claude-code) if you haven't, then open the folder as
 a project. The first time, it asks whether you trust this folder. **Say yes** — until you do, it
 ignores the settings that ship with this repo and will pester you for permission on routine things.
 
-**3. Let the agent finish the job.** Paste this as your first message:
-
-> This folder is my new second brain, fresh from a ZIP download. Turn it into a git repository
-> with a first commit, then run `./brain/bin/doctor` and take me through anything it flags, one
-> thing at a time, in plain language.
-
-Git is the undo button: once it's on, everything the agent ever does to your notes can be rolled
-back. If git isn't on your machine yet, the agent will say so and walk you through the one-click
-install. When `doctor` comes back clean, you're set up.
+**3. Say `doctor`.** The agent checks that everything is in place and takes you through what's
+missing, one thing at a time, in plain language. Ask it to fix what it finds — that includes
+switching on git, the undo button, so everything it ever does to your notes can be rolled back.
+When `doctor` comes back clean, you're set up.
 
 **4. Back it up (recommended, 2 minutes).** Create an empty **private** repo on
 [github.com/new](https://github.com/new) — no README, no `.gitignore` — then tell the agent:
