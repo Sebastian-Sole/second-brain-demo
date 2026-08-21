@@ -254,7 +254,7 @@ the exact sentence to type, because you test it, not it.
 The security step is never skipped, not even for something that looks like a one-liner: it has to say
 in writing what the new command can read, what it can send outward and to whom, and what happens if
 something it fetches turns out to be hostile. That's the step you'd be skipping if you added a file
-by hand, so don't — run `new-idea` and let it refuse the idea if the idea deserves refusing. It
+by hand, so don't — run `/new-idea` and let it refuse the idea if the idea deserves refusing. It
 will happily tell you that what you asked for already exists under another name, or that it's really
 two commands. Both of those are good outcomes.
 
@@ -358,7 +358,7 @@ indistinguishable from one that got lost.
 ## Connecting mail and calendar
 
 Both are **opt-in**, and what you're opting into is the connection itself. Nothing is connected
-until you connect it, which you do once, in your agent's own connector settings — say `new-idea`
+until you connect it, which you do once, in your agent's own connector settings — say `/new-idea`
 and it walks you through it; until then, asking about your inbox gets you one
 plain sentence — "No mail connector is configured" — rather than an error. Once connected, they work
 like every other command: you won't be asked permission again each time you ask what's on today.

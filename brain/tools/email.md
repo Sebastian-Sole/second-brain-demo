@@ -1,7 +1,7 @@
 ---
 name: email
 requires: mcp
-fallback: "No mail connector is configured — add one in your agent's connector settings, or say `new-idea` and I'll walk you through it."
+fallback: "No mail connector is configured — add one in your agent's connector settings, or say `/new-idea` and I'll walk you through it."
 writes: drafts; sends and mailbox changes only when asked
 consent: opt-in
 ---

@@ -1,7 +1,7 @@
 ---
 name: calendar
 requires: mcp
-fallback: "No calendar connector is configured — add one in your agent's connector settings, or say `new-idea` and I'll walk you through it."
+fallback: "No calendar connector is configured — add one in your agent's connector settings, or say `/new-idea` and I'll walk you through it."
 writes: events, and only when asked
 consent: opt-in
 ---

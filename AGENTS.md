@@ -25,7 +25,7 @@ alongside `cortex/index.md`.** It carries `type: person` and holds **Name**, **W
 brain is for**, **How I like to work**, and **Current focus**.
 
 > **← Start here. This is the single highest-leverage change available.** Everything else in this
-> file is a sensible default; that note is what makes the brain *yours*. Say `start` and your agent
+> file is a sensible default; that note is what makes the brain *yours*. Say `/start` and your agent
 > will get to know you — six questions, about five minutes, each one changing how it works for
 > you — and then build you something that works before the conversation ends.
 >
@@ -860,7 +860,12 @@ A command is either a **skill** or a **tool**, and the difference is reach.
 
 Both are plain markdown prompts, and both are invoked the same way: if the human names one, read
 the file and follow it. Agents with slash-command support get thin wrappers (see `.claude/commands/`
-for one such set).
+for one such set; Codex gets skills in `.agents/skills/`, invoked with `$`).
+
+**When you tell the human to type a command, write it with its prefix** — `/new-idea`, never a bare
+`new-idea` — so what they read is exactly what they type. Use the prefix this agent actually
+registers (`/` almost everywhere, `$` in Codex). Bare backticked names are for talking *about*
+commands — routing tables, cross-references — not for asking someone to type one.
 
 The split exists so that **"what can this thing reach" is a directory listing rather than a
 paragraph.** That's what a security review needs to start from, and it's what `doctor` needs in

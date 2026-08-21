@@ -312,11 +312,11 @@ because it arrives alone.
 >
 > ## What's next
 >
-> 1. **Fix one thing that eats your time.** Say `new-idea` and tell me what it is. We take a bite
+> 1. **Fix one thing that eats your time.** Say `/new-idea` and tell me what it is. We take a bite
 >    out of it in that conversation.
 > 2. **Let me learn from your past AI sessions** on this machine: what you already ask assistants
 >    for, how you like to talk. You pick which projects; histories can contain work stuff.
-> 3. **The deeper version of "how I tick"**: say `interview big-five`. Twenty statements. What it
+> 3. **The deeper version of "how I tick"**: say `/interview big-five`. Twenty statements. What it
 >    produces is rules for how I treat you, not a test score.
 >
 > More to read and learn, when you want it: [Bygg din egen personlige assistent](https://app.notion.com/p/Bygg-din-egen-personlige-assistent-3c24dc662c2281f3a178d53504972873)
